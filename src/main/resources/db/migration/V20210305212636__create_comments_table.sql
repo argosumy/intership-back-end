@@ -5,5 +5,5 @@ CREATE TABLE comments
     created_at       TIMESTAMP          NOT NULL,
     advertisement_id INT                NOT NULL,
     user_id          INT                NOT NULL,
-    parent_id        INT                NOT NULL
+    parent_id        INT
 );
