@@ -3,10 +3,12 @@ package com.spduniversity.repositories;
 
 import com.spduniversity.entities.comments.Comment;
 import com.spduniversity.mappers.CommentMapper;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CommentRepository implements CommentPersistence {
@@ -24,7 +26,7 @@ public class CommentRepository implements CommentPersistence {
                         "u.resources_link FROM comments c " +
                         "INNER JOIN advertisements a ON c.advertisements_id = a.id " +
                         "INNER JOIN users u ON c.user_id = u.id WHERE c.advertisement_id=?",
-                new Object[]{adId},
+                new Object[] {adId},
                 new CommentMapper()
         );
     }
@@ -43,12 +45,32 @@ public class CommentRepository implements CommentPersistence {
     }
 
     @Override
-    public void remove(int commentId) {
-
+    public void deleteById(int id) {
+        jdbcTemplate.update("DELETE FROM comments WHERE id=?", id);
     }
 
     @Override
-    public void update(Comment comment) {
+    public Optional<Comment> findById(int id) {
+        String sql = "SELECT * FROM comments WHERE id=" + id;
 
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CommentMapper()));
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Comment update(Comment updatedComment, int id) {
+        jdbcTemplate.update(
+                "UPDATE comments SET body=?, created_at=?, advertisement_id=?, user_id=?, parent_id=? WHERE id=?",
+                updatedComment.getBody(),
+                updatedComment.getCreatedDate(),
+                updatedComment.getAdvertisement().getId(),
+                updatedComment.getUser().getId(),
+                updatedComment.getParent().getId(),
+                id
+        );
+        return updatedComment;
     }
 }

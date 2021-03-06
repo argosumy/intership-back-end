@@ -1,12 +1,14 @@
 package com.spduniversity.services;
 
 import com.spduniversity.entities.comments.Comment;
+import com.spduniversity.exceptions.CommentNotFoundException;
 import com.spduniversity.repositories.CommentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -29,5 +31,25 @@ public class CommentService {
         Comment commentToSave = commentRepository.saveNew(comment);
         logger.info("IN save new - comment: {} successfully saved", commentToSave);
         return commentToSave;
+    }
+
+    public void deleteById(int id) {
+        commentRepository.deleteById(id);
+        logger.info("IN delete - comment with id: {} successfully deleted", id);
+    }
+
+    public Optional<Comment> findById(int id) {
+         Optional<Comment> result = commentRepository.findById(id);
+
+        if (result.isEmpty()) {
+            logger.warn("IN findById - no comment found by id: {}", id);
+            throw new CommentNotFoundException();
+        }
+        logger.info("IN findById - comment: {} found by id: {}", result, id);
+        return result;
+    }
+
+    public Comment update(Comment comment, int id) {
+       return commentRepository.update(comment, id);
     }
 }

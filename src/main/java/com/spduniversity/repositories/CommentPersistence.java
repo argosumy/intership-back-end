@@ -3,6 +3,7 @@ package com.spduniversity.repositories;
 import com.spduniversity.entities.comments.Comment;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CommentPersistence {
 
@@ -10,7 +11,9 @@ public interface CommentPersistence {
 
     Comment saveNew(Comment comment);
 
-    void remove(int commentId);
+    Comment update(Comment comment, int id);
 
-    void update(Comment comment);
+    void deleteById(int id);
+
+    Optional<Comment> findById(int id);
 }
