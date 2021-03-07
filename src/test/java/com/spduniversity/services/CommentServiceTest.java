@@ -5,14 +5,18 @@ import com.spduniversity.entities.comments.Comment;
 import com.spduniversity.entities.users.User;
 import com.spduniversity.repositories.CommentRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class CommentServiceTest {
@@ -57,6 +61,7 @@ class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("Should return list of comments by advertisement id")
     void getAllByAdId() {
         when(commentService.getAllByAdId(1)).thenReturn(List.of(comment));
         List<Comment> commentList = commentService.getAllByAdId(1);
@@ -65,6 +70,16 @@ class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("Should return empty list of comments by advertisement id")
+    void getEmptyCommentListByAdId() {
+        when(commentService.getAllByAdId(2)).thenReturn(Collections.emptyList());
+        List<Comment> commentList = commentService.getAllByAdId(2);
+
+        assertThat(commentList).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Should correctly save and return comment")
     void saveNew() {
         when(commentService.saveNew(comment)).thenReturn(comment);
         Comment savedComment = commentService.saveNew(comment);
@@ -73,14 +88,45 @@ class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("Should delete comment by id")
     void deleteById() {
+        commentService.deleteById(1);
+
+        verify(commentRepository).deleteById(1);
     }
 
     @Test
+    @DisplayName("Should find comment by id")
     void findById() {
+        when(commentService.findById(1)).thenReturn(Optional.ofNullable(comment));
+        Optional<Comment> returnedComment = commentService.findById(1);
+
+        assertThat(returnedComment).contains(comment);
     }
 
     @Test
+    @DisplayName("Should return Optional.empty() in case of unFinding comment by id")
+    void unFindById() {
+        when(commentService.findById(2)).thenReturn(Optional.empty());
+        Optional<Comment> returnedComment = commentService.findById(2);
+
+        assertThat(returnedComment).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Should return correctly updated comment")
     void update() {
+        Comment updatedComment = new Comment(
+                1,
+                "UPDATED COMMENT",
+                LocalDate.of(2021, 1, 1),
+                advertisement,
+                user,
+                null
+        );
+        when(commentService.update(updatedComment, 1)).thenReturn(updatedComment);
+        Comment returnedComment = commentService.update(updatedComment, 1);
+
+        assertThat(returnedComment).isEqualTo(updatedComment);
     }
 }
