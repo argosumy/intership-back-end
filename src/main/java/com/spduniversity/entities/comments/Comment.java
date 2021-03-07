@@ -14,6 +14,18 @@ public class Comment {
     private User user;
     private Comment parent;
 
+    public Comment() {
+    }
+
+    public Comment(int id, String body, LocalDate createdDate, Advertisement advertisement, User user, Comment parent) {
+        this.id = id;
+        this.body = body;
+        this.createdDate = createdDate;
+        this.advertisement = advertisement;
+        this.user = user;
+        this.parent = parent;
+    }
+
     public int getId() {
         return id;
     }

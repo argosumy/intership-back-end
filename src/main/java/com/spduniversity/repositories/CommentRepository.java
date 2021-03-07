@@ -25,8 +25,8 @@ public class CommentRepository implements CommentPersistence {
                 "SELECT c.*, a.id AS ad_id, u.* FROM comments c " +
                         "INNER JOIN advertisements a ON c.advertisement_id = a.id " +
                         "INNER JOIN users u ON c.user_id = u.id WHERE c.advertisement_id=?",
-                new Object[] {adId},
-                new CommentMapper()
+                new CommentMapper(),
+                adId
         );
     }
 
@@ -55,8 +55,7 @@ public class CommentRepository implements CommentPersistence {
                 "INNER JOIN users u ON c.user_id = u.id WHERE c.id =" + id;
 
         try {
-            final Optional<Comment> comment = Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CommentMapper()));
-            return comment;
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CommentMapper()));
         } catch (DataAccessException e) {
             return Optional.empty();
         }
