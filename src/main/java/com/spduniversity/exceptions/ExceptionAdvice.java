@@ -11,6 +11,13 @@ public class ExceptionAdvice {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(CommentsNotFoundException.class)
+    String commentsNotFoundHandler(CommentsNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(CommentNotFoundException.class)
     String commentNotFoundHandler(CommentNotFoundException e) {
         return e.getMessage();

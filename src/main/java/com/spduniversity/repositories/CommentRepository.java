@@ -22,9 +22,8 @@ public class CommentRepository implements CommentPersistence {
     @Override
     public List<Comment> getAllByAdId(int adId) {
         return jdbcTemplate.query(
-                "SELECT c.*, a.id AS ad_id, u.id AS user_id, u.first_name, u.last_name, u.avatar, u.email, u.position, u.phone_number, u.blocked_status, " +
-                        "u.resources_link FROM comments c " +
-                        "INNER JOIN advertisements a ON c.advertisements_id = a.id " +
+                "SELECT c.*, a.id AS ad_id, u.* FROM comments c " +
+                        "INNER JOIN advertisements a ON c.advertisement_id = a.id " +
                         "INNER JOIN users u ON c.user_id = u.id WHERE c.advertisement_id=?",
                 new Object[] {adId},
                 new CommentMapper()
@@ -51,10 +50,13 @@ public class CommentRepository implements CommentPersistence {
 
     @Override
     public Optional<Comment> findById(int id) {
-        String sql = "SELECT * FROM comments WHERE id=" + id;
+        String sql = "SELECT c.*, a.id AS ad_id, u.* FROM comments c " +
+                "INNER JOIN advertisements a ON c.advertisement_id = a.id " +
+                "INNER JOIN users u ON c.user_id = u.id WHERE c.id =" + id;
 
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CommentMapper()));
+            final Optional<Comment> comment = Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CommentMapper()));
+            return comment;
         } catch (DataAccessException e) {
             return Optional.empty();
         }

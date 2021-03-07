@@ -1,7 +1,6 @@
 package com.spduniversity.services;
 
 import com.spduniversity.entities.comments.Comment;
-import com.spduniversity.exceptions.CommentNotFoundException;
 import com.spduniversity.repositories.CommentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,17 +38,16 @@ public class CommentService {
     }
 
     public Optional<Comment> findById(int id) {
-         Optional<Comment> result = commentRepository.findById(id);
+        Optional<Comment> result = commentRepository.findById(id);
 
         if (result.isEmpty()) {
             logger.warn("IN findById - no comment found by id: {}", id);
-            throw new CommentNotFoundException();
         }
         logger.info("IN findById - comment: {} found by id: {}", result, id);
         return result;
     }
 
     public Comment update(Comment comment, int id) {
-       return commentRepository.update(comment, id);
+        return commentRepository.update(comment, id);
     }
 }

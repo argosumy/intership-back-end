@@ -1,8 +1,8 @@
 package com.spduniversity.exceptions;
 
-public class CommentNotFoundException extends  RuntimeException {
+public class CommentNotFoundException extends RuntimeException {
 
-    public CommentNotFoundException() {
-        super("No comments yet!");
+    public CommentNotFoundException(int id) {
+        super("Could not find comment " + id);
     }
 }

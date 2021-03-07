@@ -4,13 +4,13 @@ import com.spduniversity.dto.CommentDto;
 import com.spduniversity.entities.comments.Comment;
 import com.spduniversity.exceptions.CommentNoContentException;
 import com.spduniversity.exceptions.CommentNotFoundException;
+import com.spduniversity.exceptions.CommentsNotFoundException;
 import com.spduniversity.services.CommentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-//@RequestMapping()
 public class CommentController {
 
     private final CommentService commentService;
@@ -24,7 +24,7 @@ public class CommentController {
         List<Comment> commentList = commentService.getAllByAdId(adId);
 
         if (commentList.isEmpty()) {
-            throw new CommentNotFoundException();
+            throw new CommentsNotFoundException();
         }
 
         return CommentDto.toCommentDtoList(commentList);
@@ -59,5 +59,11 @@ public class CommentController {
                     commentDto.setId(id);
                     return commentService.saveNew(CommentDto.toComment(commentDto));
                 });
+    }
+
+    @GetMapping("/comments/one/{id}")
+    Comment one(@PathVariable int id) {
+        return commentService.findById(id)
+                .orElseThrow(() -> new CommentNotFoundException(id));
     }
 }
