@@ -16,7 +16,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
+//    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
     implementation group: 'org.postgresql', name: 'postgresql'
     implementation group: 'com.zaxxer', name: 'HikariCP'
     implementation group: 'org.flywaydb', name: 'flyway-core'

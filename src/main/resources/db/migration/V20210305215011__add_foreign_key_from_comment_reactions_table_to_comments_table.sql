@@ -1,2 +1,2 @@
-ALTER TABLE comment_likes
+ALTER TABLE comment_reactions
     ADD FOREIGN KEY (comment_id) REFERENCES comments (id);
