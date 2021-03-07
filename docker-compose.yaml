@@ -1,0 +1,49 @@
+version: '2.3'
+
+services:
+  database:
+    image: 'postgres:alpine'
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "${DB_NAME}", "-U", "${DB_USER}" ]
+      interval: 10s
+      timeout: 1s
+      retries: 20
+
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://database:5432/${DB_NAME} -schemas=public -user=${DB_USER} -password=${DB_PASSWORD} -connectRetries=60 migrate
+    volumes:
+      - ./src/main/resources/sql:/flyway/sql
+    depends_on:
+      database:
+        condition: service_healthy
+
+  backend-app:
+    image: 'baraholka-backend:latest'
+    build:
+      context: .
+    container_name: backend-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+    depends_on:
+      database:
+        condition: service_healthy
+      flyway:
+        condition: service_started
+
+volumes:
+  db-data:
