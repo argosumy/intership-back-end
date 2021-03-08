@@ -15,11 +15,12 @@ public class CommentReactionRepository implements CommentReactionPersistence {
     }
 
     @Override
-    public int getTotalAmountByCommentId(int commentId) {
-        return jdbcTemplate.update(
-                "SELECT COUNT(*) FROM comment_reactions WHERE comment_id=?",
-                commentId
+    public int getTotalReactionTypeByCommentId(int commentId, String commentReaction) {
+        final int update = jdbcTemplate.update(
+                "SELECT COUNT(*) FROM comment_reactions WHERE comment_id=? AND reaction=?",
+                commentId, commentReaction
         );
+        return update;
     }
 
     @Override
@@ -34,8 +35,11 @@ public class CommentReactionRepository implements CommentReactionPersistence {
     }
 
     @Override
-    public void deleteLastRecordByCommentId(int commentId) {
-        jdbcTemplate.update("DELETE FROM comment_reactions WHERE comment_id=? AND id=" +
-                "(SELECT id FROM comment_reactions ORDER BY id DESC LIMIT 1);");
+    public void deleteLastRecordByCommentId(int commentId, String commentReaction) {
+        jdbcTemplate.update(
+                "DELETE FROM comment_reactions WHERE id=" +
+                        "(SELECT id FROM comment_reactions WHERE comment_id=? AND reaction=? ORDER BY id DESC LIMIT 1)",
+                commentId, commentReaction
+        );
     }
 }

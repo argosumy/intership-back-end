@@ -15,9 +15,10 @@ public class CommentReactionController {
         this.commentReactionService = commentReactionService;
     }
 
-    @GetMapping("/comment/{commentId}")
-    int getTotalAmountByCommentId(@PathVariable("commentId") int commentId) {
-        return commentReactionService.getTotalAmountByCommentId(commentId);
+    @GetMapping("/comment-reactions/{commentId}/{commentReaction}")
+    int getTotalReactionTypeByCommentId(@PathVariable("commentId") int commentId,
+                                        @PathVariable("commentReaction") String commentReaction) {
+        return commentReactionService.getTotalReactionTypeByCommentId(commentId, commentReaction);
     }
 
     @PostMapping("/comment-reactions")
@@ -29,8 +30,9 @@ public class CommentReactionController {
         return commentReactionService.saveNew(commentReaction);
     }
 
-    @DeleteMapping("/comment-reactions/{commentId}")
-    void deleteCommentReaction(@PathVariable("commentId") int commentId) {
-        commentReactionService.deleteLastRecordByCommentId(commentId);
+    @DeleteMapping("/comment-reactions/{commentId}/{commentReaction}")
+    void deleteCommentReaction(@PathVariable("commentId") int commentId,
+                               @PathVariable("commentReaction") String commentReaction) {
+        commentReactionService.deleteLastRecordByCommentId(commentId, commentReaction);
     }
 }

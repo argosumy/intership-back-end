@@ -5,9 +5,9 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public interface CommentReactionPersistence {
 
-    int getTotalAmountByCommentId(int commentId);
+    int getTotalReactionTypeByCommentId(int commentId, String commentReaction);
 
     CommentReaction saveNew(CommentReaction commentReaction);
 
-    void deleteLastRecordByCommentId(int commentId);
+    void deleteLastRecordByCommentId(int commentId, String commentReaction);
 }
