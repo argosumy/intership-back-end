@@ -1,10 +1,10 @@
-package com.spduniversity.controllers;
+package com.spduniversity.controllers.comment_reactions;
 
-import com.spduniversity.dto.CommentReactionDto;
-import com.spduniversity.entities.comments.CommentReaction;
+import com.spduniversity.dto.comment_reactions.CommentReactionDto;
+import com.spduniversity.entities.comment_reactions.CommentReaction;
 import com.spduniversity.exceptions.comment_reactions.CommentReactionBadRequestException;
 import com.spduniversity.exceptions.comment_reactions.CommentReactionNoContentException;
-import com.spduniversity.services.CommentReactionService;
+import com.spduniversity.services.comment_reactions.CommentReactionService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

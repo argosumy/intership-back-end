@@ -1,7 +1,7 @@
-package com.spduniversity.dto;
+package com.spduniversity.dto.comment_reactions;
 
 import com.spduniversity.entities.comments.Comment;
-import com.spduniversity.entities.comments.CommentReaction;
+import com.spduniversity.entities.comment_reactions.CommentReaction;
 import com.spduniversity.entities.enums.CommentReactionType;
 import com.spduniversity.entities.users.User;
 
@@ -48,7 +48,6 @@ public class CommentReactionDto {
         commentReaction.setCommentReactionType(commentReactionDto.getCommentReaction());
         commentReaction.setComment(commentReactionDto.getComment());
         commentReaction.setUser(commentReactionDto.getUser());
-
         return commentReaction;
     }
 }

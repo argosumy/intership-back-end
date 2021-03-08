@@ -1,4 +1,4 @@
-package com.spduniversity.mappers;
+package com.spduniversity.mappers.comments;
 
 import com.spduniversity.entities.advertisements.Advertisement;
 import com.spduniversity.entities.comments.Comment;

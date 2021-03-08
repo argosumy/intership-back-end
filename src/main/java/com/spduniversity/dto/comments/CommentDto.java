@@ -1,4 +1,4 @@
-package com.spduniversity.dto;
+package com.spduniversity.dto.comments;
 
 import com.spduniversity.entities.advertisements.Advertisement;
 import com.spduniversity.entities.comments.Comment;
@@ -83,7 +83,6 @@ public class CommentDto {
         comment.setAdvertisement(commentDto.getAdvertisement());
         comment.setUser(commentDto.getUser());
         comment.setParent(commentDto.getParent());
-
         return comment;
     }
 }

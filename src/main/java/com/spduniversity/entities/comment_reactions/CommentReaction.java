@@ -1,5 +1,6 @@
-package com.spduniversity.entities.comments;
+package com.spduniversity.entities.comment_reactions;
 
+import com.spduniversity.entities.comments.Comment;
 import com.spduniversity.entities.enums.CommentReactionType;
 import com.spduniversity.entities.users.User;
 

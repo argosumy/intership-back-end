@@ -1,11 +1,11 @@
-package com.spduniversity.controllers;
+package com.spduniversity.controllers.comments;
 
-import com.spduniversity.dto.CommentDto;
+import com.spduniversity.dto.comments.CommentDto;
 import com.spduniversity.entities.comments.Comment;
 import com.spduniversity.exceptions.comments.CommentNoContentException;
 import com.spduniversity.exceptions.comments.CommentNotFoundException;
 import com.spduniversity.exceptions.comments.CommentsNotFoundException;
-import com.spduniversity.services.CommentService;
+import com.spduniversity.services.comments.CommentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

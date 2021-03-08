@@ -1,10 +1,11 @@
 package com.spduniversity.services;
 
 import com.spduniversity.entities.comments.Comment;
-import com.spduniversity.entities.comments.CommentReaction;
+import com.spduniversity.entities.comment_reactions.CommentReaction;
 import com.spduniversity.entities.enums.CommentReactionType;
 import com.spduniversity.entities.users.User;
 import com.spduniversity.repositories.comment_reactions.CommentReactionRepository;
+import com.spduniversity.services.comment_reactions.CommentReactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

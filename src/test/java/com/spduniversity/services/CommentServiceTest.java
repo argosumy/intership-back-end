@@ -4,6 +4,7 @@ import com.spduniversity.entities.advertisements.Advertisement;
 import com.spduniversity.entities.comments.Comment;
 import com.spduniversity.entities.users.User;
 import com.spduniversity.repositories.comments.CommentRepository;
+import com.spduniversity.services.comments.CommentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

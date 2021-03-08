@@ -1,6 +1,6 @@
-package com.spduniversity.services;
+package com.spduniversity.services.comment_reactions;
 
-import com.spduniversity.entities.comments.CommentReaction;
+import com.spduniversity.entities.comment_reactions.CommentReaction;
 import com.spduniversity.repositories.comment_reactions.CommentReactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

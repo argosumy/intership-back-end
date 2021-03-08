@@ -2,7 +2,7 @@ package com.spduniversity.repositories.comments;
 
 
 import com.spduniversity.entities.comments.Comment;
-import com.spduniversity.mappers.CommentMapper;
+import com.spduniversity.mappers.comments.CommentMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

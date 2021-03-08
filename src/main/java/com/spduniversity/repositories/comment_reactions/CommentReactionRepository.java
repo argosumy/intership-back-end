@@ -1,7 +1,7 @@
 package com.spduniversity.repositories.comment_reactions;
 
 
-import com.spduniversity.entities.comments.CommentReaction;
+import com.spduniversity.entities.comment_reactions.CommentReaction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.spduniversity.repositories.comment_reactions;
 
-import com.spduniversity.entities.comments.CommentReaction;
+import com.spduniversity.entities.comment_reactions.CommentReaction;
 
 public interface CommentReactionPersistence {
 
