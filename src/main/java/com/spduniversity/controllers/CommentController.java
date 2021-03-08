@@ -2,9 +2,9 @@ package com.spduniversity.controllers;
 
 import com.spduniversity.dto.CommentDto;
 import com.spduniversity.entities.comments.Comment;
-import com.spduniversity.exceptions.CommentNoContentException;
-import com.spduniversity.exceptions.CommentNotFoundException;
-import com.spduniversity.exceptions.CommentsNotFoundException;
+import com.spduniversity.exceptions.comments.CommentNoContentException;
+import com.spduniversity.exceptions.comments.CommentNotFoundException;
+import com.spduniversity.exceptions.comments.CommentsNotFoundException;
 import com.spduniversity.services.CommentService;
 import org.springframework.web.bind.annotation.*;
 

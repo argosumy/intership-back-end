@@ -1,4 +1,4 @@
-package com.spduniversity.exceptions;
+package com.spduniversity.exceptions.comments;
 
 public class CommentNotFoundException extends RuntimeException {
 

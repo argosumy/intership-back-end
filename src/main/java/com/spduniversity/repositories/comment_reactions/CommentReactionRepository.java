@@ -34,8 +34,8 @@ public class CommentReactionRepository implements CommentReactionPersistence {
     }
 
     @Override
-    public void deleteLastRecord() {
-        jdbcTemplate.update("DELETE FROM comment_reactions WHERE id=" +
+    public void deleteLastRecordByCommentId(int commentId) {
+        jdbcTemplate.update("DELETE FROM comment_reactions WHERE comment_id=? AND id=" +
                 "(SELECT id FROM comment_reactions ORDER BY id DESC LIMIT 1);");
     }
 }

@@ -9,5 +9,5 @@ public interface CommentReactionPersistence {
 
     CommentReaction saveNew(CommentReaction commentReaction);
 
-    void deleteLastRecord();
+    void deleteLastRecordByCommentId(int commentId);
 }

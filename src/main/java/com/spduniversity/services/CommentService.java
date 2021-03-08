@@ -48,6 +48,8 @@ public class CommentService {
     }
 
     public Comment update(Comment comment, int id) {
-        return commentRepository.update(comment, id);
+        Comment updatedComment = commentRepository.update(comment, id);
+        logger.info("IN update - comment: {} by id: {} successfully updated", updatedComment, id);
+        return updatedComment;
     }
 }
