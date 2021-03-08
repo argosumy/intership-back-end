@@ -15,15 +15,6 @@ public class CommentReactionRepository implements CommentReactionPersistence {
     }
 
     @Override
-    public int getTotalReactionTypeByCommentId(int commentId, String commentReaction) {
-        final int update = jdbcTemplate.update(
-                "SELECT COUNT(*) FROM comment_reactions WHERE comment_id=? AND reaction=?",
-                commentId, commentReaction
-        );
-        return update;
-    }
-
-    @Override
     public CommentReaction saveNew(CommentReaction commentReaction) {
         jdbcTemplate.update(
                 "INSERT INTO comment_reactions (reaction, comment_id, user_id) VALUES (?, ?, ?)",
@@ -39,6 +30,16 @@ public class CommentReactionRepository implements CommentReactionPersistence {
         jdbcTemplate.update(
                 "DELETE FROM comment_reactions WHERE id=" +
                         "(SELECT id FROM comment_reactions WHERE comment_id=? AND reaction=? ORDER BY id DESC LIMIT 1)",
+                commentId, commentReaction
+        );
+    }
+
+    @Override
+//    @SuppressWarnings("ConstantConditions")
+    public int getTotalReactionTypeByCommentId(int commentId, String commentReaction) {
+        return jdbcTemplate.queryForObject(
+                "SELECT COUNT(id) FROM comment_reactions WHERE comment_id=? AND reaction=?",
+                Integer.class,
                 commentId, commentReaction
         );
     }
