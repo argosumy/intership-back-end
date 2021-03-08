@@ -3,10 +3,12 @@ package com.spduniversity.entities.comments;
 import com.spduniversity.entities.enums.CommentReactionType;
 import com.spduniversity.entities.users.User;
 
+import java.util.Objects;
+
 public class CommentReaction {
 
     private int id;
-    private CommentReactionType commentReaction;
+    private CommentReactionType commentReactionType;
     private Comment comment;
     private User user;
 
@@ -18,12 +20,12 @@ public class CommentReaction {
         this.id = id;
     }
 
-    public CommentReactionType getCommentReaction() {
-        return commentReaction;
+    public CommentReactionType getCommentReactionType() {
+        return commentReactionType;
     }
 
-    public void setCommentReaction(CommentReactionType commentReaction) {
-        this.commentReaction = commentReaction;
+    public void setCommentReactionType(CommentReactionType commentReactionType) {
+        this.commentReactionType = commentReactionType;
     }
 
     public Comment getComment() {
@@ -40,5 +42,25 @@ public class CommentReaction {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CommentReaction)) {
+            return false;
+        }
+        CommentReaction that = (CommentReaction) o;
+        return getId() == that.getId() &&
+                getCommentReactionType() == that.getCommentReactionType() &&
+                Objects.equals(getComment(), that.getComment()) &&
+                Objects.equals(getUser(), that.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCommentReactionType(), getComment(), getUser());
     }
 }

@@ -18,7 +18,7 @@ public class CommentReactionRepository implements CommentReactionPersistence {
     public CommentReaction saveNew(CommentReaction commentReaction) {
         jdbcTemplate.update(
                 "INSERT INTO comment_reactions (reaction, comment_id, user_id) VALUES (?, ?, ?)",
-                commentReaction.getCommentReaction().name(),
+                commentReaction.getCommentReactionType().name(),
                 commentReaction.getComment().getId(),
                 commentReaction.getUser().getId()
         );
@@ -35,7 +35,7 @@ public class CommentReactionRepository implements CommentReactionPersistence {
     }
 
     @Override
-//    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("ConstantConditions")
     public int getTotalReactionTypeByCommentId(int commentId, String commentReaction) {
         return jdbcTemplate.queryForObject(
                 "SELECT COUNT(id) FROM comment_reactions WHERE comment_id=? AND reaction=?",

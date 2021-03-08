@@ -4,6 +4,7 @@ import com.spduniversity.entities.advertisements.Advertisement;
 import com.spduniversity.entities.users.User;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Comment {
 
@@ -72,5 +73,25 @@ public class Comment {
 
     public void setParent(Comment parent) {
         this.parent = parent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Comment)) {
+            return false;
+        }
+        Comment comment = (Comment) o;
+        return getId() == comment.getId() &&
+                Objects.equals(getBody(), comment.getBody()) && Objects.equals(getCreatedDate(), comment.getCreatedDate()) &&
+                Objects.equals(getAdvertisement(), comment.getAdvertisement()) && Objects.equals(getUser(), comment.getUser()) &&
+                Objects.equals(getParent(), comment.getParent());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getBody(), getCreatedDate(), getAdvertisement(), getUser(), getParent());
     }
 }

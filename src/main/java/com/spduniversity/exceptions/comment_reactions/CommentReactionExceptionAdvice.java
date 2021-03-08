@@ -10,14 +10,14 @@ public class CommentReactionExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ExceptionHandler(CommentReactionNoContentException.class)
-    String CommentReactionNoContentHandler(CommentReactionNoContentException e) {
+    String commentReactionNoContentHandler(CommentReactionNoContentException e) {
         return e.getMessage();
     }
 
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CommentReactionBadRequestException.class)
-    String CommentReactionNoContentHandler(CommentReactionBadRequestException e) {
+    String commentReactionNoContentHandler(CommentReactionBadRequestException e) {
         return e.getMessage();
     }
 }

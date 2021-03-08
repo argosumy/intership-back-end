@@ -35,7 +35,7 @@ class CommentReactionServiceTest {
 
     private CommentReaction createCommentReaction() {
         CommentReaction commentReaction = new CommentReaction();
-        commentReaction.setCommentReaction(CommentReactionType.DISLIKE);
+        commentReaction.setCommentReactionType(CommentReactionType.DISLIKE);
         commentReaction.setComment(comment);
         commentReaction.setUser(user);
         return commentReaction;

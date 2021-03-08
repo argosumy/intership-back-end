@@ -19,7 +19,6 @@ public class CommentMapper implements RowMapper<Comment> {
         comment.setAdvertisement(getMappedAdvertisement(rs));
         comment.setUser(getMappedUser(rs));
         comment.setParent(getMappedParentComment(rs));
-
         return comment;
     }
 
@@ -46,7 +45,6 @@ public class CommentMapper implements RowMapper<Comment> {
         user.setPhoneNumber(rs.getString("phone_number"));
         user.setBlockedStatus(rs.getBoolean("blocked_status"));
         user.setResourcesLink(rs.getString("resources_link"));
-
         return user;
     }
 }

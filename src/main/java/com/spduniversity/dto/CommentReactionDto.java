@@ -7,9 +7,16 @@ import com.spduniversity.entities.users.User;
 
 public class CommentReactionDto {
     private int id;
-    private CommentReactionType commentReaction;
+    private final CommentReactionType commentReaction;
     private Comment comment;
-    private User user;
+    private final User user;
+
+    public CommentReactionDto(int id, CommentReactionType commentReaction, Comment comment, User user) {
+        this.id = id;
+        this.commentReaction = commentReaction;
+        this.comment = comment;
+        this.user = user;
+    }
 
     public int getId() {
         return id;
@@ -38,7 +45,7 @@ public class CommentReactionDto {
     public static CommentReaction toCommentReaction(CommentReactionDto commentReactionDto) {
         CommentReaction commentReaction = new CommentReaction();
         commentReaction.setId(commentReactionDto.getId());
-        commentReaction.setCommentReaction(commentReactionDto.getCommentReaction());
+        commentReaction.setCommentReactionType(commentReactionDto.getCommentReaction());
         commentReaction.setComment(commentReactionDto.getComment());
         commentReaction.setUser(commentReactionDto.getUser());
 

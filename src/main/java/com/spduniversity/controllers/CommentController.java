@@ -20,7 +20,7 @@ public class CommentController {
     }
 
     @GetMapping("/comments/{adId}")
-    List<CommentDto> getCommentsByAdId(@PathVariable("adId") int adId) {
+    public List<CommentDto> getCommentsByAdId(@PathVariable("adId") int adId) {
         List<Comment> commentList = commentService.getAllByAdId(adId);
 
         if (commentList.isEmpty()) {
@@ -31,7 +31,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
-    Comment saveComment(@RequestBody CommentDto commentDto) {
+    public Comment saveComment(@RequestBody CommentDto commentDto) {
         if (commentDto == null) {
             throw new CommentNoContentException();
         }
@@ -40,12 +40,12 @@ public class CommentController {
     }
 
     @DeleteMapping("/comments/{id}")
-    void deleteComment(@PathVariable int id) {
+    public void deleteComment(@PathVariable int id) {
         commentService.deleteById(id);
     }
 
     @PutMapping("/comments/{id}")
-    Comment updateComment(@RequestBody CommentDto commentDto, @PathVariable int id) {
+    public Comment updateComment(@RequestBody CommentDto commentDto, @PathVariable int id) {
         return commentService.findById(id)
                 .map(com -> {
                     com.setId(commentDto.getId());
@@ -62,7 +62,7 @@ public class CommentController {
     }
 
     @GetMapping("/comments/one/{id}")
-    Comment one(@PathVariable int id) {
+    public Comment one(@PathVariable int id) {
         return commentService.findById(id)
                 .orElseThrow(() -> new CommentNotFoundException(id));
     }
