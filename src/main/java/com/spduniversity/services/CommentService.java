@@ -1,7 +1,7 @@
 package com.spduniversity.services;
 
 import com.spduniversity.entities.comments.Comment;
-import com.spduniversity.repositories.CommentRepository;
+import com.spduniversity.repositories.comments.CommentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

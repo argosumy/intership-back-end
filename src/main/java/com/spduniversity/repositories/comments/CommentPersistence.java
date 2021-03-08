@@ -1,4 +1,4 @@
-package com.spduniversity.repositories;
+package com.spduniversity.repositories.comments;
 
 import com.spduniversity.entities.comments.Comment;
 
