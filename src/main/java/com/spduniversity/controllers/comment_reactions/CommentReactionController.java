@@ -25,7 +25,7 @@ public class CommentReactionController {
         return commentReactionService.getTotalReactionTypeByCommentId(commentId, commentReaction);
     }
 
-    @PostMapping("/comment-reactions")
+    @PostMapping("/comment-reaction")
     public CommentReaction saveNew(@RequestBody CommentReactionDto commentReactionDto) {
         if (commentReactionDto == null) {
             throw new CommentReactionNoContentException();
@@ -34,7 +34,7 @@ public class CommentReactionController {
         return commentReactionService.saveNew(commentReaction);
     }
 
-    @DeleteMapping("/comment-reactions/{commentId}/{commentReaction}")
+    @DeleteMapping("/comment-reaction/{commentId}/{commentReaction}")
     public void deleteCommentReaction(@PathVariable("commentId") int commentId,
                                       @PathVariable("commentReaction") String commentReaction) {
         if (commentReaction == null) {

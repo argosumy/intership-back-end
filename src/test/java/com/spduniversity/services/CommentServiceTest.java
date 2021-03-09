@@ -80,6 +80,15 @@ class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("Should return empty list of comments by advertisement id")
+    void getListOfThreeCommentsByAdId() {
+        when(commentService.getLimitCommentsByAdId(1)).thenReturn(List.of(comment, comment, comment));
+        List<Comment> commentList = commentService.getAllByAdId(1);
+
+        assertThat(commentList.size()).isEqualTo(3);
+    }
+
+    @Test
     @DisplayName("Should correctly save and return comment")
     void saveNew() {
         when(commentService.saveNew(comment)).thenReturn(comment);
