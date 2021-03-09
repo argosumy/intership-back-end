@@ -113,5 +113,6 @@ _**Note:**_ a command `docker-compose up --build` will start PostgreSQL service,
 6. Open URL [http://localhost:8080](http://localhost:8080) in a web browser. If needed, you can connect to the database via commandline:
    `psql -h localhost -p 5432 -d mydatabase -U mydbuser`
 
+_**Note:**_ Database data will be stored locally in a folder **db-data**. If needed to purge all data from previous tests, you can delete this folder after stopping the application.
 
 7. To stop the application press **Ctrl+C** in a command prompt or type command `docker-compose down`
