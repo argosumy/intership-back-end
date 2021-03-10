@@ -19,13 +19,13 @@ public class CommentReactionService {
 
     public int getTotalReactionTypeByCommentId(int commentId, CommentReactionType commentReactionType) {
         int size = commentReactionRepository.getTotalReactionTypeByCommentId(commentId, commentReactionType);
-        logger.info("IN getTotalAmountByCommentId - total size: {}", size);
+        logger.debug("IN getTotalAmountByCommentId - total size: {}", size);
         return size;
     }
 
     public CommentReaction saveNew(CommentReaction commentReaction) {
         CommentReaction commentReactionToSave = commentReactionRepository.saveNew(commentReaction);
-        logger.info("IN save new commentReaction: {} successfully saved", commentReactionToSave);
+        logger.info("New comment reaction: {} has been successfully saved", commentReactionToSave);
         return commentReactionToSave;
     }
 

@@ -22,30 +22,17 @@ public class CommentController {
     @GetMapping("/comments/{adId}")
     public List<CommentDto> getCommentsByAdId(@PathVariable("adId") int adId) {
         List<Comment> commentList = commentService.getAllByAdId(adId);
-
-        if (commentList.isEmpty()) {
-            throw new CommentsNotFoundException();
-        }
-
         return CommentDto.toCommentDtoList(commentList);
     }
 
     @GetMapping("/comments/limit/{adId}")
     public List<CommentDto> getLimitCommentsByAdId(@PathVariable("adId") int adId) {
         List<Comment> commentList = commentService.getLimitCommentsByAdId(adId);
-
-        if (commentList.isEmpty()) {
-            throw new CommentsNotFoundException();
-        }
-
         return CommentDto.toCommentDtoList(commentList);
     }
 
     @PostMapping("/comments")
     public Comment saveComment(@RequestBody CommentDto commentDto) {
-        if (commentDto == null) {
-            throw new CommentNoContentException();
-        }
         Comment comment = CommentDto.toComment(commentDto);
         return commentService.saveNew(comment);
     }
