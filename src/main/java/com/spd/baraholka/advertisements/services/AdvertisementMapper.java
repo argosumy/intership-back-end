@@ -8,6 +8,7 @@ public class AdvertisementMapper {
 
     public Advertisement convertToEntity(AdvertisementDTO advertisementDTO) {
         Advertisement advertisement = new Advertisement();
+        advertisement.setAdvertisementId(advertisementDTO.getAdvertisementId());
         advertisement.setOwnerId(advertisementDTO.getOwnerId());
         advertisement.setTitle(advertisementDTO.getTitle());
         advertisement.setDescription(advertisementDTO.getDescription());

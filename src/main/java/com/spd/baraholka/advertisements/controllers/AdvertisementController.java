@@ -3,9 +3,7 @@ package com.spd.baraholka.advertisements.controllers;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/advertisements")
@@ -17,11 +15,19 @@ public class AdvertisementController {
         this.advertisementService = advertisementService;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/")
     public int saveAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
         if (advertisementDTO == null) {
             throw new NullPointerException();
         }
         return advertisementService.saveAdvertisement(advertisementDTO);
+    }
+
+    @PutMapping("/")
+    public int updateAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
+        if (advertisementDTO == null) {
+            throw new NullPointerException();
+        }
+        return advertisementService.updateAdvertisement(advertisementDTO);
     }
 }

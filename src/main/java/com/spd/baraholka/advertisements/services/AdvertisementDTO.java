@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public class AdvertisementDTO {
 
+    private int advertisementId;
     private int ownerId;
     private String title;
     private String description;
@@ -19,6 +20,14 @@ public class AdvertisementDTO {
     private LocalDateTime creationDate;
     private LocalDateTime publicationDate;
     private LocalDateTime statusChangeDate;
+
+    public int getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(int advertisementId) {
+        this.advertisementId = advertisementId;
+    }
 
     public int getOwnerId() {
         return ownerId;
