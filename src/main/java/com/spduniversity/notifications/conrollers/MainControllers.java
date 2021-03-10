@@ -25,7 +25,7 @@ public class MainControllers {
 
     @GetMapping("/ban")
     public String getBan() throws MessagingException, IOException, TemplateException {
-        MimeMessage mailMessage = factory.buildNotification(EventTypes.CHANGES_ADVERTISEMENT);
+        MimeMessage mailMessage = factory.buildNotification(EventTypes.ADVERTISEMENT_BLOCK);
         sender.send(mailMessage);
 
         return "OK";

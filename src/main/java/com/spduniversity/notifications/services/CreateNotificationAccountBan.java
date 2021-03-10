@@ -18,6 +18,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,9 +38,12 @@ public class CreateNotificationAccountBan{
     }
 
     public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
-        String dateBan = "10-02-2020 15:00";
+        LocalDateTime localDateTime = notification.getDate().plusDays(10);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String dateBan = localDateTime.format(formatter);
         Map<String,String> model = new HashMap();
-        model.put("block_ends" , dateBan);
+        model.put("block_ends", dateBan);
+        model.put("reason", notification.getDescription());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("profile-block.ftl");
@@ -57,7 +62,8 @@ public class CreateNotificationAccountBan{
         notification.setEvent(EventTypes.ACCOUNT_BAN.name());
         notification.setSubject("Account BAN");
         notification.setSendTo(user);
-        notification.setDescription("Your account is ban till 22-103-2021 15:00");
+        notification.setDate(LocalDateTime.now());
+        notification.setDescription("Your profile was blocked by moderator till");
 
         return notification;
     }

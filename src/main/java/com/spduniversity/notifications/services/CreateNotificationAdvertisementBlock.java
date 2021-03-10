@@ -17,6 +17,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,10 +33,13 @@ public class CreateNotificationAdvertisementBlock {
     }
 
     public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
-        String dateBlock = "15-10-2020 15:00";
+        LocalDateTime localDateTime = notification.getDate().plusDays(10);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String dateBlock = localDateTime.format(formatter);
         Map<String,String> model = new HashMap();
         model.put("ad_name", notification.getSendTo().getFirst_name());
         model.put("block_ends" , dateBlock);
+        model.put("reason", notification.getDescription());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("ad-block.ftl");
@@ -56,7 +61,8 @@ public class CreateNotificationAdvertisementBlock {
         notification.setEvent(EventTypes.ADVERTISEMENT_BLOCK.name());
         notification.setSubject("Advertisement Block");
         notification.setSendTo(user);
-        notification.setDescription("Your advertisement is ban till 22-103-2021 15:00");
+        notification.setDate(LocalDateTime.now());
+        notification.setDescription("UPS :)");
 
         return notification;
     }

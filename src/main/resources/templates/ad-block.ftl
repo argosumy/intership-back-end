@@ -42,10 +42,7 @@
                 Your Ad ${ad_name} was blocked by moderator till ${block_ends}.
             </h2>
             <p class="description">
-                Block reason: Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Hic quam consequuntur veritatis fuga repellendus molestiae
-                nulla quidem architecto! Repellat officia nostrum tenetur rem,
-                quis eius.
+                Block reason: ${reason}
             </p>
 
             <p class="unsubscribe">
