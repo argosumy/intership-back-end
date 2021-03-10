@@ -1,7 +1,6 @@
-package com.spduniversity.config.service.impl;
+package com.spd.baraholka.users.services;
 
-import com.spduniversity.model.OAuth2UserDto;
-import com.spduniversity.service.OAuth2UserService;
+import com.spd.baraholka.users.dto.OAuth2UserDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-class GoogleOAuth2UserServiceImplTest {
+class GoogleOAuth2UserServiceTest {
 
     @Mock
     private Authentication authMock;

@@ -1,4 +1,4 @@
-package com.spduniversity.model;
+package com.spd.baraholka.users.dto;
 
 import java.util.Objects;
 

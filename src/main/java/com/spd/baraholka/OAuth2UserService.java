@@ -1,6 +1,6 @@
-package com.spduniversity.service;
+package com.spd.baraholka;
 
-import com.spduniversity.model.OAuth2UserDto;
+import com.spd.baraholka.users.dto.OAuth2UserDto;
 
 public interface OAuth2UserService {
     OAuth2UserDto getUserInfoFromOAuth2();

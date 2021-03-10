@@ -1,7 +1,6 @@
-package com.spduniversity.service.impl;
+package com.spd.baraholka.users.services;
 
-import com.spduniversity.model.OAuth2UserDto;
-import com.spduniversity.service.OAuth2UserService;
+import com.spd.baraholka.users.dto.OAuth2UserDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Qualifier("Google OAuth2")
-public class GoogleOAuth2UserServiceImpl implements OAuth2UserService {
+public class GoogleOAuth2UserService implements OAuth2UserService {
 
     private OAuth2User getCurrentOAuth2Principal() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
