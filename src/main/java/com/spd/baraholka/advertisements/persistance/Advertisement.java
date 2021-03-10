@@ -1,13 +1,10 @@
 package com.spd.baraholka.advertisements.persistance;
 
-import com.spd.baraholka.User;
-
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class Advertisement {
 
-    private User owner;
+    private int ownerId;
     private String title;
     private String description;
     private String category;
@@ -20,12 +17,12 @@ public class Advertisement {
     private LocalDateTime publicationDate;
     private LocalDateTime statusChangeDate;
 
-    public User getOwner() {
-        return owner;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getTitle() {
@@ -114,36 +111,5 @@ public class Advertisement {
 
     public void setStatusChangeDate(LocalDateTime statusChangeDate) {
         this.statusChangeDate = statusChangeDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Advertisement that = (Advertisement) o;
-        return Double.compare(that.price, price) == 0 && discountAvailability == that.discountAvailability && owner.equals(that.owner) && title.equals(that.title) && description.equals(that.description) && category.equals(that.category) && currency == that.currency && city.equals(that.city) && status == that.status && creationDate.equals(that.creationDate) && publicationDate.equals(that.publicationDate) && statusChangeDate.equals(that.statusChangeDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(owner, title, description, category, price, currency, discountAvailability, city, status, creationDate, publicationDate, statusChangeDate);
-    }
-
-    @Override
-    public String toString() {
-        return "Advertisement{" +
-                "owner=" + owner +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", currency=" + currency +
-                ", discountAvailability=" + discountAvailability +
-                ", city='" + city + '\'' +
-                ", status=" + status +
-                ", creationDate=" + creationDate +
-                ", publicationDate=" + publicationDate +
-                ", statusChangeDate=" + statusChangeDate +
-                '}';
     }
 }
