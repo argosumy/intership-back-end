@@ -1,5 +1,6 @@
 package com.spd.baraholka.comments.services;
 
+import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.repositories.CommentRepository;
 import org.slf4j.Logger;
@@ -60,5 +61,15 @@ public class CommentService {
         Comment updatedComment = commentRepository.update(comment, id);
         logger.info("IN update - comment: {} by id: {} successfully updated", updatedComment, id);
         return updatedComment;
+    }
+
+    public Comment updateExistsComment(Comment comment, CommentDto commentDto) {
+        comment.setId(commentDto.getId());
+        comment.setBody(commentDto.getBody());
+        comment.setCreatedDate(commentDto.getCreatedDate());
+        comment.setAdvertisement(commentDto.getAdvertisement());
+        comment.setUser(commentDto.getUser());
+        comment.setParent(commentDto.getParent());
+        return comment;
     }
 }

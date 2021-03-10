@@ -2,7 +2,7 @@ package com.spd.baraholka.comments.repositories;
 
 
 import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.comments.mappers.CommentMapper;
+import com.spd.baraholka.comments.mappers.CommentRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,7 +25,7 @@ public class CommentRepository implements CommentPersistence {
                 "SELECT c.*, a.id AS ad_id, u.* FROM comments c " +
                         "INNER JOIN advertisements a ON c.advertisement_id = a.id " +
                         "INNER JOIN users u ON c.user_id = u.id WHERE c.advertisement_id=?",
-                new CommentMapper(),
+                new CommentRowMapper(),
                 adId
         );
     }
@@ -55,7 +55,7 @@ public class CommentRepository implements CommentPersistence {
                 "INNER JOIN users u ON c.user_id = u.id WHERE c.id =" + id;
 
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CommentMapper()));
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CommentRowMapper()));
         } catch (DataAccessException e) {
             return Optional.empty();
         }
