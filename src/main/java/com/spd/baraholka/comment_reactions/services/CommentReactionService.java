@@ -1,6 +1,7 @@
 package com.spd.baraholka.comment_reactions.services;
 
 import com.spd.baraholka.comment_reactions.entities.CommentReaction;
+import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.repositories.CommentReactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +17,8 @@ public class CommentReactionService {
         this.commentReactionRepository = commentReactionRepository;
     }
 
-    public int getTotalReactionTypeByCommentId(int commentId, String commentReaction) {
-        int size = commentReactionRepository.getTotalReactionTypeByCommentId(commentId, commentReaction);
+    public int getTotalReactionTypeByCommentId(int commentId, CommentReactionType commentReactionType) {
+        int size = commentReactionRepository.getTotalReactionTypeByCommentId(commentId, commentReactionType);
         logger.info("IN getTotalAmountByCommentId - total size: {}", size);
         return size;
     }
@@ -28,9 +29,9 @@ public class CommentReactionService {
         return commentReactionToSave;
     }
 
-    public void deleteLastRecordByCommentId(int commentId, String commentReaction) {
-        commentReactionRepository.deleteLastRecordByCommentId(commentId, commentReaction);
+    public void deleteLastRecordByCommentId(int commentId, CommentReactionType commentReactionType) {
+        commentReactionRepository.deleteLastRecordByCommentId(commentId, commentReactionType);
         logger.info("IN delete - comment reaction: {} by comment id: {} successfully deleted",
-                commentReaction, commentId);
+                commentReactionType.name(), commentId);
     }
 }

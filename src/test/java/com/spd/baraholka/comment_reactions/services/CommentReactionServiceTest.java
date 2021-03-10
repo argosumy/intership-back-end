@@ -1,17 +1,17 @@
 package com.spd.baraholka.comment_reactions.services;
 
-import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comment_reactions.entities.CommentReaction;
-import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
-import com.spd.baraholka.users.entities.User;
 import com.spd.baraholka.comment_reactions.repositories.CommentReactionRepository;
-import com.spd.baraholka.comment_reactions.services.CommentReactionService;
+import com.spd.baraholka.comments.entities.Comment;
+import com.spd.baraholka.users.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static com.spd.baraholka.comment_reactions.enums.CommentReactionType.DISLIKE;
+import static com.spd.baraholka.comment_reactions.enums.CommentReactionType.LIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,7 +36,7 @@ class CommentReactionServiceTest {
 
     private CommentReaction createCommentReaction() {
         CommentReaction commentReaction = new CommentReaction();
-        commentReaction.setCommentReactionType(CommentReactionType.DISLIKE);
+        commentReaction.setCommentReactionType(DISLIKE);
         commentReaction.setComment(comment);
         commentReaction.setUser(user);
         return commentReaction;
@@ -57,9 +57,9 @@ class CommentReactionServiceTest {
     @Test
     @DisplayName("Should return actual amount of comment reactions")
     void getTotalReactionTypeByCommentId() {
-        when(commentReactionService.getTotalReactionTypeByCommentId(1, "LIKE"))
+        when(commentReactionService.getTotalReactionTypeByCommentId(1, LIKE))
                 .thenReturn(1);
-        int size = commentReactionRepository.getTotalReactionTypeByCommentId(1, "LIKE");
+        int size = commentReactionRepository.getTotalReactionTypeByCommentId(1, LIKE);
 
         assertThat(size).isEqualTo(1);
     }
@@ -76,8 +76,8 @@ class CommentReactionServiceTest {
     @Test
     @DisplayName("Should delete comment reaction by comment id")
     void deleteLastRecordByCommentId() {
-        commentReactionService.deleteLastRecordByCommentId(1, "DISLIKE");
+        commentReactionService.deleteLastRecordByCommentId(1, DISLIKE);
 
-        verify(commentReactionRepository).deleteLastRecordByCommentId(1, "DISLIKE");
+        verify(commentReactionRepository).deleteLastRecordByCommentId(1, DISLIKE);
     }
 }

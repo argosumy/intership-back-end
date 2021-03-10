@@ -2,6 +2,7 @@ package com.spd.baraholka.comment_reactions.controllers;
 
 import com.spd.baraholka.comment_reactions.dto.CommentReactionDto;
 import com.spd.baraholka.comment_reactions.entities.CommentReaction;
+import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.exceptions.CommentReactionBadRequestException;
 import com.spd.baraholka.comment_reactions.exceptions.CommentReactionNoContentException;
 import com.spd.baraholka.comment_reactions.services.CommentReactionService;
@@ -18,11 +19,11 @@ public class CommentReactionController {
 
     @GetMapping("/comment-reactions/{commentId}/{commentReaction}")
     public int getTotalReactionTypeByCommentId(@PathVariable("commentId") int commentId,
-                                               @PathVariable("commentReaction") String commentReaction) {
-        if (commentReaction == null) {
+                                               @PathVariable("commentReaction") CommentReactionType commentReactionType) {
+        if (commentReactionType == null) {
             throw new CommentReactionBadRequestException();
         }
-        return commentReactionService.getTotalReactionTypeByCommentId(commentId, commentReaction);
+        return commentReactionService.getTotalReactionTypeByCommentId(commentId, commentReactionType);
     }
 
     @PostMapping("/comment-reaction")
@@ -36,10 +37,10 @@ public class CommentReactionController {
 
     @DeleteMapping("/comment-reaction/{commentId}/{commentReaction}")
     public void deleteCommentReaction(@PathVariable("commentId") int commentId,
-                                      @PathVariable("commentReaction") String commentReaction) {
-        if (commentReaction == null) {
+                                      @PathVariable("commentReaction") CommentReactionType commentReactionType) {
+        if (commentReactionType == null) {
             throw new CommentReactionBadRequestException();
         }
-        commentReactionService.deleteLastRecordByCommentId(commentId, commentReaction);
+        commentReactionService.deleteLastRecordByCommentId(commentId, commentReactionType);
     }
 }
