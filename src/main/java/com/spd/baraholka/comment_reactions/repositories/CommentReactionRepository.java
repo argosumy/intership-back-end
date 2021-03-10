@@ -11,6 +11,8 @@ import java.util.Map;
 @Repository
 public class CommentReactionRepository implements CommentReactionPersistence {
 
+    public static final String REACTION = "reaction";
+    public static final String COMMENT_ID = "commentId";
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public CommentReactionRepository(NamedParameterJdbcTemplate jdbcTemplate) {
@@ -21,9 +23,9 @@ public class CommentReactionRepository implements CommentReactionPersistence {
     public CommentReaction saveNew(CommentReaction commentReaction) {
         jdbcTemplate.update(
                 "INSERT INTO comment_reactions (reaction, comment_id, user_id) VALUES (:reaction, :commentId, :userId)",
-                Map.of("reaction", commentReaction.getCommentReactionType().name(),
-                        "commentId", commentReaction.getComment().getId(),
-                        "userID", commentReaction.getUser().getId())
+                Map.of(REACTION, commentReaction.getCommentReactionType().name(),
+                        COMMENT_ID, commentReaction.getComment().getId(),
+                        "userId", commentReaction.getUser().getId())
         );
         return commentReaction;
     }
@@ -33,8 +35,8 @@ public class CommentReactionRepository implements CommentReactionPersistence {
         jdbcTemplate.update(
                 "DELETE FROM comment_reactions WHERE id=" +
                         "(SELECT id FROM comment_reactions WHERE comment_id=:commentId AND reaction=:reaction ORDER BY id DESC LIMIT 1)",
-                Map.of("commentId", commentId,
-                        "reaction", commentReactionType.name())
+                Map.of(COMMENT_ID, commentId,
+                        REACTION, commentReactionType.name())
         );
     }
 
@@ -43,8 +45,8 @@ public class CommentReactionRepository implements CommentReactionPersistence {
     public int getTotalReactionTypeByCommentId(int commentId, CommentReactionType commentReactionType) {
         return jdbcTemplate.queryForObject(
                 "SELECT COUNT(id) FROM comment_reactions WHERE comment_id=:commentId AND reaction=:reaction",
-                Map.of("commentId", commentId,
-                        "reaction", commentReactionType.name()),
+                Map.of(COMMENT_ID, commentId,
+                        REACTION, commentReactionType.name()),
                 Integer.class
         );
     }

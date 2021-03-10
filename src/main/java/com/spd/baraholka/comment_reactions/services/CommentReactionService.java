@@ -32,6 +32,6 @@ public class CommentReactionService {
     public void deleteLastRecordByCommentId(int commentId, CommentReactionType commentReactionType) {
         commentReactionRepository.deleteLastRecordByCommentId(commentId, commentReactionType);
         logger.info("IN delete - comment reaction: {} by comment id: {} successfully deleted",
-                commentReactionType.name(), commentId);
+                commentReactionType, commentId);
     }
 }
