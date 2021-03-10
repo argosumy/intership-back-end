@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Repository
@@ -34,6 +35,7 @@ public class AdvertisementRepository {
             + "status=?,"
             + "status_change_date=?"
             + "WHERE id=?";
+    private static final String UPDATE_ADVERTISEMENT_STATUS = "UPDATE  advertisements SET status=?, status_change_date=? WHERE id=?";
     private final JdbcTemplate jdbcTemplate;
 
     public AdvertisementRepository(JdbcTemplate jdbcTemplate) {
@@ -74,5 +76,10 @@ public class AdvertisementRepository {
                 Timestamp.valueOf(advertisement.getStatusChangeDate()),
                 advertisement.getAdvertisementId());
         return advertisement.getAdvertisementId();
+    }
+
+    public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
+        jdbcTemplate.update(UPDATE_ADVERTISEMENT_STATUS, status, Timestamp.valueOf(LocalDateTime.now()), id);
+        return id;
     }
 }

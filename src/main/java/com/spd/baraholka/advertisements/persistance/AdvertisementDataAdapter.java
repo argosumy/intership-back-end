@@ -21,4 +21,9 @@ public class AdvertisementDataAdapter implements PersistenceAdvertisementService
     public int updateAdvertisement(Advertisement advertisement) {
         return advertisementRepository.updateAdvertisement(advertisement);
     }
+
+    @Override
+    public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
+        return advertisementRepository.updateAdvertisementStatus(id, status);
+    }
 }

@@ -1,5 +1,6 @@
 package com.spd.baraholka.advertisements.controllers;
 
+import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
 import org.springframework.stereotype.Controller;
@@ -29,5 +30,13 @@ public class AdvertisementController {
             throw new NullPointerException();
         }
         return advertisementService.updateAdvertisement(advertisementDTO);
+    }
+
+    @PutMapping("/{id}/{status}")
+    public int updateAdvertisementStatus(@PathVariable int id, @PathVariable AdvertisementStatus status) {
+        if (status == null) {
+            throw new NullPointerException();
+        }
+        return advertisementService.updateAdvertisementStatus(id, status);
     }
 }
