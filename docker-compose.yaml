@@ -4,28 +4,19 @@ services:
   database:
     image: 'postgres:alpine'
     container_name: postgres
-    expose:
-      - "5432"
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - ./db-data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "${DB_NAME}", "-U", "${DB_USER}" ]
+      test: [ "CMD", "pg_isready", "-q", "-d", "${DB_NAME}", "-U", "${DB_USERNAME}" ]
       interval: 10s
       timeout: 1s
       retries: 20
-
-  flyway:
-    image: flyway/flyway
-    command: -url=jdbc:postgresql://database:5432/${DB_NAME} -schemas=public -user=${DB_USER} -password=${DB_PASSWORD} -connectRetries=60 migrate
-    volumes:
-      - ./src/main/resources/sql:/flyway/sql
-    depends_on:
-      database:
-        condition: service_healthy
 
   backend-app:
     image: 'baraholka-backend:latest'
@@ -36,17 +27,11 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/${DB_NAME}
-      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
-      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
-      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     depends_on:
       database:
         condition: service_healthy
-      flyway:
-        condition: service_started
 
 volumes:
   db-data:
