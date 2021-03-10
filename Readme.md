@@ -99,6 +99,8 @@ Prerequisites - Required software to be installed:
 - `DB_PASSWORD`
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
 
 _**Note:**_ An example of setting an environment variable in Windows via commandline: `setx DB_NAME "mydatabase"`
 Also in Windows environment variables may be set as follows:
@@ -115,4 +117,4 @@ _**Note:**_ a command `docker-compose up --build` will start PostgreSQL service,
 
 _**Note:**_ Database data will be stored locally in a folder **db-data**. If needed to purge all data from previous tests, you can delete this folder after stopping the application.
 
-7. To stop the application press **Ctrl+C** in a command prompt or type command `docker-compose down`
+7. To stop the application press **Ctrl+C** in a command prompt and type command `docker-compose down`
