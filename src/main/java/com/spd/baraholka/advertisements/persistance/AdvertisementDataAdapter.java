@@ -11,4 +11,9 @@ public class AdvertisementDataAdapter implements PersistenceAdvertisementService
     public AdvertisementDataAdapter(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
     }
+
+    @Override
+    public int saveAdvertisement(Advertisement advertisement) {
+        return advertisementRepository.addAdvertisement(advertisement);
+    }
 }
