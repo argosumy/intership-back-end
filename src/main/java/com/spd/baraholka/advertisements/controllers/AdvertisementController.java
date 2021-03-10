@@ -1,8 +1,8 @@
 package com.spd.baraholka.advertisements.controllers;
 
-import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
+import com.spd.baraholka.advertisements.services.AdvertisementStatusMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.*;
 public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
+    private final AdvertisementStatusMatcher advertisementStatusMatcher;
 
-    public AdvertisementController(AdvertisementService advertisementService) {
+    public AdvertisementController(AdvertisementService advertisementService,
+                                   AdvertisementStatusMatcher advertisementStatusMatcher) {
         this.advertisementService = advertisementService;
+        this.advertisementStatusMatcher = advertisementStatusMatcher;
     }
 
     @PostMapping("/")
@@ -33,8 +36,8 @@ public class AdvertisementController {
     }
 
     @PutMapping("/{id}/{status}")
-    public int updateAdvertisementStatus(@PathVariable int id, @PathVariable AdvertisementStatus status) {
-        if (status == null) {
+    public int updateAdvertisementStatus(@PathVariable int id, @PathVariable String status) {
+        if (!advertisementStatusMatcher.isStatusMatch(status)) {
             throw new NullPointerException();
         }
         return advertisementService.updateAdvertisementStatus(id, status);
