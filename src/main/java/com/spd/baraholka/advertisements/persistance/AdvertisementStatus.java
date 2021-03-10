@@ -1,6 +1,6 @@
 package com.spd.baraholka.advertisements.persistance;
 
-public enum AdvertisementStatuses {
+public enum AdvertisementStatus {
 
     DRAFT,
     ACTIVE,
