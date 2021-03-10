@@ -22,45 +22,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CreateNotificationAccountBan{
+public class CreateNotificationNewCommentsAd {
     private JavaMailSender emailSender;
     private Configuration emailConfig;
 
 
-
     @Autowired
-    public CreateNotificationAccountBan(JavaMailSender emailSender,
-                                        @Qualifier("freeMarker")Configuration emailConfig){
+    public CreateNotificationNewCommentsAd(JavaMailSender emailSender,
+                                           @Qualifier("freeMarker") Configuration emailConfig) {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;
     }
 
     public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
-        String dateBan = "10-02-2020 15:00";
         Map<String,String> model = new HashMap();
-        model.put("block_ends" , dateBan);
+        model.put("username", notification.getSendFrom().getFirst_name());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-        Template template = emailConfig.getTemplate("profile-block.ftl");
+        Template template = emailConfig.getTemplate("new-comment.ftl");
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+
         mimeMessageHelper.setTo(notification.getSendTo().getEmail());
         mimeMessageHelper.setText(html, true);
-        mimeMessageHelper.setSubject("Account BAN");
+        mimeMessageHelper.setSubject("New comments");
         mimeMessageHelper.setFrom("Admin");
+
         return message;
     }
 
     public Notification getNotificationFromData(){
-        User user = new User();
-        user.setEmail("udizsumy@gmail.com");
+        User userTo = new User();
+        userTo.setEmail("udizsumy@gmail.com");
+        User userFrom = new User();
+        userFrom.setFirst_name("Ludmila");
         Notification notification = new Notification();
-        notification.setEvent(EventTypes.ACCOUNT_BAN.name());
-        notification.setSubject("Account BAN");
-        notification.setSendTo(user);
-        notification.setDescription("Your account is ban till 22-103-2021 15:00");
+        notification.setEvent(EventTypes.NEW_COMMENTS_ADVERTISEMENT.name());
+        notification.setSubject("New comments Ad");
+        notification.setSendTo(userTo);
+        notification.setSendFrom(userFrom);
+        notification.setDescription("New comments Ad");
 
         return notification;
     }
+
+
+
 
 
 }

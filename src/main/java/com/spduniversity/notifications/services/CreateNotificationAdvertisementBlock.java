@@ -1,6 +1,5 @@
 package com.spduniversity.notifications.services;
 
-
 import com.spduniversity.notifications.enumes.EventTypes;
 import com.spduniversity.notifications.model.Notification;
 import com.spduniversity.notifications.model.User;
@@ -22,45 +21,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CreateNotificationAccountBan{
+public class CreateNotificationAdvertisementBlock {
     private JavaMailSender emailSender;
     private Configuration emailConfig;
-
-
-
     @Autowired
-    public CreateNotificationAccountBan(JavaMailSender emailSender,
-                                        @Qualifier("freeMarker")Configuration emailConfig){
+    public CreateNotificationAdvertisementBlock(JavaMailSender emailSender, @Qualifier("freeMarker") Configuration emailConfig) {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;
     }
 
     public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
-        String dateBan = "10-02-2020 15:00";
+        String dateBlock = "15-10-2020 15:00";
         Map<String,String> model = new HashMap();
-        model.put("block_ends" , dateBan);
+        model.put("ad_name", notification.getSendTo().getFirst_name());
+        model.put("block_ends" , dateBlock);
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-        Template template = emailConfig.getTemplate("profile-block.ftl");
+        Template template = emailConfig.getTemplate("ad-block.ftl");
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+
         mimeMessageHelper.setTo(notification.getSendTo().getEmail());
         mimeMessageHelper.setText(html, true);
-        mimeMessageHelper.setSubject("Account BAN");
+        mimeMessageHelper.setSubject("Advertisement Block");
         mimeMessageHelper.setFrom("Admin");
+
         return message;
     }
 
     public Notification getNotificationFromData(){
         User user = new User();
+        user.setFirst_name("Valeriy");
         user.setEmail("udizsumy@gmail.com");
         Notification notification = new Notification();
-        notification.setEvent(EventTypes.ACCOUNT_BAN.name());
-        notification.setSubject("Account BAN");
+        notification.setEvent(EventTypes.ADVERTISEMENT_BLOCK.name());
+        notification.setSubject("Advertisement Block");
         notification.setSendTo(user);
-        notification.setDescription("Your account is ban till 22-103-2021 15:00");
+        notification.setDescription("Your advertisement is ban till 22-103-2021 15:00");
 
         return notification;
     }
-
-
 }
