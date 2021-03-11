@@ -21,7 +21,6 @@ public class CommentDto {
     private final Advertisement advertisement;
     @NotNull
     private final User user;
-    @NotNull
     private final Comment parent;
 
     public CommentDto(int id, String body, LocalDate createdDate, Advertisement advertisement, User user, Comment parent) {
