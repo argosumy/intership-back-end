@@ -7,6 +7,7 @@ import com.spd.baraholka.comments.mappers.CommentDtoMapper;
 import com.spd.baraholka.comments.services.CommentService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
-    public Comment saveComment(@RequestBody CommentDto commentDto) {
+    public Comment saveComment(@RequestBody @Valid CommentDto commentDto) {
         Comment comment = commentDtoMapper.toComment(commentDto);
         return commentService.saveNew(comment);
     }
@@ -44,7 +45,7 @@ public class CommentController {
     }
 
     @PutMapping("/comment/{id}")
-    public CommentDto updateComment(@RequestBody CommentDto commentDto, @PathVariable("id") int id) {
+    public CommentDto updateComment(@RequestBody @Valid CommentDto commentDto, @PathVariable("id") int id) {
         Comment comment = commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
         Comment commentToUpdate = commentService.updateExistsComment(comment, commentDto);
         return commentDtoMapper.getCommentDto(commentService.update(commentToUpdate, id));
