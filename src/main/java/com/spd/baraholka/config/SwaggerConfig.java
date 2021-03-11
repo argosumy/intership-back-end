@@ -1,4 +1,4 @@
-package com.spduniversity.config;
+package com.spd.baraholka.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.spduniversity"))
+                .apis(RequestHandlerSelectors.basePackage("com.spd.baraholka"))
                 .build();
     }
 }
