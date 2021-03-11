@@ -5,6 +5,7 @@ import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.repositories.CommentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 public class CommentService {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
+    @Value("${commentService.topCommentsCount}")
+    public int topCommentsCount;
 
     private final CommentRepository commentRepository;
 
@@ -32,7 +35,7 @@ public class CommentService {
     public List<Comment> getLimitCommentsByAdId(int adId) {
         return getAllByAdId(adId).stream()
                 .sorted(Comparator.comparing(Comment::getCreatedDate).reversed())
-                .limit(3)
+                .limit(topCommentsCount)
                 .collect(Collectors.toList());
     }
 
