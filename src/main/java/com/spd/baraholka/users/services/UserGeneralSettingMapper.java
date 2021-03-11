@@ -9,7 +9,7 @@ public class UserGeneralSettingMapper {
     UserGeneralSetting convertToEntity(UserGeneralSettingDTO userGeneralSettingDTO) {
         UserGeneralSetting userGeneralSetting = new UserGeneralSetting();
         userGeneralSetting.setId(userGeneralSettingDTO.getId());
-        userGeneralSetting.setUserId(userGeneralSetting.getUserId());
+        userGeneralSetting.setUserId(userGeneralSettingDTO.getUserId());
         userGeneralSetting.setOpenAdsInNewTab(userGeneralSettingDTO.isOpenAdsInNewTab());
         return userGeneralSetting;
     }

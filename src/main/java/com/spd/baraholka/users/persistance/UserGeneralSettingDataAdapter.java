@@ -10,4 +10,9 @@ public class UserGeneralSettingDataAdapter implements PersistenceUserGeneralSett
     public UserGeneralSettingDataAdapter(UserGeneralSettingRepository userGeneralSettingRepository) {
         this.userGeneralSettingRepository = userGeneralSettingRepository;
     }
+
+    @Override
+    public int updateUserGeneralSettings(UserGeneralSetting userGeneralSetting) {
+        return userGeneralSettingRepository.updateUserGeneralSettings(userGeneralSetting);
+    }
 }
