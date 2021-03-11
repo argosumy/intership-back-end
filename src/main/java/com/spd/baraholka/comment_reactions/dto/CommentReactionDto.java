@@ -1,26 +1,25 @@
 package com.spd.baraholka.comment_reactions.dto;
 
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
-import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class CommentReactionDto {
 
     private int id;
     @NotNull
     private final CommentReactionType commentReactionType;
-    @NotNull
-    private Comment comment;
-    @NotNull
-    private final User user;
+    @Positive
+    private final int commentId;
+    @Positive
+    private final int userId;
 
-    public CommentReactionDto(int id, CommentReactionType commentReactionType, Comment comment, User user) {
+    public CommentReactionDto(int id, CommentReactionType commentReactionType, int commentId, int userId) {
         this.id = id;
         this.commentReactionType = commentReactionType;
-        this.comment = comment;
-        this.user = user;
+        this.commentId = commentId;
+        this.userId = userId;
     }
 
     public int getId() {
@@ -35,15 +34,11 @@ public class CommentReactionDto {
         return commentReactionType;
     }
 
-    public Comment getComment() {
-        return comment;
+    public int getCommentId() {
+        return commentId;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
-
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 }

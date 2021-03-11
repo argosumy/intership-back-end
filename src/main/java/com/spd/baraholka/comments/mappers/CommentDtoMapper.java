@@ -1,7 +1,9 @@
 package com.spd.baraholka.comments.mappers;
 
+import com.spd.baraholka.advertisements.entities.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
+import com.spd.baraholka.users.entities.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,9 +23,9 @@ public class CommentDtoMapper {
                 comment.getId(),
                 comment.getBody(),
                 comment.getCreatedDate(),
-                comment.getAdvertisement(),
-                comment.getUser(),
-                comment.getParent()
+                comment.getAdvertisement().getId(),
+                comment.getUser().getId(),
+                comment.getParent().getId()
         );
     }
 
@@ -32,9 +34,37 @@ public class CommentDtoMapper {
                 commentDto.getId(),
                 commentDto.getBody(),
                 commentDto.getCreatedDate(),
-                commentDto.getAdvertisement(),
-                commentDto.getUser(),
-                commentDto.getParent()
+                getAdvertisement(commentDto),
+                getUser(commentDto),
+                getParentComment(commentDto)
         );
+    }
+
+    private Comment getParentComment(CommentDto commentDto) {
+        Comment comment = new Comment();
+        comment.setId(commentDto.getParentCommentId());
+        return comment;
+    }
+
+    private User getUser(CommentDto commentDto) {
+        User user = new User();
+        user.setId(commentDto.getUserId());
+        return user;
+    }
+
+    private Advertisement getAdvertisement(CommentDto commentDto) {
+        Advertisement advertisement = new Advertisement();
+        advertisement.setId(commentDto.getAdvertisementId());
+        return advertisement;
+    }
+
+    public Comment updateExistsComment(Comment comment, CommentDto commentDto) {
+        comment.setId(commentDto.getId());
+        comment.setBody(commentDto.getBody());
+        comment.setCreatedDate(commentDto.getCreatedDate());
+        comment.setAdvertisement(getAdvertisement(commentDto));
+        comment.setUser(getUser(commentDto));
+        comment.setParent(getParentComment(commentDto));
+        return comment;
     }
 }

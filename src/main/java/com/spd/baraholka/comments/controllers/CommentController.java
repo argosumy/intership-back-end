@@ -47,7 +47,7 @@ public class CommentController {
     @PutMapping("/comment/{id}")
     public CommentDto updateComment(@RequestBody @Valid CommentDto commentDto, @PathVariable("id") int id) {
         Comment comment = commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
-        Comment commentToUpdate = commentService.updateExistsComment(comment, commentDto);
+        Comment commentToUpdate = commentDtoMapper.updateExistsComment(comment, commentDto);
         return commentDtoMapper.getCommentDto(commentService.update(commentToUpdate, id));
     }
 

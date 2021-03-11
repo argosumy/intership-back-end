@@ -1,12 +1,6 @@
 package com.spd.baraholka.comments.dto;
 
-import com.spd.baraholka.advertisements.entities.Advertisement;
-import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class CommentDto {
@@ -17,19 +11,20 @@ public class CommentDto {
     private final String body;
     @NotNull
     private final LocalDate createdDate;
-    @NotNull
-    private final Advertisement advertisement;
-    @NotNull
-    private final User user;
-    private final Comment parent;
+    @Positive
+    private final int advertisementId;
+    @Positive
+    private final int userId;
+    @PositiveOrZero
+    private final int parentCommentId;
 
-    public CommentDto(int id, String body, LocalDate createdDate, Advertisement advertisement, User user, Comment parent) {
+    public CommentDto(int id, String body, LocalDate createdDate, int advertisementId, int userId, int parentCommentId) {
         this.id = id;
         this.body = body;
         this.createdDate = createdDate;
-        this.advertisement = advertisement;
-        this.user = user;
-        this.parent = parent;
+        this.advertisementId = advertisementId;
+        this.userId = userId;
+        this.parentCommentId = parentCommentId;
     }
 
     public int getId() {
@@ -48,15 +43,15 @@ public class CommentDto {
         return createdDate;
     }
 
-    public Advertisement getAdvertisement() {
-        return advertisement;
+    public int getAdvertisementId() {
+        return advertisementId;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public Comment getParent() {
-        return parent;
+    public int getParentCommentId() {
+        return parentCommentId;
     }
 }

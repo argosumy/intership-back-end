@@ -2,9 +2,8 @@ package com.spd.baraholka.comments.services;
 
 import com.spd.baraholka.advertisements.entities.Advertisement;
 import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
 import com.spd.baraholka.comments.repositories.CommentRepository;
-import com.spd.baraholka.comments.services.CommentService;
+import com.spd.baraholka.users.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

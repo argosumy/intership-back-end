@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.spd.baraholka.advertisements.entities.Advertisement;
+import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;
@@ -43,6 +44,7 @@ class CommentControllerTest {
     private CommentDtoMapper commentDtoMapper;
     @Autowired
     private ObjectMapper mapper;
+    private CommentDto commentDto;
     private Comment comment;
     private Advertisement advertisement;
     private User user;
@@ -52,6 +54,7 @@ class CommentControllerTest {
         advertisement = createAdvertisement();
         user = createUser();
         comment = createComment();
+        commentDto = createCommentDto();
     }
 
     private Comment createComment() {
@@ -62,6 +65,17 @@ class CommentControllerTest {
                 advertisement,
                 user,
                 null
+        );
+    }
+
+    private CommentDto createCommentDto() {
+        return new CommentDto(
+                1,
+                "test comment text",
+                LocalDate.of(2021, 3, 7),
+                1,
+                1,
+                1
         );
     }
 
@@ -155,6 +169,6 @@ class CommentControllerTest {
         mapper.registerModule(new JavaTimeModule());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        return ow.writeValueAsString(comment);
+        return ow.writeValueAsString(commentDto);
     }
 }

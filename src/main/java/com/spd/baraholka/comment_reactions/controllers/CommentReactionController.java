@@ -7,6 +7,8 @@ import com.spd.baraholka.comment_reactions.mappers.CommentReactionDtoMapper;
 import com.spd.baraholka.comment_reactions.services.CommentReactionService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class CommentReactionController {
 
@@ -26,7 +28,7 @@ public class CommentReactionController {
     }
 
     @PostMapping("/comment-reaction")
-    public CommentReaction saveNew(@RequestBody CommentReactionDto commentReactionDto) {
+    public CommentReaction saveNew(@RequestBody @Valid CommentReactionDto commentReactionDto) {
         CommentReaction commentReaction = commentReactionDtoMapper.toCommentReaction(commentReactionDto);
         return commentReactionService.saveNew(commentReaction);
     }

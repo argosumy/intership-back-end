@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.spd.baraholka.comment_reactions.dto.CommentReactionDto;
 import com.spd.baraholka.comment_reactions.entities.CommentReaction;
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.mappers.CommentReactionDtoMapper;
@@ -40,26 +41,27 @@ class CommentReactionControllerTest {
     private CommentReactionDtoMapper commentReactionDtoMapper;
     @Autowired
     private ObjectMapper mapper;
-    private CommentReaction commentReaction;
-    private Comment comment;
-    private User user;
+    private CommentReactionDto commentReactionDto;
+//    private Comment comment;
+//    private User user;
 
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        comment = createComment();
-        user = createUser();
-        commentReaction = createCommentReaction();
+//        comment = createComment();
+//        user = createUser();
+        commentReactionDto = createCommentReactionDto();
     }
 
-    private CommentReaction createCommentReaction() {
-        CommentReaction commentReaction = new CommentReaction();
-        commentReaction.setId(1);
-        commentReaction.setCommentReactionType(DISLIKE);
-        commentReaction.setComment(comment);
-        commentReaction.setUser(user);
-        return commentReaction;
+    private CommentReactionDto createCommentReactionDto() {
+        return new CommentReactionDto(1, DISLIKE, 1, 1);
+//        CommentReaction commentReaction = new CommentReaction();
+//        commentReaction.setId(1);
+//        commentReaction.setCommentReactionType(DISLIKE);
+//        commentReaction.setComment(comment);
+//        commentReaction.setUser(user);
+//        return commentReaction;
     }
 
     private Comment createComment() {
@@ -103,6 +105,6 @@ class CommentReactionControllerTest {
         mapper.registerModule(new JavaTimeModule());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        return ow.writeValueAsString(commentReaction);
+        return ow.writeValueAsString(commentReactionDto);
     }
 }
