@@ -1,86 +1,10 @@
-## How to start this project application locally
-
-### Option 1: Without Docker
-System Prerequisites - Required software to be installed: 
-- [Java SE 11 JDK](https://www.oracle.com/java/technologies/javase-downloads.html) (_**Note:**_ Please make sure to set the **JAVA_HOME** and the **PATH** environment variables)
-- [PostgreSQL 12.6 or higher](https://www.postgresql.org/download/) (_**Note:**_ Please keep default port **5432** unchanged during installation)
-- [Git](https://git-scm.com/downloads)
-- optionally [FlyWay 7.6 or higher](https://flywaydb.org/download/community) 
-
-_**Useful links:**_
-- [Setting the **PATH** Environment Variable in Windows](https://docs.oracle.com/en/java/javase/11/install/installation-jdk-microsoft-windows-platforms.html#GUID-96EB3876-8C7A-4A25-9F3A-A2983FEC016A)
-- [Setting the **JAVA_HOME** Variable in Windows](https://confluence.atlassian.com/doc/setting-the-java_home-variable-in-windows-8895.html)
-  (_**Note:**_ Also in Windows environment variables may be set as follows:
-  Right click on Computer -> Advanced system settings -> Select Advanced tab -> Click on Environment variables)
-- [PostgreSQL installation on Windows](https://www.postgresqltutorial.com/install-postgresql/)
-
-System Prerequisites - Configuration to be done using commandline:
-- [Create a PostgreSQL database](https://www.postgresql.org/docs/current/tutorial-createdb.html) (if it does not exist): 
-`createdb mydatabase`  
-- [Create a user to access a database](https://www.enterprisedb.com/postgres-tutorials/how-create-postgresql-database-and-users-using-psql-and-pgadmin):
-  - `psql` or `psql -U postgres`
-  - `create user myuser with password 'mypassword';`
-  - `grant all priviliges on database mydatabase to myuser;`
-  - `quit`
-
-### Steps to run the project application using commandline
-1. Download the project source code from GitLab repository:
-  `git clone https://gitlab.com/spd-marketplace/back-end.git`
-   
-   
-2. Go to the folder with downloaded source code:
-  `cd back-end`
-   
-
-3. Checkout to a necessary branch, e.g.:
-  `git checkout 2-be-001-setup-documentation-for-qa`
-   
-
-4. Set environment variables for all variables defined in a file **src/main/resources/application.properties**, e.g.:
-  - `DB_NAME`
-  - `DB_USER`
-  - `DB_PASSWORD`
-  - `GOOGLE_CLIENT_ID`
-  - `GOOGLE_CLIENT_SECRET`
-    
-  _**Note:**_ An example of setting an environment variable in Windows via commandline: `setx DB_NAME "mydatabase"`
-Also in Windows environment variables may be set as follows.
-  Right click on Computer -> Advanced system settings -> Select Advanced tab -> Click on Environment variables.
-
-5. Check that PostgreSQL service is running. If you installed pgAdmin during PostgreSQL installation you can check it via commandline:
-`pg_ctl status`
-
-_**Note:**_ Provided pgAdmin is installed, you can start PostgreSQL service using command `pg_ctl start` if needed.
-   
-_**Note:**_ If needed, you can connect to the database via commandline:
-`psql -h localhost -p 5432 -d mydatabase -U mydbuser`
-
-
-6. Populate a database
-`gradlew.bat flywayMigrate -i` (for Windows) or
-`./gradlew flywayMigrate -i` (for Linux)
-
-
-7. Run the application
-`gradlew.bat bootRun -i` (for Windows) or 
-`./gradlew bootRun -i` (for Linux)
-   
-   
-8. Open URL [http://localhost:8080](http://localhost:8080) in a web browser. If needed, you can connect to a database via commandline:
-   `psql -h localhost -p 5432 -d mydatabase -U mydbuser`
-
-
-9. To stop the application press **Ctrl+C** in a command prompt.
-
-
-### Option 2: Using Docker 
-_(applicable only if files **Dockerfile** and **docker-compose.yaml** are present in the project folder)_
+## How to start this project application locally using Docker 
 
 Prerequisites - Required software to be installed: 
 - [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) (for Windows or MacOS)
 - [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) (for Linux)
 
-### Steps to run the project application using commandline
+### Steps to run the application using command prompt:
 1. Download the project source code from GitLab repository:
    `git clone https://gitlab.com/spd-marketplace/back-end.git`
 
@@ -90,31 +14,51 @@ Prerequisites - Required software to be installed:
 
 
 3. Checkout to a necessary branch, e.g.:
-   `git checkout 2-be-001-setup-documentation-for-qa`
+   `git checkout hotfix/p-007`
+   
+
+5. Run the application using command:
+
+`DB_NAME=<database_name> DB_USERNAME=<database_user> DB_PASSWORD=<database_password> docker-compose up --build` (replace parameters **<database_name>**, **<database_user>**, **<database_password>** with any text values) 
+
+_**Note:**_ Please memorize provided values for **<database_name>**, **<database_user>**, **<database_password>**. These values will be required further in the step 7.
+
+Example:
+
+`DB_NAME=mydb DB_USERNAME=user DB_PASSWORD=qwerty docker-compose up --build`
+
+_**Note:**_ This command will start PostgreSQL server and pgAdmin tool, create a database and run the application afterwards.
 
 
-4. Set environment variables for all variables defined in a file **src/main/resources/application.properties**:
-- `DB_NAME`
-- `DB_USER`
-- `DB_PASSWORD`
-- `GOOGLE_CLIENT_ID`
-- `GOOGLE_CLIENT_SECRET`
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
+6. Log in to pgAdmin page at [http://localhost:5050](http://localhost:5050) using credentials:
+- **Username:** admin
+- **Password:** 12345
+   
+_**Note:**_ Please feel free to try [pgAdmin interactive online tutorial](https://www.pgadmin.org/try/).
 
-_**Note:**_ An example of setting an environment variable in Windows via commandline: `setx DB_NAME "mydatabase"`
-Also in Windows environment variables may be set as follows:
-Right click on Computer -> Advanced system settings -> Select Advanced tab -> Click on Environment variables.
+7. Configure a connection to a PostgreSQL server in pgAdmin using **DB_NAME**, **DB_USERNAME**, **DB_PASSWORD** parameters from the step 5. 
+   
+_Usually this step should be done only once when **docker-compose** is run for the first time._
+- Click on **Add New Server** at **Quick Links** section
+- On tab **General** enter a name for a new server, e.g. **PostgreSQL**
+- On tab **Connection**: 
+   - enter a hostname: **database** _(please use exactly this hostname)_
+   - keep default values for:
+        - port: **5432**
+        - maintenance database: **postgres**
+   - enter **username** from the step 5 (e.g. user)
+   - enter **password** from the step 5 (e.g. qwerty)
+   - check **Save password** option
+   - click on **Save** button
 
-5. Run the project application via command prompt:
+_**Important note:**_ All database data will be stored locally in a subfolder **db-data** in the project folder **back-end**. Thus, all data previously inserted into a database will be available next time you start the application. If needed to purge all database data from previous tests, you can delete **db-data** folder after stopping the application. Alternatively you can provide another **DB_NAME** parameter eg. `DB_NAME=mynewdb` in step 5 to start the application with a new empty database.
 
-`docker-compose up --build`
+8. You can find a database created in step 5 on a left sidebar of pgAdmin page: Servers -> PostgreSQL (a server name from the step 7) -> Databases -> mydb (<database_name> from the step 5) -> Schemas -> public -> Tables.
 
-_**Note:**_ a command `docker-compose up --build` will start PostgreSQL service, create a database, populate it and run the project application afterwards.
+You can use Tools -> Query Tool for executing SQL queries in pgAdmin.
 
-6. Open URL [http://localhost:8080](http://localhost:8080) in a web browser. If needed, you can connect to the database via commandline:
-   `psql -h localhost -p 5432 -d mydatabase -U mydbuser`
+9. To stop the application, database and pgAdmin press **Ctrl+C** in a command prompt
 
-_**Note:**_ Database data will be stored locally in a folder **db-data**. If needed to purge all data from previous tests, you can delete this folder after stopping the application.
+### The back-end application API will accept requests at URL [http://localhost:8080](http://localhost:8080)
 
-7. To stop the application press **Ctrl+C** in a command prompt and type command `docker-compose down`
+### pgAdmin tool to access a database will be available at URL [http://localhost:5050](http://localhost:5050)
