@@ -1,10 +1,8 @@
-package com.spduniversity.user;
+package com.spd.baraholka.user;
 
-import org.springframework.stereotype.Component;
-
+import java.util.List;
 import java.util.Objects;
 
-@Component
 public class User {
 
     private int id;
@@ -14,8 +12,8 @@ public class User {
     private String email;
     private String position;
     private String phoneNumber;
-    private boolean blockedStatus;
-    private String linkOfResources;
+    private boolean isBlocked;
+    private List<String> resourceLinks;
 
     public int getId() {
         return id;
@@ -73,20 +71,20 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public boolean isBlockedStatus() {
-        return blockedStatus;
+    public boolean isBlocked() {
+        return isBlocked;
     }
 
-    public void setBlockedStatus(boolean blockedStatus) {
-        this.blockedStatus = blockedStatus;
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
-    public String getLinkOfResources() {
-        return linkOfResources;
+    public List<String> getResourceLinks() {
+        return resourceLinks;
     }
 
-    public void setLinkOfResources(String linkOfResources) {
-        this.linkOfResources = linkOfResources;
+    public void setResourceLinks(List<String> resourceLinks) {
+        this.resourceLinks = resourceLinks;
     }
 
     @Override
@@ -94,12 +92,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && blockedStatus == user.blockedStatus && Objects.equals(avatar, user.avatar) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(position, user.position) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(linkOfResources, user.linkOfResources);
+        return id == user.id && isBlocked == user.isBlocked && Objects.equals(avatar, user.avatar) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(position, user.position) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(resourceLinks, user.resourceLinks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, avatar, firstName, lastName, email, position, phoneNumber, blockedStatus, linkOfResources);
+        return Objects.hash(id, avatar, firstName, lastName, email, position, phoneNumber, isBlocked, resourceLinks);
     }
 
     @Override
@@ -112,8 +110,8 @@ public class User {
                 ", email='" + email + '\'' +
                 ", position='" + position + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", blockedStatus=" + blockedStatus +
-                ", linkOfResources='" + linkOfResources + '\'' +
+                ", isBlocked=" + isBlocked +
+                ", resourceLinks=" + resourceLinks +
                 '}';
     }
 }

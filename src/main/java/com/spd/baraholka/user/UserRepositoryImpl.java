@@ -1,4 +1,4 @@
-package com.spduniversity.user;
+package com.spd.baraholka.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,7 +17,7 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public void save(User user) {
+    public void create(User user) {
         final String sql = "INSERT INTO users (avatar, first_name, last_name, email " +
                 "VALUES (:avatar, :first_name, :last_name, :email) ";
 

@@ -1,4 +1,4 @@
-package com.spduniversity.user;
+package com.spd.baraholka.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void save(User user) {
-        repository.save(user);
+    public void create(User user) {
+        repository.create(user);
     }
 }
