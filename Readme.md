@@ -1,10 +1,14 @@
 ## How to start this project application locally using Docker 
 
 Prerequisites - Required software to be installed: 
-- [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) (for Windows or MacOS)
+- [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) (for Windows 10 or MacOS)
 - [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) (for Linux)
 
-### Steps to run the application using command prompt:
+Additionally, for Windows 10 Home _(Note: WSL2 is included in Windows 10 Pro by default):_
+- [Windows Subsystem for Linux v.2 (WSL2)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (for Windows 10 Home only)
+- optional [Windows Terminal](https://docs.microsoft.com/en-us/windows/terminal/get-started)
+ 
+### Steps to run the application using Windows Terminal or PowerShell:
 1. Download the project source code from GitLab repository:
    `git clone https://gitlab.com/spd-marketplace/back-end.git`
 
@@ -17,15 +21,27 @@ Prerequisites - Required software to be installed:
    `git checkout hotfix/p-007`
    
 
-4. Run the application using command:
+4. Run the application.
 
-`DB_NAME=<database_name> DB_USERNAME=<database_user> DB_PASSWORD=<database_password> docker-compose up --build` (replace parameters **<database_name>**, **<database_user>**, **<database_password>** with any text values) 
+_For Windows:_
 
-_**Note:**_ Please memorize provided values for **<database_name>**, **<database_user>**, **<database_password>**. These values will be required further in the step 6.
+Type in Powershell or Windows Terminal:
+
+`$env:DB_NAME="<database_name>";$env:DB_USERNAME="<database_user>";$env:DB_PASSWORD="<database_password>";docker-compose up` 
 
 Example:
 
-`DB_NAME=mydb DB_USERNAME=user DB_PASSWORD=qwerty docker-compose up --build`
+`$env:DB_NAME="mydb";$env:DB_USERNAME="user";$env:DB_PASSWORD="qwerty";docker-compose up`
+
+_For Linux:_
+
+`DB_NAME=<database_name> DB_USERNAME=<database_user> DB_PASSWORD=<database_password> docker-compose up`
+
+Example:
+
+`DB_NAME=mydb DB_USERNAME=user DB_PASSWORD=qwerty docker-compose up`
+
+_**Note:**_ Replace parameters **<database_name>**, **<database_user>**, **<database_password>** with any text values and memorize provided values as they will be required further in the step 6.
 
 _**Note:**_ This command will start PostgreSQL server and pgAdmin tool, create a database and run the application afterwards.
 
