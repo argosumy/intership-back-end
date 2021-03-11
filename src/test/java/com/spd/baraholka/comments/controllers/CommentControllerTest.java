@@ -18,20 +18,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.jdbc.JdbcTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CommentController.class)
 class CommentControllerTest {
@@ -81,6 +78,7 @@ class CommentControllerTest {
     }
 
     @Test
+    @DisplayName("Show list of all comments by ad id")
     void getCommentsByAdId() throws Exception {
         when(commentService.getAllByAdId(1)).thenReturn(
                 List.of(comment)
@@ -92,6 +90,7 @@ class CommentControllerTest {
     }
 
     @Test
+    @DisplayName("Show list of three comments")
     void getLimitCommentsByAdId() throws Exception {
         when(commentService.getAllByAdId(1)).thenReturn(
                 List.of(comment, comment, comment)
@@ -103,6 +102,7 @@ class CommentControllerTest {
     }
 
     @Test
+    @DisplayName("Comment was saved")
     void saveComment() throws Exception {
         mockMvc.perform(
                 post("/comments").contentType(MediaType.APPLICATION_JSON)
@@ -111,6 +111,7 @@ class CommentControllerTest {
     }
 
     @Test
+    @DisplayName("Comment was deleted")
     void deleteComment() throws Exception {
         mockMvc.perform(delete("/comment/1"))
                 .andExpect(status().isOk());
@@ -119,6 +120,7 @@ class CommentControllerTest {
     }
 
     @Test
+    @DisplayName("Comment was updated")
     void updateComment() throws Exception {
         when(commentService.findById(1))
                 .thenReturn(Optional.ofNullable(comment));
@@ -129,6 +131,7 @@ class CommentControllerTest {
     }
 
     @Test
+    @DisplayName("Comment was found by id")
     void getOneComment() throws Exception {
         when(commentService.findById(1))
                 .thenReturn(Optional.ofNullable(comment));
@@ -142,9 +145,9 @@ class CommentControllerTest {
     @DisplayName("Comment not found by id")
     void commentNotFoundById() throws Exception {
         when(commentService.findById(2))
-                .thenThrow(new CommentNotFoundException(2));
+                .thenThrow(new CommentNotFoundException(100));
 
-        mockMvc.perform(get("/comment/2"))
+        mockMvc.perform(get("/comment/100"))
                 .andExpect(status().isNotFound());
     }
 
