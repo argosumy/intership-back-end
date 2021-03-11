@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 
 
 public class Notification {
-
-
     private int id;
     private String subject;
     private String description;
@@ -84,4 +82,6 @@ public class Notification {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
+
 }

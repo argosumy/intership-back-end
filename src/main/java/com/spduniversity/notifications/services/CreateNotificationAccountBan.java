@@ -25,10 +25,8 @@ import java.util.Map;
 
 @Service
 public class CreateNotificationAccountBan{
-    private JavaMailSender emailSender;
-    private Configuration emailConfig;
-
-
+    private final JavaMailSender emailSender;
+    private final Configuration emailConfig;
 
     @Autowired
     public CreateNotificationAccountBan(JavaMailSender emailSender,
@@ -44,20 +42,23 @@ public class CreateNotificationAccountBan{
         Map<String,String> model = new HashMap();
         model.put("block_ends", dateBan);
         model.put("reason", notification.getDescription());
+        model.put("profile_link", notification.getSendTo().getResources_link());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("profile-block.ftl");
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
         mimeMessageHelper.setTo(notification.getSendTo().getEmail());
         mimeMessageHelper.setText(html, true);
-        mimeMessageHelper.setSubject("Account BAN");
+        mimeMessageHelper.setSubject(notification.getSubject());
         mimeMessageHelper.setFrom("Admin");
         return message;
     }
 
+    //test method (DataBase)
     public Notification getNotificationFromData(){
         User user = new User();
         user.setEmail("udizsumy@gmail.com");
+        user.setResources_link("#");
         Notification notification = new Notification();
         notification.setEvent(EventTypes.ACCOUNT_BAN.name());
         notification.setSubject("Account BAN");

@@ -65,46 +65,21 @@
                 <div class="main-image">
                     <img
                         class="big-image"
-                        src="${main_image}"
+                        th:src="${main_image}"
                         alt=""
                     />
                 </div>
                 <div class="more-images">
-
-
-                    <img
-                        class="small-image"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTceb6oPjt7_NqPOKCbBXlofFQMeZU6DpRAEw&usqp=CAU"
-                        alt=""
-                    />
-                    <img
-                        class="small-image"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQI7nmkdLHf3O9rwsJecyD5ppwFI0D2q-sMQ&usqp=CAU"
-                        alt=""
-                    />
-                    <img
-                        class="small-image"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS4o2T8dByjSu2cD4vqpK7oo01e1Ln-ct8tg&usqp=CAU"
-                        alt=""
-                    />
-                    <img
-                        class="small-image"
-                        src="https://a.d-cd.net/Ac_UNo8UvbuQLE74P4Zyt4cZ8zg-960.jpg"
-                        alt=""
-                    />
-                    <img
-                        class="small-image"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4DwknrmcdpCGaPRIl9cZc3L2SH9EHFRfC1g&usqp=CAU"
-                        alt=""
-                    />
-                    <img
-                        class="small-image"
-                        src="https://forum.guns.ru/forums/icons/forum_pictures/027739/27739349_23265.jpg"
-                        alt=""
-                    />
+                    <div th:each="image : ${images}">
+                        <img
+                            class="smail-image"
+                            th:src="${image}"
+                            alt=""
+                        />
+                    </div>
                 </div>
             </div>
-            <p class="description">
+            <p class="description" th:text="${description}">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 Similique velit nostrum reprehenderit. Similique, nisi nostrum
                 architecto numquam quibusdam pariatur culpa aspernatur animi
@@ -115,6 +90,7 @@
             </p>
 
             <a class="btn" href="#">View Details</a>
+            
             <a class="btn" href="mailto:${recipient}?subject=RE: ${title}`"
                 >Contact seller</a
             >
@@ -123,7 +99,7 @@
                 You recived this message because you are subscribed to the
                 Google Groups "Baraholka" group. To unsubscribe from this group
                 and stop receiving emails from it, you can turn off it in
-                <a class="profile-link" href="#">Your profile</a> settings
+                <a class="profile-link" th:href="${profile_link}">Your profile</a> settings
             </p>
         </div>
         ​ ​

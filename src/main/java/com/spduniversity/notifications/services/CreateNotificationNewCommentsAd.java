@@ -23,8 +23,8 @@ import java.util.Map;
 
 @Service
 public class CreateNotificationNewCommentsAd {
-    private JavaMailSender emailSender;
-    private Configuration emailConfig;
+    private final JavaMailSender emailSender;
+    private final Configuration emailConfig;
 
 
     @Autowired
@@ -50,11 +50,13 @@ public class CreateNotificationNewCommentsAd {
         return message;
     }
 
+    //test method
     public Notification getNotificationFromData(){
         User userTo = new User();
         userTo.setEmail("udizsumy@gmail.com");
         User userFrom = new User();
         userFrom.setFirst_name("Ludmila");
+
         Notification notification = new Notification();
         notification.setEvent(EventTypes.NEW_COMMENTS_ADVERTISEMENT.name());
         notification.setSubject("New comments Ad");
@@ -64,9 +66,6 @@ public class CreateNotificationNewCommentsAd {
 
         return notification;
     }
-
-
-
 
 
 }

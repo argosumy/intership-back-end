@@ -62,6 +62,8 @@ public class NotificationFactory {
         }
 
         if (type == EventTypes.NEW_COMMENTS_TO_MY_COMMENTS) {
+
+
         }
         if (type == EventTypes.NEW_MESSAGE_DIRECT) {
         }

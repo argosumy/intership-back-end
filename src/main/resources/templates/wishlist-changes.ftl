@@ -46,7 +46,7 @@
                 You recived this message because you are subscribed to the
                 Google Groups "Baraholka" group. To unsubscribe from this group
                 and stop receiving emails from it, you can turn off it in
-                <a class="profile-link" href="#">Your profile</a> settings
+                <a class="profile-link" href="${linkprofile}">Your profile</a> settings
             </p>
         </div>
         ​ ​

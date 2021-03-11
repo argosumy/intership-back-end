@@ -24,8 +24,8 @@ import java.util.Map;
 
 @Service
 public class CreateNotificationAdvertisementBlock {
-    private JavaMailSender emailSender;
-    private Configuration emailConfig;
+    private final JavaMailSender emailSender;
+    private final Configuration emailConfig;
     @Autowired
     public CreateNotificationAdvertisementBlock(JavaMailSender emailSender, @Qualifier("freeMarker") Configuration emailConfig) {
         this.emailSender = emailSender;
@@ -40,6 +40,7 @@ public class CreateNotificationAdvertisementBlock {
         model.put("ad_name", notification.getSendTo().getFirst_name());
         model.put("block_ends" , dateBlock);
         model.put("reason", notification.getDescription());
+        model.put("profilelink",notification.getSendTo().getResources_link());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("ad-block.ftl");
@@ -52,11 +53,12 @@ public class CreateNotificationAdvertisementBlock {
 
         return message;
     }
-
+    //test method
     public Notification getNotificationFromData(){
         User user = new User();
         user.setFirst_name("Valeriy");
         user.setEmail("udizsumy@gmail.com");
+        user.setResources_link("#");
         Notification notification = new Notification();
         notification.setEvent(EventTypes.ADVERTISEMENT_BLOCK.name());
         notification.setSubject("Advertisement Block");

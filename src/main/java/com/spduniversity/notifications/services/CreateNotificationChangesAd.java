@@ -21,8 +21,8 @@ import java.util.Map;
 
 @Service
 public class CreateNotificationChangesAd {
-    private JavaMailSender emailSender;
-    private Configuration emailConfig;
+    private final JavaMailSender emailSender;
+    private final Configuration emailConfig;
 
 
     @Autowired
@@ -35,6 +35,7 @@ public class CreateNotificationChangesAd {
     public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
         Map<String,String> model = new HashMap();
         model.put("reason" , notification.getSubject());
+        model.put("linkprofile",notification.getSendTo().getResources_link());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("wishlist-changes.ftl");
@@ -47,14 +48,16 @@ public class CreateNotificationChangesAd {
 
         return message;
     }
-
+    //test method
     public Notification getNotificationFromData(){
         User user = new User();
         user.setEmail("udizsumy@gmail.com");
+        user.setResources_link("#");
+
         Notification notification = new Notification();
+        notification.setSendTo(user);
         notification.setEvent(EventTypes.CHANGES_ADVERTISEMENT.name());
         notification.setSubject("Changes AD ");
-        notification.setSendTo(user);
         notification.setDescription("Your account is ban till 22-103-2021 15:00");
 
         return notification;
