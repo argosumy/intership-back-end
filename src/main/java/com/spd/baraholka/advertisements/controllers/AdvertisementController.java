@@ -4,7 +4,6 @@ import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatusNotMatchException;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
-import com.spd.baraholka.advertisements.services.AdvertisementStatusMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +12,9 @@ import org.springframework.web.bind.annotation.*;
 public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
-    private final AdvertisementStatusMatcher advertisementStatusMatcher;
 
-    public AdvertisementController(AdvertisementService advertisementService,
-                                   AdvertisementStatusMatcher advertisementStatusMatcher) {
+    public AdvertisementController(AdvertisementService advertisementService) {
         this.advertisementService = advertisementService;
-        this.advertisementStatusMatcher = advertisementStatusMatcher;
     }
 
     @PostMapping
