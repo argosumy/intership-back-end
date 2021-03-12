@@ -19,4 +19,8 @@ public class UserService {
         User user = persistenceUserService.getUserById(id);
         return userMapper.convertToDTO(user);
     }
+
+    public int changeUserBlockedStatus(int id, boolean isBlocked) {
+        return persistenceUserService.changeUserBlockedStatus(id, isBlocked);
+    }
 }

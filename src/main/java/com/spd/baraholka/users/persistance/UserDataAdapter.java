@@ -15,4 +15,9 @@ public class UserDataAdapter implements PersistenceUserService {
     public User getUserById(int id) {
         return userRepository.selectUserById(id);
     }
+
+    @Override
+    public int changeUserBlockedStatus(int id, boolean isBlocked) {
+        return userRepository.updateUserBlockedStatus(id, isBlocked);
+    }
 }

@@ -18,7 +18,14 @@ public class UserRepository {
 
     public User selectUserById(int id) {
         String selectSQL = "SELECT * FROM users WHERE id=:id";
-        Map<String, Integer> updateParameters = Map.of("id", id);
-        return jdbcTemplate.queryForObject(selectSQL, updateParameters, userRowMapper);
+        Map<String, Integer> selectParameters = Map.of("id", id);
+        return jdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper);
+    }
+
+    public int updateUserBlockedStatus(int id, boolean isBlocked) {
+        String updateSQL = "UPDATE users SET is_blocked=:isBlocked WHERE id=:id";
+        Map<String, Object> updateParameters = Map.of("isBlocked", isBlocked, "id", id);
+        jdbcTemplate.update(updateSQL, updateParameters);
+        return id;
     }
 }
