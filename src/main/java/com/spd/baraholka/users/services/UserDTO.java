@@ -1,17 +1,36 @@
 package com.spd.baraholka.users.services;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Map;
 
 public class UserDTO {
 
+    @NotNull
     private int id;
+
+    @NotNull
     private String firstName;
+
+    @NotNull
     private String lastName;
+
+    @NotNull
     private String email;
+
+    @NotEmpty
+    @Size(max = 50)
     private String position;
+
+    @NotEmpty
+    @Size(max = 20)
     private String phoneNumber;
-    private boolean isBlocked;
+
+    @NotEmpty
     private Map<String, String> additionalContactResources;
+
+    private boolean isBlocked;
 
     public int getId() {
         return id;

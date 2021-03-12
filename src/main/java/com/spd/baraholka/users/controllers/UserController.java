@@ -4,6 +4,8 @@ import com.spd.baraholka.users.services.UserDTO;
 import com.spd.baraholka.users.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController("/users")
 public class UserController {
 
@@ -19,7 +21,7 @@ public class UserController {
     }
 
     @PutMapping
-    public int updateUserMainInfo(@RequestBody UserDTO userDTO) {
+    public int updateUserMainInfo(@RequestBody @Valid UserDTO userDTO) {
         return userService.updateUserMainInfo(userDTO);
     }
 }
