@@ -31,7 +31,7 @@ Type in Powershell or Windows Terminal:
 
 Example:
 
-`$env:DB_NAME="mydb";$env:DB_USERNAME="user";$env:DB_PASSWORD="qwerty";docker-compose up`
+`$env:DB_NAME="baraholka";$env:DB_USERNAME="baraholka";$env:DB_PASSWORD="baraholka";docker-compose up`
 
 _For Linux:_
 
@@ -39,7 +39,7 @@ _For Linux:_
 
 Example:
 
-`DB_NAME=mydb DB_USERNAME=user DB_PASSWORD=qwerty docker-compose up`
+`DB_NAME=baraholka DB_USERNAME=baraholka DB_PASSWORD=baraholka docker-compose up`
 
 _**Note:**_ Replace parameters **<database_name>**, **<database_user>**, **<database_password>** with any text values and memorize provided values as they will be required further in the step 6.
 
@@ -62,8 +62,8 @@ _Usually this step should be done only once when **docker-compose** is run for t
    - keep default values for:
         - port: **5432**
         - maintenance database: **postgres**
-   - enter **username** from the step 4 (e.g. user)
-   - enter **password** from the step 4 (e.g. qwerty)
+   - enter **username** from the step 4 (e.g. baraholka)
+   - enter **password** from the step 4 (e.g. baraholka)
    - check **Save password** option
    - click on **Save** button
 
@@ -78,3 +78,10 @@ You can use Tools -> Query Tool for executing SQL queries in pgAdmin.
 ### The back-end application API will accept requests at URL [http://localhost:8080](http://localhost:8080)
 
 ### pgAdmin tool to access a database will be available at URL [http://localhost:5050](http://localhost:5050)
+
+
+### Default parameters to access a database:
+
+- Database name:     **baraholka**
+- Username:          **baraholka**
+- Password password: **baraholka**
