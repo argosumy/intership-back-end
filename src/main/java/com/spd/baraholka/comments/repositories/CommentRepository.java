@@ -1,6 +1,5 @@
 package com.spd.baraholka.comments.repositories;
 
-
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.mappers.CommentRowMapper;
 import org.springframework.dao.DataAccessException;
