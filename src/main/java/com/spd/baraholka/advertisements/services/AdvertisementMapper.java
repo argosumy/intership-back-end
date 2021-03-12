@@ -1,9 +1,12 @@
 package com.spd.baraholka.advertisements.services;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
+import com.spd.baraholka.comments.dto.CommentDto;
+import com.spd.baraholka.comments.entities.Comment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AdvertisementMapper {
@@ -27,6 +30,26 @@ public class AdvertisementMapper {
     }
 
     public List<Advertisement> toAdvertisementDtoList(List<Advertisement> advertisementList) {
-        return null;
+        return advertisementList.stream()
+                .map(this::getAdvertisementDto)
+                .collect(Collectors.toList());
+    }
+
+    public AdvertisementDTO getAdvertisementDto(Advertisement advertisement) {
+        return new CommentDto(
+                advertisement.getAdvertisementId(),
+        advertisement.getOwnerId(),
+        advertisement.getTitle(),
+        advertisement.getDescription(),
+        advertisement.getCategory(),
+        advertisement.getPrice(),
+        advertisement.getCurrency(),
+        advertisement.isDiscountAvailability(),
+        advertisement.getCity(),
+        advertisement.getStatus(),
+        advertisement.getCreationDate(),
+        advertisement.getPublicationDate(),
+        advertisement.getStatusChangeDate()
+        );
     }
 }
