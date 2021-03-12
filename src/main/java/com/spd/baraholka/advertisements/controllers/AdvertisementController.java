@@ -1,21 +1,37 @@
 package com.spd.baraholka.advertisements.controllers;
 
+import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
+import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/advertisements")
 public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
+    private final AdvertisementMapper advertisementMapper;
 
-    public AdvertisementController(AdvertisementService advertisementService) {
+    public AdvertisementController(AdvertisementService advertisementService, AdvertisementMapper advertisementMapper) {
         this.advertisementService = advertisementService;
+        this.advertisementMapper = advertisementMapper;
+    }
+
+    @GetMapping("/{title}")
+    public List<Advertisement> getFilteredAdsByTitle(@PathVariable("title") String title) {
+        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByTitle(title);
+        return advertisementMapper.toAdvertisementDtoList(advertisementList);
+    }
+
+    @GetMapping("/{description}")
+    public List<Advertisement> getFilteredAdsByTitle(@PathVariable("description") String description) {
+        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByDescription(description);
+        return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
 
     @PostMapping

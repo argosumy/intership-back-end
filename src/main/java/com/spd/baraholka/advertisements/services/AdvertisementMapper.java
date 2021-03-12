@@ -3,6 +3,8 @@ package com.spd.baraholka.advertisements.services;
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class AdvertisementMapper {
 
@@ -22,5 +24,9 @@ public class AdvertisementMapper {
         advertisement.setPublicationDate(advertisementDTO.getPublicationDate());
         advertisement.setStatusChangeDate(advertisementDTO.getStatusChangeDate());
         return advertisement;
+    }
+
+    public List<Advertisement> toAdvertisementDtoList(List<Advertisement> advertisementList) {
+        return null;
     }
 }
