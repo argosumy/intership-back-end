@@ -1,5 +1,6 @@
 package com.spd.baraholka.advertisements.persistance;
 
+import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -127,7 +128,8 @@ public class AdvertisementRepository {
         return null;
 //        return jdbcTemplate.query(
 //                "SELECT * FROM advertisements WHERE description LIKE :description",
-//                Map.of("description", "%" + description + "%")
+//                Map.of("description", "%" + description + "%"),
+//                new AdvertisementMapper()
 //        );
     }
 }
