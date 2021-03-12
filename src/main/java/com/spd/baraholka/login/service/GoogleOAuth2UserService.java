@@ -1,6 +1,7 @@
-package com.spd.baraholka.users.services;
+package com.spd.baraholka.login.service;
 
-import com.spd.baraholka.users.dto.OAuth2UserDto;
+import com.spd.baraholka.login.OAuth2UserService;
+import com.spd.baraholka.login.dto.OAuth2UserDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

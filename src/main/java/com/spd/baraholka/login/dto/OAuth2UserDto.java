@@ -1,4 +1,4 @@
-package com.spd.baraholka.users.dto;
+package com.spd.baraholka.login.dto;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.spd.baraholka.config;
+package com.spd.baraholka.login;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class SecurityConfigTest {
+class LoginTest {
 
     @Autowired
     private MockMvc mvc;

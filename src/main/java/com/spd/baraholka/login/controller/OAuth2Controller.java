@@ -1,26 +1,24 @@
-package com.spd.baraholka.users.controllers;
+package com.spd.baraholka.login.controller;
 
-import com.spd.baraholka.users.dto.OAuth2UserDto;
-import com.spd.baraholka.users.services.OAuth2UserService;
+import com.spd.baraholka.login.dto.OAuth2UserDto;
+import com.spd.baraholka.login.OAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class OAuth2Controller {
 
     private final OAuth2UserService oAuth2UserService;
 
-    // TODO: Remove this temporary endpoint after QA have tested Google OAuth 2.0 authentication
-    public static final String ENDPOINT_ME_OAUTH = "/";
+    public static final String ENDPOINT_ME_OAUTH = "/me/oauth2";
 
     @Autowired
-    public UserController(OAuth2UserService oAuth2UserService) {
+    public OAuth2Controller(OAuth2UserService oAuth2UserService) {
         this.oAuth2UserService = oAuth2UserService;
     }
 
-    // TODO: Remove this temporary endpoint after QA have tested Google OAuth 2.0 authentication
     @GetMapping(ENDPOINT_ME_OAUTH)
     public ResponseEntity<OAuth2UserDto> showOAuth2User() {
         OAuth2UserDto oAuth2UserDto = oAuth2UserService.getUserInfoFromOAuth2();
