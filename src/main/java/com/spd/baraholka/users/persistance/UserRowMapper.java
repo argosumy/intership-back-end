@@ -1,14 +1,13 @@
 package com.spd.baraholka.users.persistance;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 public class UserRowMapper implements RowMapper<User> {
@@ -23,14 +22,20 @@ public class UserRowMapper implements RowMapper<User> {
         user.setPosition(rs.getString("position"));
         user.setPhoneNumber(rs.getString("phone_number"));
         user.setBlocked(rs.getBoolean("is_blocked"));
-        Map<String, String> additionalContactResources = getAdditionalContactResources(rs);
+        JSONObject additionalContactResources = getAdditionalContactResources(rs);
         user.setAdditionalContactResources(additionalContactResources);
         return user;
     }
 
-    private Map<String, String> getAdditionalContactResources(ResultSet resultSet) throws SQLException {
-        Array resultSetArray = resultSet.getArray("additional_contact_resources");
-        String[][] additionalContactResources = (String[][]) resultSetArray.getArray();
-        return Arrays.stream(additionalContactResources).collect(Collectors.toMap(key -> key[0], value -> value[1]));
+    private JSONObject getAdditionalContactResources(ResultSet resultSet) throws SQLException {
+        String jsonString = resultSet.getString("additional_contact_resources");
+        JSONParser parser = new JSONParser();
+        JSONObject additionalContactResources = new JSONObject();
+        try {
+            additionalContactResources = (JSONObject) parser.parse(jsonString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return additionalContactResources;
     }
 }
