@@ -38,15 +38,10 @@ public class UserRepository {
     }
 
     private Map<String, Object> createUpdateUserMainInfoParameters(User user) {
-        String additionalContactResources = createJsonString(user.getAdditionalContactResources());
+        JSONObject additionalContactResources = user.getAdditionalContactResources();
         return Map.of("position", user.getPosition(),
                 "phoneNumber", user.getPhoneNumber(),
-                "additionalContactResources", additionalContactResources,
+                "additionalContactResources", additionalContactResources.toJSONString(),
                 "id", user.getId());
-    }
-
-    private String createJsonString(Map<String, String> additionalContactResources) {
-        JSONObject jsonObject = new JSONObject(additionalContactResources);
-        return jsonObject.toJSONString();
     }
 }
