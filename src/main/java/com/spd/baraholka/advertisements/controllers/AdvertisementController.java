@@ -20,7 +20,7 @@ public class AdvertisementController {
         this.advertisementStatusMatcher = advertisementStatusMatcher;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public int saveAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
         if (advertisementDTO == null) {
             throw new NullPointerException();
@@ -28,7 +28,7 @@ public class AdvertisementController {
         return advertisementService.saveAdvertisement(advertisementDTO);
     }
 
-    @PutMapping("/")
+    @PutMapping
     public int updateAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
         if (advertisementDTO == null) {
             throw new NullPointerException();
