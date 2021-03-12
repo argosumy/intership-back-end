@@ -1,0 +1,10 @@
+image: docker:latest
+
+check:
+  image: adoptjdk11:latest
+  stage: test
+  except:
+    - prod
+  script:
+    - export GRADLE_USER_HOME=/cache/gradle
+    - ./gradlew clean check --stacktrace
