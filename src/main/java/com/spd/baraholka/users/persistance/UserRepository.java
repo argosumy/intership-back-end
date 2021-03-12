@@ -18,8 +18,9 @@ public class UserRepository {
     }
 
     public User selectUserById(int id) {
-        String selectSQL = createSelectUserByIDSQL();
-        return jdbcTemplate.queryForObject(selectSQL, fillSelectUserByIdParameters(id), userRowMapper);
+        String selectSQL = "SELECT * FROM users WHERE id=:id";
+        Map<String, Integer> updateParameters = Map.of("id", id);
+        return jdbcTemplate.queryForObject(selectSQL, updateParameters, userRowMapper);
     }
 
     public int updateUserMainInfo(User user) {
@@ -27,14 +28,6 @@ public class UserRepository {
         Map<String, Object> updateParameters = createUpdateUserMainInfoParameters(user);
         jdbcTemplate.update(updateSQL, updateParameters);
         return user.getId();
-    }
-
-    private Map<String, Integer> fillSelectUserByIdParameters(int id) {
-        return Map.of("id", id);
-    }
-
-    private String createSelectUserByIDSQL() {
-        return "SELECT * FROM users WHERE id=:id";
     }
 
     private String createUpdateUserMainInfoSQL() {
