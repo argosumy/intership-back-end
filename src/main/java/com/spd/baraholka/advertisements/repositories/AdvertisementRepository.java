@@ -1,15 +1,11 @@
 package com.spd.baraholka.advertisements.repositories;
 
 
-import com.spd.baraholka.advertisements.entities.Advertisement;
-import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.comments.mappers.CommentMapper;
-import org.springframework.dao.DataAccessException;
+import com.spd.baraholka.advertisements.persistance.Advertisement;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class AdvertisementRepository implements AdvertisementPersistence {

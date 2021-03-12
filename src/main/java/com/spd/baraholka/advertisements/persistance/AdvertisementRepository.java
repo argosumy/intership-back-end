@@ -1,6 +1,6 @@
 package com.spd.baraholka.advertisements.persistance;
 
-import com.spd.baraholka.advertisements.services.AdvertisementMapper;
+import com.spd.baraholka.advertisements.services.AdvertisementRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -17,9 +17,11 @@ import java.util.Objects;
 public class AdvertisementRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final AdvertisementRowMapper advertisementRowMapper;
 
-    public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+    public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate, AdvertisementRowMapper advertisementRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.advertisementRowMapper = advertisementRowMapper;
     }
 
     public int addAdvertisement(Advertisement advertisement) {

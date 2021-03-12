@@ -18,6 +18,7 @@ public class Advertisement {
     private LocalDateTime publicationDate;
     private LocalDateTime statusChangeDate;
 
+
     public int getAdvertisementId() {
         return advertisementId;
     }

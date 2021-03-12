@@ -23,13 +23,13 @@ public class AdvertisementController {
     }
 
     @GetMapping("/{title}")
-    public List<Advertisement> getFilteredAdsByTitle(@PathVariable("title") String title) {
+    public List<AdvertisementDTO> getFilteredAdsByTitle(@PathVariable("title") String title) {
         List<Advertisement> advertisementList = advertisementService.getFilteredAdsByTitle(title);
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
 
     @GetMapping("/{description}")
-    public List<Advertisement> getFilteredAdsByTitle(@PathVariable("description") String description) {
+    public List<AdvertisementDTO> getFilteredAdsByDescription(@PathVariable("description") String description) {
         List<Advertisement> advertisementList = advertisementService.getFilteredAdsByDescription(description);
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }

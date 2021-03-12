@@ -29,7 +29,7 @@ public class AdvertisementMapper {
         return advertisement;
     }
 
-    public List<Advertisement> toAdvertisementDtoList(List<Advertisement> advertisementList) {
+    public List<AdvertisementDTO> toAdvertisementDtoList(List<Advertisement> advertisementList) {
         return advertisementList.stream()
                 .map(this::getAdvertisementDto)
                 .collect(Collectors.toList());
@@ -38,18 +38,18 @@ public class AdvertisementMapper {
     public AdvertisementDTO getAdvertisementDto(Advertisement advertisement) {
         return new AdvertisementDTO(
                 advertisement.getAdvertisementId(),
-        advertisement.getOwnerId(),
-        advertisement.getTitle(),
-        advertisement.getDescription(),
-        advertisement.getCategory(),
-        advertisement.getPrice(),
-        advertisement.getCurrency(),
-        advertisement.isDiscountAvailability(),
-        advertisement.getCity(),
-        advertisement.getStatus(),
-        advertisement.getCreationDate(),
-        advertisement.getPublicationDate(),
-        advertisement.getStatusChangeDate()
+                advertisement.getOwnerId(),
+                advertisement.getTitle(),
+                advertisement.getDescription(),
+                advertisement.getCategory(),
+                advertisement.getPrice(),
+                advertisement.getCurrency(),
+                advertisement.isDiscountAvailability(),
+                advertisement.getCity(),
+                advertisement.getStatus(),
+                advertisement.getCreationDate(),
+                advertisement.getPublicationDate(),
+                advertisement.getStatusChangeDate()
         );
     }
 }

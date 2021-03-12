@@ -39,4 +39,12 @@ public class AdvertisementService {
     public List<Advertisement> findAdsByDescription(String description) {
         return persistenceAdvertisementService.findAdsByDescription(description);
     }
+
+    public List<Advertisement> getFilteredAdsByTitle(String title) {
+        return persistenceAdvertisementService.findAdsByTitle(title);
+    }
+
+    public List<Advertisement> getFilteredAdsByDescription(String description) {
+        return persistenceAdvertisementService.findAdsByDescription(description);
+    }
 }
