@@ -6,6 +6,8 @@ import com.spd.baraholka.advertisements.services.AdvertisementService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/advertisements")
 public class AdvertisementController {
@@ -17,12 +19,12 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public int saveAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
+    public int saveAdvertisement(@RequestBody @Valid AdvertisementDTO advertisementDTO) {
         return advertisementService.saveAdvertisement(advertisementDTO);
     }
 
     @PutMapping
-    public int updateAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
+    public int updateAdvertisement(@RequestBody @Valid AdvertisementDTO advertisementDTO) {
         return advertisementService.updateAdvertisement(advertisementDTO);
     }
 
