@@ -9,68 +9,20 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotificationFactory {
-    private CreateNotificationAccountBan createNotificationAccountBan;
-    private CreateNotificationAdvertisementBlock createNotificationAdvertisementBlock;
-    private CreateNotificationNewAd createNotificationNewAd;
-    private CreateNotificationNewCommentsAd createNotificationNewCommentsAd;
-    private CreateNotificationChangesAd createNotificationChangesAd;
-    MimeMessage mimeMessage;
+    private List<CreateNotification> list;
 
     @Autowired
-    public NotificationFactory(CreateNotificationAccountBan createNotificationAccountBan,
-                               CreateNotificationAdvertisementBlock createNotificationAdvertisementBlock,
-                               CreateNotificationNewAd createNotificationNewAd,
-                               CreateNotificationNewCommentsAd createNotificationNewCommentsAd,
-                               CreateNotificationChangesAd createNotificationChangesAd) {
-        this.createNotificationAccountBan = createNotificationAccountBan;
-        this.createNotificationAdvertisementBlock = createNotificationAdvertisementBlock;
-        this.createNotificationNewAd = createNotificationNewAd;
-        this.createNotificationNewCommentsAd = createNotificationNewCommentsAd;
-        this.createNotificationChangesAd = createNotificationChangesAd;
+    public NotificationFactory(List<CreateNotification> list) {
+        this.list = list;
     }
 
     public MimeMessage buildNotification(EventTypes type) throws MessagingException, IOException, TemplateException {
-        if (type == EventTypes.ACCOUNT_BAN) {
-            mimeMessage =createNotificationAccountBan
-                    .createNotificationTemplate(createNotificationAccountBan.getNotificationFromData());
-            return mimeMessage;
-        }
-
-        if (type == EventTypes.NEW_ADVERTISEMENT) {
-            mimeMessage =createNotificationNewAd
-                    .createNotificationTemplate(createNotificationNewAd.getNotificationFromData());
-            return mimeMessage;
-        }
-        if (type == EventTypes.ADVERTISEMENT_BLOCK) {
-            mimeMessage = createNotificationAdvertisementBlock
-                    .createNotificationTemplate(createNotificationAdvertisementBlock.getNotificationFromData());
-            return mimeMessage;
-        }
-        if (type == EventTypes.CHANGES_ADVERTISEMENT) {
-            mimeMessage = createNotificationChangesAd.createNotificationTemplate(createNotificationChangesAd
-                    .getNotificationFromData());
-            return mimeMessage;
-
-        }
-        if (type == EventTypes.NEW_COMMENTS_ADVERTISEMENT) {
-            mimeMessage = createNotificationNewCommentsAd.createNotificationTemplate(createNotificationNewCommentsAd
-                    .getNotificationFromData());
-            return mimeMessage;
-        }
-
-        if (type == EventTypes.NEW_COMMENTS_TO_MY_COMMENTS) {
-
-
-        }
-        if (type == EventTypes.NEW_MESSAGE_DIRECT) {
-        }
-        return null;
+        Optional<CreateNotification> notification =  list.stream().filter(list -> type == list.getType()).findFirst();
+        return notification.orElseThrow().createNotificationTemplate(notification.get().getNotificationFromData());
     }
-
-
-
-
 }

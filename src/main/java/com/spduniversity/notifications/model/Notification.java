@@ -1,7 +1,7 @@
 package com.spduniversity.notifications.model;
 
 
-import lombok.Data;
+
 
 import java.time.LocalDateTime;
 

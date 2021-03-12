@@ -1,20 +1,17 @@
 package com.spduniversity.notifications.model;
 
-import lombok.Data;
-
-
 
 public class User {
     private int id;
     private String image;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String position;
-    private String phone_number;
-    private String role_in_system;
-    private boolean blocked_status;
-    private String resources_link;
+    private String phoneNumber;
+    private String roleInSystem;
+    private boolean blockedStatus;
+    private String resourcesLink;
 
     public User() {
     }
@@ -35,20 +32,20 @@ public class User {
         this.image = image;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -67,36 +64,36 @@ public class User {
         this.position = position;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getRole_in_system() {
-        return role_in_system;
+    public String getRoleInSystem() {
+        return roleInSystem;
     }
 
-    public void setRole_in_system(String role_in_system) {
-        this.role_in_system = role_in_system;
+    public void setRoleInSystem(String roleInSystem) {
+        this.roleInSystem = roleInSystem;
     }
 
-    public boolean isBlocked_status() {
-        return blocked_status;
+    public boolean isBlockedStatus() {
+        return blockedStatus;
     }
 
-    public void setBlocked_status(boolean blocked_status) {
-        this.blocked_status = blocked_status;
+    public void setBlockedStatus(boolean blockedStatus) {
+        this.blockedStatus = blockedStatus;
     }
 
-    public String getResources_link() {
-        return resources_link;
+    public String getResourcesLink() {
+        return resourcesLink;
     }
 
-    public void setResources_link(String resources_link) {
-        this.resources_link = resources_link;
+    public void setResourcesLink(String resourcesLink) {
+        this.resourcesLink = resourcesLink;
     }
 
     @Override
@@ -104,14 +101,14 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", image='" + image + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
+                ", first_name='" + firstName + '\'' +
+                ", last_name='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", position='" + position + '\'' +
-                ", phone_number='" + phone_number + '\'' +
-                ", role_in_system='" + role_in_system + '\'' +
-                ", blocked_status=" + blocked_status +
-                ", resources_link='" + resources_link + '\'' +
+                ", phone_number='" + phoneNumber + '\'' +
+                ", role_in_system='" + roleInSystem + '\'' +
+                ", blocked_status=" + blockedStatus +
+                ", resources_link='" + resourcesLink + '\'' +
                 '}';
     }
 }
