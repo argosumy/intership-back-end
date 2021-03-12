@@ -19,7 +19,7 @@ public class UserMapper {
         return user;
     }
 
-    public UserDTO convertToDTO(User user){
+    public UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setFirstName(user.getFirstName());
