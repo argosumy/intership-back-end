@@ -1,0 +1,1 @@
+ALTER TABLE users RENAME COLUMN blocked_status TO is_blocked;
