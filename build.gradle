@@ -24,7 +24,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core'
-    testImplementation group: 'org.assertj', name: 'assertj-core'
+    testImplementation 'org.assertj:assertj-core'
 }
 
 test {
