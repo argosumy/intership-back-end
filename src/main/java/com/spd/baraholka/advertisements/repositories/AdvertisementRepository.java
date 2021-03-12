@@ -28,10 +28,11 @@ public class AdvertisementRepository implements AdvertisementPersistence {
 
     @Override
     public List<Advertisement> findAdsByDescription(String description) {
-        return jdbcTemplate.query(
-                "SELECT * FROM advertisements WHERE description LIKE ?",
-                new AdvertisementMapper(),
-                "%" + description + "%"
-        );
+        return null;
+//        return jdbcTemplate.query(
+//                "SELECT * FROM advertisements WHERE description LIKE ?",
+//                new AdvertisementMapper(),
+//                "%" + description + "%"
+//        );
     }
 }
