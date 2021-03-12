@@ -1,7 +1,6 @@
 package com.spd.baraholka.advertisements.controllers;
 
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
-import com.spd.baraholka.advertisements.persistance.AdvertisementStatusNotMatchException;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
 import org.springframework.stereotype.Controller;
