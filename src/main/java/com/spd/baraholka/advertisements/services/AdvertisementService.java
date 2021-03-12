@@ -26,7 +26,7 @@ public class AdvertisementService {
         return persistenceAdvertisementService.updateAdvertisement(advertisement);
     }
 
-    public int updateAdvertisementStatus(int id, String status) {
-        return persistenceAdvertisementService.updateAdvertisementStatus(id, AdvertisementStatus.valueOf(status));
+    public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
+        return persistenceAdvertisementService.updateAdvertisementStatus(id, status);
     }
 }

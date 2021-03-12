@@ -1,5 +1,6 @@
 package com.spd.baraholka.advertisements.controllers;
 
+import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatusNotMatchException;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
@@ -37,7 +38,7 @@ public class AdvertisementController {
     }
 
     @PutMapping("/{id}/{status}")
-    public int updateAdvertisementStatus(@PathVariable int id, @PathVariable String status) {
+    public int updateAdvertisementStatus(@PathVariable int id, @PathVariable AdvertisementStatus status) {
         if (!advertisementStatusMatcher.isStatusMatch(status)) {
             throw new AdvertisementStatusNotMatchException(status);
         }
