@@ -7,5 +7,5 @@ CREATE TABLE users
     position                     VARCHAR(50)        NOT NULL,
     phone_number                 VARCHAR(20)        NOT NULL,
     is_blocked                   BOOLEAN DEFAULT false,
-    additional_contact_resources VARCHAR[]          NOT NULL
+    additional_contact_resources VARCHAR[][]        NOT NULL
 );
