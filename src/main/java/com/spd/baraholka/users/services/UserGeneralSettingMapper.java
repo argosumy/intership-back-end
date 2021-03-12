@@ -1,9 +1,9 @@
 package com.spd.baraholka.users.services;
 
 import com.spd.baraholka.users.persistance.UserGeneralSetting;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class UserGeneralSettingMapper {
 
     UserGeneralSetting convertToEntity(UserGeneralSettingDTO userGeneralSettingDTO) {
