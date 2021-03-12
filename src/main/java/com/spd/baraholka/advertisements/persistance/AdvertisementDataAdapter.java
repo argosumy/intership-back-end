@@ -3,6 +3,8 @@ package com.spd.baraholka.advertisements.persistance;
 import com.spd.baraholka.advertisements.services.PersistenceAdvertisementService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdvertisementDataAdapter implements PersistenceAdvertisementService {
 
@@ -25,5 +27,15 @@ public class AdvertisementDataAdapter implements PersistenceAdvertisementService
     @Override
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
         return advertisementRepository.updateAdvertisementStatus(id, status);
+    }
+
+    @Override
+    public List<Advertisement> findAdsByTitle(String title) {
+       return advertisementRepository.findAdsByTitle(title);
+    }
+
+    @Override
+    public List<Advertisement> findAdsByDescription(String description) {
+        return advertisementRepository.findAdsByDescription(description);
     }
 }

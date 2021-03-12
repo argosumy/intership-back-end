@@ -4,6 +4,8 @@ import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdvertisementService {
 
@@ -28,5 +30,13 @@ public class AdvertisementService {
 
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
         return persistenceAdvertisementService.updateAdvertisementStatus(id, status);
+    }
+
+    public List<Advertisement> findAdsByTitle(String title) {
+        return persistenceAdvertisementService.findAdsByTitle(title);
+    }
+
+    public List<Advertisement> findAdsByDescription(String description) {
+        return persistenceAdvertisementService.findAdsByDescription(description);
     }
 }

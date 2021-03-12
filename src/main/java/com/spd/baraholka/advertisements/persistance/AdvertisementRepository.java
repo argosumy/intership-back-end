@@ -120,16 +120,19 @@ public class AdvertisementRepository {
                 + " RETURNING id";
     }
 
-    public List<com.spd.baraholka.advertisements.entities.Advertisement> findAdsByTitle(String title) {
-        return null;
+    public List<Advertisement> findAdsByTitle(String title) {
+        return jdbcTemplate.query(
+                "SELECT * FROM advertisements WHERE description LIKE :title",
+                Map.of("description", "%" + title + "%"),
+                advertisementRowMapper
+        );
     }
 
     public List<Advertisement> findAdsByDescription(String description) {
-        return null;
-//        return jdbcTemplate.query(
-//                "SELECT * FROM advertisements WHERE description LIKE :description",
-//                Map.of("description", "%" + description + "%"),
-//                new AdvertisementMapper()
-//        );
+        return jdbcTemplate.query(
+                "SELECT * FROM advertisements WHERE description LIKE :description",
+                Map.of("description", "%" + description + "%"),
+                advertisementRowMapper
+        );
     }
 }
