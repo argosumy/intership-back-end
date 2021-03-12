@@ -36,7 +36,7 @@ public class AdvertisementMapper {
     }
 
     public AdvertisementDTO getAdvertisementDto(Advertisement advertisement) {
-        return new CommentDto(
+        return new AdvertisementDTO(
                 advertisement.getAdvertisementId(),
         advertisement.getOwnerId(),
         advertisement.getTitle(),

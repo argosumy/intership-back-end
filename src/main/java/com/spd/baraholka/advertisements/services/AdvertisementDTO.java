@@ -40,6 +40,7 @@ public class AdvertisementDTO {
     private boolean discountAvailability;
     private LocalDateTime publicationDate;
 
+
     public int getAdvertisementId() {
         return advertisementId;
     }
