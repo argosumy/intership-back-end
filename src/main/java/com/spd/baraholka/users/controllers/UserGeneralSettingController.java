@@ -15,7 +15,7 @@ public class UserGeneralSettingController {
         this.userGeneralSettingService = userGeneralSettingService;
     }
 
-    @PutMapping("/")
+    @PutMapping
     public int updateUserGeneralSettings(@RequestBody UserGeneralSettingDTO userGeneralSettingDTO) {
         if (userGeneralSettingDTO == null) {
             throw new NullPointerException();
