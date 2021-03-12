@@ -18,6 +18,7 @@ public class UserRepository {
 
     public User selectUserById(int id) {
         String selectSQL = "SELECT * FROM users WHERE id=:id";
-        return jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), userRowMapper);
+        Map<String, Integer> updateParameters = Map.of("id", id);
+        return jdbcTemplate.queryForObject(selectSQL, updateParameters, userRowMapper);
     }
 }
