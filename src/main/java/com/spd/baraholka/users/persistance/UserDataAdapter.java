@@ -12,7 +12,7 @@ public class UserDataAdapter implements PersistenceUserService {
     }
 
     @Override
-    public User getUserById(int id){
+    public User getUserById(int id) {
         return userRepository.selectUserById(id);
     }
 }
