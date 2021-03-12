@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController("/settings/general")
 public class UserGeneralSettingController {
 
@@ -16,7 +18,7 @@ public class UserGeneralSettingController {
     }
 
     @PutMapping
-    public int updateUserGeneralSettings(@RequestBody UserGeneralSettingDTO userGeneralSettingDTO) {
+    public int updateUserGeneralSettings(@RequestBody @Valid UserGeneralSettingDTO userGeneralSettingDTO) {
         return userGeneralSettingService.updateUserGeneralSettings(userGeneralSettingDTO);
     }
 }
