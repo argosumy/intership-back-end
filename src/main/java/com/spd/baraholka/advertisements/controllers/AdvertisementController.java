@@ -18,25 +18,16 @@ public class AdvertisementController {
 
     @PostMapping
     public int saveAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
-        if (advertisementDTO == null) {
-            throw new NullPointerException();
-        }
         return advertisementService.saveAdvertisement(advertisementDTO);
     }
 
     @PutMapping
     public int updateAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
-        if (advertisementDTO == null) {
-            throw new NullPointerException();
-        }
         return advertisementService.updateAdvertisement(advertisementDTO);
     }
 
     @PutMapping("/{id}/{status}")
     public int updateAdvertisementStatus(@PathVariable int id, @PathVariable AdvertisementStatus status) {
-        if (!advertisementStatusMatcher.isStatusMatch(status)) {
-            throw new AdvertisementStatusNotMatchException(status);
-        }
         return advertisementService.updateAdvertisementStatus(id, status);
     }
 }
