@@ -1,9 +1,9 @@
 package com.spd.baraholka.advertisements.services;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class AdvertisementMapper {
 
     public Advertisement convertToEntity(AdvertisementDTO advertisementDTO) {
