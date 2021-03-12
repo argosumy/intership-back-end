@@ -3,6 +3,7 @@ package com.spd.baraholka.users.persistance;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.util.Map;
 
 @Repository
@@ -16,8 +17,12 @@ public class UserGeneralSettingRepository {
 
     public int updateUserGeneralSettings(UserGeneralSetting userGeneralSetting) {
         String updateSQL = createUpdateSQL();
-        jdbcTemplate.update(updateSQL, Map.of("openAdsInNewTab", userGeneralSetting.isOpenAdsInNewTab(), "id", userGeneralSetting.getId()));
+        jdbcTemplate.update(updateSQL, fillInsertParameters(userGeneralSetting));
         return userGeneralSetting.getId();
+    }
+
+    private Map<String, ? extends Serializable> fillInsertParameters(UserGeneralSetting userGeneralSetting) {
+        return Map.of("openAdsInNewTab", userGeneralSetting.isOpenAdsInNewTab(), "id", userGeneralSetting.getId());
     }
 
     private String createUpdateSQL() {
