@@ -1,6 +1,7 @@
 package com.spd.baraholka.users.services;
 
 import org.json.simple.JSONObject;
+import org.json.simple.JSONObject;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -32,6 +33,7 @@ public class UserDTO {
     private JSONObject additionalContactResources;
 
     private boolean isBlocked;
+    private JSONObject additionalContactResources;
 
     public int getId() {
         return id;
