@@ -1,5 +1,6 @@
 package com.spd.baraholka.users.persistance;
 
+import org.json.simple.JSONObject;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +24,8 @@ public class UserRepository {
 
     public int updateUserMainInfo(User user) {
         String updateSQL = createUpdateUserMainInfoSQL();
-        jdbcTemplate.update(updateSQL, fillUpdateUserMainInfoParameters(user));
+        Map<String, Object> updateParameters = createUpdateUserMainInfoParameters(user);
+        jdbcTemplate.update(updateSQL, updateParameters);
         return user.getId();
     }
 
@@ -42,10 +44,16 @@ public class UserRepository {
                 + " WHERE id=:id";
     }
 
-    private Map<String, Object> fillUpdateUserMainInfoParameters(User user) {
+    private Map<String, Object> createUpdateUserMainInfoParameters(User user) {
+        String additionalContactResources = createJsonString(user.getAdditionalContactResources());
         return Map.of("position", user.getPosition(),
-                "phone_number", user.getPhoneNumber(),
-                "additional_contact_resources", user.getAdditionalContactResources(),
+                "phoneNumber", user.getPhoneNumber(),
+                "additionalContactResources", additionalContactResources,
                 "id", user.getId());
+    }
+
+    private String createJsonString(Map<String, String> additionalContactResources) {
+        JSONObject jsonObject = new JSONObject(additionalContactResources);
+        return jsonObject.toJSONString();
     }
 }
