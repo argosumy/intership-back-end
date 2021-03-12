@@ -20,4 +20,24 @@ public class UserRepository {
         String selectSQL = "SELECT * FROM users WHERE id=:id";
         return jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), userRowMapper);
     }
+
+    public int updateUserMainInfo(User user) {
+        String updateSQL = createUpdateUserMainInfoSQL();
+        jdbcTemplate.update(updateSQL, fillUpdateUserMainInfoParameters(user));
+        return user.getId();
+    }
+
+    private String createUpdateUserMainInfoSQL() {
+        return "UPDATE users SET position=:position,"
+                + " phone_number=:phoneNumber,"
+                + " additional_contact_resources=:additionalContactResources"
+                + " WHERE id=:id";
+    }
+
+    private Map<String, Object> fillUpdateUserMainInfoParameters(User user) {
+        return Map.of("position", user.getPosition(),
+                "phone_number", user.getPhoneNumber(),
+                "additional_contact_resources", user.getAdditionalContactResources(),
+                "id", user.getId());
+    }
 }

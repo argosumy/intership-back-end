@@ -2,9 +2,7 @@ package com.spd.baraholka.users.controllers;
 
 import com.spd.baraholka.users.services.UserDTO;
 import com.spd.baraholka.users.services.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("/users")
 public class UserController {
@@ -18,5 +16,10 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable int id) {
         return userService.getUserById(id);
+    }
+
+    @PutMapping
+    public int updateUserMainInfo(@RequestBody UserDTO userDTO) {
+        return userService.updateUserMainInfo(userDTO);
     }
 }

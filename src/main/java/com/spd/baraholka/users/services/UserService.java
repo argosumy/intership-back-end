@@ -19,4 +19,9 @@ public class UserService {
         User user = persistenceUserService.getUserById(id);
         return userMapper.convertToDTO(user);
     }
+
+    public int updateUserMainInfo(UserDTO userDTO) {
+        User user = userMapper.convertToEntity(userDTO);
+        return persistenceUserService.updateUserMainInfo(user);
+    }
 }
