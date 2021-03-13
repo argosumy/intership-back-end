@@ -1,6 +1,7 @@
 package com.spd.baraholka.login;
 
 import com.spd.baraholka.login.dto.OAuth2UserDto;
+import com.spd.baraholka.login.service.OAuth2UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.spd.baraholka.login.controller;
 
 import com.spd.baraholka.login.dto.OAuth2UserDto;
-import com.spd.baraholka.login.OAuth2UserService;
+import com.spd.baraholka.login.service.OAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
