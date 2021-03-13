@@ -1,7 +1,7 @@
 package com.spd.baraholka.advertisements.persistance;
 
 import com.spd.baraholka.advertisements.services.AdvertisementRowMapper;
-import com.spd.baraholka.comments.entities.Comment;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 public class AdvertisementRepository {
@@ -146,8 +147,22 @@ public class AdvertisementRepository {
                 Map.of("active", "ACTIVE",
                         "draft", "DRAFT",
                         "publicationDate", LocalDateTime.now()
-                        ),
+                ),
                 advertisementRowMapper
         );
+    }
+
+    public Optional<Advertisement> findDraftAdById(int id) {
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(
+                    "SELECT * FROM advertisements WHERE id=:id AND status=:status",
+                    Map.of("id", id,
+                            "status", "DRAFT"
+                    ),
+                    advertisementRowMapper
+            ));
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
     }
 }

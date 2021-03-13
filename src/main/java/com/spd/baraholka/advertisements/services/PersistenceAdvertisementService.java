@@ -4,6 +4,7 @@ import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PersistenceAdvertisementService {
 
@@ -18,4 +19,6 @@ public interface PersistenceAdvertisementService {
     List<Advertisement> findAdsByDescription(String description);
 
     List<Advertisement> getAllActive();
+
+    public Optional<Advertisement> findDraftAdById(int id);
 }

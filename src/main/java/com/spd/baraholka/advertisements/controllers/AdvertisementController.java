@@ -1,13 +1,16 @@
 package com.spd.baraholka.advertisements.controllers;
 
+import com.spd.baraholka.advertisements.exceptions.AdNotFoundException;
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,9 +38,27 @@ public class AdvertisementController {
     }
 
     @GetMapping
-    public List<AdvertisementDTO> getAllActive() {
+    public List<AdvertisementDTO> getAllActiveAds() {
         List<Advertisement> advertisementList = advertisementService.getAllActive();
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
+    }
+
+    @PostMapping("/{id}/{publicationDate}")
+    public int editPublicationDate(@PathVariable("id") int id,
+                                   @PathVariable("publicationDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String publicationDate) {
+        Advertisement advertisement = advertisementService.findDraftAdById(id)
+                .orElseThrow(() -> new AdNotFoundException(id));
+        advertisementService.editPublicationDate(advertisement, publicationDate);
+        return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
+    }
+
+    @PostMapping("/{id}")
+    public int cancelDelayedPublicationOfExistsAd(@PathVariable("id") int id) {
+        Advertisement advertisement = advertisementService.findDraftAdById(id)
+                .orElseThrow(() -> new AdNotFoundException(id));
+        String presentDate = String.valueOf(LocalDateTime.now());
+        advertisementService.editPublicationDate(advertisement, presentDate);
+        return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
     }
 
     @PostMapping

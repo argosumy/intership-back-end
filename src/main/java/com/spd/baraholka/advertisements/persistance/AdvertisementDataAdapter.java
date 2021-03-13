@@ -4,6 +4,7 @@ import com.spd.baraholka.advertisements.services.PersistenceAdvertisementService
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdvertisementDataAdapter implements PersistenceAdvertisementService {
@@ -42,5 +43,10 @@ public class AdvertisementDataAdapter implements PersistenceAdvertisementService
     @Override
     public List<Advertisement> getAllActive() {
         return advertisementRepository.getAllActive();
+    }
+
+    @Override
+    public Optional<Advertisement> findDraftAdById(int id) {
+        return advertisementRepository.findDraftAdById(id);
     }
 }
