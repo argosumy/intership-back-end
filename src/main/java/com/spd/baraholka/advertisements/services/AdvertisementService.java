@@ -32,14 +32,6 @@ public class AdvertisementService {
         return persistenceAdvertisementService.updateAdvertisementStatus(id, status);
     }
 
-    public List<Advertisement> findAdsByTitle(String title) {
-        return persistenceAdvertisementService.findAdsByTitle(title);
-    }
-
-    public List<Advertisement> findAdsByDescription(String description) {
-        return persistenceAdvertisementService.findAdsByDescription(description);
-    }
-
     public List<Advertisement> getFilteredAdsByTitle(String title) {
         return persistenceAdvertisementService.findAdsByTitle(title);
     }
