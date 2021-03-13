@@ -1,77 +1,117 @@
 package com.spd.baraholka.user;
 
+import java.util.List;
+import java.util.Objects;
+
 public class User {
 
-    private Long id;
+    private int id;
     private String avatar;
     private String firstName;
     private String lastName;
     private String email;
-    private String location;
-    private String phoneNumber;
     private String position;
+    private String phoneNumber;
+    private boolean isBlocked;
+    private List<String> resourceLinks;
 
-    public Long getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAvatar() {
         return avatar;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
+    public List<String> getResourceLinks() {
+        return resourceLinks;
+    }
+
+    public void setResourceLinks(List<String> resourceLinks) {
+        this.resourceLinks = resourceLinks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && isBlocked == user.isBlocked && Objects.equals(avatar, user.avatar) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(position, user.position) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(resourceLinks, user.resourceLinks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, avatar, firstName, lastName, email, position, phoneNumber, isBlocked, resourceLinks);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", avatar='" + avatar + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", position='" + position + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isBlocked=" + isBlocked +
+                ", resourceLinks=" + resourceLinks +
+                '}';
     }
 }
