@@ -1,6 +1,7 @@
 package com.spd.baraholka.advertisements.persistance;
 
 import com.spd.baraholka.advertisements.services.AdvertisementRowMapper;
+import com.spd.baraholka.comments.entities.Comment;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -134,6 +135,18 @@ public class AdvertisementRepository {
         return jdbcTemplate.query(
                 "SELECT * FROM advertisements WHERE description LIKE :description",
                 Map.of("description", "%" + description + "%"),
+                advertisementRowMapper
+        );
+    }
+
+    public List<Advertisement> getAllActive() {
+        return jdbcTemplate.query(
+                "SELECT * FROM advertisements a WHERE a.status=:active AND " +
+                        "(a.status=:draft AND a.publication_date>=:publicationDate)",
+                Map.of("active", "ACTIVE",
+                        "draft", "DRAFT",
+                        "publicationDate", LocalDateTime.now()
+                        ),
                 advertisementRowMapper
         );
     }

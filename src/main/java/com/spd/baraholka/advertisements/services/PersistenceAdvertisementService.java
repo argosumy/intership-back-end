@@ -16,4 +16,6 @@ public interface PersistenceAdvertisementService {
     List<Advertisement> findAdsByTitle(String title);
 
     List<Advertisement> findAdsByDescription(String description);
+
+    List<Advertisement> getAllActive();
 }

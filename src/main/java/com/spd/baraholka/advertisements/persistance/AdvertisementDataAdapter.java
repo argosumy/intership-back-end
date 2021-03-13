@@ -38,4 +38,9 @@ public class AdvertisementDataAdapter implements PersistenceAdvertisementService
     public List<Advertisement> findAdsByDescription(String description) {
         return advertisementRepository.findAdsByDescription(description);
     }
+
+    @Override
+    public List<Advertisement> getAllActive() {
+        return advertisementRepository.getAllActive();
+    }
 }

@@ -34,6 +34,12 @@ public class AdvertisementController {
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
 
+    @GetMapping
+    public List<AdvertisementDTO> getAllActive() {
+        List<Advertisement> advertisementList = advertisementService.getAllActive();
+        return advertisementMapper.toAdvertisementDtoList(advertisementList);
+    }
+
     @PostMapping
     public int saveAdvertisement(@RequestBody @Valid AdvertisementDTO advertisementDTO) {
         return advertisementService.saveAdvertisement(advertisementDTO);
