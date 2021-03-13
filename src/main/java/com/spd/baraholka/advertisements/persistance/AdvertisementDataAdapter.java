@@ -31,16 +31,6 @@ public class AdvertisementDataAdapter implements PersistenceAdvertisementService
     }
 
     @Override
-    public List<Advertisement> findAdsByTitle(String title) {
-       return advertisementRepository.findAdsByTitle(title);
-    }
-
-    @Override
-    public List<Advertisement> findAdsByDescription(String description) {
-        return advertisementRepository.findAdsByDescription(description);
-    }
-
-    @Override
     public List<Advertisement> getAllActive() {
         return advertisementRepository.getAllActive();
     }

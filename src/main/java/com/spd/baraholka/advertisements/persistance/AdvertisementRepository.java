@@ -124,22 +124,6 @@ public class AdvertisementRepository {
                 + " RETURNING id";
     }
 
-    public List<Advertisement> findAdsByTitle(String title) {
-        return jdbcTemplate.query(
-                "SELECT * FROM advertisements WHERE description LIKE :title",
-                Map.of("description", "%" + title + "%"),
-                advertisementRowMapper
-        );
-    }
-
-    public List<Advertisement> findAdsByDescription(String description) {
-        return jdbcTemplate.query(
-                "SELECT * FROM advertisements WHERE description LIKE :description",
-                Map.of("description", "%" + description + "%"),
-                advertisementRowMapper
-        );
-    }
-
     public List<Advertisement> getAllActive() {
         return jdbcTemplate.query(
                 "SELECT * FROM advertisements a WHERE a.status=:active AND " +

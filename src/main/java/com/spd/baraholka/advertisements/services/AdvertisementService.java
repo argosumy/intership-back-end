@@ -45,7 +45,9 @@ public class AdvertisementService {
     }
 
     public List<Advertisement> getFilteredAdsByDescription(String description) {
-        return persistenceAdvertisementService.findAdsByDescription(description);
+        return getAllActive().stream()
+                .filter(ad -> ad.getDescription().contains(description))
+                .collect(Collectors.toList());
     }
 
     public List<Advertisement> getAllActive() {

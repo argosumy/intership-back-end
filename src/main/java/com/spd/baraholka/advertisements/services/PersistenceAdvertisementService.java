@@ -14,11 +14,7 @@ public interface PersistenceAdvertisementService {
 
     int updateAdvertisementStatus(int id, AdvertisementStatus status);
 
-    List<Advertisement> findAdsByTitle(String title);
-
-    List<Advertisement> findAdsByDescription(String description);
-
     List<Advertisement> getAllActive();
 
-    public Optional<Advertisement> findDraftAdById(int id);
+     Optional<Advertisement> findDraftAdById(int id);
 }
