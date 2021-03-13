@@ -1,6 +1,6 @@
 package com.spd.baraholka.comments.entities;
 
-import com.spd.baraholka.advertisements.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.users.entities.User;
 
 import java.time.LocalDate;

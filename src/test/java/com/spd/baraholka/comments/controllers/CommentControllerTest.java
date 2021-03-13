@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.spd.baraholka.advertisements.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
@@ -87,7 +87,7 @@ class CommentControllerTest {
 
     private Advertisement createAdvertisement() {
         Advertisement advertisement = new Advertisement();
-        advertisement.setId(1);
+        advertisement.setAdvertisementId(1);
         return advertisement;
     }
 

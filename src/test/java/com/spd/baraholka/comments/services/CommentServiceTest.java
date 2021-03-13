@@ -1,6 +1,6 @@
 package com.spd.baraholka.comments.services;
 
-import com.spd.baraholka.advertisements.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.repositories.CommentRepository;
 import com.spd.baraholka.users.entities.User;
@@ -56,7 +56,7 @@ class CommentServiceTest {
 
     private Advertisement createAdvertisement() {
         Advertisement advertisement = new Advertisement();
-        advertisement.setId(1);
+        advertisement.setAdvertisementId(1);
         return advertisement;
     }
 

@@ -1,6 +1,6 @@
 package com.spd.baraholka.comments.mappers;
 
-import com.spd.baraholka.advertisements.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.users.entities.User;
@@ -23,7 +23,7 @@ public class CommentDtoMapper {
                 comment.getId(),
                 comment.getBody(),
                 comment.getCreatedDate(),
-                comment.getAdvertisement().getId(),
+                comment.getAdvertisement().getAdvertisementId(),
                 comment.getUser().getId(),
                 comment.getParent().getId()
         );
@@ -54,7 +54,7 @@ public class CommentDtoMapper {
 
     private Advertisement getAdvertisement(CommentDto commentDto) {
         Advertisement advertisement = new Advertisement();
-        advertisement.setId(commentDto.getAdvertisementId());
+        advertisement.setAdvertisementId(commentDto.getAdvertisementId());
         return advertisement;
     }
 

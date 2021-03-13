@@ -25,7 +25,7 @@ public class AdvertisementRowMapper implements RowMapper<Advertisement> {
         advertisement.setDiscountAvailability(rs.getBoolean("discount_availability"));
         advertisement.setCity(rs.getString("city"));
         advertisement.setStatus(AdvertisementStatus.valueOf(rs.getString("status")));
-        advertisement.setCreationDate(rs.getTimestamp("creation_date ").toLocalDateTime());
+        advertisement.setCreationDate(rs.getTimestamp("creation_date").toLocalDateTime());
         advertisement.setPublicationDate(rs.getTimestamp("publication_date").toLocalDateTime());
         advertisement.setStatusChangeDate(rs.getTimestamp("status_change_date").toLocalDateTime());
         return advertisement;

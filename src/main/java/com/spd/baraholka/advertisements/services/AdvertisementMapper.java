@@ -1,8 +1,6 @@
 package com.spd.baraholka.advertisements.services;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
-import com.spd.baraholka.comments.dto.CommentDto;
-import com.spd.baraholka.comments.entities.Comment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

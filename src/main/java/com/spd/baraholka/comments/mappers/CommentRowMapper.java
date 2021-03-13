@@ -1,6 +1,6 @@
 package com.spd.baraholka.comments.mappers;
 
-import com.spd.baraholka.advertisements.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.users.entities.User;
 import org.springframework.jdbc.core.RowMapper;
@@ -32,7 +32,7 @@ public class CommentRowMapper implements RowMapper<Comment> {
 
     private Advertisement getMappedAdvertisement(ResultSet rs) throws SQLException {
         Advertisement advertisement = new Advertisement();
-        advertisement.setId(rs.getInt("ad_id"));
+        advertisement.setAdvertisementId(rs.getInt("ad_id"));
         return advertisement;
     }
 
