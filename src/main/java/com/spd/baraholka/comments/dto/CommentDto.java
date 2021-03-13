@@ -1,29 +1,30 @@
 package com.spd.baraholka.comments.dto;
 
-import com.spd.baraholka.advertisements.entities.Advertisement;
-import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
-
+import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class CommentDto {
 
     private int id;
+    @NotBlank(message = "body shouldn't be empty!")
+    @Size(min = 2, max = 255, message = "length must be between 2 and 255 characters!")
     private final String body;
+    @NotNull
     private final LocalDate createdDate;
-    private final Advertisement advertisement;
-    private final User user;
-    private final Comment parent;
+    @Positive
+    private final int advertisementId;
+    @Positive
+    private final int userId;
+    @PositiveOrZero
+    private final int parentCommentId;
 
-    public CommentDto(int id, String body, LocalDate createdDate, Advertisement advertisement, User user, Comment parent) {
+    public CommentDto(int id, String body, LocalDate createdDate, int advertisementId, int userId, int parentCommentId) {
         this.id = id;
         this.body = body;
         this.createdDate = createdDate;
-        this.advertisement = advertisement;
-        this.user = user;
-        this.parent = parent;
+        this.advertisementId = advertisementId;
+        this.userId = userId;
+        this.parentCommentId = parentCommentId;
     }
 
     public int getId() {
@@ -42,47 +43,15 @@ public class CommentDto {
         return createdDate;
     }
 
-    public Advertisement getAdvertisement() {
-        return advertisement;
+    public int getAdvertisementId() {
+        return advertisementId;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public Comment getParent() {
-        return parent;
-    }
-
-    public static CommentDto toCommentDto(Comment comment) {
-        return getCommentDto(comment);
-    }
-
-    public static List<CommentDto> toCommentDtoList(List<Comment> commentList) {
-        return commentList.stream()
-                .map(CommentDto::getCommentDto)
-                .collect(Collectors.toList());
-    }
-
-    private static CommentDto getCommentDto(Comment comment) {
-        return new CommentDto(
-                comment.getId(),
-                comment.getBody(),
-                comment.getCreatedDate(),
-                comment.getAdvertisement(),
-                comment.getUser(),
-                comment.getParent()
-        );
-    }
-
-    public static Comment toComment(CommentDto commentDto) {
-        Comment comment = new Comment();
-        comment.setId(commentDto.getId());
-        comment.setBody(commentDto.getBody());
-        comment.setCreatedDate(commentDto.getCreatedDate());
-        comment.setAdvertisement(commentDto.getAdvertisement());
-        comment.setUser(commentDto.getUser());
-        comment.setParent(commentDto.getParent());
-        return comment;
+    public int getParentCommentId() {
+        return parentCommentId;
     }
 }

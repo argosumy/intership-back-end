@@ -4,11 +4,13 @@ import com.spd.baraholka.advertisements.entities.Advertisement;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.users.entities.User;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CommentMapper implements RowMapper<Comment> {
+@Component
+public class CommentRowMapper implements RowMapper<Comment> {
 
     @Override
     public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {

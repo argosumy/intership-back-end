@@ -7,6 +7,6 @@ CREATE TABLE "users"
     "email"          VARCHAR(50)        NOT NULL,
     "position"       VARCHAR(30)        NOT NULL,
     "phone_number"   VARCHAR(15)        NOT NULL,
-    "blocked_status" BOOLEAN,
+    "blocked_status" BOOLEAN            NOT NULL DEFAULT False,
     "resources_link" VARCHAR(255)       NOT NULL
 );

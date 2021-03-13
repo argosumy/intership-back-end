@@ -1,21 +1,25 @@
 package com.spd.baraholka.comment_reactions.dto;
 
-import com.spd.baraholka.comment_reactions.entities.CommentReaction;
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
-import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class CommentReactionDto {
-    private int id;
-    private final CommentReactionType commentReaction;
-    private Comment comment;
-    private final User user;
 
-    public CommentReactionDto(int id, CommentReactionType commentReaction, Comment comment, User user) {
+    private int id;
+    @NotNull
+    private final CommentReactionType commentReactionType;
+    @Positive
+    private final int commentId;
+    @Positive
+    private final int userId;
+
+    public CommentReactionDto(int id, CommentReactionType commentReactionType, int commentId, int userId) {
         this.id = id;
-        this.commentReaction = commentReaction;
-        this.comment = comment;
-        this.user = user;
+        this.commentReactionType = commentReactionType;
+        this.commentId = commentId;
+        this.userId = userId;
     }
 
     public int getId() {
@@ -26,28 +30,15 @@ public class CommentReactionDto {
         this.id = id;
     }
 
-    public CommentReactionType getCommentReaction() {
-        return commentReaction;
+    public CommentReactionType getCommentReactionType() {
+        return commentReactionType;
     }
 
-    public Comment getComment() {
-        return comment;
+    public int getCommentId() {
+        return commentId;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public static CommentReaction toCommentReaction(CommentReactionDto commentReactionDto) {
-        CommentReaction commentReaction = new CommentReaction();
-        commentReaction.setId(commentReactionDto.getId());
-        commentReaction.setCommentReactionType(commentReactionDto.getCommentReaction());
-        commentReaction.setComment(commentReactionDto.getComment());
-        commentReaction.setUser(commentReactionDto.getUser());
-        return commentReaction;
+    public int getUserId() {
+        return userId;
     }
 }

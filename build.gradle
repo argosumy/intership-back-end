@@ -17,11 +17,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation "io.springfox:springfox-boot-starter:3.0.0"
-
     implementation 'org.postgresql:postgresql'
     implementation 'com.zaxxer:HikariCP'
     implementation 'org.flywaydb:flyway-core'
+    implementation "io.springfox:springfox-boot-starter:3.0.0"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core'
