@@ -52,6 +52,8 @@ public class AdvertisementService {
 
     public List<Advertisement> getAllActive() {
         List<Advertisement> active = persistenceAdvertisementService.getAllActive();
+        logger.info("IN getAllActive - advertisements found: {}", active.size());
+
         active.forEach(ad -> {
             if (ad.getStatus() == (AdvertisementStatus.DRAFT)) {
                 ad.setStatus(AdvertisementStatus.ACTIVE);
