@@ -40,13 +40,13 @@ public class AdvertisementService {
 
     public List<Advertisement> getFilteredAdsByTitle(String title) {
         return getAllActive().stream()
-                .filter(ad -> ad.getTitle().contains(title))
+                .filter(ad -> ad.getTitle().toLowerCase().contains(title.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     public List<Advertisement> getFilteredAdsByDescription(String description) {
         return getAllActive().stream()
-                .filter(ad -> ad.getDescription().contains(description))
+                .filter(ad -> ad.getDescription().toLowerCase().contains(description.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
