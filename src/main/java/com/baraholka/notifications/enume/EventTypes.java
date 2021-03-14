@@ -1,4 +1,4 @@
-package com.spduniversity.notifications.enumes;
+package com.baraholka.notifications.enume;
 
 public enum EventTypes {
     NEW_ADVERTISEMENT,

@@ -1,4 +1,4 @@
-package com.spduniversity;
+package com.baraholka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
