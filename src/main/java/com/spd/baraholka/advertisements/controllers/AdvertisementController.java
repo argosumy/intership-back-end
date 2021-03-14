@@ -25,14 +25,14 @@ public class AdvertisementController {
         this.advertisementMapper = advertisementMapper;
     }
 
-    @GetMapping("/{title}")
-    public List<AdvertisementDTO> getFilteredAdsByTitle(@PathVariable("title") String title) {
+    @GetMapping("/title-search")
+    public List<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("title") String title) {
         List<Advertisement> advertisementList = advertisementService.getFilteredAdsByTitle(title);
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
 
-    @GetMapping("/{description}")
-    public List<AdvertisementDTO> getFilteredAdsByDescription(@PathVariable("description") String description) {
+    @GetMapping("/description-search")
+    public List<AdvertisementDTO> getFilteredAdsByDescription(@RequestParam("description") String description) {
         List<Advertisement> advertisementList = advertisementService.getFilteredAdsByDescription(description);
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
@@ -43,7 +43,7 @@ public class AdvertisementController {
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
 
-    @PostMapping("/{id}/{publicationDate}")
+    @PutMapping("/{id}/{publicationDate}")
     public int editPublicationDate(@PathVariable("id") int id,
                                    @PathVariable("publicationDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String publicationDate) {
         Advertisement advertisement = advertisementService.findDraftAdById(id)
@@ -52,7 +52,7 @@ public class AdvertisementController {
         return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public int cancelDelayedPublicationOfExistsAd(@PathVariable("id") int id) {
         Advertisement advertisement = advertisementService.findDraftAdById(id)
                 .orElseThrow(() -> new AdNotFoundException(id));
