@@ -153,6 +153,7 @@ class AdvertisementServiceTest {
     }
 
     @Test
+    @DisplayName("Should set publication date")
     void editPublicationDate() {
         advertisementService.editPublicationDate(advertisementDraft, "3333-01-01T10:40:01");
 

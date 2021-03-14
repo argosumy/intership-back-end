@@ -43,22 +43,22 @@ public class AdvertisementController {
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
 
-    @PutMapping("/{id}/{publicationDate}")
+    @PutMapping("/{id}/publish-delayed")
     public int editPublicationDate(@PathVariable("id") int id,
-                                   @PathVariable("publicationDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String publicationDate) {
+                                   @RequestParam("publicationDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String publicationDate) {
         Advertisement advertisement = advertisementService.findDraftAdById(id)
                 .orElseThrow(() -> new AdNotFoundException(id));
-        advertisementService.editPublicationDate(advertisement, publicationDate);
-        return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
+       return advertisementService.editPublicationDate(advertisement, publicationDate);
+//        return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/cancel-delayed")
     public int cancelDelayedPublicationOfExistsAd(@PathVariable("id") int id) {
         Advertisement advertisement = advertisementService.findDraftAdById(id)
                 .orElseThrow(() -> new AdNotFoundException(id));
         String presentDate = String.valueOf(LocalDateTime.now());
-        advertisementService.editPublicationDate(advertisement, presentDate);
-        return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
+       return advertisementService.editPublicationDate(advertisement, presentDate);
+//        return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
     }
 
     @PostMapping

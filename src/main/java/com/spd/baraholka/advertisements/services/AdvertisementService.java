@@ -73,7 +73,8 @@ public class AdvertisementService {
         return result;
     }
 
-    public void editPublicationDate(Advertisement advertisement, String publicationDate) {
+    public int editPublicationDate(Advertisement advertisement, String publicationDate) {
         advertisement.setPublicationDate(LocalDateTime.parse(publicationDate));
+        return persistenceAdvertisementService.updateAdvertisement(advertisement);
     }
 }
