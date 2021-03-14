@@ -1,10 +1,9 @@
-package com.spd.baraholka.user.service;
+package com.spd.baraholka.user;
 
 import com.spd.baraholka.login.dto.OAuth2UserDto;
-import com.spd.baraholka.user.User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class UserMapper {
 
     public User convertToEntity(OAuth2UserDto oAuth2UserDto) {

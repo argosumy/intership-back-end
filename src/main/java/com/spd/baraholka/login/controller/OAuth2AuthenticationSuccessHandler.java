@@ -1,10 +1,10 @@
-package com.spd.baraholka.config;
+package com.spd.baraholka.login.controller;
 
 import com.spd.baraholka.login.dto.OAuth2UserDto;
 import com.spd.baraholka.login.service.OAuth2UserService;
 import com.spd.baraholka.user.User;
-import com.spd.baraholka.user.service.UserMapper;
-import com.spd.baraholka.user.service.UserService;
+import com.spd.baraholka.user.UserMapper;
+import com.spd.baraholka.user.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

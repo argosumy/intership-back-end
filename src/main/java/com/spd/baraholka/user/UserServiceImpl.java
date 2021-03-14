@@ -16,4 +16,8 @@ public class UserServiceImpl implements UserService{
     public void create(User user) {
         repository.create(user);
     }
+
+    public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
 }

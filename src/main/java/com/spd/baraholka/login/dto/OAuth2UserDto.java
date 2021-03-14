@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class OAuth2UserDto {
 
-    private final String email;
+    private String email;
     private final String firstName;
     private final String lastName;
     private final String avatar;
@@ -18,6 +18,10 @@ public class OAuth2UserDto {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {

@@ -10,6 +10,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String location;
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
@@ -53,6 +54,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getPosition() {

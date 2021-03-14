@@ -1,0 +1,17 @@
+users:
+  - id: 1
+    first_name: "Lucas"
+    last_name: "Thompson"
+    location: "Kyiv"
+    email: "lucas@ukr.net"
+    position: "Java Developer"
+    phone_number: "12345678"
+    is_blocked: false
+  - id: 2
+    first_name: "Mary"
+    last_name: "Johnson"
+    location: "Lviv"
+    email: "existing@email.com"
+    position: "Javascript Developer"
+    phone_number: "87654321"
+    is_blocked: false
