@@ -48,8 +48,7 @@ public class AdvertisementController {
                                    @RequestParam("publicationDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String publicationDate) {
         Advertisement advertisement = advertisementService.findDraftAdById(id)
                 .orElseThrow(() -> new AdNotFoundException(id));
-       return advertisementService.editPublicationDate(advertisement, publicationDate);
-//        return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
+        return advertisementService.editPublicationDate(advertisement, publicationDate);
     }
 
     @PutMapping("/{id}/cancel-delayed")
@@ -57,8 +56,7 @@ public class AdvertisementController {
         Advertisement advertisement = advertisementService.findDraftAdById(id)
                 .orElseThrow(() -> new AdNotFoundException(id));
         String presentDate = String.valueOf(LocalDateTime.now());
-       return advertisementService.editPublicationDate(advertisement, presentDate);
-//        return advertisementService.updateAdvertisement(advertisementMapper.getAdvertisementDto(advertisement));
+        return advertisementService.editPublicationDate(advertisement, presentDate);
     }
 
     @PostMapping

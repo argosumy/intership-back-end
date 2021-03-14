@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.spd.baraholka.advertisements.exceptions.AdNotFoundException;
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.CurrencyType;
@@ -22,9 +23,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-import static com.spd.baraholka.comment_reactions.enums.CommentReactionType.LIKE;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -78,6 +82,7 @@ class AdvertisementControllerTest {
     }
 
     @Test
+    @DisplayName("Expect list of advertisements filtered by title")
     void getFilteredAdsByTitle() throws Exception {
         when(advertisementService.getFilteredAdsByTitle("title")).thenReturn(
                 List.of(advertisementActive, advertisementDraftToBeShown)
@@ -90,6 +95,7 @@ class AdvertisementControllerTest {
     }
 
     @Test
+    @DisplayName("Expect list of advertisements filtered by description")
     void getFilteredAdsByDescription() throws Exception {
         when(advertisementService.getFilteredAdsByDescription("description")).thenReturn(
                 List.of(advertisementActive, advertisementDraftToBeShown)
@@ -102,7 +108,7 @@ class AdvertisementControllerTest {
     }
 
     @Test
-    @DisplayName("Should return list of active comments")
+    @DisplayName("Should return list of active ads")
     void getAllActiveAds() throws Exception {
         when(advertisementService.getAllActive()).thenReturn(
                 List.of(advertisementActive, advertisementDraftToBeShown)
@@ -115,26 +121,60 @@ class AdvertisementControllerTest {
     }
 
     @Test
+    @DisplayName("Advertisement was found by id and updated publication date")
     void editPublicationDate() throws Exception {
-        when(advertisementService.editPublicationDate(advertisementDraft, "2023-01-01T10:40:01"))
-                .thenReturn(1);
-
-//        mockMvc.perform(get("/comment-reactions/1/LIKE"))
-//                .andExpect(status().isOk());
+        when(advertisementService.findDraftAdById(1))
+                .thenReturn(Optional.ofNullable(advertisementDraft));
 
         mockMvc.perform(put("/advertisements/1/publish-delayed?publicationDate=2023-01-01T10:40:01")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.TEXT_HTML)
                 .content("1"))
                 .andExpect(status().isOk());
-//                .contentType(MediaType.TEXT_HTML)
-//                .content("1"));
-//                .andExpect(status().isOk());
-
-//        verify(advertisementService).editPublicationDate(advertisementDraft, "2023-01-01T10:40:01");
     }
 
     @Test
-    void cancelDelayedPublicationOfExistsAd() {
+    @DisplayName("Advertisement was not found by id and throw exception")
+    void editPublicationDateThrowException() throws Exception {
+        when(advertisementService.findDraftAdById(100))
+                .thenThrow(new AdNotFoundException(100));
+
+        mockMvc.perform(put("/advertisements/100/publish-delayed?publicationDate=2023-01-01T10:40:01"))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof AdNotFoundException))
+                .andExpect(result -> assertEquals("Could not find advertisement with id 100",
+                        Objects.requireNonNull(result.getResolvedException()).getMessage()));
+    }
+
+    @Test
+    @DisplayName("Advertisement was not found by id and returned Optional Empty")
+    void editPublicationDateOfNotExistsAdAndReturnEmpty() throws Exception {
+        when(advertisementService.findDraftAdById(100))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(put("/advertisements/100/publish-delayed?publicationDate=2023-01-01T10:40:01"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Advertisement was found by id and canceled delayed publication")
+    void cancelDelayedPublicationOfExistsAd() throws Exception {
+        when(advertisementService.findDraftAdById(1))
+                .thenReturn(Optional.ofNullable(advertisementDraft));
+
+        mockMvc.perform(put("/advertisements/1/cancel-delayed")
+                .contentType(MediaType.TEXT_HTML)
+                .content("1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Advertisement was not found by id and returned Optional Empty")
+    void cancelDelayedPublicationOfNotExistsAdAndReturnEmpty() throws Exception {
+        when(advertisementService.findDraftAdById(100))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(put("/advertisements/100/cancel-delayed"))
+                .andExpect(status().isNotFound());
     }
 
     private String getResponseJson(List<Advertisement> advertisements) throws JsonProcessingException {

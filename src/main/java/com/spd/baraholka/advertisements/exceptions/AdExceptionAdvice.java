@@ -1,6 +1,5 @@
-package com.spd.baraholka.comments.controllers;
+package com.spd.baraholka.advertisements.exceptions;
 
-import com.spd.baraholka.advertisements.exceptions.AdNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

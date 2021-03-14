@@ -7,16 +7,19 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 public class AdvertisementRepository {
 
     public static final String STATUS = "status";
     public static final String STATUS_CHANGE_DATE = "statusChangeDate";
+    public static final String PUBLICATION_DATE = "publicationDate";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final AdvertisementRowMapper advertisementRowMapper;
 
@@ -55,26 +58,25 @@ public class AdvertisementRepository {
         namedParameters.addValue("city", advertisement.getCity());
         namedParameters.addValue(STATUS, advertisement.getStatus().toString());
         namedParameters.addValue("creationDate", Timestamp.valueOf(advertisement.getCreationDate()));
-        namedParameters.addValue("publicationDate", Timestamp.valueOf(advertisement.getPublicationDate()));
+        namedParameters.addValue(PUBLICATION_DATE, Timestamp.valueOf(advertisement.getPublicationDate()));
         namedParameters.addValue(STATUS_CHANGE_DATE, Timestamp.valueOf(advertisement.getStatusChangeDate()));
         return namedParameters;
     }
 
     private Map<String, Object> fillUpdateParameters(Advertisement advertisement) {
-        return new HashMap<>() {
-            {
-                put("title", advertisement.getTitle());
-                put("description", advertisement.getDescription());
-                put("category", advertisement.getCategory());
-                put("price", advertisement.getPrice());
-                put("currency", advertisement.getCurrency().toString());
-                put("discountAvailability", advertisement.isDiscountAvailability());
-                put("city", advertisement.getCity());
-                put(STATUS, advertisement.getStatus().toString());
-                put(STATUS_CHANGE_DATE, Timestamp.valueOf(advertisement.getStatusChangeDate()));
-                put("publicationDate", Timestamp.valueOf(advertisement.getPublicationDate()));
-                put("advertisementId", advertisement.getAdvertisementId());
-            }};
+        return Map.ofEntries(
+                Map.entry("title", advertisement.getTitle()),
+                Map.entry("description", advertisement.getDescription()),
+                Map.entry("category", advertisement.getCategory()),
+                Map.entry("price", advertisement.getPrice()),
+                Map.entry("currency", advertisement.getCurrency().toString()),
+                Map.entry("discountAvailability", advertisement.isDiscountAvailability()),
+                Map.entry("city", advertisement.getCity()),
+                Map.entry(STATUS, advertisement.getStatus().toString()),
+                Map.entry(STATUS_CHANGE_DATE, Timestamp.valueOf(advertisement.getStatusChangeDate())),
+                Map.entry(PUBLICATION_DATE, Timestamp.valueOf(advertisement.getPublicationDate())),
+                Map.entry("advertisementId", advertisement.getAdvertisementId())
+        );
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> fillUpdateStatusParameters(int id, AdvertisementStatus status) {
@@ -134,7 +136,7 @@ public class AdvertisementRepository {
                         "(a.status=:draft AND a.publication_date<=:publicationDate)",
                 Map.of("active", "ACTIVE",
                         "draft", "DRAFT",
-                        "publicationDate", LocalDateTime.now()
+                        PUBLICATION_DATE, LocalDateTime.now()
                 ),
                 advertisementRowMapper
         );
