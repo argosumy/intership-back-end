@@ -51,7 +51,14 @@ public class AdvertisementService {
     }
 
     public List<Advertisement> getAllActive() {
-        return persistenceAdvertisementService.getAllActive();
+        List<Advertisement> active = persistenceAdvertisementService.getAllActive();
+        active.forEach(ad -> {
+            if (ad.getStatus() == (AdvertisementStatus.DRAFT)) {
+                ad.setStatus(AdvertisementStatus.ACTIVE);
+                updateAdvertisement(advertisementMapper.getAdvertisementDto(ad));
+            }
+        });
+        return active;
     }
 
     public Optional<Advertisement> findDraftAdById(int id) {

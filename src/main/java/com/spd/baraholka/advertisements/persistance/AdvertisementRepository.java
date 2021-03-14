@@ -10,10 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class AdvertisementRepository {
@@ -63,17 +60,21 @@ public class AdvertisementRepository {
         return namedParameters;
     }
 
-    private Map<String, ? extends Serializable> fillUpdateParameters(Advertisement advertisement) {
-        return Map.of("title", advertisement.getTitle(),
-                "description", advertisement.getDescription(),
-                "category", advertisement.getCategory(),
-                "price", advertisement.getPrice(),
-                "currency", advertisement.getCurrency().toString(),
-                "discountAvailability", advertisement.isDiscountAvailability(),
-                "city", advertisement.getCity(),
-                STATUS, advertisement.getStatus().toString(),
-                STATUS_CHANGE_DATE, Timestamp.valueOf(advertisement.getStatusChangeDate()),
-                "id", advertisement.getAdvertisementId());
+    private Map<String, Object> fillUpdateParameters(Advertisement advertisement) {
+        return new HashMap<>() {
+            {
+                put("title", advertisement.getTitle());
+                put("description", advertisement.getDescription());
+                put("category", advertisement.getCategory());
+                put("price", advertisement.getPrice());
+                put("currency", advertisement.getCurrency().toString());
+                put("discountAvailability", advertisement.isDiscountAvailability());
+                put("city", advertisement.getCity());
+                put(STATUS, advertisement.getStatus().toString());
+                put(STATUS_CHANGE_DATE, Timestamp.valueOf(advertisement.getStatusChangeDate()));
+                put("publicationDate", Timestamp.valueOf(advertisement.getPublicationDate()));
+                put("advertisementId", advertisement.getAdvertisementId());
+            }};
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> fillUpdateStatusParameters(int id, AdvertisementStatus status) {
@@ -96,7 +97,8 @@ public class AdvertisementRepository {
                 + "discount_availability=:discountAvailability,"
                 + "city=:city,"
                 + "status=:status,"
-                + "status_change_date=:statusChangeDate "
+                + "status_change_date=:statusChangeDate,"
+                + "publication_date=:publicationDate "
                 + "WHERE id=:advertisementId";
     }
 
@@ -129,7 +131,7 @@ public class AdvertisementRepository {
     public List<Advertisement> getAllActive() {
         return jdbcTemplate.query(
                 "SELECT * FROM advertisements a WHERE a.status=:active OR " +
-                        "(a.status=:draft AND a.publication_date>=:publicationDate)",
+                        "(a.status=:draft AND a.publication_date<=:publicationDate)",
                 Map.of("active", "ACTIVE",
                         "draft", "DRAFT",
                         "publicationDate", LocalDateTime.now()
