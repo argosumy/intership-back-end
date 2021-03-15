@@ -32,4 +32,10 @@ class UserServiceImplTest {
         userServiceUnderTest.existsByEmail(dummyEmail);
         verify(userRepository, times(1)).existsByEmail(dummyEmail);
     }
+
+    @Test
+    void shouldInvokeRepoCountAllTest() {
+        userServiceUnderTest.countAll();
+        verify(userRepository, times(1)).countAll();
+    }
 }

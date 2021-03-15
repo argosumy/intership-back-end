@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Component("OAuth2SuccessHandler")
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -33,7 +34,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        OAuth2UserDto oAuth2UserDto = oAuth2UserService.getUserInfoFromOAuth2(authentication);
+        OAuth2UserDto oAuth2UserDto = Objects.requireNonNull(oAuth2UserService.getUserInfoFromOAuth2(authentication));
         if (!userService.existsByEmail(oAuth2UserDto.getEmail())) {
             User user = userMapper.convertToEntity(oAuth2UserDto);
             if (userService.countAll() == 0) {

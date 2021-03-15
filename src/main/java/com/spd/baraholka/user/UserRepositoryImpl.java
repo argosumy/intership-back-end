@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 @Repository
@@ -27,7 +28,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void create(User user) {
+    public User create(User user) {
         final String sql = "INSERT INTO users (avatar, first_name, last_name, email, location, phone_number, position) " +
                 "VALUES (:avatar, :first_name, :last_name, :email, :location, :phone_number, :position) ";
 
@@ -40,17 +41,19 @@ public class UserRepositoryImpl implements UserRepository {
                 .addValue("location", user.getLocation())
                 .addValue("phone_number", user.getPhoneNumber())
                 .addValue("position", user.getPosition());
-
         parameterizedJdbcTemplate.update(sql, parameters, keyHolder);
-        Map<String, Object> keys = keyHolder.getKeys();
-        if ((keys != null) && (keys.containsKey("id"))) {
+        Map<String, Object> keys = Objects.requireNonNull(keyHolder.getKeys());
+        if (keys.containsKey("id")) {
             Integer userId = (Integer) keys.get("id");
-            saveUserRoles(user, userId);
+            user.setId(userId);
+            saveUserRoles(user);
         }
+        return user;
     }
 
-    private void saveUserRoles(User user, int userId) {
-        Set<Role> roles = user.getRoles();
+    private void saveUserRoles(User user) {
+        Set<Role> roles = Objects.requireNonNull(user.getRoles());
+        int userId = user.getId();
         final String sql = "INSERT INTO users_roles (user_id, role) values (:user_id, :role) ON CONFLICT DO NOTHING";
         for (Role role : roles) {
             SqlParameterSource parameters = new MapSqlParameterSource()

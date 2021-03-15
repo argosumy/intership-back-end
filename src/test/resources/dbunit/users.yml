@@ -15,3 +15,12 @@ users:
     position: "Javascript Developer"
     phone_number: "87654321"
     is_blocked: false
+  - id: 3
+    first_name: "George"
+    last_name: "Jefferson"
+    location: "Dnipro"
+    email: "george@email.com"
+    position: "DevOps"
+    phone_number: "55555555"
+    is_blocked: false
+
