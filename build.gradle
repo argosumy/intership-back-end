@@ -15,7 +15,11 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
     implementation "io.springfox:springfox-boot-starter:3.0.0"
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
 }
 
 test {
