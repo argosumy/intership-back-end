@@ -1,6 +1,6 @@
-package com.spd.baraholka.users.services;
+package com.spd.baraholka.user.services;
 
-import com.spd.baraholka.users.persistance.User;
+import com.spd.baraholka.user.persistance.User;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,7 +1,7 @@
-package com.spd.baraholka.users.controllers;
+package com.spd.baraholka.user.controller;
 
-import com.spd.baraholka.users.services.UserDTO;
-import com.spd.baraholka.users.services.UserService;
+import com.spd.baraholka.user.services.UserDTO;
+import com.spd.baraholka.user.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
