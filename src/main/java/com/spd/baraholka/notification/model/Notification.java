@@ -1,4 +1,4 @@
-package com.spduniversity.notifications.model;
+package com.spd.baraholka.notification.model;
 
 
 
@@ -6,25 +6,16 @@ package com.spduniversity.notifications.model;
 import java.time.LocalDateTime;
 
 
-public class Notification {
-    private int id;
+public abstract class Notification {
     private String subject;
     private String description;
-    private User sendTo;
-    private User sendFrom;
+    private String sendTo;
     private String status;
     private String event;
     private LocalDateTime date;
+    private String profileLinkUser;
 
     public Notification(){
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getSubject() {
@@ -43,20 +34,12 @@ public class Notification {
         this.description = description;
     }
 
-    public User getSendTo() {
+    public String getSendTo() {
         return sendTo;
     }
 
-    public void setSendTo(User sendTo) {
+    public void setSendTo(String sendTo) {
         this.sendTo = sendTo;
-    }
-
-    public User getSendFrom() {
-        return sendFrom;
-    }
-
-    public void setSendFrom(User sendFrom) {
-        this.sendFrom = sendFrom;
     }
 
     public String getStatus() {
@@ -83,5 +66,11 @@ public class Notification {
         this.date = date;
     }
 
+    public String getProfileLinkUser() {
+        return profileLinkUser;
+    }
 
+    public void setProfileLinkUser(String profileLinkUser) {
+        this.profileLinkUser = profileLinkUser;
+    }
 }

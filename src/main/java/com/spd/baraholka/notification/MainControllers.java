@@ -1,7 +1,7 @@
-package com.spduniversity.notifications.conrollers;
+package com.spd.baraholka.notification;
 
-import com.spduniversity.notifications.enumes.EventTypes;
-import com.spduniversity.notifications.services.factory.NotificationFactory;
+import com.spd.baraholka.notification.enumes.EventTypes;
+import com.spd.baraholka.notification.services.factory.NotificationFactory;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;

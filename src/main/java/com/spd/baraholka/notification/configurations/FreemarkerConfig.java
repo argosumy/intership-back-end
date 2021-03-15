@@ -1,4 +1,4 @@
-package com.spduniversity.notifications.configurations;
+package com.spd.baraholka.notification.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

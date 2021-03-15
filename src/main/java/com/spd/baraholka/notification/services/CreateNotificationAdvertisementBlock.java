@@ -1,9 +1,8 @@
-package com.spduniversity.notifications.services;
+package com.spd.baraholka.notification.services;
 
-import com.spduniversity.notifications.enumes.EventTypes;
-import com.spduniversity.notifications.model.NotificationAdvertisement;
-import com.spduniversity.notifications.model.Notification;
-import com.spduniversity.notifications.model.User;
+import com.spd.baraholka.notification.enumes.EventTypes;
+import com.spd.baraholka.notification.model.AdvertisementNotification;
+import com.spd.baraholka.notification.model.Notification;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -41,7 +40,7 @@ public class CreateNotificationAdvertisementBlock implements CreateNotification 
 
     @Override
     public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
-        NotificationAdvertisement notificationAd = (NotificationAdvertisement) notification;
+        AdvertisementNotification notificationAd = (AdvertisementNotification) notification;
         LocalDateTime localDateTime = notification.getDate().plusDays(10);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String dateBlock = localDateTime.format(formatter);
@@ -49,36 +48,20 @@ public class CreateNotificationAdvertisementBlock implements CreateNotification 
         model.put("ad_name", notificationAd.getNameAd());
         model.put("block_ends" , dateBlock);
         model.put("reason", notification.getDescription());
-        model.put("profilelink",notification.getSendTo().getResourcesLink());
+        model.put("profilelink",notification.getProfileLinkUser());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("ad-block.ftl");
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-        mimeMessageHelper.setTo(notification.getSendTo().getEmail());
+        mimeMessageHelper.setTo(notification.getSendTo());
         mimeMessageHelper.setText(html, true);
         mimeMessageHelper.setSubject("Advertisement Block");
         mimeMessageHelper.setFrom("Admin");
 
         return message;
     }
-    //test method
-    @Override
-    public Notification getNotificationFromData(){
-        User userTo = new User();
-        userTo.setFirstName("Valeriy");
-        userTo.setEmail("udizsumy@gmail.com");
-        userTo.setResourcesLink("#");
-        NotificationAdvertisement notification = new NotificationAdvertisement();
-        notification.setEvent(EventTypes.ADVERTISEMENT_BLOCK.name());
-        notification.setSubject("Advertisement Block");
-        notification.setSendTo(userTo);
-        notification.setDate(LocalDateTime.now());
-        notification.setDescription("UPS :)");
-        notification.setNameAd("Note");
 
-        return notification;
-    }
 
     public EventTypes getTypes() {
         return types;

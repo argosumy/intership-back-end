@@ -1,9 +1,9 @@
-package com.spduniversity.notifications.services;
+package com.spd.baraholka.notification.services;
 
 
-import com.spduniversity.notifications.enumes.EventTypes;
-import com.spduniversity.notifications.model.Notification;
-import com.spduniversity.notifications.model.User;
+import com.spd.baraholka.notification.enumes.EventTypes;
+import com.spd.baraholka.notification.model.BanBlockNotification;
+import com.spd.baraholka.notification.model.Notification;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CreateNotificationAccountBan implements CreateNotification{
+public class CreateNotificationAccountBan implements CreateNotification {
     private final JavaMailSender emailSender;
     private final Configuration emailConfig;
     private final EventTypes types = EventTypes.ACCOUNT_BAN;
@@ -41,39 +41,23 @@ public class CreateNotificationAccountBan implements CreateNotification{
     }
 
     @Override
-    public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
+    public MimeMessage createNotificationTemplate(Notification not) throws MessagingException, IOException, TemplateException {
+        BanBlockNotification notification = (BanBlockNotification) not;
         LocalDateTime localDateTime = notification.getDate().plusDays(10);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String dateBan = localDateTime.format(formatter);
         Map<String,String> model = new HashMap();
         model.put("block_ends", dateBan);
         model.put("reason", notification.getDescription());
-        model.put("profile_link", notification.getSendTo().getResourcesLink());
+        model.put("profile_link", notification.getProfileLinkUser());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("profile-block.ftl");
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-        mimeMessageHelper.setTo(notification.getSendTo().getEmail());
+        mimeMessageHelper.setTo(notification.getSendTo());
         mimeMessageHelper.setText(html, true);
         mimeMessageHelper.setSubject(notification.getSubject());
         mimeMessageHelper.setFrom("Admin");
         return message;
     }
-
-    //test method (DataBase)
-    public Notification getNotificationFromData(){
-        User userTo = new User();
-        userTo.setEmail("udizsumy@gmail.com");
-        userTo.setResourcesLink("#");
-        Notification notification = new Notification();
-        notification.setEvent(EventTypes.ACCOUNT_BAN.name());
-        notification.setSubject("Account BAN");
-        notification.setSendTo(userTo);
-        notification.setDate(LocalDateTime.now());
-        notification.setDescription("Your profile was blocked by moderator till");
-
-        return notification;
-    }
-
-
 }

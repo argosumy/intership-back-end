@@ -1,20 +1,22 @@
-package com.spduniversity.notifications.model;
+package com.spd.baraholka.notification.model;
+
 
 import java.util.List;
-
-
-public class NotificationAdvertisement extends Notification{
-    private int id;
+//New Comments or new Advertisement
+public class AdvertisementNotification extends Notification{
     private String nameAd;
+    private String sendToOwner;
     private long price;
     private String currency;
     private String mainImage;
     private List<String> images;
     private String location;
     private String linkAd;
+    private String nameWriter;
 
 
-    public NotificationAdvertisement() {
+
+    public AdvertisementNotification() {
 
     }
 
@@ -24,6 +26,14 @@ public class NotificationAdvertisement extends Notification{
 
     public void setNameAd(String nameAd) {
         this.nameAd = nameAd;
+    }
+
+    public String getSendToOwner() {
+        return sendToOwner;
+    }
+
+    public void setSendToOwner(String sendToOwner) {
+        this.sendToOwner = sendToOwner;
     }
 
     public long getPrice() {
@@ -58,13 +68,7 @@ public class NotificationAdvertisement extends Notification{
         this.images = images;
     }
 
-    public String getLocation() {
-        return location;
-    }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     public String getLinkAd() {
         return linkAd;
@@ -72,5 +76,13 @@ public class NotificationAdvertisement extends Notification{
 
     public void setLinkAd(String linkAd) {
         this.linkAd = linkAd;
+    }
+
+    public String getNameWriter() {
+        return nameWriter;
+    }
+
+    public void setNameWriter(String nameWriter) {
+        this.nameWriter = nameWriter;
     }
 }

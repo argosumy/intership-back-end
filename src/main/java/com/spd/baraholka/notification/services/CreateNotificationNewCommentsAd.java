@@ -1,9 +1,9 @@
-package com.spduniversity.notifications.services;
+package com.spd.baraholka.notification.services;
 
 
-import com.spduniversity.notifications.enumes.EventTypes;
-import com.spduniversity.notifications.model.Notification;
-import com.spduniversity.notifications.model.User;
+import com.spd.baraholka.notification.enumes.EventTypes;
+import com.spd.baraholka.notification.model.AdvertisementNotification;
+import com.spd.baraholka.notification.model.Notification;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CreateNotificationNewCommentsAd {
+public class CreateNotificationNewCommentsAd implements CreateNotification {
     private final JavaMailSender emailSender;
     private final Configuration emailConfig;
 
@@ -33,16 +33,18 @@ public class CreateNotificationNewCommentsAd {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;
     }
-
-    public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
+    @Override
+    public MimeMessage createNotificationTemplate(Notification not) throws MessagingException, IOException, TemplateException {
+        AdvertisementNotification notification = (AdvertisementNotification) not;
         Map<String,String> model = new HashMap();
-        model.put("username", notification.getSendFrom().getFirst_name());
+        model.put("writer", notification.getNameWriter());
+        model.put("ad",notification.getLinkAd());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-        Template template = emailConfig.getTemplate("new-comment.ftl");
+        Template template = emailConfig.getTemplate("new-comment-ad.ftl");
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-        mimeMessageHelper.setTo(notification.getSendTo().getEmail());
+        mimeMessageHelper.setTo(notification.getSendTo());
         mimeMessageHelper.setText(html, true);
         mimeMessageHelper.setSubject("New comments");
         mimeMessageHelper.setFrom("Admin");
@@ -50,22 +52,8 @@ public class CreateNotificationNewCommentsAd {
         return message;
     }
 
-    //test method
-    public Notification getNotificationFromData(){
-        User userTo = new User();
-        userTo.setEmail("udizsumy@gmail.com");
-        User userFrom = new User();
-        userFrom.setFirst_name("Ludmila");
-
-        Notification notification = new Notification();
-        notification.setEvent(EventTypes.NEW_COMMENTS_ADVERTISEMENT.name());
-        notification.setSubject("New comments Ad");
-        notification.setSendTo(userTo);
-        notification.setSendFrom(userFrom);
-        notification.setDescription("New comments Ad");
-
-        return notification;
+    @Override
+    public EventTypes getType() {
+        return EventTypes.NEW_COMMENTS_ADVERTISEMENT;
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.spduniversity.notifications.model;
+package com.spd.baraholka.notification.model;
 
 public class NotificationCommentsToComments extends Notification {
 

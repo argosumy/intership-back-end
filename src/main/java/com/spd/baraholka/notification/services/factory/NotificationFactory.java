@@ -1,7 +1,8 @@
-package com.spduniversity.notifications.services.factory;
+package com.spd.baraholka.notification.services.factory;
 
-import com.spduniversity.notifications.enumes.EventTypes;
-import com.spduniversity.notifications.services.*;
+import com.spd.baraholka.notification.enumes.EventTypes;
+import com.spd.baraholka.notification.model.Notification;
+import com.spd.baraholka.notification.services.CreateNotification;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class NotificationFactory {
 
     public MimeMessage buildNotification(EventTypes type) throws MessagingException, IOException, TemplateException {
         Optional<CreateNotification> notification =  list.stream().filter(list -> type == list.getType()).findFirst();
-        return notification.orElseThrow().createNotificationTemplate(notification.get().getNotificationFromData());
+        //bild model notification
+       // notification.orElseThrow().createNotificationTemplate();
+        return null;
     }
 }
