@@ -7,6 +7,8 @@ public class SQLQueries {
             + "VAlUES (?,?,?,?,?,?)";
     public final static String SAVE_NOTIFICATION_NEW_AD = "INSERT INTO NOTIFICATIONS (send_to,status,event,date,ad_id) "
             + "VAlUES (?,?,?,?,?)";
+    public  final static String SAVE_NOTIFICATION_NEW_COMMENT_TO_MY_COMMENT = "INSERT INTO "
+            + "NOTIFICATIONS (send_to,send_from,status,event,date) VALUES (?,?,?,?,?)";
     public final static String GET_ALL_USER_ID = "SELECT ID FROM USERS";
     public final static String GET_USER_ID_WISHLIST = "SELECT wish_list.user_id FROM wish_list INNER JOIN advertisement AS ad "
                                                                              + "ON ad.id = wish_list.ad_id WHERE ad.id = ?";

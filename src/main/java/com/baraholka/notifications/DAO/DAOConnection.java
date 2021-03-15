@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 public interface DAOConnection {
     void connect() throws ClassNotFoundException;
-    void disconnect();
     void saveNotification(EventTypes types, HashMap<String,String> arg);
 
 }
