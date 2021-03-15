@@ -41,6 +41,12 @@ Example:
 
 `DB_NAME=baraholka DB_USERNAME=baraholka DB_PASSWORD=baraholka docker-compose up`
 
+#### Default parameters to access a database:
+
+- Database name:     **baraholka**
+- Username:          **baraholka**
+- Password password: **baraholka**
+
 _**Note:**_ Replace parameters **<database_name>**, **<database_user>**, **<database_password>** with any text values and memorize provided values as they will be required further in the step 6.
 
 _**Note:**_ This command will start PostgreSQL server and pgAdmin tool, create a database and run the application afterwards.
