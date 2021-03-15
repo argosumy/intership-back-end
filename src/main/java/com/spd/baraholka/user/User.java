@@ -1,7 +1,8 @@
 package com.spd.baraholka.user;
 
-import java.util.List;
-import java.util.Objects;
+import com.spd.baraholka.role.Role;
+
+import java.util.*;
 
 public class User {
 
@@ -15,6 +16,12 @@ public class User {
     private String phoneNumber;
     private boolean isBlocked;
     private List<String> resourceLinks;
+    private final Set<Role> roles;
+
+    public User() {
+        this.roles = new HashSet<>();
+        roles.add(Role.USER);
+    }
 
     public int getId() {
         return id;
@@ -94,6 +101,14 @@ public class User {
 
     public void setResourceLinks(List<String> resourceLinks) {
         this.resourceLinks = resourceLinks;
+    }
+
+    public Set<Role> getRoles() {
+        return Collections.unmodifiableSet(roles);
+    }
+
+    public boolean grantRole(Role role) {
+        return roles.add(role);
     }
 
     @Override

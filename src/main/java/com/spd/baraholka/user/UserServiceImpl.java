@@ -20,4 +20,8 @@ public class UserServiceImpl implements UserService{
     public boolean existsByEmail(String email) {
         return repository.existsByEmail(email);
     }
+
+    public int countAll() {
+        return repository.countAll();
+    }
 }

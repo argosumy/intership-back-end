@@ -2,6 +2,7 @@ package com.spd.baraholka.login.controller;
 
 import com.spd.baraholka.login.dto.OAuth2UserDto;
 import com.spd.baraholka.login.service.OAuth2UserService;
+import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.User;
 import com.spd.baraholka.user.UserMapper;
 import com.spd.baraholka.user.UserService;
@@ -35,6 +36,9 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         OAuth2UserDto oAuth2UserDto = oAuth2UserService.getUserInfoFromOAuth2(authentication);
         if (!userService.existsByEmail(oAuth2UserDto.getEmail())) {
             User user = userMapper.convertToEntity(oAuth2UserDto);
+            if (userService.countAll() == 0) {
+                user.grantRole(Role.MODERATOR);
+            }
             userService.create(user);
         }
         response.sendRedirect("/me/oauth2");
