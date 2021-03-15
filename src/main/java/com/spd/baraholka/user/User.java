@@ -13,7 +13,7 @@ public class User {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private List<String> resourceLinks;
+    private List<UserAdditionalResource> resourceLinks;
 
     public int getId() {
         return id;
@@ -79,11 +79,11 @@ public class User {
         isBlocked = blocked;
     }
 
-    public List<String> getResourceLinks() {
+    public List<UserAdditionalResource> getResourceLinks() {
         return resourceLinks;
     }
 
-    public void setResourceLinks(List<String> resourceLinks) {
+    public void setResourceLinks(List<UserAdditionalResource> resourceLinks) {
         this.resourceLinks = resourceLinks;
     }
 
