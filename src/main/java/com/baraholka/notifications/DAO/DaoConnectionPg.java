@@ -1,15 +1,23 @@
 package com.baraholka.notifications.DAO;
+import com.baraholka.notifications.DAO.factory.SaveNotification;
+import com.baraholka.notifications.DAO.factory.SaveNotificationFactory;
 import com.baraholka.notifications.enume.EventTypes;
 import com.baraholka.notifications.enume.NotificationStatus;
+import freemarker.template.TemplateException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 @Repository
 public class DaoConnectionPg implements DAOConnection {
     private DaoConnectionPg daoConnectionPg;
+    private SaveNotificationFactory factory;
 
     @Value("${datasource.url}")
     private String url;
@@ -22,8 +30,11 @@ public class DaoConnectionPg implements DAOConnection {
     private ResultSet resultSet;
     private Driver driver;
 
-    public DaoConnectionPg() {
+
+    @Autowired
+    public DaoConnectionPg(SaveNotificationFactory factory) {
         super();
+        this.factory = factory;
     }
 
     @Override
@@ -58,55 +69,21 @@ public class DaoConnectionPg implements DAOConnection {
         }
     }
 
+    /*if(EventTypes.NEW_ADVERTISEMENT or EventTypes.CHANGES_ADVERTISEMENT or NEW_COMMENTS_ADVERTISEMENT)
+    *           then int idUserOrIdAd = IdAd
+    * if(EventTypes.ACCOUNT_BAN or EventTypes.ADVERTISEMENT_BLOCK) then idUserOrIdAd = idUser
+    *
+    * */
     @Override
-    public void saveNotification(EventTypes types, String description, int idUserOrIdAd){
+    public void saveNotification(EventTypes types, HashMap<String,String> arg){
         connect();
-        if((types == EventTypes.NEW_ADVERTISEMENT) || (types == EventTypes.CHANGES_ADVERTISEMENT)) {
-            try {
-                if(types == EventTypes.NEW_ADVERTISEMENT) {
-                    statement = connection.createStatement();
-                    resultSet = statement.executeQuery(SQLQueries.GET_ALL_USER_ID);
-                }
-                else{
-                    PreparedStatement preparedStatement = (PreparedStatement) statement;
-                    preparedStatement = connection.prepareStatement(SQLQueries.GET_USER_ID_WISHLIST);
-                    //table wish_list idAD == idUserOrIdAd
-                    preparedStatement.setInt(1,idUserOrIdAd);
-                    resultSet = preparedStatement.executeQuery();
-                }
-                while (resultSet.next()) {
-                    int id = resultSet.getInt(1);
-                    saveNotificationOne(types,"",id);
-                }
-            } catch (SQLException throwables) {
+        try {
+            SaveNotification saveNotification = factory.buildSaveNotification(types);
+            saveNotification.save(arg,connection);
+            connection.close();
+        }catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        }
-
-        if((types == EventTypes.ACCOUNT_BAN) || (types == EventTypes.ADVERTISEMENT_BLOCK)){
-            //table user  id <- idUserOrIdAd
-            saveNotificationOne(types, description, idUserOrIdAd);
-        }
-
-        if(types == EventTypes.NEW_COMMENTS_ADVERTISEMENT){
-            PreparedStatement preparedStatement = (PreparedStatement) statement;
-            try {
-                preparedStatement = connection.prepareStatement(SQLQueries.GET_TO_SEND_COMMENT_AD);
-                resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()){
-                    saveNotificationOne(EventTypes.NEW_COMMENTS_ADVERTISEMENT,"",resultSet.getInt("to"));
-                }
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-
-
-
-
-
-        disconnect();
     }
 
     /*
@@ -114,23 +91,5 @@ public class DaoConnectionPg implements DAOConnection {
      * @param recipient recipient == 0 (EventTypes.NEW_ADVERTISEMENT, EventTypes.CHANGES_ADVERTISEMENT)
      */
     private void saveNotificationOne(EventTypes types,String description, int recipient) {
-        String status = NotificationStatus.NEW.name();
-        String event = types.name();
-        Date date = Date.valueOf(LocalDate.now());
-        String sqlInsert = SQLQueries.SAVE_NOTIFICATION;
-        PreparedStatement preparedStatement = (PreparedStatement) statement;
-
-        try {
-            preparedStatement = connection.prepareStatement(sqlInsert);
-            preparedStatement.setInt(1,recipient);
-            preparedStatement.setString(2,status);
-            preparedStatement.setString(3,event);
-            preparedStatement.setDate(4,date);
-            preparedStatement.setString(5,description);
-            preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
-
-    }
 }
