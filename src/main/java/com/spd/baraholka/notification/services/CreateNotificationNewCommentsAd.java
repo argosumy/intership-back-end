@@ -2,7 +2,7 @@ package com.spd.baraholka.notification.services;
 
 
 import com.spd.baraholka.notification.enumes.EventTypes;
-import com.spd.baraholka.notification.model.AdvertisementNotification;
+import com.spd.baraholka.notification.model.CommentNotification;
 import com.spd.baraholka.notification.model.Notification;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -35,10 +35,12 @@ public class CreateNotificationNewCommentsAd implements CreateNotification {
     }
     @Override
     public MimeMessage createNotificationTemplate(Notification not) throws MessagingException, IOException, TemplateException {
-        AdvertisementNotification notification = (AdvertisementNotification) not;
+        CommentNotification notification = (CommentNotification) not;
         Map<String,String> model = new HashMap();
         model.put("writer", notification.getNameWriter());
+        model.put("link_profile", notification.getProfileLinkUser());
         model.put("ad",notification.getLinkAd());
+
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("new-comment-ad.ftl");
@@ -46,7 +48,7 @@ public class CreateNotificationNewCommentsAd implements CreateNotification {
 
         mimeMessageHelper.setTo(notification.getSendTo());
         mimeMessageHelper.setText(html, true);
-        mimeMessageHelper.setSubject("New comments");
+        mimeMessageHelper.setSubject(notification.getSubject());
         mimeMessageHelper.setFrom("Admin");
 
         return message;

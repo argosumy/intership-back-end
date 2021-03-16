@@ -2,8 +2,8 @@ package com.spd.baraholka.notification.model;
 
 
 import java.util.List;
-//New Comments or new Advertisement
-public class AdvertisementNotification extends Notification{
+//New Comments, new Advertisement, Changes Advertisement
+public class CommentNotification extends Notification{
     private String nameAd;
     private String sendToOwner;
     private long price;
@@ -15,7 +15,7 @@ public class AdvertisementNotification extends Notification{
 
 
 
-    public AdvertisementNotification() {
+    public CommentNotification() {
 
     }
 

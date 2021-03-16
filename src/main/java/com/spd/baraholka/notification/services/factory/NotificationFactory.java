@@ -25,7 +25,6 @@ public class NotificationFactory {
     public MimeMessage buildNotification(EventTypes type, Notification notif) throws MessagingException, IOException, TemplateException {
         Optional<CreateNotification> notification =  list.stream().filter(list -> type == list.getType()).findFirst();
         //bild model notification
-        notification.orElseThrow().createNotificationTemplate(notif);
         return  notification.orElseThrow().createNotificationTemplate(notif);
     }
 }

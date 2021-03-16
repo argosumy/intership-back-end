@@ -1,7 +1,7 @@
 package com.spd.baraholka.notification.services;
 import com.spd.baraholka.notification.enumes.EventTypes;
 import com.spd.baraholka.notification.model.Notification;
-import com.spd.baraholka.notification.model.AdvertisementNotification;
+import com.spd.baraholka.notification.model.CommentNotification;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -38,19 +38,20 @@ public class CreateNotificationChangesAd implements CreateNotification {
     }
 
     @Override
-    public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
-        AdvertisementNotification notificationAd = (AdvertisementNotification) notification;
+    public MimeMessage createNotificationTemplate(Notification notif) throws MessagingException, IOException, TemplateException {
+        CommentNotification notificationAd = (CommentNotification) notif;
         Map<String,String> model = new HashMap();
         model.put("reason" , notificationAd.getDescription());
         model.put("link_profile",notificationAd.getProfileLinkUser());
+        model.put("link_ad",notificationAd.getLinkAd());
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Template template = emailConfig.getTemplate("wishlist-changes.ftl");
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-        mimeMessageHelper.setTo(notification.getSendTo());
+        mimeMessageHelper.setTo(notificationAd.getSendTo());
         mimeMessageHelper.setText(html, true);
-        mimeMessageHelper.setSubject(notification.getSubject());
+        mimeMessageHelper.setSubject(notificationAd.getSubject());
         mimeMessageHelper.setFrom("Admin");
 
         return message;

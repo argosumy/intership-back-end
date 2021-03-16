@@ -1,6 +1,6 @@
 package com.spd.baraholka.notification.services;
 import com.spd.baraholka.notification.enumes.EventTypes;
-import com.spd.baraholka.notification.model.AdvertisementNotification;
+import com.spd.baraholka.notification.model.CommentNotification;
 import com.spd.baraholka.notification.model.Notification;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -38,7 +38,7 @@ public class CreateNotificationNewAd implements CreateNotification {
 
     @Override
     public MimeMessage createNotificationTemplate(Notification not) throws MessagingException, IOException, TemplateException {
-        AdvertisementNotification notification = (AdvertisementNotification) not;
+        CommentNotification notification = (CommentNotification) not;
         Map<String, Object> model = new HashMap<>();
         model.put("main_image",notification.getMainImage());
         model.put("images",notification.getImages());
