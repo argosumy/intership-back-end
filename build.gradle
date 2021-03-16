@@ -16,6 +16,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation "io.springfox:springfox-boot-starter:3.0.0"
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.30'
 }
 
 test {
