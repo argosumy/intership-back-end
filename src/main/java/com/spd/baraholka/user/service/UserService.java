@@ -1,13 +1,13 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.user.controller.UserAdditionalResourceDTO;
-import com.spd.baraholka.user.controller.UserAdditionalResourceMapper;
-import com.spd.baraholka.user.controller.UserDTO;
-import com.spd.baraholka.user.controller.UserMapper;
+import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
+import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
+import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
-import com.spd.baraholka.user.persistance.User;
-import com.spd.baraholka.user.persistance.UserAdditionalResource;
+import com.spd.baraholka.user.persistance.entities.User;
+import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

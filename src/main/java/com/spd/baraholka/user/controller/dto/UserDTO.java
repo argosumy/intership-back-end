@@ -1,17 +1,36 @@
-package com.spd.baraholka.user.persistance;
+package com.spd.baraholka.user.controller.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
-public class User {
+public class UserDTO {
 
+    @NotNull
     private int id;
+
+    @NotNull
     private String firstName;
+
+    @NotNull
     private String lastName;
+
+    @NotNull
     private String email;
+
+    @NotEmpty
+    @Size(max = 50)
     private String position;
+
+    @NotEmpty
+    @Size(max = 20)
     private String phoneNumber;
+
+    @NotEmpty
+    private List<UserAdditionalResourceDTO> additionalContactResources;
+
     private boolean isBlocked;
-    private List<UserAdditionalResource> additionalContactResources;
 
     public int getId() {
         return id;
@@ -69,11 +88,11 @@ public class User {
         isBlocked = blocked;
     }
 
-    public List<UserAdditionalResource> getAdditionalContactResources() {
+    public List<UserAdditionalResourceDTO> getAdditionalContactResources() {
         return additionalContactResources;
     }
 
-    public void setAdditionalContactResources(List<UserAdditionalResource> additionalContactResources) {
+    public void setAdditionalContactResources(List<UserAdditionalResourceDTO> additionalContactResources) {
         this.additionalContactResources = additionalContactResources;
     }
 }

@@ -1,6 +1,7 @@
-package com.spd.baraholka.user.controller;
+package com.spd.baraholka.user.controller.mappers;
 
-import com.spd.baraholka.user.persistance.UserAdditionalResource;
+import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
+import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

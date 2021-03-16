@@ -1,5 +1,6 @@
-package com.spd.baraholka.user.persistance;
+package com.spd.baraholka.user.persistance.mappers;
 
+import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

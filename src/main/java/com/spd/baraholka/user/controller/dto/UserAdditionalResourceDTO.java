@@ -1,4 +1,4 @@
-package com.spd.baraholka.user.controller;
+package com.spd.baraholka.user.controller.dto;
 
 public class UserAdditionalResourceDTO {
 

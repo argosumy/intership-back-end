@@ -1,5 +1,8 @@
-package com.spd.baraholka.user.persistance;
+package com.spd.baraholka.user.persistance.repoositories;
 
+import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
+import com.spd.baraholka.user.persistance.mappers.UserAdditionalResourceRowMapper;
+import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;

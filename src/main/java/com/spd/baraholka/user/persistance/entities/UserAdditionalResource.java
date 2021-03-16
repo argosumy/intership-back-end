@@ -1,4 +1,4 @@
-package com.spd.baraholka.user.persistance;
+package com.spd.baraholka.user.persistance.entities;
 
 public class UserAdditionalResource {
 
