@@ -11,6 +11,7 @@ import com.spd.baraholka.login.service.OAuth2UserService;
 import com.spd.baraholka.user.User;
 import com.spd.baraholka.user.UserMapper;
 import com.spd.baraholka.user.UserService;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +25,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 
@@ -42,6 +44,7 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
     private final String dummyGivenName = "Mock Given Name";
     private final String dummyFamilyName = "Mock Family Name";
     private final String dummyPicture = "Mock Picture URL";
+    private final String existingEmail = "existing@email.com";
 
     @Autowired
     @Spy
@@ -59,10 +62,15 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
     @BeforeEach
     void init() {
         oAuth2SuccessHandlerUnderTest = new OAuth2AuthenticationSuccessHandler(userService, userMapper, oAuth2UserService);
+        ReflectionTestUtils.setField(oAuth2SuccessHandlerUnderTest, "allowedDomains", Lists.newArrayList("spd-ukraine.com", "email.com"));
     }
 
     private OAuth2UserDto initDummyOAuth2UserDto() {
         return new OAuth2UserDto(dummyEmail, dummyGivenName, dummyFamilyName, dummyPicture);
+    }
+
+    private OAuth2UserDto initExistingDummyOAuth2UserDto() {
+        return new OAuth2UserDto(existingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
     private User initDummyUser() {
@@ -99,9 +107,7 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
     @Test
     @DataSet(value="/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldNotSaveExistingLoggedInUserToDbTest() throws IOException {
-        String existingEmail = "existing@email.com";
-        OAuth2UserDto dummyOAuth2UserDto = initDummyOAuth2UserDto();
-        dummyOAuth2UserDto.setEmail(existingEmail);
+        OAuth2UserDto dummyOAuth2UserDto = initExistingDummyOAuth2UserDto();
         User dummyUser = initDummyUser();
         dummyUser.setEmail(existingEmail);
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
