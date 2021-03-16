@@ -1,4 +1,4 @@
-package com.spd.baraholka.user.service;
+package com.spd.baraholka.user.controller.dto;
 
 import org.json.simple.JSONObject;
 

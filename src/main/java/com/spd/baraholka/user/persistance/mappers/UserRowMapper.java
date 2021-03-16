@@ -1,5 +1,6 @@
-package com.spd.baraholka.user.persistance;
+package com.spd.baraholka.user.persistance.mappers;
 
+import com.spd.baraholka.user.persistance.entities.User;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

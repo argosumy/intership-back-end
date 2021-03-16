@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.controller;
 
-import com.spd.baraholka.user.service.UserDTO;
+import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

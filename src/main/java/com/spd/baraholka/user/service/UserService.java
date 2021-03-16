@@ -1,7 +1,9 @@
 package com.spd.baraholka.user.service;
 
+import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
-import com.spd.baraholka.user.persistance.User;
+import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.stereotype.Service;
 
 @Service
