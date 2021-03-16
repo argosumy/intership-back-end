@@ -1,22 +1,44 @@
-package com.spd.baraholka.advertisements.persistance;
+package com.spd.baraholka.advertisement.service;
 
+import com.spd.baraholka.advertisement.persistance.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.CurrencyType;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-public class Advertisement {
+public class AdvertisementDTO {
 
+    @NotNull
     private int advertisementId;
+
+    @NotNull
     private int ownerId;
+
+    @Size(max = 200)
     private String title;
+
+    @NotNull
+    private AdvertisementStatus status;
+
+    @Positive
+    private double price;
+
+    @NotNull
+    private LocalDateTime creationDate;
+
+    @NotNull
+    private LocalDateTime statusChangeDate;
+
+    @Size(max = 20)
+    private String city;
+
     private String description;
     private String category;
-    private double price;
     private CurrencyType currency;
     private boolean discountAvailability;
-    private String city;
-    private AdvertisementStatus status;
-    private LocalDateTime creationDate;
     private LocalDateTime publicationDate;
-    private LocalDateTime statusChangeDate;
 
     public int getAdvertisementId() {
         return advertisementId;

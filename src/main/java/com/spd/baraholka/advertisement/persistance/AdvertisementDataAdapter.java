@@ -1,6 +1,6 @@
-package com.spd.baraholka.advertisements.persistance;
+package com.spd.baraholka.advertisement.persistance;
 
-import com.spd.baraholka.advertisements.services.PersistenceAdvertisementService;
+import com.spd.baraholka.advertisement.service.PersistenceAdvertisementService;
 import org.springframework.stereotype.Service;
 
 @Service

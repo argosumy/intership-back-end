@@ -1,4 +1,4 @@
-package com.spd.baraholka.advertisements.persistance;
+package com.spd.baraholka.advertisement.persistance;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

@@ -1,8 +1,8 @@
-package com.spd.baraholka.advertisements.controllers;
+package com.spd.baraholka.advertisement.controller;
 
-import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
-import com.spd.baraholka.advertisements.services.AdvertisementDTO;
-import com.spd.baraholka.advertisements.services.AdvertisementService;
+import com.spd.baraholka.advertisement.persistance.AdvertisementStatus;
+import com.spd.baraholka.advertisement.service.AdvertisementDTO;
+import com.spd.baraholka.advertisement.service.AdvertisementService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
