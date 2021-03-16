@@ -65,10 +65,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 "category", advertisement.getCategory(),
                 "price", advertisement.getPrice(),
                 "currency", advertisement.getCurrency().toString(),
-                "discountAvailability", advertisement.isDiscountAvailability(),
                 "city", advertisement.getCity(),
-                "status", advertisement.getStatus().toString(),
-                "statusChangeDate", Timestamp.valueOf(advertisement.getStatusChangeDate()),
                 "id", advertisement.getAdvertisementId());
     }
 
@@ -89,10 +86,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + "category=:category,"
                 + "price=:price,"
                 + "currency=:currency,"
-                + "discount_availability=:discountAvailability,"
                 + "city=:city,"
-                + "status=:status,"
-                + "status_change_date=:statusChangeDate "
                 + "WHERE id=:advertisementId";
     }
 
