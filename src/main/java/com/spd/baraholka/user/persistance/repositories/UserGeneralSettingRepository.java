@@ -20,11 +20,12 @@ public class UserGeneralSettingRepository implements PersistenceUserGeneralSetti
     @Override
     public int updateUserGeneralSettings(UserGeneralSetting userGeneralSetting) {
         String updateSQL = createUpdateSQL();
-        jdbcTemplate.update(updateSQL, fillInsertParameters(userGeneralSetting));
+        Map<String, ? extends Serializable> updateParameters = createUpdateUserGeneralSettingsParameters(userGeneralSetting);
+        jdbcTemplate.update(updateSQL, updateParameters);
         return userGeneralSetting.getId();
     }
 
-    private Map<String, ? extends Serializable> fillInsertParameters(UserGeneralSetting userGeneralSetting) {
+    private Map<String, ? extends Serializable> createUpdateUserGeneralSettingsParameters(UserGeneralSetting userGeneralSetting) {
         return Map.of("openAdsInNewTab", userGeneralSetting.isOpenAdsInNewTab(), "id", userGeneralSetting.getId());
     }
 
