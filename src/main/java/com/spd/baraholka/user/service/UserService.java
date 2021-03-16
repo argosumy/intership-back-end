@@ -18,11 +18,11 @@ public class UserService {
     }
 
     public UserDTO getUserById(int id) {
-        User user = persistenceUserService.getUserById(id);
+        User user = persistenceUserService.selectUserById(id);
         return userMapper.convertToDTO(user);
     }
 
     public int changeUserBlockedStatus(int id, boolean isBlocked) {
-        return persistenceUserService.changeUserBlockedStatus(id, isBlocked);
+        return persistenceUserService.updateUserBlockedStatus(id, isBlocked);
     }
 }
