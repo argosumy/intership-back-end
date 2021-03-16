@@ -2,7 +2,7 @@ package com.spd.baraholka.comments.controllers;
 
 import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
+import com.spd.baraholka.config.exceptions.*;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;
 import com.spd.baraholka.comments.services.CommentService;
 import org.springframework.web.bind.annotation.*;
@@ -46,14 +46,14 @@ public class CommentController {
 
     @PutMapping("/comment/{id}")
     public CommentDto updateComment(@RequestBody @Valid CommentDto commentDto, @PathVariable("id") int id) {
-        Comment comment = commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
+        Comment comment = commentService.findById(id).orElseThrow(() -> new NotFoundByIdException(id));
         Comment commentToUpdate = commentDtoMapper.updateExistsComment(comment, commentDto);
         return commentDtoMapper.getCommentDto(commentService.update(commentToUpdate, id));
     }
 
     @GetMapping("/comment/{id}")
     public CommentDto getOneComment(@PathVariable("id") int id) {
-        Comment comment = commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
+        Comment comment = commentService.findById(id).orElseThrow(() -> new NotFoundByIdException(id));
         return commentDtoMapper.getCommentDto(comment);
     }
 }

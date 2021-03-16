@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.spd.baraholka.advertisements.exceptions.AdNotFoundException;
+import com.spd.baraholka.config.exceptions.*;
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.CurrencyType;
@@ -123,12 +123,12 @@ class AdvertisementControllerTest {
     @DisplayName("Advertisement was not found by id and throw exception")
     void editPublicationDateThrowException() throws Exception {
         when(advertisementService.findDraftAdById(100))
-                .thenThrow(new AdNotFoundException(100));
+                .thenThrow(new NotFoundByIdException(100));
 
         mockMvc.perform(put("/advertisements/100/publish-delayed?publicationDate=2023-01-01T10:40:01"))
                 .andExpect(status().isNotFound())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof AdNotFoundException))
-                .andExpect(result -> assertEquals("Could not find advertisement with id 100",
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof NotFoundByIdException))
+                .andExpect(result -> assertEquals("Could not find by id: 100",
                         Objects.requireNonNull(result.getResolvedException()).getMessage()));
     }
 
