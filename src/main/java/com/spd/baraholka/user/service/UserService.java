@@ -18,7 +18,7 @@ public class UserService {
     }
 
     public UserDTO getUserById(int id) {
-        User user = persistenceUserService.getUserById(id);
+        User user = persistenceUserService.selectUserById(id);
         return userMapper.convertToDTO(user);
     }
 }
