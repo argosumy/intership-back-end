@@ -1,7 +1,7 @@
-package com.spd.baraholka.users.controller;
+package com.spd.baraholka.user.controller;
 
-import com.spd.baraholka.users.controller.dto.UserGeneralSettingDTO;
-import com.spd.baraholka.users.service.UserGeneralSettingService;
+import com.spd.baraholka.user.controller.dto.UserGeneralSettingDTO;
+import com.spd.baraholka.user.service.UserGeneralSettingService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

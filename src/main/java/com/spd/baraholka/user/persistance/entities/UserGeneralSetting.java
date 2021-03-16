@@ -1,4 +1,4 @@
-package com.spd.baraholka.users.persistance.entities;
+package com.spd.baraholka.user.persistance.entities;
 
 public class UserGeneralSetting {
 

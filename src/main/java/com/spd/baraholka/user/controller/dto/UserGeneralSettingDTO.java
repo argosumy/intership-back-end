@@ -1,4 +1,4 @@
-package com.spd.baraholka.users.controller.dto;
+package com.spd.baraholka.user.controller.dto;
 
 import javax.validation.constraints.NotNull;
 

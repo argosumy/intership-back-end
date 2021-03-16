@@ -1,7 +1,7 @@
-package com.spd.baraholka.users.controller.mappers;
+package com.spd.baraholka.user.controller.mappers;
 
-import com.spd.baraholka.users.controller.dto.UserGeneralSettingDTO;
-import com.spd.baraholka.users.persistance.entities.UserGeneralSetting;
+import com.spd.baraholka.user.controller.dto.UserGeneralSettingDTO;
+import com.spd.baraholka.user.persistance.entities.UserGeneralSetting;
 import org.springframework.stereotype.Component;
 
 @Component

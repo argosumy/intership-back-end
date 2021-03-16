@@ -1,6 +1,6 @@
-package com.spd.baraholka.users.persistance;
+package com.spd.baraholka.user.persistance;
 
-import com.spd.baraholka.users.persistance.entities.UserGeneralSetting;
+import com.spd.baraholka.user.persistance.entities.UserGeneralSetting;
 
 public interface PersistenceUserGeneralSettingService {
 
