@@ -33,8 +33,8 @@ public class UserService {
         User user = persistenceUserService.selectUserById(id);
         List<UserAdditionalResource> additionalResources = persistenceResourceService.selectUserAdditionalResources(id);
         UserDTO userDTO = userMapper.convertToDTO(user);
-        List<UserAdditionalResourceDTO> additionalResourceDTOS = resourceMapper.convertToDTOList(additionalResources);
-        userDTO.setAdditionalContactResources(additionalResourceDTOS);
+        List<UserAdditionalResourceDTO> additionalResourceDTO = resourceMapper.convertToDTOList(additionalResources);
+        userDTO.setAdditionalContactResources(additionalResourceDTO);
         return userDTO;
     }
 }
