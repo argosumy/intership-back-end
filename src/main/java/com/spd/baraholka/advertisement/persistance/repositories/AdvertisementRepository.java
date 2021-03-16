@@ -39,9 +39,9 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
-        String updateStatusSQL = createUpdateStatusSQL();
-        Map<String, ? extends Comparable<? extends Comparable<?>>> updateStatusParameters = createUpdateStatusParameters(id, status);
-        jdbcTemplate.update(updateStatusSQL, updateStatusParameters);
+        String updateSQL = createUpdateStatusSQL();
+        Map<String, ? extends Comparable<? extends Comparable<?>>> updateParameters = createUpdateStatusParameters(id, status);
+        jdbcTemplate.update(updateSQL, updateParameters);
         return id;
     }
 
