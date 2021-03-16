@@ -43,7 +43,7 @@ public class CreateNotificationAccountBan implements CreateNotification {
     @Override
     public MimeMessage createNotificationTemplate(Notification not) throws MessagingException, IOException, TemplateException {
         BanBlockNotification notification = (BanBlockNotification) not;
-        LocalDateTime localDateTime = notification.getDate().plusDays(10);
+        LocalDateTime localDateTime = notification.getDateBanNotification();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String dateBan = localDateTime.format(formatter);
         Map<String,String> model = new HashMap();

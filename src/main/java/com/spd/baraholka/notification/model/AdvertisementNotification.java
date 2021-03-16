@@ -10,7 +10,6 @@ public class AdvertisementNotification extends Notification{
     private String currency;
     private String mainImage;
     private List<String> images;
-    private String location;
     private String linkAd;
     private String nameWriter;
 

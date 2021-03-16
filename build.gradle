@@ -21,6 +21,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.30'
+
+
 }
 
 test {

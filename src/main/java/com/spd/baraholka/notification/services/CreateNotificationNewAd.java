@@ -61,45 +61,4 @@ public class CreateNotificationNewAd implements CreateNotification {
         mimeMessageHelper.setFrom("Admin");
         return message;
     }
-
-    //test method
-//    public Notification getNotificationFromData(){
-//        ComentAdvertisementNotification notification = new ComentAdvertisementNotification();
-//
-//        List<String> images = new ArrayList<>();
-//        images.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTceb6oPjt7_NqPOKCbBXlofFQMeZU6DpRAEw&usqp=CAU");
-//        images.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQI7nmkdLHf3O9rwsJecyD5ppwFI0D2q-sMQ&usqp=CAU");
-//        images.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQI7nmkdLHf3O9rwsJecyD5ppwFI0D2q-sMQ&usqp=CAU");
-//        images.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQI7nmkdLHf3O9rwsJecyD5ppwFI0D2q-sMQ&usqp=CAU");
-//        images.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQI7nmkdLHf3O9rwsJecyD5ppwFI0D2q-sMQ&usqp=CAU");
-//
-//
-//        User userTo = new User();
-//        userTo.setId(2);
-//        userTo.setEmail("udizsumy@gmail.com");
-//        userTo.setResourcesLink("#");
-//
-//        User userFrom = new User();
-//        userFrom.setId(1);
-//        userFrom.setEmail("argosumy@gmail.com");
-//
-//        notification.setNameAd("Note");
-//        notification.setPrice(100);
-//        notification.setCurrency("USD");
-//        notification.setMainImage("http://s020.radikal.ru/i714/1512/ca/4b42d3dfc4c8.jpg");
-//        notification.setLocation("#");
-//        notification.setLinkAd("#");
-//        notification.setDescription("Description ++++++");
-//        notification.setImages(images);
-//
-//        notification.setEvent(EventTypes.NEW_ADVERTISEMENT.name());
-//        notification.setSubject("Account BAN");
-//        notification.setSendTo(userTo);
-//        notification.setSendFrom(userFrom);
-//
-//
-//        return notification;
-//    }
-
-
 }

@@ -1,7 +1,7 @@
 package com.spd.baraholka.notification.services;
 
 import com.spd.baraholka.notification.enumes.EventTypes;
-import com.spd.baraholka.notification.model.AdvertisementNotification;
+import com.spd.baraholka.notification.model.BanBlockNotification;
 import com.spd.baraholka.notification.model.Notification;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -40,8 +40,8 @@ public class CreateNotificationAdvertisementBlock implements CreateNotification 
 
     @Override
     public MimeMessage createNotificationTemplate(Notification notification) throws MessagingException, IOException, TemplateException {
-        AdvertisementNotification notificationAd = (AdvertisementNotification) notification;
-        LocalDateTime localDateTime = notification.getDate().plusDays(10);
+        BanBlockNotification notificationAd = (BanBlockNotification) notification;
+        LocalDateTime localDateTime = notificationAd.getDateBanNotification();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String dateBlock = localDateTime.format(formatter);
         Map<String,String> model = new HashMap();

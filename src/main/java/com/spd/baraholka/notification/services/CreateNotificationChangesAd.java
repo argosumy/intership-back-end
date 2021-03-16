@@ -55,22 +55,6 @@ public class CreateNotificationChangesAd implements CreateNotification {
 
         return message;
     }
-    //test method
-//
-//    public Notification getNotificationFromData(){
-//        User user = new User();
-//        user.setEmail("udizsumy@gmail.com");
-//        user.setResourcesLink("#");
-//
-//        AdvertisementNotification notification = new AdvertisementNotification();
-//        notification.setSendTo(user);
-//        notification.setLinkAd("#");
-//        notification.setSendTo(user);
-//        notification.setEvent(EventTypes.CHANGES_ADVERTISEMENT.name());
-//        notification.setSubject("Changes AD ");
-//        notification.setDescription("changes.");
-//
-//        return notification;
-//    }
+
 
 }
