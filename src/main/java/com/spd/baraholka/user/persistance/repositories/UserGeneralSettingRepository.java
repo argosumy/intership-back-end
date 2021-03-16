@@ -1,5 +1,6 @@
 package com.spd.baraholka.user.persistance.repositories;
 
+import com.spd.baraholka.user.persistance.PersistenceUserGeneralSettingService;
 import com.spd.baraholka.user.persistance.entities.UserGeneralSetting;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 @Repository
-public class UserGeneralSettingRepository {
+public class UserGeneralSettingRepository implements PersistenceUserGeneralSettingService {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -16,6 +17,7 @@ public class UserGeneralSettingRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
     public int updateUserGeneralSettings(UserGeneralSetting userGeneralSetting) {
         String updateSQL = createUpdateSQL();
         jdbcTemplate.update(updateSQL, fillInsertParameters(userGeneralSetting));

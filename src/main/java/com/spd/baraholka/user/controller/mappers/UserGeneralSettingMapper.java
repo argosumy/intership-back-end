@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserGeneralSettingMapper {
 
-    UserGeneralSetting convertToEntity(UserGeneralSettingDTO userGeneralSettingDTO) {
+    public UserGeneralSetting convertToEntity(UserGeneralSettingDTO userGeneralSettingDTO) {
         UserGeneralSetting userGeneralSetting = new UserGeneralSetting();
         userGeneralSetting.setId(userGeneralSettingDTO.getId());
         userGeneralSetting.setUserId(userGeneralSettingDTO.getUserId());
