@@ -1,4 +1,4 @@
-package com.spd.baraholka.user.persistance.repoositories;
+package com.spd.baraholka.user.persistance.repositories;
 
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.mappers.UserAdditionalResourceRowMapper;
