@@ -1,4 +1,4 @@
-package com.spd.baraholka.users.services;
+package com.spd.baraholka.users.service;
 
 import com.spd.baraholka.users.persistance.PersistenceUserGeneralSettingService;
 import com.spd.baraholka.users.persistance.UserGeneralSetting;
