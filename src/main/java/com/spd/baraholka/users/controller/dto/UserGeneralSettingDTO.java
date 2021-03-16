@@ -1,9 +1,16 @@
-package com.spd.baraholka.users.persistance;
+package com.spd.baraholka.users.controller.dto;
 
-public class UserGeneralSetting {
+import javax.validation.constraints.NotNull;
 
+public class UserGeneralSettingDTO {
+
+    @NotNull
     private int id;
+
+    @NotNull
     private int userId;
+
+    @NotNull
     private boolean openAdsInNewTab;
 
     public int getId() {

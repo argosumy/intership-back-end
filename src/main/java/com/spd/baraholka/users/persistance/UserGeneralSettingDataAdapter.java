@@ -1,5 +1,7 @@
 package com.spd.baraholka.users.persistance;
 
+import com.spd.baraholka.users.persistance.entities.UserGeneralSetting;
+import com.spd.baraholka.users.persistance.repositories.UserGeneralSettingRepository;
 import org.springframework.stereotype.Service;
 
 @Service

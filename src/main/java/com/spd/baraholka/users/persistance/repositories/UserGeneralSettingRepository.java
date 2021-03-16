@@ -1,5 +1,6 @@
-package com.spd.baraholka.users.persistance;
+package com.spd.baraholka.users.persistance.repositories;
 
+import com.spd.baraholka.users.persistance.entities.UserGeneralSetting;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
