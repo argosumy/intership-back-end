@@ -1,4 +1,4 @@
-package com.spd.baraholka.advertisement.persistance;
+package com.spd.baraholka.advertisement.persistance.entities;
 
 public enum AdvertisementStatus {
 

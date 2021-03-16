@@ -1,5 +1,7 @@
-package com.spd.baraholka.advertisement.persistance;
+package com.spd.baraholka.advertisement.persistance.repositories;
 
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

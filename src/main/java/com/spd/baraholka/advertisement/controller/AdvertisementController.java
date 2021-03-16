@@ -1,7 +1,7 @@
 package com.spd.baraholka.advertisement.controller;
 
-import com.spd.baraholka.advertisement.persistance.AdvertisementStatus;
-import com.spd.baraholka.advertisement.service.AdvertisementDTO;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

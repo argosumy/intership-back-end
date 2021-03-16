@@ -1,7 +1,7 @@
-package com.spd.baraholka.advertisement.service;
+package com.spd.baraholka.advertisement.controller.dto;
 
-import com.spd.baraholka.advertisement.persistance.AdvertisementStatus;
-import com.spd.baraholka.advertisement.persistance.CurrencyType;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
