@@ -1,4 +1,4 @@
-package com.spd.baraholka.users.persistance;
+package com.spd.baraholka.user.persistance;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
