@@ -1,4 +1,4 @@
-package com.spd.baraholka.users.services;
+package com.spd.baraholka.user.service;
 
 import org.json.simple.JSONObject;
 
