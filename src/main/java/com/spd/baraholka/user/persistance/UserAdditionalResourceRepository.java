@@ -29,7 +29,7 @@ public class UserAdditionalResourceRepository implements PersistenceUserAddition
 
     @Override
     public void updateUserAdditionalResources(List<UserAdditionalResource> additionalResources) {
-        String updateSQL = "UPDATE users_additional_resources SET resource_name=:resourceName, resource_url=:resourceUrl WHERE user_id=:userId";
+        String updateSQL = "UPDATE users_additional_resources SET resource_name=:resourceName, resource_url=:resourceUrl WHERE id=:id";
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(additionalResources.toArray());
         jdbcTemplate.batchUpdate(updateSQL, batch);
     }
