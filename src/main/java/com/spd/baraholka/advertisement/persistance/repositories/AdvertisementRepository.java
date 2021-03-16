@@ -26,24 +26,26 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     @Override
     public int insertAdvertisement(Advertisement advertisement) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        MapSqlParameterSource namedParameters = fillInsertParameters(advertisement);
         String insertSQL = createInsertSQL();
-        jdbcTemplate.update(insertSQL, namedParameters, keyHolder);
+        MapSqlParameterSource insertParameters = createInsertParameters(advertisement);
+        jdbcTemplate.update(insertSQL, insertParameters, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
     public int updateAdvertisement(Advertisement advertisement) {
         String updateSQL = createUpdateSQL();
-        return jdbcTemplate.update(updateSQL, fillUpdateParameters(advertisement));
+        Map<String, ? extends Serializable> updateParameters = createUpdateParameters(advertisement);
+        return jdbcTemplate.update(updateSQL, updateParameters);
     }
 
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
         String updateStatusSQL = createUpdateStatusSQL();
-        jdbcTemplate.update(updateStatusSQL, fillUpdateStatusParameters(id, status));
+        Map<String, ? extends Comparable<? extends Comparable<?>>> updateStatusParameters = createUpdateStatusParameters(id, status);
+        jdbcTemplate.update(updateStatusSQL, updateStatusParameters);
         return id;
     }
 
-    private MapSqlParameterSource fillInsertParameters(Advertisement advertisement) {
+    private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("title", advertisement.getTitle());
         namedParameters.addValue("description", advertisement.getDescription());
@@ -59,7 +61,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         return namedParameters;
     }
 
-    private Map<String, ? extends Serializable> fillUpdateParameters(Advertisement advertisement) {
+    private Map<String, ? extends Serializable> createUpdateParameters(Advertisement advertisement) {
         return Map.of("title", advertisement.getTitle(),
                 "description", advertisement.getDescription(),
                 "category", advertisement.getCategory(),
@@ -69,7 +71,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 "id", advertisement.getAdvertisementId());
     }
 
-    private Map<String, ? extends Comparable<? extends Comparable<?>>> fillUpdateStatusParameters(int id, AdvertisementStatus status) {
+    private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateStatusParameters(int id, AdvertisementStatus status) {
         return Map.of("status", status,
                 "statusChangeDate", Timestamp.valueOf(LocalDateTime.now()),
                 "advertisementId", id);
