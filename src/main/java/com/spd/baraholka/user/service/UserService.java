@@ -22,16 +22,12 @@ public class UserService {
 
     public UserService(PersistenceUserService persistenceUserService,
                        PersistenceUserAdditionalResourcesService persistenceResourceService,
-                       UserMapper userMapper, UserAdditionalResourceMapper resourceMapper) {
+                       UserMapper userMapper,
+                       UserAdditionalResourceMapper resourceMapper) {
         this.persistenceUserService = persistenceUserService;
         this.persistenceResourceService = persistenceResourceService;
         this.userMapper = userMapper;
         this.resourceMapper = resourceMapper;
-    private final UserMapper userMapper;
-
-    public UserService(PersistenceUserService persistenceUserService, UserMapper userMapper) {
-        this.persistenceUserService = persistenceUserService;
-        this.userMapper = userMapper;
     }
 
     public UserDTO getUserById(int id) {
@@ -41,7 +37,6 @@ public class UserService {
         List<UserAdditionalResourceDTO> additionalResourceDTOS = resourceMapper.convertToDTOList(additionalResources);
         userDTO.setAdditionalContactResources(additionalResourceDTOS);
         return userDTO;
-        return userMapper.convertToDTO(user);
     }
 
     public int changeUserBlockedStatus(int id, boolean isBlocked) {

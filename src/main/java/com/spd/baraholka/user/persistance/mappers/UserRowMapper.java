@@ -1,9 +1,6 @@
 package com.spd.baraholka.user.persistance.mappers;
 
 import com.spd.baraholka.user.persistance.entities.User;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -23,20 +20,6 @@ public class UserRowMapper implements RowMapper<User> {
         user.setPosition(rs.getString("position"));
         user.setPhoneNumber(rs.getString("phone_number"));
         user.setBlocked(rs.getBoolean("is_blocked"));
-        JSONObject additionalContactResources = getAdditionalContactResources(rs);
-        user.setAdditionalContactResources(additionalContactResources);
         return user;
-    }
-
-    private JSONObject getAdditionalContactResources(ResultSet resultSet) throws SQLException {
-        String jsonString = resultSet.getString("additional_contact_resources");
-        JSONParser parser = new JSONParser();
-        JSONObject additionalContactResources = new JSONObject();
-        try {
-            additionalContactResources = (JSONObject) parser.parse(jsonString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return additionalContactResources;
     }
 }
