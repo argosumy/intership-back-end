@@ -1,6 +1,7 @@
-package com.spd.baraholka.user.service;
+package com.spd.baraholka.user.controller.mappers;
 
-import com.spd.baraholka.user.persistance.User;
+import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.stereotype.Component;
 
 @Component
