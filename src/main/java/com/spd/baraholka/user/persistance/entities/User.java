@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.persistance.entities;
 
-import org.json.simple.JSONObject;
+import java.util.List;
 
 public class User {
 
@@ -11,7 +11,7 @@ public class User {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private JSONObject additionalContactResources;
+    private List<UserAdditionalResource> additionalContactResources;
 
     public int getId() {
         return id;
@@ -67,13 +67,5 @@ public class User {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
-    }
-
-    public JSONObject getAdditionalContactResources() {
-        return additionalContactResources;
-    }
-
-    public void setAdditionalContactResources(JSONObject additionalContactResources) {
-        this.additionalContactResources = additionalContactResources;
     }
 }
