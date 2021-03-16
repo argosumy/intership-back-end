@@ -21,7 +21,7 @@ public class AdvertisementService {
 
     public int saveAdvertisement(AdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
-        return persistenceAdvertisementService.saveAdvertisement(advertisement);
+        return persistenceAdvertisementService.insertAdvertisement(advertisement);
     }
 
     public int updateAdvertisement(AdvertisementDTO advertisementDTO) {

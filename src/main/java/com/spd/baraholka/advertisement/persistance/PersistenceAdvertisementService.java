@@ -5,7 +5,7 @@ import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 
 public interface PersistenceAdvertisementService {
 
-    int saveAdvertisement(Advertisement advertisement);
+    int insertAdvertisement(Advertisement advertisement);
 
     int updateAdvertisement(Advertisement advertisement);
 

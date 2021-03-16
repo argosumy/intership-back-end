@@ -1,5 +1,6 @@
 package com.spd.baraholka.advertisement.persistance.repositories;
 
+import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Repository
-public class AdvertisementRepository {
+public class AdvertisementRepository implements PersistenceAdvertisementService {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -22,7 +23,8 @@ public class AdvertisementRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int addAdvertisement(Advertisement advertisement) {
+    @Override
+    public int insertAdvertisement(Advertisement advertisement) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource namedParameters = fillInsertParameters(advertisement);
         String insertSQL = createInsertSQL();
