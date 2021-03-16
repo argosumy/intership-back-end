@@ -1,4 +1,4 @@
-package com.spd.baraholka.user.services;
+package com.spd.baraholka.user.controller;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

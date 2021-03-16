@@ -1,5 +1,9 @@
 package com.spd.baraholka.user.services;
 
+import com.spd.baraholka.user.controller.UserAdditionalResourceDTO;
+import com.spd.baraholka.user.controller.UserAdditionalResourceMapper;
+import com.spd.baraholka.user.controller.UserDTO;
+import com.spd.baraholka.user.controller.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.User;

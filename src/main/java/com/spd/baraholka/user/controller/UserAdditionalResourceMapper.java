@@ -1,4 +1,4 @@
-package com.spd.baraholka.user.services;
+package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.user.persistance.UserAdditionalResource;
 import org.springframework.stereotype.Component;

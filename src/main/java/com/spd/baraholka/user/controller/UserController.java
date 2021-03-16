@@ -1,6 +1,5 @@
 package com.spd.baraholka.user.controller;
 
-import com.spd.baraholka.user.services.UserDTO;
 import com.spd.baraholka.user.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
