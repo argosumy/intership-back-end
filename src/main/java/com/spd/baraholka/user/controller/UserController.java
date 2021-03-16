@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.controller;
 
-import com.spd.baraholka.user.services.UserService;
+import com.spd.baraholka.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

@@ -1,4 +1,4 @@
-package com.spd.baraholka.user.services;
+package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.user.controller.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.UserAdditionalResourceMapper;
