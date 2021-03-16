@@ -1,6 +1,5 @@
 package com.spd.baraholka.user.persistance;
 
-import org.json.simple.JSONObject;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +17,7 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User selectUserById(int id) {
         String selectSQL = "SELECT * FROM users WHERE id=:id";
         Map<String, Integer> selectParameters = Map.of("id", id);
         return jdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper);
@@ -26,24 +25,13 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public int updateUserMainInfo(User user) {
-        String updateSQL = createUpdateUserMainInfoSQL();
+        String updateSQL = "UPDATE users SET position=:position, phone_number=:phoneNumber WHERE id=:id";
         Map<String, Object> updateParameters = createUpdateUserMainInfoParameters(user);
         jdbcTemplate.update(updateSQL, updateParameters);
         return user.getId();
     }
 
-    private String createUpdateUserMainInfoSQL() {
-        return "UPDATE users SET position=:position,"
-                + " phone_number=:phoneNumber,"
-                + " additional_contact_resources=:additionalContactResources"
-                + " WHERE id=:id";
-    }
-
     private Map<String, Object> createUpdateUserMainInfoParameters(User user) {
-        JSONObject additionalContactResources = user.getAdditionalContactResources();
-        return Map.of("position", user.getPosition(),
-                "phoneNumber", user.getPhoneNumber(),
-                "additionalContactResources", additionalContactResources.toJSONString(),
-                "id", user.getId());
+        return Map.of("position", user.getPosition(), "phoneNumber", user.getPhoneNumber(), "id", user.getId());
     }
 }

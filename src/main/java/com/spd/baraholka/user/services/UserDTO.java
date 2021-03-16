@@ -1,10 +1,9 @@
 package com.spd.baraholka.user.services;
 
-import org.json.simple.JSONObject;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public class UserDTO {
 
@@ -29,7 +28,7 @@ public class UserDTO {
     private String phoneNumber;
 
     @NotEmpty
-    private JSONObject additionalContactResources;
+    private List<UserAdditionalResourceDTO> additionalContactResources;
 
     private boolean isBlocked;
 
@@ -89,11 +88,11 @@ public class UserDTO {
         isBlocked = blocked;
     }
 
-    public JSONObject getAdditionalContactResources() {
+    public List<UserAdditionalResourceDTO> getAdditionalContactResources() {
         return additionalContactResources;
     }
 
-    public void setAdditionalContactResources(JSONObject additionalContactResources) {
+    public void setAdditionalContactResources(List<UserAdditionalResourceDTO> additionalContactResources) {
         this.additionalContactResources = additionalContactResources;
     }
 }
