@@ -55,7 +55,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         namedParameters.addValue("status", advertisement.getStatus().toString());
         namedParameters.addValue("creationDate", Timestamp.valueOf(advertisement.getCreationDate()));
         namedParameters.addValue("publicationDate", Timestamp.valueOf(advertisement.getPublicationDate()));
-        namedParameters.addValue("statusChangeDate", Timestamp.valueOf(advertisement.getStatusChangeDate()));
+        namedParameters.addValue("statusChangeDate", Timestamp.valueOf(LocalDateTime.now()));
         return namedParameters;
     }
 
