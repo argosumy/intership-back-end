@@ -82,26 +82,13 @@ class AdvertisementControllerTest {
     }
 
     @Test
-    @DisplayName("Expect list of advertisements filtered by title")
-    void getFilteredAdsByTitle() throws Exception {
-        when(advertisementService.getFilteredAdsByTitle("title")).thenReturn(
+    @DisplayName("Expect list of advertisements filtered by keyword")
+    void getFilteredAdsByKeyword() throws Exception {
+        when(advertisementService.getFilteredAdsByKeyword("title", null)).thenReturn(
                 List.of(advertisementActive, advertisementDraftToBeShown)
         );
 
-        mockMvc.perform(get("/advertisements/title-search?title=title")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(getResponseJson(List.of(advertisementActive, advertisementDraftToBeShown))))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("Expect list of advertisements filtered by description")
-    void getFilteredAdsByDescription() throws Exception {
-        when(advertisementService.getFilteredAdsByDescription("description")).thenReturn(
-                List.of(advertisementActive, advertisementDraftToBeShown)
-        );
-
-        mockMvc.perform(get("/advertisements/description-search?description=description")
+        mockMvc.perform(get("/advertisements/search?keyword=title&size=")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(getResponseJson(List.of(advertisementActive, advertisementDraftToBeShown))))
                 .andExpect(status().isOk());

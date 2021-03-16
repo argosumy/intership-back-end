@@ -25,15 +25,10 @@ public class AdvertisementController {
         this.advertisementMapper = advertisementMapper;
     }
 
-    @GetMapping("/title-search")
-    public List<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("title") String title) {
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByTitle(title);
-        return advertisementMapper.toAdvertisementDtoList(advertisementList);
-    }
-
-    @GetMapping("/description-search")
-    public List<AdvertisementDTO> getFilteredAdsByDescription(@RequestParam("description") String description) {
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByDescription(description);
+    @GetMapping("/search")
+    public List<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
+                                                        @RequestParam(value = "size", required = false) Integer size) {
+        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword(keyword, size);
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
 

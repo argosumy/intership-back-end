@@ -62,56 +62,37 @@ class AdvertisementServiceTest {
     }
 
     @Test
-    @DisplayName("Should return list of filtered ads by title")
-    void getFilteredAdsByTitle() {
-        when(advertisementService.getFilteredAdsByTitle("title")).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByTitle("title");
+    @DisplayName("Should return full list of filtered ads by keyword in case returned size not defined")
+    void getFilteredAdsByKeyword() {
+        when(advertisementService.getFilteredAdsByKeyword("title", null)).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
+        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword("title", null);
 
         assertThat(advertisementList).isEqualTo(List.of(advertisementActive, advertisementDraftToBeShown));
     }
 
     @Test
-    @DisplayName("Should return list of filtered ads by title query in upper case")
-    void getFilteredAdsByTitleInUpperCase() {
-        when(advertisementService.getFilteredAdsByTitle("TITLE")).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByTitle("TITLE");
+    @DisplayName("Should return only one entry of filtered ads by keyword in case size is defined as 1")
+    void getFilteredAdsByKeywordWithDefinedSize() {
+        when(advertisementService.getFilteredAdsByKeyword("i", 1)).thenReturn(List.of(advertisementActive));
+        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword("i", 1);
+
+        assertThat(advertisementList).isEqualTo(List.of(advertisementActive));
+    }
+
+    @Test
+    @DisplayName("Should return full list of filtered ads by keyword query in upper case")
+    void getFilteredAdsByKeywordInUpperCase() {
+        when(advertisementService.getFilteredAdsByKeyword("TITLE", null)).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
+        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword("TITLE", null);
 
         assertThat(advertisementList).isEqualTo(List.of(advertisementActive, advertisementDraftToBeShown));
     }
 
     @Test
-    @DisplayName("Should return empty list in case no ads found by title")
-    void getEmptyListOfFilteredAdsByTitle() {
-        when(advertisementService.getFilteredAdsByTitle("string")).thenReturn(Collections.emptyList());
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByTitle("string");
-
-        assertThat(advertisementList).isEmpty();
-    }
-
-    @Test
-    @DisplayName("Should return list of filtered ads by description")
-    void getFilteredAdsByDescription() {
-        when(advertisementService.getFilteredAdsByDescription("description")).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByDescription("description");
-
-        assertThat(advertisementList).isEqualTo(List.of(advertisementActive, advertisementDraftToBeShown));
-    }
-
-    @Test
-    @DisplayName("Should return list of filtered ads by description query in upper case")
-    void getFilteredAdsByDescriptionInUpperCase() {
-        when(advertisementService.getFilteredAdsByDescription("DESCRIPTION")).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByDescription("DESCRIPTION");
-
-        assertThat(advertisementList).isEqualTo(List.of(advertisementActive, advertisementDraftToBeShown));
-    }
-
-
-    @Test
-    @DisplayName("Should return empty list in case no ads found by description")
-    void getEmptyListOfFilteredAdsByDescription() {
-        when(advertisementService.getFilteredAdsByDescription("string")).thenReturn(Collections.emptyList());
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByDescription("string");
+    @DisplayName("Should return empty list in case no ads found by keyword")
+    void getEmptyListOfFilteredAdsByKeyword() {
+        when(advertisementService.getFilteredAdsByKeyword("string", null)).thenReturn(Collections.emptyList());
+        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword("string", null);
 
         assertThat(advertisementList).isEmpty();
     }

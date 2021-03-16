@@ -38,15 +38,12 @@ public class AdvertisementService {
         return persistenceAdvertisementService.updateAdvertisementStatus(id, status);
     }
 
-    public List<Advertisement> getFilteredAdsByTitle(String title) {
-        return getAllActive().stream()
-                .filter(ad -> ad.getTitle().toLowerCase().contains(title.toLowerCase()))
-                .collect(Collectors.toList());
-    }
-
-    public List<Advertisement> getFilteredAdsByDescription(String description) {
-        return getAllActive().stream()
-                .filter(ad -> ad.getDescription().toLowerCase().contains(description.toLowerCase()))
+    public List<Advertisement> getFilteredAdsByKeyword(String keyword, Integer size) {
+        List<Advertisement> advertisementList = getAllActive();
+        return advertisementList.stream()
+                .filter(ad -> (ad.getTitle().toLowerCase().contains(keyword.toLowerCase()) ||
+                        ad.getDescription().toLowerCase().contains(keyword.toLowerCase())))
+                .limit(size != null ? size : advertisementList.size())
                 .collect(Collectors.toList());
     }
 
