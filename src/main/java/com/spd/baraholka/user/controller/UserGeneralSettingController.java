@@ -4,11 +4,13 @@ import com.spd.baraholka.user.controller.dto.UserGeneralSettingDTO;
 import com.spd.baraholka.user.service.UserGeneralSettingService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@RestController("/settings/general")
+@RestController
+@RequestMapping("/general")
 public class UserGeneralSettingController {
 
     private final UserGeneralSettingService userGeneralSettingService;
