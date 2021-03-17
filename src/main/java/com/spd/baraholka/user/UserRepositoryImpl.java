@@ -18,7 +18,6 @@ import java.util.Set;
 public class UserRepositoryImpl implements UserRepository {
 
     private final NamedParameterJdbcTemplate parameterizedJdbcTemplate;
-    
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
