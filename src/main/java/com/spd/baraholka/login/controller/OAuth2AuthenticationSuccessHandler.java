@@ -49,7 +49,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
             User user = userMapper.convertToEntity(oAuth2UserDto);
             userService.create(user);
         }
-        response.sendRedirect("/me/oauth2");
+        response.sendRedirect("/");
     }
 
     private boolean isEmailDomainInAllowedDomains(String email, List<String> allowedDomains) {
