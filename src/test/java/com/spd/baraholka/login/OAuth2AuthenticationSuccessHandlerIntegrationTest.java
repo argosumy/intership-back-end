@@ -31,7 +31,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -39,7 +38,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(DBUnitExtension.class)
-@DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE, schema="public")
+@DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE, schema = "public")
 class OAuth2AuthenticationSuccessHandlerIntegrationTest {
 
     private final String dummyEmail = "new_dummy@email.com";

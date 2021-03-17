@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(DBUnitExtension.class)
-@DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE, schema="public")
+@DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE, schema = "public")
 class UserRepositoryImplTest {
 
     @Autowired
@@ -26,7 +26,7 @@ class UserRepositoryImplTest {
 
     @Test
     @DisplayName("'Should return 'true' when a user with a certain email exists in a database")
-    @DataSet(value="/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
+    @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnTrueWhenUserWithEmailExists() {
         String existingEmail = "existing@email.com";
         boolean exists = userRepositoryUnderTest.existsByEmail(existingEmail);
@@ -35,11 +35,10 @@ class UserRepositoryImplTest {
 
     @Test
     @DisplayName("'Should return 'false' when a user with a certain email does not exist in a database")
-    @DataSet(value="/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
+    @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnFalseWhenUserWithEmailDoesntExist() {
         String newEmail = "new@email.com";
         boolean exists = userRepositoryUnderTest.existsByEmail(newEmail);
         assertFalse(exists);
     }
-
 }
