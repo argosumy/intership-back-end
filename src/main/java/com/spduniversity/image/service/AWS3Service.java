@@ -34,7 +34,7 @@ public class AWS3Service {
         File file = convertMultiPartFileToFile(imageResource.getImage());
 
         String fileName = generateFileName(imageResource);
-        String fileUrl =  AMAZON_DOMAIN + bucketName + "/" + fileName;
+        String fileUrl = AMAZON_DOMAIN + bucketName + "/" + fileName;
 
         try {
             uploadFileToS3Bucket(file, fileName);
@@ -62,7 +62,7 @@ public class AWS3Service {
         final File file = new File(multipartFile.getOriginalFilename());
 
         try (FileOutputStream outputStream = new FileOutputStream(file);
-             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream)) {
+              BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream)) {
             bufferedOutputStream.write(multipartFile.getBytes());
             bufferedOutputStream.flush();
         } catch (IOException ex) {

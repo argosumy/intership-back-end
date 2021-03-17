@@ -2,29 +2,27 @@ package com.spduniversity.image;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Objects;
-
 public class ImageResource {
 
     private long id;
     private final long adId;
     private final boolean isPrimary;
-    private final int positionOrder;
+    private final int position;
     private MultipartFile image;
     private String imageUrl;
 
-    private ImageResource(long adId, boolean isPrimary, int positionOrder, MultipartFile image) {
+    private ImageResource(long adId, boolean isPrimary, int position, MultipartFile image) {
         this.adId = adId;
         this.isPrimary = isPrimary;
-        this.positionOrder = positionOrder;
+        this.position = position;
         this.image = image;
     }
 
-    public ImageResource(long id, long adId, boolean isPrimary, int positionOrder, String imageUrl) {
+    public ImageResource(long id, long adId, boolean isPrimary, int position, String imageUrl) {
         this.id = id;
         this.adId = adId;
         this.isPrimary = isPrimary;
-        this.positionOrder = positionOrder;
+        this.position = position;
         this.imageUrl = imageUrl;
     }
 
@@ -48,8 +46,8 @@ public class ImageResource {
         return isPrimary;
     }
 
-    public int getPositionOrder() {
-        return positionOrder;
+    public int getPosition() {
+        return position;
     }
 
     public MultipartFile getImage() {
@@ -62,23 +60,5 @@ public class ImageResource {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ImageResource that = (ImageResource) o;
-        return id == that.id &&
-                adId == that.adId &&
-                isPrimary == that.isPrimary &&
-                positionOrder == that.positionOrder &&
-                image.equals(that.image) &&
-                imageUrl.equals(that.imageUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, adId, isPrimary, positionOrder, image, imageUrl);
     }
 }
