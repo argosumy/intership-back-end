@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ViewServiceImpl implements ViewService{
+public class ViewServiceImpl implements ViewService {
     private final ViewRepository viewRepository;
 
     @Autowired

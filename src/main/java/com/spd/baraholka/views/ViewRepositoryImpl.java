@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ViewRepositoryImpl implements ViewRepository{
+public class ViewRepositoryImpl implements ViewRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -23,7 +23,7 @@ public class ViewRepositoryImpl implements ViewRepository{
 
         return jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), rs -> {
             List<View> list = new ArrayList<>();
-            while(rs.next()){
+            while (rs.next()) {
                 View view = new View(
                         rs.getInt("id"),
                         rs.getInt("user_id"),

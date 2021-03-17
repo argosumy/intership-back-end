@@ -34,8 +34,12 @@ public class View {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         View view = (View) o;
         return id == view.id && userId == view.userId && advertisementId == view.advertisementId && Objects.equals(viewedAt, view.viewedAt);
     }
