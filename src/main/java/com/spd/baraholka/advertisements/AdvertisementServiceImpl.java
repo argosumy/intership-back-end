@@ -1,21 +1,24 @@
 package com.spd.baraholka.advertisements;
 
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-@EnableScheduling
+import java.time.LocalDateTime;
+
 @Service
-public class AdvertisementServiceImpl {
-    private static final long PERIOD_OF_DELETING_OLD_ARCHIVED_ADVERTISEMENT = 86400000L;
+public class AdvertisementServiceImpl implements AdvertisementService{
     private final AdvertisementRepository advertisementRepository;
 
+    @Autowired
     public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
     }
 
-    @Scheduled(fixedRate = PERIOD_OF_DELETING_OLD_ARCHIVED_ADVERTISEMENT)
+    @Override
+    @Scheduled(cron = "${baraholka.scheduled.delete-old-archive-task}")
     public void deleteOldArchiveAdvertisements() {
-        advertisementRepository.changeStatusArchivedOnDeleted();
+        //advertisementRepository.changeStatusArchivedOnDeleted();
+        System.out.println(LocalDateTime.now().toString());
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AdvertisementRepositoryImpl implements AdvertisementRepository{
+class AdvertisementRepositoryImpl implements AdvertisementRepository{
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -16,14 +16,14 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository{
 
     @Override
     public void changeStatusArchivedOnDeleted() {
-        String sql = "UPDATE advertisements SET status = :del, status_change_date = now() " +
-                "WHERE status = :arch " +
-                "AND (now() - status_change_date) < INTERVAL '60 DAY' ";
-
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("del","DELETED");
-        params.addValue("arch","ARCHIVED");
-
-        jdbcTemplate.update(sql, params);
+//        String sql = "UPDATE advertisements SET status = :del, status_change_date = now() " +
+//                "WHERE status = :arch " +
+//                "AND (now() - status_change_date) < INTERVAL '60 DAY' ";
+//
+//        MapSqlParameterSource params = new MapSqlParameterSource();
+//        params.addValue("del","DELETED");
+//        params.addValue("arch","ARCHIVED");
+//
+//        jdbcTemplate.update(sql, params);
     }
 }
