@@ -1,6 +1,6 @@
-package com.baraholka.notifications.DAO.factory;
+package com.spd.baraholka.notifications.DAO.factory;
 
-import com.baraholka.notifications.enume.EventTypes;
+import com.spd.baraholka.notifications.enume.EventTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

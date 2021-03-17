@@ -1,9 +1,7 @@
-package com.baraholka.notifications.DAO;
-import com.baraholka.notifications.DAO.factory.SaveNotification;
-import com.baraholka.notifications.DAO.factory.SaveNotificationFactory;
-import com.baraholka.notifications.enume.EventTypes;
-import com.baraholka.notifications.enume.NotificationStatus;
-import freemarker.template.TemplateException;
+package com.spd.baraholka.notifications.DAO;
+import com.spd.baraholka.notifications.DAO.factory.SaveNotification;
+import com.spd.baraholka.notifications.DAO.factory.SaveNotificationFactory;
+import com.spd.baraholka.notifications.enume.EventTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

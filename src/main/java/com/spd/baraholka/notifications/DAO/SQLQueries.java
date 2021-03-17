@@ -1,4 +1,4 @@
-package com.baraholka.notifications.DAO;
+package com.spd.baraholka.notifications.DAO;
 
 public class SQLQueries {
     public final static String SAVE_NOTIFICATION_BAN = "INSERT INTO NOTIFICATIONS (send_to,status,event,date,description) "

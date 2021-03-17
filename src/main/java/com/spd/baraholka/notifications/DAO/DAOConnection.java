@@ -1,6 +1,6 @@
-package com.baraholka.notifications.DAO;
+package com.spd.baraholka.notifications.DAO;
 
-import com.baraholka.notifications.enume.EventTypes;
+import com.spd.baraholka.notifications.enume.EventTypes;
 
 import java.util.HashMap;
 
