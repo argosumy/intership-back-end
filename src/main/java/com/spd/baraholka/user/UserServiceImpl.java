@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService{
         return repository.existsByEmail(email);
     }
 
-    public int countAll() {
-        return repository.countAll();
+    public int count() {
+        return repository.count();
     }
 }

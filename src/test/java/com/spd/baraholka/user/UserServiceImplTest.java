@@ -37,7 +37,7 @@ class UserServiceImplTest {
 
     @Test
     void shouldInvokeRepoCountAllTest() {
-        userServiceUnderTest.countAll();
-        verify(userRepository, times(1)).countAll();
+        userServiceUnderTest.count();
+        verify(userRepository, times(1)).count();
     }
 }

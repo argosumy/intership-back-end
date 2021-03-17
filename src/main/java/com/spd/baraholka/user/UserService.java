@@ -6,5 +6,5 @@ public interface UserService {
 
     boolean existsByEmail(String email);
 
-    int countAll();
+    int count();
 }

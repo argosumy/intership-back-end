@@ -62,7 +62,7 @@ class UserRepositoryImplTest {
     @Test
     @DataSet(value="/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnNumberOfAllUsers() {
-        int numberOfUsers = userRepositoryUnderTest.countAll();
+        int numberOfUsers = userRepositoryUnderTest.count();
         assertEquals(3, numberOfUsers);
     }
 

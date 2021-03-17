@@ -6,5 +6,5 @@ public interface UserRepository {
 
     boolean existsByEmail(String email);
 
-    int countAll();
+    int count();
 }

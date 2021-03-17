@@ -54,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
     private void saveUserRoles(User user) {
         Set<Role> roles = Objects.requireNonNull(user.getRoles());
         int userId = user.getId();
-        final String sql = "INSERT INTO users_roles (user_id, role) values (:user_id, :role) ON CONFLICT DO NOTHING";
+        final String sql = "INSERT INTO users_roles (user_id, role) values (:user_id, :role)";
         for (Role role : roles) {
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("user_id", userId)
@@ -70,7 +70,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int countAll() {
+    public int count() {
         return jdbcTemplate.queryForObject("SELECT count(*) FROM users", Integer.class);
     }
 }

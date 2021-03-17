@@ -44,10 +44,10 @@ class OAuth2AuthenticationSuccessHandlerTest {
     private final String dummyFamilyName = "Mock Family Name";
     private final String dummyPicture = "Mock Picture URL";
 
-    private final User dummyUser = new User();
+    private OAuth2UserDto dummyOAuth2UserDto;
 
     @Spy
-    private User user = initDummyUser();
+    private final User dummyUser = new User();
 
     @Mock
     private UserService userService;
@@ -76,6 +76,11 @@ class OAuth2AuthenticationSuccessHandlerTest {
         dummyUser.setLocation("");
         dummyUser.setPhoneNumber("");
         dummyUser.setPosition("");
+    }
+
+    @BeforeEach
+    void initDummyOAuth2UserDto() {
+        dummyOAuth2UserDto = new OAuth2UserDto(dummyEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
     private OAuth2UserDto initNotExistingDummyAllowedDomainOAuth2UserDto() {
@@ -121,41 +126,40 @@ class OAuth2AuthenticationSuccessHandlerTest {
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
         verify(userMapper, times(0)).convertToEntity(dummyOAuth2UserDto);
-        verify(userService, times(0)).create(user);
+        verify(userService, times(0)).create(dummyUser);
     }
 
     @Test
+    @DisplayName("Should grant a 'Moderator' role to a first logged-in user")
     void shouldGrantModeratorRoleToFirstLoggedInUser() throws IOException {
-        OAuth2UserDto dummyOAuth2UserDto = initDummyOAuth2UserDto();
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
-        when(userService.existsByEmail(user.getEmail())).thenReturn(false);
-        when(userService.countAll()).thenReturn(0);
-        when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(user);
-        assertFalse(user.getRoles().contains(Role.MODERATOR));
+        when(userService.existsByEmail(dummyUser.getEmail())).thenReturn(false);
+        when(userService.count()).thenReturn(0);
+        when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(dummyUser);
+        assertFalse(dummyUser.getRoles().contains(Role.MODERATOR));
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(user, times(1)).grantRole(Role.MODERATOR);
-        assertTrue(user.getRoles().contains(Role.MODERATOR));
+        verify(dummyUser, times(1)).grantRole(Role.MODERATOR);
+        assertTrue(dummyUser.getRoles().contains(Role.MODERATOR));
     }
 
     @Test
+    @DisplayName("Should not grant a 'Moderator' role to a not first logged-in user")
     void shouldNotGrantModeratorRoleToNotFirstLoggedInUser() throws IOException {
-        OAuth2UserDto dummyOAuth2UserDto = initDummyOAuth2UserDto();
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
-        when(userService.existsByEmail(user.getEmail())).thenReturn(false);
-        when(userService.countAll()).thenReturn(1);
-        when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(user);
-        assertFalse(user.getRoles().contains(Role.MODERATOR));
+        when(userService.existsByEmail(dummyUser.getEmail())).thenReturn(false);
+        when(userService.count()).thenReturn(1);
+        when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(user, times(0)).grantRole(Role.MODERATOR);
-        assertFalse(user.getRoles().contains(Role.MODERATOR));
+        verify(dummyUser, times(0)).grantRole(Role.MODERATOR);
+        assertFalse(dummyUser.getRoles().contains(Role.MODERATOR));
     }
 
     @Test

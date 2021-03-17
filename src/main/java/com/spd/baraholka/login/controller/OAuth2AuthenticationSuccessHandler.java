@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.List;
-import java.util.Objects;
 
 @Component("OAuth2SuccessHandler")
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -49,7 +48,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         }
         if (!userService.existsByEmail(oAuth2UserDto.getEmail())) {
             User user = userMapper.convertToEntity(oAuth2UserDto);
-            if (userService.countAll() == 0) {
+            if (userService.count() == 0) {
                 user.grantRole(Role.MODERATOR);
             }
             userService.create(user);
