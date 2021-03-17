@@ -19,7 +19,7 @@ public class ViewRepositoryImpl implements ViewRepository{
 
     @Override
     public List<View> read(int userId) {
-        String sql = "SELECT id, user_id, advertisements_id, viewed_at FROM history_of_views WHERE user_id = :userId";
+        String sql = "SELECT id, user_id, advertisements_id, viewed_at FROM history_of_views WHERE user_id = :user_id";
 
         return jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), rs -> {
             List<View> list = new ArrayList<>();
@@ -39,7 +39,7 @@ public class ViewRepositoryImpl implements ViewRepository{
     @Override
     public int save(int userId, int advertisementsId) {
         final String sql = "INSERT INTO history_of_views(user_id, advertisements_id) " +
-                "VALUES (:userId, :advertisementsId) RETURNING id";
+                "VALUES (:user_id, :advertisements_id) RETURNING id";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("user_id", userId)
