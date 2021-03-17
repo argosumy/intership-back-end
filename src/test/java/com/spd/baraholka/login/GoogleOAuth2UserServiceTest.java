@@ -4,6 +4,7 @@ import com.spd.baraholka.login.dto.OAuth2UserDto;
 import com.spd.baraholka.login.service.OAuth2UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.spd.baraholka.login.service.GoogleOAuth2UserService.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -42,10 +44,10 @@ class GoogleOAuth2UserServiceTest {
 
     private Map<String, Object> initDummyAttributes() {
         Map<String, Object> dummyAttributes = new HashMap<>();
-        dummyAttributes.put("email", dummyEmail);
-        dummyAttributes.put("given_name", dummyGivenName);
-        dummyAttributes.put("family_name", dummyFamilyName);
-        dummyAttributes.put("picture", dummyPicture);
+        dummyAttributes.put(EMAIL_CLAIM_ATTRIBUTE, dummyEmail);
+        dummyAttributes.put(FIRST_NAME_CLAIM_ATTRIBUTE, dummyGivenName);
+        dummyAttributes.put(LAST_NAME_CLAIM_ATTRIBUTE, dummyFamilyName);
+        dummyAttributes.put(AVATAR_CLAIM_ATTRIBUTE, dummyPicture);
         return dummyAttributes;
     }
 
@@ -56,19 +58,39 @@ class GoogleOAuth2UserServiceTest {
     }
 
     @Test
-    void shouldReturnUserInfoFromPrincipal() {
+    @DisplayName("'Should return user's email from Principal")
+    void shouldReturnUserEmailFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-
         OAuth2UserDto oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
-
         assertEquals(oAuth2UserDto.getEmail(), dummyEmail);
+    }
+
+    @Test
+    @DisplayName("'Should return user's first name from Principal")
+    void shouldReturnUserFirstNameFromPrincipal() {
+        when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
+        OAuth2UserDto oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
         assertEquals(oAuth2UserDto.getFirstName(), dummyGivenName);
+    }
+
+    @Test
+    @DisplayName("'Should return user's last name from Principal")
+    void shouldReturnUserLastNameFromPrincipal() {
+        when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
+        OAuth2UserDto oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
         assertEquals(oAuth2UserDto.getLastName(), dummyFamilyName);
+    }
+
+    @Test
+    @DisplayName("'Should return user's avatar from Principal")
+    void shouldReturnUserAvatarFromPrincipal() {
+        when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
+        OAuth2UserDto oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
         assertEquals(oAuth2UserDto.getAvatar(), dummyPicture);
     }
 
     @AfterEach
-    public void clearSecurityContext() {
+    void clearSecurityContext() {
         SecurityContextHolder.clearContext();
     }
 }
