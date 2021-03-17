@@ -1,50 +1,50 @@
 package com.spd.baraholka.views;
 
-import com.spd.baraholka.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class ViewRepositoryImpl implements ViewRepository{
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final ViewMapper viewMapper;
 
     @Autowired
-    public ViewRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate, ViewMapper viewMapper) {
+    public ViewRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.viewMapper = viewMapper;
     }
 
     @Override
     public List<View> read(int userId) {
         String sql = "SELECT id, user_id, advertisements_id, viewed_at FROM history_of_views WHERE user_id = :userId";
-        List<View> list;
 
-        try {
-            list = jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), viewMapper);
-        } catch (EmptyResultDataAccessException exception) {
-            throw new NotFoundException("Views with id = " + userId + "don`t found");
-        }
-
-        return list;
+        return jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), rs -> {
+            List<View> list = new ArrayList<>();
+            while(rs.next()){
+                View view = new View(
+                        rs.getInt("id"),
+                        rs.getInt("user_id"),
+                        rs.getInt("advertisements_id"),
+                        rs.getTimestamp("viewed_at").toLocalDateTime()
+                );
+                list.add(view);
+            }
+            return list;
+        });
     }
 
     @Override
-    public void save(View view) {
-        final String sql = "INSERT INTO history_of_views(user_id, advertisements_id, viewed_at) " +
-                "VALUES (:userId, :advertisementsId, :viewed_at)";
+    public int save(int userId, int advertisementsId) {
+        final String sql = "INSERT INTO history_of_views(user_id, advertisements_id) " +
+                "VALUES (:userId, :advertisementsId) RETURNING id";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("user_id", view.getUserId())
-                .addValue("advertisements_id", view.getAdvertisementId())
-                .addValue("viewed_at", view.getViewedAt());
+                .addValue("user_id", userId)
+                .addValue("advertisements_id", advertisementsId);
 
-        jdbcTemplate.update(sql, parameters);
+        return jdbcTemplate.update(sql, parameters);
     }
 }

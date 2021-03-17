@@ -4,41 +4,32 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class View {
-    private int id;
-    private int userId;
-    private int advertisementId;
-    private LocalDateTime viewedAt;
+    private final int id;
+    private final int userId;
+    private final int advertisementId;
+    private final LocalDateTime viewedAt;
+
+    public View(int id, int userId, int advertisementId, LocalDateTime viewedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.advertisementId = advertisementId;
+        this.viewedAt = viewedAt;
+    }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public int getAdvertisementId() {
         return advertisementId;
     }
 
-    public void setAdvertisementId(int advertisementId) {
-        this.advertisementId = advertisementId;
-    }
-
     public LocalDateTime getViewedAt() {
         return viewedAt;
-    }
-
-    public void setViewedAt(LocalDateTime viewedAt) {
-        this.viewedAt = viewedAt;
     }
 
     @Override

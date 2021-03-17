@@ -6,5 +6,5 @@ public interface ViewRepository {
 
     List<View> read(int userId);
 
-    void save(View view);
+    int save(int userId, int advertisementsId);
 }
