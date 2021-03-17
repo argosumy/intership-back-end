@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  database:
+    image: 'postgres:alpine'
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    container_name: postgres
+    restart: on-failure
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=baraholka
+      - POSTGRES_USER=baraholka
+      - POSTGRES_PASSWORD=baraholka
+#    volumes:
+#      - ./db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "baraholka", "-U", "baraholka" ]
+      interval: 10s
+      timeout: 1s
+      retries: 20
+
+  backend-app:
+    image: 'baraholka-backend:latest'
+    build:
+      context: .
+    container_name: backend-app
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/baraholka
+      - SPRING_DATASOURCE_USERNAME=baraholka
+      - SPRING_DATASOURCE_PASSWORD=baraholka
+    depends_on:
+      - database
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    restart: on-failure
+    ports:
+      - "5050:5050"
+    environment:
+      - PGADMIN_LISTEN_PORT=5050
+      - PGADMIN_DEFAULT_EMAIL=admin
+      - PGADMIN_DEFAULT_PASSWORD=12345
+    depends_on:
+      - database
+
+#volumes:
+#  db-data:
