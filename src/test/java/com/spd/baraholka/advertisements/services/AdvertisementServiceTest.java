@@ -81,15 +81,6 @@ class AdvertisementServiceTest {
         assertThat(advertisementList).isEqualTo(List.of(advertisementActive, advertisementDraftToBeShown));
     }
 
-//    @Test
-//    @DisplayName("Should return full list of filtered ads by description in upper case when returned size not defined")
-//    void getFilteredAdsFoundByDescriptionKeywordInUpperCase() {
-//        when(advertisementService.getFilteredAdsByKeyword("DESCRIPTION", null)).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
-//        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword("DESCRIPTION", null);
-//
-//        assertThat(advertisementList).isEqualTo(List.of(advertisementActive, advertisementDraftToBeShown));
-//    }
-
     @Test
     @DisplayName("Should return only one entry of filtered ads by keyword in case size is defined as 1")
     void getFilteredAdsByKeywordWithDefinedSize() {
@@ -98,15 +89,6 @@ class AdvertisementServiceTest {
 
         assertThat(advertisementList).isEqualTo(List.of(advertisementActive));
     }
-
-//    @Test
-//    @DisplayName("Should return full list of filtered ads by keyword query in upper case")
-//    void getFilteredAdsByKeywordInUpperCase() {
-//        when(advertisementService.getFilteredAdsByKeyword("I", null)).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
-//        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword("TITLE", null);
-//
-//        assertThat(advertisementList).isEqualTo(List.of(advertisementActive, advertisementDraftToBeShown));
-//    }
 
     @Test
     @DisplayName("Should return empty list in case no ads found by keyword")
