@@ -34,8 +34,12 @@ public class OAuth2UserDto {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
         OAuth2UserDto oAuth2UserDto = (OAuth2UserDto) object;
         return Objects.equals(email, oAuth2UserDto.email);
     }
