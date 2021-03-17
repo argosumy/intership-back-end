@@ -1,0 +1,14 @@
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 2);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 3);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 4);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (12, 4);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (11, 2);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (4, 2);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (5, 22);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (3, 23);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (4, 21);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (4, 3);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (4, 22);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (7, 145);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 88);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (42, 42);
