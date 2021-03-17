@@ -11,52 +11,34 @@ import java.time.LocalDateTime;
 public class AdvertisementDTO {
 
     @NotNull
-    private final int advertisementId;
+    private int advertisementId;
 
     @NotNull
-    private final int ownerId;
+    private int ownerId;
 
     @Size(max = 200)
-    private final String title;
+    private String title;
 
     @NotNull
     private AdvertisementStatus status;
 
     @Positive
-    private final double price;
+    private double price;
 
     @NotNull
-    private final LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
     @NotNull
-    private final LocalDateTime statusChangeDate;
+    private LocalDateTime statusChangeDate;
 
     @Size(max = 20)
-    private final String city;
+    private String city;
 
-    private final String description;
-    private final String category;
-    private final CurrencyType currency;
-    private final boolean discountAvailability;
-    private final LocalDateTime publicationDate;
-
-    public AdvertisementDTO(int advertisementId, int ownerId, String title, String description, String category, double price,
-                         CurrencyType currency, boolean discountAvailability, String city, AdvertisementStatus status, LocalDateTime creationDate,
-                         LocalDateTime publicationDate, LocalDateTime statusChangeDate) {
-        this.advertisementId = advertisementId;
-        this.ownerId = ownerId;
-        this.title = title;
-        this.description = description;
-        this.category = category;
-        this.price = price;
-        this.currency = currency;
-        this.discountAvailability = discountAvailability;
-        this.city = city;
-        this.status = status;
-        this.creationDate = creationDate;
-        this.publicationDate = publicationDate;
-        this.statusChangeDate = statusChangeDate;
-    }
+    private String description;
+    private String category;
+    private CurrencyType currency;
+    private boolean discountAvailability;
+    private LocalDateTime publicationDate;
 
     public int getAdvertisementId() {
         return advertisementId;
@@ -112,5 +94,53 @@ public class AdvertisementDTO {
 
     public LocalDateTime getStatusChangeDate() {
         return statusChangeDate;
+    }
+
+    public void setAdvertisementId(int advertisementId) {
+        this.advertisementId = advertisementId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setStatusChangeDate(LocalDateTime statusChangeDate) {
+        this.statusChangeDate = statusChangeDate;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setCurrency(CurrencyType currency) {
+        this.currency = currency;
+    }
+
+    public void setDiscountAvailability(boolean discountAvailability) {
+        this.discountAvailability = discountAvailability;
+    }
+
+    public void setPublicationDate(LocalDateTime publicationDate) {
+        this.publicationDate = publicationDate;
     }
 }

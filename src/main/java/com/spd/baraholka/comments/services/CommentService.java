@@ -17,7 +17,7 @@ public class CommentService {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
     @Value("${commentService.topCommentsCount}")
-    public int topCommentsCount;
+    private int topCommentsCount;
     private final CommentRepository commentRepository;
 
     public CommentService(CommentRepository commentRepository) {
@@ -63,5 +63,4 @@ public class CommentService {
         logger.info("IN update - comment: {} by id: {} successfully updated", updatedComment, id);
         return updatedComment;
     }
-
 }

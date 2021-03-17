@@ -19,27 +19,6 @@ public class Advertisement {
     private LocalDateTime publicationDate;
     private LocalDateTime statusChangeDate;
 
-    public Advertisement() {
-    }
-
-    public Advertisement(int advertisementId, int ownerId, String title, String description, String category, double price,
-                         CurrencyType currency, boolean discountAvailability, String city, AdvertisementStatus status, LocalDateTime creationDate,
-                         LocalDateTime publicationDate, LocalDateTime statusChangeDate) {
-        this.advertisementId = advertisementId;
-        this.ownerId = ownerId;
-        this.title = title;
-        this.description = description;
-        this.category = category;
-        this.price = price;
-        this.currency = currency;
-        this.discountAvailability = discountAvailability;
-        this.city = city;
-        this.status = status;
-        this.creationDate = creationDate;
-        this.publicationDate = publicationDate;
-        this.statusChangeDate = statusChangeDate;
-    }
-
     public int getAdvertisementId() {
         return advertisementId;
     }

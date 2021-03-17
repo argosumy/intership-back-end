@@ -42,7 +42,6 @@ class CommentReactionControllerTest {
     private ObjectMapper mapper;
     private CommentReactionDto commentReactionDto;
 
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);

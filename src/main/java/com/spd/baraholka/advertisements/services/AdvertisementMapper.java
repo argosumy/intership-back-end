@@ -34,20 +34,20 @@ public class AdvertisementMapper {
     }
 
     public AdvertisementDTO getAdvertisementDto(Advertisement advertisement) {
-        return new AdvertisementDTO(
-                advertisement.getAdvertisementId(),
-                advertisement.getOwnerId(),
-                advertisement.getTitle(),
-                advertisement.getDescription(),
-                advertisement.getCategory(),
-                advertisement.getPrice(),
-                advertisement.getCurrency(),
-                advertisement.isDiscountAvailability(),
-                advertisement.getCity(),
-                advertisement.getStatus(),
-                advertisement.getCreationDate(),
-                advertisement.getPublicationDate(),
-                advertisement.getStatusChangeDate()
-        );
+        AdvertisementDTO advertisementDTO = new AdvertisementDTO();
+        advertisementDTO.setAdvertisementId(advertisement.getAdvertisementId());
+        advertisementDTO.setOwnerId(advertisement.getOwnerId());
+        advertisementDTO.setTitle(advertisement.getTitle());
+        advertisementDTO.setDescription(advertisement.getDescription());
+        advertisementDTO.setCategory(advertisement.getCategory());
+        advertisementDTO.setPrice(advertisement.getPrice());
+        advertisementDTO.setCurrency(advertisement.getCurrency());
+        advertisementDTO.setDiscountAvailability(advertisement.isDiscountAvailability());
+        advertisementDTO.setCity(advertisement.getCity());
+        advertisementDTO.setStatus(advertisement.getStatus());
+        advertisementDTO.setCreationDate(advertisement.getCreationDate());
+        advertisementDTO.setPublicationDate(advertisement.getPublicationDate());
+        advertisementDTO.setStatusChangeDate(advertisement.getStatusChangeDate());
+        return advertisementDTO;
     }
 }

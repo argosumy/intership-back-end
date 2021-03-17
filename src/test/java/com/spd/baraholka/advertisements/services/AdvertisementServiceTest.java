@@ -42,25 +42,24 @@ class AdvertisementServiceTest {
                 AdvertisementStatus.ACTIVE);
         advertisementDraftToBeShown = createAdvertisement(3, LocalDateTime.of(2019, 2, 2, 2, 10, 2),
                 AdvertisementStatus.DRAFT);
-
     }
 
     private Advertisement createAdvertisement(int id, LocalDateTime publication, AdvertisementStatus status) {
-        return new Advertisement(
-                id,
-                1,
-                "title",
-                "description",
-                "category",
-                100,
-                CurrencyType.UAH,
-                true,
-                "city",
-                status,
-                LocalDateTime.of(2021, 3, 14, 9, 48, 56),
-                publication,
-                LocalDateTime.of(2021, 3, 14, 9, 48, 56)
-        );
+        Advertisement advertisement = new Advertisement();
+        advertisement.setAdvertisementId(id);
+        advertisement.setOwnerId(1);
+        advertisement.setTitle("title");
+        advertisement.setDescription("description");
+        advertisement.setCategory("category");
+        advertisement.setPrice(100);
+        advertisement.setCurrency(CurrencyType.UAH);
+        advertisement.setDiscountAvailability(true);
+        advertisement.setCity("city");
+        advertisement.setStatus(status);
+        advertisement.setCreationDate(LocalDateTime.of(2021, 3, 14, 9, 48, 56));
+        advertisement.setPublicationDate(publication);
+        advertisement.setStatusChangeDate(LocalDateTime.of(2021, 3, 14, 9, 48, 56));
+        return advertisement;
     }
 
     @Test
@@ -102,10 +101,10 @@ class AdvertisementServiceTest {
     @Test
     @DisplayName("Should return list of ACTIVE ads")
     void getAllActive() {
-        when(advertisementService.getAllActive()).thenReturn(List.of(advertisementActive));
+        when(advertisementService.getAllActive()).thenReturn(List.of(advertisementActive, advertisementDraftToBeShown));
         List<Advertisement> advertisementList = advertisementService.getAllActive();
 
-        assertThat(advertisementList).isEqualTo(List.of(advertisementActive));
+        assertThat(advertisementList).isEqualTo(List.of(advertisementActive, advertisementDraftToBeShown));
     }
 
     @Test

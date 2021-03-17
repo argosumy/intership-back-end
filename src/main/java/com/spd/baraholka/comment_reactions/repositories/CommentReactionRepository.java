@@ -1,6 +1,5 @@
 package com.spd.baraholka.comment_reactions.repositories;
 
-
 import com.spd.baraholka.comment_reactions.entities.CommentReaction;
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
