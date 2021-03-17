@@ -25,6 +25,11 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+//    @PostMapping("users/userId")
+//    public ImageResourceDto saveUserProfileImage(long userId, MultipartFile profileImage) {
+//        imageService.saveUserProfileImage();
+//    }
+
     @PostMapping("images/ads/{adId}")
     @ResponseStatus(HttpStatus.OK)
     public void save(@PathVariable /*@ValidateAdId*/ long adId,
@@ -69,14 +74,14 @@ public class ImageController {
     }
 
     @GetMapping("images/ads/{adId}/primary")
-    public ResponseEntity<ImageResource> getPrimary(@PathVariable long adId) {
+    public ResponseEntity<PrimaryImageResourceDto> getPrimary(@PathVariable long adId) {
         Optional<ImageResource> imageResourceHolder = imageService.getPrimary(adId);
 
         if (imageResourceHolder.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         ImageResource imageResource = imageResourceHolder.get();
 
-        return new ResponseEntity(
+        return new ResponseEntity<>(
                 PrimaryImageResourceDto.of(
                         imageResource.getId(),
                         imageResource.getAdId(),
@@ -84,11 +89,6 @@ public class ImageController {
                 HttpStatus.OK
         );
     }
-
-//    @DeleteMapping("images/ads/{adId}")
-//    public void deleteAllByAdId(@PathVariable /*@ValidateAdId*/ long adId) {
-//
-//    }
 
     @DeleteMapping("/images/{imageId}")
     @ResponseStatus(HttpStatus.OK)
