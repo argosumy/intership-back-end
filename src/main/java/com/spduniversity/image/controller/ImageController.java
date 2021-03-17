@@ -23,35 +23,36 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @PostMapping("images/ads/{adId}")
+    @PostMapping("ads/{adId}/images")
     @ResponseStatus(HttpStatus.OK)
-    public void save(@PathVariable long adId,
-                     @RequestPart(value = "images") List<MultipartFile> images) {
+    public void saveImages(@PathVariable long adId,
+                           @RequestPart(value = "images") List<MultipartFile> images) {
 
         List<ImageResource> imageResources = toDomain(adId, images);
 
         imageService.saveAll(imageResources);
     }
 
-    /* Validate if it is possible to add a new image */
-//    @PostMapping("ads/images/{adId}")
-//    public ImageResourceDto saveSingleImage(@PathVariable long adId,
-//                                            @RequestPart(name = "isPrimary") String isPrimary,
-//                                            @RequestPart(name = "positionOrder") String positionOrder,
-//                                            @RequestPart MultipartFile image) {
-//
-//        ImageResource imageResource = imageService.save(ImageResource.of(adId, Boolean.getBoolean(isPrimary), Integer.parseInt(positionOrder), image));
-//
-//        return ImageResourceDto.of(
-//                                    imageResource.getId(),
-//                                    imageResource.getAdId(),
-//                                    imageResource.getIsPrimary(),
-//                                    imageResource.getPosition(),
-//                                    imageResource.getImageUrl()
-//        );
-//    }
+    @PostMapping("ads/{adId}/image")
+    public ImageResourceDto saveImage(@PathVariable long adId,
+                                      @RequestPart(name = "isPrimary") String isPrimary,
+                                      @RequestPart(name = "position") String position,
+                                      @RequestPart MultipartFile image) {
 
-    @GetMapping("images/ads/{adId}")
+        ImageResource imageResource = imageService.save(
+                ImageResource.of(adId, Boolean.getBoolean(isPrimary), Integer.parseInt(position), image)
+        );
+
+        return ImageResourceDto.of(
+                                    imageResource.getId(),
+                                    imageResource.getAdId(),
+                                    imageResource.getIsPrimary(),
+                                    imageResource.getPosition(),
+                                    imageResource.getImageUrl()
+        );
+    }
+
+    @GetMapping("ads/{adId}/images")
     public List<ImageResourceDto> getAllByAdId(@PathVariable long adId) {
         List<ImageResource> imageResources = imageService.getAllByAdId(adId);
 
@@ -66,34 +67,17 @@ public class ImageController {
                 .collect(Collectors.toList());
     }
 
-//    @GetMapping("images/ads/{adId}/primary")
-//    public ResponseEntity<PrimaryImageResourceDto> getPrimary(@PathVariable long adId) {
-//        Optional<ImageResource> imageResourceHolder = imageService.getPrimary(adId);
-//
-//        if (imageResourceHolder.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//
-//        ImageResource imageResource = imageResourceHolder.get();
-//
-//        return new ResponseEntity<>(
-//                PrimaryImageResourceDto.of(
-//                        imageResource.getId(),
-//                        imageResource.getAdId(),
-//                        imageResource.getImageUrl()),
-//                HttpStatus.OK
-//        );
-//    }
-
-//    @DeleteMapping("/images/{imageId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public void deleteImage(@PathVariable long imageId) {
-//        imageService.delete(imageId);
-//    }
+    @DeleteMapping("ads/ad/images/{imageId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteImage(@PathVariable long imageId) {
+        imageService.deleteImage(imageId);
+    }
 
     private List<ImageResource> toDomain(long adId, List<MultipartFile> images) {
         List<ImageResource> imageResources = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
             MultipartFile image = images.get(i);
-            // Makes the first image be primary
+            // Make the first image be primary
             if (i == 0) {
                 imageResources.add(ImageResource.of(adId, true, i + 1, image));
                 continue;
