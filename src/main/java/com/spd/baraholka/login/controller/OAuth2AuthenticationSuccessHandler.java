@@ -27,7 +27,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
     private final UserMapper userMapper;
 
-    @Value("#{'${login.allowed-domains}'.split(',')}")
+    @Value("${login.allowed-domains}")
     private List<String> allowedDomains;
 
     @Qualifier("Google OAuth2")

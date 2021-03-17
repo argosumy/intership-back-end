@@ -1,6 +1,7 @@
 package com.spd.baraholka.user;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,6 +28,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("'Should invoke UserRepository.existsByEmail when UserService.existsByEmail is invoked")
     void shouldInvokeRepoExistsByEmailTest() {
         String dummyEmail = "dummy@email.com";
         userServiceUnderTest.existsByEmail(dummyEmail);

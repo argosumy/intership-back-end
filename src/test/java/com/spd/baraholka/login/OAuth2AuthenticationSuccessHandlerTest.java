@@ -10,6 +10,7 @@ import com.spd.baraholka.user.UserService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,7 +39,8 @@ class OAuth2AuthenticationSuccessHandlerTest {
     private final String dummyGivenName = "Mock Given Name";
     private final String dummyFamilyName = "Mock Family Name";
     private final String dummyPicture = "Mock Picture URL";
-    private final String existingEmail = "existing@email.com";
+
+    private final User dummyUser = new User();
 
     @Mock
     private UserService userService;
@@ -58,11 +60,24 @@ class OAuth2AuthenticationSuccessHandlerTest {
         ReflectionTestUtils.setField(oAuth2SuccessHandlerUnderTest, "allowedDomains", Lists.newArrayList("spd-ukraine.com", "email.com"));
     }
 
-    private OAuth2UserDto initDummyOAuth2UserDto() {
-        return new OAuth2UserDto(dummyEmail, dummyGivenName, dummyFamilyName, dummyPicture);
+    @BeforeEach
+    void initDummyUser() {
+        dummyUser.setEmail(dummyEmail);
+        dummyUser.setFirstName(dummyGivenName);
+        dummyUser.setLastName(dummyFamilyName);
+        dummyUser.setAvatar(dummyPicture);
+        dummyUser.setLocation("");
+        dummyUser.setPhoneNumber("");
+        dummyUser.setPosition("");
+    }
+
+    private OAuth2UserDto initNotExistingDummyAllowedDomainOAuth2UserDto() {
+        String notExistingEmail = "notExisting@email.com";
+        return new OAuth2UserDto(notExistingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
     private OAuth2UserDto initExistingDummyOAuth2UserDto() {
+        String existingEmail = "existing@email.com";
         return new OAuth2UserDto(existingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
@@ -71,22 +86,10 @@ class OAuth2AuthenticationSuccessHandlerTest {
         return new OAuth2UserDto(notAllowedEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
-    private User initDummyUser() {
-        User dummyUser = new User();
-        dummyUser.setEmail(dummyEmail);
-        dummyUser.setFirstName(dummyGivenName);
-        dummyUser.setLastName(dummyFamilyName);
-        dummyUser.setAvatar(dummyPicture);
-        dummyUser.setLocation("");
-        dummyUser.setPhoneNumber("");
-        dummyUser.setPosition("");
-        return dummyUser;
-    }
-
     @Test
+    @DisplayName("'Should invoke creating of a new successfully logged-in user")
     void shouldInvokeCreateNewLoggedInUserTest() throws IOException {
-        OAuth2UserDto dummyOAuth2UserDto = initDummyOAuth2UserDto();
-        User dummyUser = initDummyUser();
+        OAuth2UserDto dummyOAuth2UserDto = initNotExistingDummyAllowedDomainOAuth2UserDto();
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
         when(userService.existsByEmail(dummyOAuth2UserDto.getEmail())).thenReturn(false);
         when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(dummyUser);
@@ -100,9 +103,9 @@ class OAuth2AuthenticationSuccessHandlerTest {
     }
 
     @Test
+    @DisplayName("'Should not invoke creating of an existing successfully logged-in user")
     void shouldNotInvokeCreateExistingLoggedInUserTest() throws IOException {
         OAuth2UserDto dummyOAuth2UserDto = initExistingDummyOAuth2UserDto();
-        User dummyUser = initDummyUser();
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
         when(userService.existsByEmail(dummyOAuth2UserDto.getEmail())).thenReturn(true);
 
@@ -115,6 +118,7 @@ class OAuth2AuthenticationSuccessHandlerTest {
     }
 
     @Test
+    @DisplayName("'Should throw BadCredentialsException when a user's email domain is not in 'login.allowed-domains' app property")
     void shouldThrowExceptionForNotAllowedDomain() {
         OAuth2UserDto dummyOAuth2UserDto = initNotAllowedDummyOAuth2UserDto();
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);

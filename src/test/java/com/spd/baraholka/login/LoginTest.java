@@ -1,5 +1,6 @@
 package com.spd.baraholka.login;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,6 +20,7 @@ class LoginTest {
     private MockMvc mvc;
 
     @Test
+    @DisplayName("'Should redirect anonymous user to Google Account OAuth2 page")
     @WithAnonymousUser
     void shouldRedirectToGoogleOAuth2Server() throws Exception {
         String appGoogleOAuth2ClientEndpoint = "/oauth2/authorization/google";

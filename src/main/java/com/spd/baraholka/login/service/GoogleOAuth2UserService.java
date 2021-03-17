@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 @Qualifier("Google OAuth2")
 public class GoogleOAuth2UserService implements OAuth2UserService {
 
+    public static final String EMAIL_CLAIM_ATTRIBUTE = "email";
+    public static final String FIRST_NAME_CLAIM_ATTRIBUTE = "given_name";
+    public static final String LAST_NAME_CLAIM_ATTRIBUTE = "family_name";
+    public static final String AVATAR_CLAIM_ATTRIBUTE = "picture";
+
     @Override
     public OAuth2UserDto getUserInfoFromOAuth2() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -20,10 +25,10 @@ public class GoogleOAuth2UserService implements OAuth2UserService {
     @Override
     public OAuth2UserDto getUserInfoFromOAuth2(Authentication authentication) {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String email = oAuth2User.getAttributes().get("email").toString();
-        String firstName = oAuth2User.getAttributes().get("given_name").toString();
-        String lastName = oAuth2User.getAttributes().get("family_name").toString();
-        String avatar = oAuth2User.getAttributes().get("picture").toString();
+        String email = oAuth2User.getAttributes().get(EMAIL_CLAIM_ATTRIBUTE).toString();
+        String firstName = oAuth2User.getAttributes().get(FIRST_NAME_CLAIM_ATTRIBUTE).toString();
+        String lastName = oAuth2User.getAttributes().get(LAST_NAME_CLAIM_ATTRIBUTE).toString();
+        String avatar = oAuth2User.getAttributes().get(AVATAR_CLAIM_ATTRIBUTE).toString();
         return new OAuth2UserDto(email, firstName, lastName, avatar);
     }
 }
