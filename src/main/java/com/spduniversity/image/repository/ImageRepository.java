@@ -37,7 +37,7 @@ public class ImageRepository {
 
     public void save(ImageResource imageResource) {
         String sql = "INSERT INTO advertisements_images(ad_id, image_id, is_primary, position) " +
-                     "VALUES(:adId, :imageId, :isPrimary, :position) RETURNING id";
+                     "VALUES(:adId, :imageId, :isPrimary, :position)";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("adId", imageResource.getAdId());

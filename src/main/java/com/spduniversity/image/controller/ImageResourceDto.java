@@ -2,18 +2,18 @@ package com.spduniversity.image.controller;
 
 public class ImageResourceDto {
 
-    private long id;
+    private final long id;
     private final long adId;
     private final boolean isPrimary;
-    private final int positionOrder;
-    private final String imageUrl;
+    private final int position;
+    private final String url;
 
-    private ImageResourceDto(long id, long adId, boolean isPrimary, int positionOrder, String imageUrl) {
+    private ImageResourceDto(long id, long adId, boolean isPrimary, int position, String url) {
         this.id = id;
         this.adId = adId;
         this.isPrimary = isPrimary;
-        this.positionOrder = positionOrder;
-        this.imageUrl = imageUrl;
+        this.position = position;
+        this.url = url;
     }
 
     public static ImageResourceDto of(long id, long adId, boolean isPrimary, int positionOrder, String imageUrl) {
@@ -32,11 +32,11 @@ public class ImageResourceDto {
         return isPrimary;
     }
 
-    public int getPositionOrder() {
-        return positionOrder;
+    public int getPosition() {
+        return position;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getUrl() {
+        return url;
     }
 }

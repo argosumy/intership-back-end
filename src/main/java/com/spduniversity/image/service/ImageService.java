@@ -25,7 +25,7 @@ public class ImageService {
     public ImageResource save(ImageResource imageResource) {
         uploadImage(imageResource);
 
-        save(imageResource);
+        repository.save(imageResource);
 
         return imageResource;
     }

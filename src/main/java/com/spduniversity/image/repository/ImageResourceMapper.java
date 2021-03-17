@@ -16,8 +16,8 @@ public class ImageResourceMapper implements RowMapper<ImageResource> {
         long id = rs.getLong("id");
         long adId = rs.getLong("ad_id");
         boolean isPrimary = rs.getBoolean("is_primary");
-        int positionOrder = rs.getInt("position_order");
-        String imageUrl = rs.getString("image_url");
+        int positionOrder = rs.getInt("position");
+        String imageUrl = rs.getString("url");
 
         return new ImageResource(id, adId, isPrimary, positionOrder, imageUrl);
     }

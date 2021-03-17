@@ -35,8 +35,8 @@ public class ImageController {
 
     @PostMapping("ads/{adId}/image")
     public ImageResourceDto saveImage(@PathVariable long adId,
-                                      @RequestPart(name = "isPrimary") String isPrimary,
-                                      @RequestPart(name = "position") String position,
+                                      @RequestParam(name = "isPrimary") boolean isPrimary,
+                                      @RequestParam(name = "position") int position,
                                       @RequestPart MultipartFile image) {
 
         ImageResource imageResource = imageService.save(
@@ -67,10 +67,16 @@ public class ImageController {
                 .collect(Collectors.toList());
     }
 
-    @DeleteMapping("ads/ad/images/{imageId}")
+    @DeleteMapping("images/{imageId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteImage(@PathVariable long imageId) {
         imageService.deleteImage(imageId);
+    }
+
+    @DeleteMapping("ads/{adId}/images")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAllImagesByAdId(@PathVariable long adId) {
+        imageService.deleteAllByAdId(adId);
     }
 
     private List<ImageResource> toDomain(long adId, List<MultipartFile> images) {
