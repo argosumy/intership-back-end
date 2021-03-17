@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.spd.baraholka.config.exceptions.*;
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.CurrencyType;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
+import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -120,9 +120,9 @@ class AdvertisementControllerTest {
     }
 
     @Test
-    @DisplayName("Advertisement was not found by id and throw exception")
-    void editPublicationDateThrowException() throws Exception {
-        when(advertisementService.findDraftAdById(100))
+    @DisplayName("Advertisement was not found by id and threw exception")
+    void editPublicationDateOfNotExistsAdAndThrowException() throws Exception {
+        when(advertisementService.editPublicationDate(100, "2023-01-01T10:40:01"))
                 .thenThrow(new NotFoundByIdException(100));
 
         mockMvc.perform(put("/advertisements/100/publish-delayed?publicationDate=2023-01-01T10:40:01"))
@@ -130,16 +130,6 @@ class AdvertisementControllerTest {
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof NotFoundByIdException))
                 .andExpect(result -> assertEquals("Could not find by id: 100",
                         Objects.requireNonNull(result.getResolvedException()).getMessage()));
-    }
-
-    @Test
-    @DisplayName("Advertisement was not found by id and returned Optional Empty")
-    void editPublicationDateOfNotExistsAdAndReturnEmpty() throws Exception {
-        when(advertisementService.findDraftAdById(100))
-                .thenReturn(Optional.empty());
-
-        mockMvc.perform(put("/advertisements/100/publish-delayed?publicationDate=2023-01-01T10:40:01"))
-                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -152,16 +142,6 @@ class AdvertisementControllerTest {
                 .contentType(MediaType.TEXT_HTML)
                 .content("1"))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("Advertisement was not found by id and returned Optional Empty")
-    void cancelDelayedPublicationOfNotExistsAdAndReturnEmpty() throws Exception {
-        when(advertisementService.findDraftAdById(100))
-                .thenReturn(Optional.empty());
-
-        mockMvc.perform(put("/advertisements/100/cancel-delayed"))
-                .andExpect(status().isNotFound());
     }
 
     private String getResponseJson(List<Advertisement> advertisements) throws JsonProcessingException {

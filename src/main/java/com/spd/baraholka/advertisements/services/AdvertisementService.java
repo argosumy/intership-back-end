@@ -2,6 +2,7 @@ package com.spd.baraholka.advertisements.services;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
+import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -51,13 +52,17 @@ public class AdvertisementService {
         List<Advertisement> active = persistenceAdvertisementService.getAllActive();
         logger.info("IN getAllActive - advertisements found: {}", active.size());
 
+        setActiveStatus(active);
+        return active;
+    }
+
+    private void setActiveStatus(List<Advertisement> active) {
         active.forEach(ad -> {
             if (ad.getStatus() == (AdvertisementStatus.DRAFT)) {
                 ad.setStatus(AdvertisementStatus.ACTIVE);
                 updateAdvertisement(advertisementMapper.getAdvertisementDto(ad));
             }
         });
-        return active;
     }
 
     public Optional<Advertisement> findDraftAdById(int id) {
@@ -70,7 +75,10 @@ public class AdvertisementService {
         return result;
     }
 
-    public int editPublicationDate(Advertisement advertisement, String publicationDate) {
+    public int editPublicationDate(int id, String publicationDate) {
+        Advertisement advertisement = findDraftAdById(id)
+                .orElseThrow(() -> new NotFoundByIdException(id));
+
         advertisement.setPublicationDate(LocalDateTime.parse(publicationDate));
         return persistenceAdvertisementService.updateAdvertisement(advertisement);
     }

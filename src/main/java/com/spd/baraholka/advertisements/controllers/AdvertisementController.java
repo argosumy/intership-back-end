@@ -5,7 +5,6 @@ import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
-import com.spd.baraholka.config.exceptions.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,17 +40,13 @@ public class AdvertisementController {
     @PutMapping("/{id}/publish-delayed")
     public int editPublicationDate(@PathVariable("id") int id,
                                    @RequestParam("publicationDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String publicationDate) {
-        Advertisement advertisement = advertisementService.findDraftAdById(id)
-                .orElseThrow(() -> new NotFoundByIdException(id));
-        return advertisementService.editPublicationDate(advertisement, publicationDate);
+        return advertisementService.editPublicationDate(id, publicationDate);
     }
 
     @PutMapping("/{id}/cancel-delayed")
     public int cancelDelayedPublicationOfExistsAd(@PathVariable("id") int id) {
-        Advertisement advertisement = advertisementService.findDraftAdById(id)
-                .orElseThrow(() -> new NotFoundByIdException(id));
         String presentDate = String.valueOf(LocalDateTime.now());
-        return advertisementService.editPublicationDate(advertisement, presentDate);
+        return advertisementService.editPublicationDate(id, presentDate);
     }
 
     @PostMapping

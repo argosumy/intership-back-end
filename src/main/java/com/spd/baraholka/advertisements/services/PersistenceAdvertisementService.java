@@ -2,10 +2,12 @@ package com.spd.baraholka.advertisements.services;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface PersistenceAdvertisementService {
 
     int saveAdvertisement(Advertisement advertisement);
@@ -16,5 +18,5 @@ public interface PersistenceAdvertisementService {
 
     List<Advertisement> getAllActive();
 
-     Optional<Advertisement> findDraftAdById(int id);
+    Optional<Advertisement> findDraftAdById(int id);
 }
