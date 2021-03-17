@@ -25,4 +25,16 @@ public class UserRepository implements PersistenceUserService {
         Map<String, Integer> selectParameters = Map.of("id", id);
         return jdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper);
     }
+
+    @Override
+    public int updateUserMainInfo(User user) {
+        String updateSQL = "UPDATE users SET position=:position, phone_number=:phoneNumber WHERE id=:id";
+        Map<String, Object> updateParameters = createUpdateUserMainInfoParameters(user);
+        jdbcTemplate.update(updateSQL, updateParameters);
+        return user.getId();
+    }
+
+    private Map<String, Object> createUpdateUserMainInfoParameters(User user) {
+        return Map.of("position", user.getPosition(), "phoneNumber", user.getPhoneNumber(), "id", user.getId());
+    }
 }
