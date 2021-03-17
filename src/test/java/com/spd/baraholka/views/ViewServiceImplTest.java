@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class ViewServiceImplTest {
     private static final int ID = 1;
     private static final int USER_ID = 15;
     private static final int ADVERTISEMENT_ID = 2;
-    private static final LocalDateTime DATE_TIME = LocalDateTime.of(2021, 1,1,18,10,15);
-    ViewService viewService;
-    ViewRepository viewRepository;
+    private static final LocalDateTime DATE_TIME = LocalDateTime.of(2021,  1, 1, 18, 10, 15);
+    private ViewService viewService;
+    private ViewRepository viewRepository;
 
     @BeforeEach
     void initializing() {
