@@ -8,5 +8,4 @@ public enum EventTypes {
     NEW_MESSAGE_DIRECT,
     NEW_COMMENTS_TO_MY_COMMENTS,
     CHANGES_ADVERTISEMENT
-
 }

@@ -3,7 +3,6 @@ package com.spd.baraholka.notifications.DAO.factory;
 import com.spd.baraholka.notifications.enume.EventTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
@@ -16,10 +15,10 @@ public class SaveNotificationFactory {
         this.list = list;
     }
 
-    public SaveNotification buildSaveNotification(EventTypes types){
+    public SaveNotification buildSaveNotification(EventTypes types) {
         SaveNotification saveNotification = null;
-        for(SaveNotification object:list){
-            if(object.getType() == types){
+        for (SaveNotification object:list) {
+            if (object.getType() == types) {
                 saveNotification = object;
                 break;
             }
