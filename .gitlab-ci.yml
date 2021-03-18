@@ -17,6 +17,9 @@ check:
   script:
     - export GRADLE_USER_HOME=/cache/gradle
     - ./gradlew clean check --stacktrace
+  artifacts:
+    reports:
+      junit: builds/spd-marketplace/back-end/build/reports/tests/test/index.html
 
 .build:
   stage: build
