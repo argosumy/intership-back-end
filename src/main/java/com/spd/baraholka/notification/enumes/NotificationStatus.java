@@ -1,4 +1,4 @@
-package com.spd.baraholka.notifications.enume;
+package com.spd.baraholka.notification.enumes;
 
 public enum NotificationStatus {
     NEW,

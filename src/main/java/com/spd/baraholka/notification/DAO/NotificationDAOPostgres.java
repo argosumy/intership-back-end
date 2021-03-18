@@ -1,8 +1,8 @@
-package com.spd.baraholka.notifications.DAO;
+package com.spd.baraholka.notification.DAO;
 
-import com.spd.baraholka.notifications.DAO.factory.SaveNotification;
-import com.spd.baraholka.notifications.DAO.factory.SaveNotificationFactory;
-import com.spd.baraholka.notifications.enume.EventTypes;
+import com.spd.baraholka.notification.DAO.factory.SaveNotification;
+import com.spd.baraholka.notification.DAO.factory.SaveNotificationFactory;
+import com.spd.baraholka.notification.enumes.EventTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Map;
 
 @Repository
-public class NotificationDAO implements DAOConnection {
+public class NotificationDAOPostgres implements NotificationDAO {
 private final JdbcTemplate jdbcTemplate;
 private SaveNotificationFactory factory;
 
 @Autowired
-public NotificationDAO(JdbcTemplate jdbcTemplate, SaveNotificationFactory factory) {
+public NotificationDAOPostgres(JdbcTemplate jdbcTemplate, SaveNotificationFactory factory) {
     this.jdbcTemplate = jdbcTemplate;
     this.factory = factory;
 }
