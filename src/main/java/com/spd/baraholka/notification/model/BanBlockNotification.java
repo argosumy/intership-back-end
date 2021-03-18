@@ -3,9 +3,8 @@ package com.spd.baraholka.notification.model;
 import java.time.LocalDateTime;
 
 public class BanBlockNotification extends Notification {
-    LocalDateTime dateBanNotification;
+    private LocalDateTime dateBanNotification;
     private String nameAd;
-
 
     public BanBlockNotification() {
         super();

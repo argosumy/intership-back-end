@@ -1,6 +1,5 @@
 package com.spd.baraholka.notification.services;
 
-
 import com.spd.baraholka.notification.enumes.EventTypes;
 import com.spd.baraholka.notification.model.BanBlockNotification;
 import com.spd.baraholka.notification.model.Notification;
@@ -13,7 +12,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
@@ -28,9 +26,10 @@ public class CreateNotificationAccountBan implements CreateNotification {
     private final JavaMailSender emailSender;
     private final Configuration emailConfig;
     private final EventTypes types = EventTypes.ACCOUNT_BAN;
+
     @Autowired
     public CreateNotificationAccountBan(JavaMailSender emailSender,
-                                        @Qualifier("freeMarker")Configuration emailConfig){
+                                        @Qualifier("freeMarker")Configuration emailConfig) {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;
     }
@@ -46,7 +45,7 @@ public class CreateNotificationAccountBan implements CreateNotification {
         LocalDateTime localDateTime = notification.getDateBanNotification();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String dateBan = localDateTime.format(formatter);
-        Map<String,String> model = new HashMap();
+        Map<String, String> model = new HashMap();
         model.put("block_ends", dateBan);
         model.put("reason", notification.getDescription());
         model.put("profile_link", notification.getProfileLinkUser());

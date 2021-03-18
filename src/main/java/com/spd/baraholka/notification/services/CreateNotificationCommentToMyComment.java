@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateNotificationCommentToMyComment extends CreateNotificationNewCommentsAd {
-
-
     @Autowired
     public CreateNotificationCommentToMyComment(JavaMailSender emailSender, @Qualifier("freeMarker") Configuration emailConfig) {
         super(emailSender, emailConfig);

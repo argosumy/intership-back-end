@@ -1,9 +1,9 @@
 package com.spd.baraholka.notification.model;
 
-
 import java.util.List;
+
 //New Comments, new Advertisement, Changes Advertisement
-public class CommentNotification extends Notification{
+public class CommentNotification extends Notification {
     private String nameAd;
     private String sendToOwner;
     private long price;
@@ -12,12 +12,6 @@ public class CommentNotification extends Notification{
     private List<String> images;
     private String linkAd;
     private String nameWriter;
-
-
-
-    public CommentNotification() {
-
-    }
 
     public String getNameAd() {
         return nameAd;
@@ -66,8 +60,6 @@ public class CommentNotification extends Notification{
     public void setImages(List<String> images) {
         this.images = images;
     }
-
-
 
     public String getLinkAd() {
         return linkAd;

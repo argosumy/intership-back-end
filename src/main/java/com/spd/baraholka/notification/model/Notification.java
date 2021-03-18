@@ -1,22 +1,15 @@
 package com.spd.baraholka.notification.model;
 
-
-
-
 import java.time.LocalDateTime;
 
-
 public abstract class Notification {
-    private String subject;
-    private String description;
-    private String sendTo;
-    private String status;
-    private String event;
-    private LocalDateTime date;
-    private String profileLinkUser;
-
-    public Notification(){
-    }
+private String subject;
+private String description;
+private String sendTo;
+private String status;
+private String event;
+private LocalDateTime date;
+private String profileLinkUser;
 
     public String getSubject() {
         return subject;

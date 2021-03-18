@@ -12,5 +12,4 @@ public class FreemarkerConfig {
         bean.setTemplateLoaderPath("classpath:/templates/");
         return bean;
     }
-
 }
