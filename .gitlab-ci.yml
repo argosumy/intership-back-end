@@ -27,7 +27,7 @@ check:
     - ./gradlew clean check --stacktrace
   artifacts:
     reports:
-      junit: build/test-results/tests/TEST-*.xml
+      junit: build/test-results/test/TEST-*.xml
 
 .build:
   stage: build
