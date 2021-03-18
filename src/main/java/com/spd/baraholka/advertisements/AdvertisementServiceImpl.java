@@ -18,7 +18,6 @@ public class AdvertisementServiceImpl implements AdvertisementService{
     @Override
     @Scheduled(cron = "${baraholka.scheduled.delete-old-archive-task}")
     public void deleteOldArchiveAdvertisements() {
-        //advertisementRepository.changeStatusArchivedOnDeleted();
-        System.out.println(LocalDateTime.now().toString());
+        advertisementRepository.changeStatusArchivedOnDeleted();
     }
 }

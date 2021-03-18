@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "baraholka.scheduled.delete-old-archive-task",
-      "type": "java.lang.Long",
-      "description": "Description for baraholka.scheduled.delete-old-archive-task."
-  }
-] }
