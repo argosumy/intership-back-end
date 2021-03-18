@@ -5,7 +5,8 @@ import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
-import com.spd.baraholka.pagination.entities.PageRequest;
+import com.spd.baraholka.pagination.dto.PageRequestDto;
+import com.spd.baraholka.pagination.mappers.PageRequestMapper;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,14 @@ public class AdvertisementController {
     private final AdvertisementService advertisementService;
     private final AdvertisementMapper advertisementMapper;
     private final PageRequestService pageRequestService;
+    private final PageRequestMapper pageRequestMapper;
 
     public AdvertisementController(AdvertisementService advertisementService, AdvertisementMapper advertisementMapper,
-                                   PageRequestService pageRequestService) {
+                                   PageRequestService pageRequestService, PageRequestMapper pageRequestMapper) {
         this.advertisementService = advertisementService;
         this.advertisementMapper = advertisementMapper;
         this.pageRequestService = pageRequestService;
+        this.pageRequestMapper = pageRequestMapper;
     }
 
     @GetMapping("/search")
@@ -43,11 +46,9 @@ public class AdvertisementController {
 //    }
 
     @GetMapping
-    public PageRequest<Advertisement> getAllActiveAds(@RequestParam("pageSize") int pageSize,
-                                                      @RequestParam("pageNumber") int pageNumber) {
-//        List<Advertisement> advertisementList = advertisementService.getAllActive();
-//        final PageRequest<Advertisement> objectPageRequest = pageRequestService.getPageRequest(pageSize, pageNumber);
-        return pageRequestService.getPageRequest(pageSize, pageNumber);
+    public PageRequestDto<Advertisement> getAllActiveAds(@RequestParam("pageSize") int pageSize,
+                                                         @RequestParam("pageNumber") int pageNumber) {
+        return pageRequestMapper.getPageRequestDto(pageRequestService.getPageRequest(pageSize, pageNumber));
     }
 
     @PutMapping("/{id}/publish-delayed")
