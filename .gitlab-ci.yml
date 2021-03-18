@@ -16,6 +16,7 @@ check:
     - postgres
     variables:
       DB_HOST: postgres
+      DB_URL: jdbc:postgresql://${DB_HOST}:5432/baraholka_test
       POSTGRES_DB: baraholka_test
       POSTGRES_USER: baraholka_test
       POSTGRES_PASSWORD: baraholka_test
@@ -26,7 +27,7 @@ check:
     - ./gradlew clean check --stacktrace
   artifacts:
     reports:
-      junit: build/reports/tests/test/*.html
+      junit: build/test-results/tests/TEST-*.xml
 
 .build:
   stage: build
