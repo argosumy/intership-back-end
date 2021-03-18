@@ -23,6 +23,7 @@ import java.util.Map;
 public class CreateNotificationNewCommentsAd implements CreateNotification {
     private final JavaMailSender emailSender;
     private final Configuration emailConfig;
+    @SuppressWarnings("checkstyle:EmptyLineSeparator")
     @Autowired
     public CreateNotificationNewCommentsAd(JavaMailSender emailSender, @Qualifier("freeMarker")Configuration emailConfig) {
         this.emailSender = emailSender;
