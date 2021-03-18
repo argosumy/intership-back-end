@@ -11,6 +11,7 @@ import com.spd.baraholka.advertisements.persistance.CurrencyType;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.pagination.services.PageRequestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,9 @@ class AdvertisementControllerTest {
     @Autowired
     @MockBean
     private AdvertisementService advertisementService;
+    @Autowired
+    @MockBean
+    private PageRequestService pageRequestService;
     @Autowired
     @MockBean
     private AdvertisementMapper advertisementMapper;

@@ -46,7 +46,7 @@ public class AdvertisementController {
     public PageRequest<Advertisement> getAllActiveAds(@RequestParam("pageSize") int pageSize,
                                                       @RequestParam("pageNumber") int pageNumber) {
 //        List<Advertisement> advertisementList = advertisementService.getAllActive();
-        final PageRequest<Advertisement> objectPageRequest = pageRequestService.getPageRequest(pageSize, pageNumber);
+//        final PageRequest<Advertisement> objectPageRequest = pageRequestService.getPageRequest(pageSize, pageNumber);
         return pageRequestService.getPageRequest(pageSize, pageNumber);
     }
 

@@ -25,7 +25,7 @@ public class PageRequestService {
         int offset = getOffset(pageSize, pageNumber);
         int adLastIndex = checkedLastIndex(getLastIndex(pageSize, offset), size);
         int totalPages = getTotalPages(pageSize, size);
-        validateParams(pageSize, pageNumber, totalPages, size);
+        validatePageNumber(pageNumber, totalPages);
         List<Advertisement> content = getContentList(advertisementList, offset, adLastIndex);
 
         return PageRequest.of(pageNumber, pageSize, totalPages, content);
@@ -53,8 +53,8 @@ public class PageRequestService {
         return Math.min(lastIndex, size);
     }
 
-    private void validateParams(int pageSize, int pageNumber, int totalPages, int size) {
-       if (pageSize > size || pageNumber > totalPages) {
+    private void validatePageNumber(int pageNumber, int totalPages) {
+       if (pageNumber > totalPages || pageNumber == 0) {
            throw new NoContentException();
        }
     }
