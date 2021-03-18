@@ -9,8 +9,6 @@ import com.spd.baraholka.comment_reactions.dto.CommentReactionDto;
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.mappers.CommentReactionDtoMapper;
 import com.spd.baraholka.comment_reactions.services.CommentReactionService;
-import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.user.persistance.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -50,18 +48,6 @@ class CommentReactionControllerTest {
 
     private CommentReactionDto createCommentReactionDto() {
         return new CommentReactionDto(1, DISLIKE, 1, 1);
-    }
-
-    private Comment createComment() {
-        Comment comment = new Comment();
-        comment.setId(1);
-        return comment;
-    }
-
-    private User createUser() {
-        User user = new User();
-        user.setId(1);
-        return user;
     }
 
     @Test

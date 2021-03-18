@@ -5,6 +5,7 @@ import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.services.AdvertisementDTO;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
+import com.spd.baraholka.advertisements.services.AdvertisementUserEmailDTO;
 import com.spd.baraholka.pagination.dto.PageRequestDto;
 import com.spd.baraholka.pagination.mappers.PageRequestMapper;
 import com.spd.baraholka.pagination.services.PageRequestService;
@@ -46,8 +47,9 @@ public class AdvertisementController {
 //    }
 
     @GetMapping
-    public PageRequestDto<Advertisement> getAllActiveAds(@RequestParam("pageSize") int pageSize,
-                                                         @RequestParam("pageNumber") int pageNumber) {
+    public PageRequestDto<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                                                                     @RequestParam("pageNumber") int pageNumber) {
+//        pageRequestMapper.getPageRequestDto(pageRequestService.getPageRequest(pageSize, pageNumber));
         return pageRequestMapper.getPageRequestDto(pageRequestService.getPageRequest(pageSize, pageNumber));
     }
 
