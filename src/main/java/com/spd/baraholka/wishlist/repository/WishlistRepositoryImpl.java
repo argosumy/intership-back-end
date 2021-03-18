@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class WishlistRepositoryImpl implements WishlistRepository{
+public class WishlistRepositoryImpl implements WishlistRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final WishlistMapper wishlistMapper;
 
@@ -21,7 +21,7 @@ public class WishlistRepositoryImpl implements WishlistRepository{
 
     @Override
     public void save(int userId, int advertisementsId) {
-        final String sql = "INSERT INTO wish_list (user_id, advertisements_id) VALUES (:userId, :advertisementsId)";
+        final String sql = "INSERT INTO wish_list (user_id, advertisements_id) VALUES (:user_id, :advertisements_id) ";
 
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("user_id", userId)
@@ -32,14 +32,14 @@ public class WishlistRepositoryImpl implements WishlistRepository{
 
     @Override
     public List<Integer> read(int userId) {
-        String sql = "SELECT advertisements_id FROM wish_list WHERE user_id = :userId";
+        String sql = "SELECT advertisements_id FROM wish_list WHERE user_id = :user_id";
 
         return jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), wishlistMapper);
     }
 
     @Override
     public void delete(int userId, int advertisementsId) {
-        String sql = "DELETE FROM wish_list WHERE user_id = :userId AND advertisements_id = :advertisementsId";
+        String sql = "DELETE FROM wish_list WHERE user_id = :user_id AND advertisements_id = :advertisements_id";
 
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("user_id", userId)

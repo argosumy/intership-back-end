@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class WishlistServiceImpl implements WishlistService{
+public class WishlistServiceImpl implements WishlistService {
 
     private final WishlistRepository wishlistRepository;
 
@@ -23,7 +23,6 @@ public class WishlistServiceImpl implements WishlistService{
 
     @Override
     public List<Integer> read(int userId) {
-
         return wishlistRepository.read(userId);
     }
 
