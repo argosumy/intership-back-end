@@ -12,6 +12,13 @@ check:
   stage: test
   tags:
     - docker
+  services:
+    - postgres
+    variables:
+      DB_HOST: postgres
+      POSTGRES_DB: baraholka_test
+      POSTGRES_USER: baraholka_test
+      POSTGRES_PASSWORD: baraholka_test
   except:
     - prod
   script:
@@ -19,7 +26,7 @@ check:
     - ./gradlew clean check --stacktrace
   artifacts:
     reports:
-      junit: builds/spd-marketplace/back-end/build/reports/tests/test/index.html
+      junit: build/reports/tests/test/*.html
 
 .build:
   stage: build
