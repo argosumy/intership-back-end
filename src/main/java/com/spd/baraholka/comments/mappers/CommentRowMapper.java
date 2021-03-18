@@ -2,7 +2,7 @@ package com.spd.baraholka.comments.mappers;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
+import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +44,7 @@ public class CommentRowMapper implements RowMapper<Comment> {
         user.setEmail(rs.getString("email"));
         user.setPosition(rs.getString("position"));
         user.setPhoneNumber(rs.getString("phone_number"));
-        user.setBlockedStatus(rs.getBoolean("is_blocked"));
+        user.setBlocked(rs.getBoolean("is_blocked"));
         return user;
     }
 }

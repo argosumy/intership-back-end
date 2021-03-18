@@ -3,7 +3,7 @@ package com.spd.baraholka.comment_reactions.mappers;
 import com.spd.baraholka.comment_reactions.dto.CommentReactionDto;
 import com.spd.baraholka.comment_reactions.entities.CommentReaction;
 import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
+import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.stereotype.Component;
 
 @Component
