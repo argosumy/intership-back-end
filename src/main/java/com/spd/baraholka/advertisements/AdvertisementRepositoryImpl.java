@@ -6,11 +6,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-class AdvertisementRepositoryImpl implements AdvertisementRepository{
+class AdvertisementRepositoryImpl implements AdvertisementRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
-    public AdvertisementRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+    AdvertisementRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -21,8 +21,8 @@ class AdvertisementRepositoryImpl implements AdvertisementRepository{
                 "AND (now() - status_change_date) < INTERVAL '60 DAY' ";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("del","DELETED");
-        params.addValue("arch","ARCHIVED");
+        params.addValue("del", "DELETED");
+        params.addValue("arch", "ARCHIVED");
 
         jdbcTemplate.update(sql, params);
     }
