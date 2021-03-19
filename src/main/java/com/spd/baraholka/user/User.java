@@ -1,10 +1,17 @@
 package com.spd.baraholka.user;
 
 import com.spd.baraholka.role.Role;
+import com.spd.baraholka.role.UserAuthority;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
-public class User {
+import static com.spd.baraholka.role.Role.USER;
+
+public class User
+//        extends org.springframework.security.core.userdetails.User
+        implements UserDetails {
 
     private int id;
     private String avatar;
@@ -16,12 +23,21 @@ public class User {
     private String phoneNumber;
     private boolean isBlocked;
     private List<String> resourceLinks;
-    private final Set<Role> roles;
+    private Set<Role> roles;
 
     public User() {
         this.roles = new HashSet<>();
-        roles.add(Role.USER);
+        this.roles.add(USER);
     }
+
+    //    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+//        super(username, password, authorities);
+//    }
+//
+//    public User(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
+//                Collection<? extends GrantedAuthority> authorities) {
+//        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+//    }
 
     public int getId() {
         return id;
@@ -107,6 +123,10 @@ public class User {
         return Collections.unmodifiableSet(roles);
     }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public boolean grantRole(Role role) {
         return roles.add(role);
     }
@@ -144,5 +164,44 @@ public class User {
                 ", isBlocked=" + isBlocked +
                 ", resourceLinks=" + resourceLinks +
                 '}';
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        for (Role role : this.roles) {
+            authorities.add(new UserAuthority(role));
+        }
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return "N/A";
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !isBlocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

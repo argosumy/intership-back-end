@@ -2,7 +2,6 @@ package com.spd.baraholka.login.controller;
 
 import com.spd.baraholka.login.dto.OAuth2UserDto;
 import com.spd.baraholka.login.service.OAuth2UserService;
-import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.User;
 import com.spd.baraholka.user.UserMapper;
 import com.spd.baraholka.user.UserService;
@@ -16,8 +15,10 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.List;
+import java.util.Objects;
+
+import static com.spd.baraholka.role.Role.MODERATOR;
 
 @Component("OAuth2SuccessHandler")
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -49,7 +50,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         if (!userService.existsByEmail(oAuth2UserDto.getEmail())) {
             User user = userMapper.convertToEntity(oAuth2UserDto);
             if (userService.count() == 0) {
-                user.grantRole(Role.MODERATOR);
+                user.grantRole(MODERATOR);
             }
             userService.create(user);
         }

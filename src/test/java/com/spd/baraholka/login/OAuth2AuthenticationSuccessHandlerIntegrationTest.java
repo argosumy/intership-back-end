@@ -13,6 +13,7 @@ import com.spd.baraholka.user.User;
 import com.spd.baraholka.user.UserMapper;
 import com.spd.baraholka.user.UserService;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,6 +83,11 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
         dummyUser.setLocation("");
         dummyUser.setPhoneNumber("");
         dummyUser.setPosition("");
+    }
+
+    @AfterEach
+    @DataSet(cleanAfter = true)
+    void cleanUpDatabase() {
     }
 
     @Test

@@ -5,6 +5,7 @@ import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import com.spd.baraholka.login.dto.OAuth2UserDto;
 import com.spd.baraholka.login.service.OAuth2UserService;
 import com.spd.baraholka.role.Role;
+import com.spd.baraholka.role.UserAuthority;
 import com.spd.baraholka.user.User;
 import com.spd.baraholka.user.UserMapper;
 import com.spd.baraholka.user.UserService;

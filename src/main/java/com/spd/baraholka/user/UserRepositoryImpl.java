@@ -2,6 +2,7 @@ package com.spd.baraholka.user;
 
 import com.spd.baraholka.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -10,9 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -20,10 +19,13 @@ public class UserRepositoryImpl implements UserRepository {
     private final NamedParameterJdbcTemplate parameterizedJdbcTemplate;
     private final JdbcTemplate jdbcTemplate;
 
+    private final UserRowMapper userRowMapper;
+
     @Autowired
-    public UserRepositoryImpl(NamedParameterJdbcTemplate parameterizedJdbcTemplate, JdbcTemplate jdbcTemplate) {
+    public UserRepositoryImpl(NamedParameterJdbcTemplate parameterizedJdbcTemplate, JdbcTemplate jdbcTemplate, UserRowMapper userRowMapper) {
         this.parameterizedJdbcTemplate = parameterizedJdbcTemplate;
         this.jdbcTemplate = jdbcTemplate;
+        this.userRowMapper = userRowMapper;
     }
 
     @Override
@@ -66,6 +68,31 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean existsByEmail(String email) {
         return parameterizedJdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (email) = LOWER (:email)",
                 Map.of("email", email), Boolean.class);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        try {
+            return Optional.ofNullable(parameterizedJdbcTemplate
+                    .queryForObject("SELECT * FROM users WHERE LOWER (email) = LOWER (:email)",
+                    Map.of("email", email),
+                    userRowMapper)
+            );
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Set<Role> findRolesByUserId(int id) {
+        Set<Role> roles = new HashSet<>();
+        List<String> roleNames = parameterizedJdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
+                Map.of("user_id", id),
+                String.class);
+        for (String role : roleNames) {
+            roles.add(Role.valueOf(role));
+        }
+        return roles;
     }
 
     @Override

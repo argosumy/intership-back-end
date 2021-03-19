@@ -5,6 +5,7 @@ import com.github.database.rider.core.api.configuration.Orthography;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 import com.github.database.rider.junit5.DBUnitExtension;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,6 +40,11 @@ class UserRepositoryImplTest {
         dummyUser.setPosition("");
         dummyUser.setPhoneNumber("");
         return dummyUser;
+    }
+
+    @AfterEach
+    @DataSet(cleanAfter = true)
+    void cleanUpDatabase() {
     }
 
     @Test
