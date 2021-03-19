@@ -1,6 +1,7 @@
 package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
+import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
@@ -36,5 +37,10 @@ public class UserService {
         List<UserAdditionalResourceDTO> additionalResourceDTO = resourceMapper.convertToDTOList(additionalResources);
         userDTO.setAdditionalContactResources(additionalResourceDTO);
         return userDTO;
+    }
+
+    public List<UserShortViewDTO> getAllUsers() {
+        List<User> users = persistenceUserService.selectAllUsers();
+        return userMapper.convertToDTOList(users);
     }
 }
