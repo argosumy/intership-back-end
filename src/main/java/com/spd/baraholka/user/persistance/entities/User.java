@@ -1,5 +1,6 @@
 package com.spd.baraholka.user.persistance.entities;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class User {
@@ -11,6 +12,7 @@ public class User {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
+    private LocalDateTime endDateOfBan;
     private List<UserAdditionalResource> additionalContactResources;
 
     public int getId() {
@@ -67,5 +69,21 @@ public class User {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public LocalDateTime getEndDateOfBan() {
+        return endDateOfBan;
+    }
+
+    public void setEndDateOfBan(LocalDateTime endDateOfBan) {
+        this.endDateOfBan = endDateOfBan;
+    }
+
+    public List<UserAdditionalResource> getAdditionalContactResources() {
+        return additionalContactResources;
+    }
+
+    public void setAdditionalContactResources(List<UserAdditionalResource> additionalContactResources) {
+        this.additionalContactResources = additionalContactResources;
     }
 }
