@@ -36,5 +36,4 @@ public class UserMapper {
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         return userDTO;
     }
-
 }
