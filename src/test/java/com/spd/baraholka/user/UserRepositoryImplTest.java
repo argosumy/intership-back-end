@@ -5,6 +5,8 @@ import com.github.database.rider.core.api.configuration.Orthography;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 import com.github.database.rider.junit5.DBUnitExtension;
+import com.spd.baraholka.user.persistance.PersistenceUserService;
+import com.spd.baraholka.user.persistance.entities.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryImplTest {
 
     @Autowired
-    private UserRepositoryImpl userRepositoryUnderTest;
+    private PersistenceUserService persistenceUserService;
 
     private User initDummyUser() {
         String dummyEmail = "mock@email.com";
@@ -46,7 +48,7 @@ class UserRepositoryImplTest {
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnTrueWhenUserWithEmailExists() {
         String existingEmail = "existing@email.com";
-        boolean exists = userRepositoryUnderTest.existsByEmail(existingEmail);
+        boolean exists = persistenceUserService.existsByEmail(existingEmail);
         assertTrue(exists);
     }
 
@@ -55,14 +57,14 @@ class UserRepositoryImplTest {
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnFalseWhenUserWithEmailDoesntExist() {
         String newEmail = "new@email.com";
-        boolean exists = userRepositoryUnderTest.existsByEmail(newEmail);
+        boolean exists = persistenceUserService.existsByEmail(newEmail);
         assertFalse(exists);
     }
 
     @Test
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnNumberOfAllUsers() {
-        int numberOfUsers = userRepositoryUnderTest.count();
+        int numberOfUsers = persistenceUserService.count();
         assertEquals(3, numberOfUsers);
     }
 
@@ -71,9 +73,9 @@ class UserRepositoryImplTest {
     void shouldCreateNewUser() {
         User dummyUser = initDummyUser();
         assertEquals(0, dummyUser.getId());
-        assertFalse(userRepositoryUnderTest.existsByEmail(dummyUser.getEmail()));
+        assertFalse(persistenceUserService.existsByEmail(dummyUser.getEmail()));
 
-        User createdUser = userRepositoryUnderTest.create(dummyUser);
+        User createdUser = persistenceUserService.create(dummyUser);
 
         assertNotEquals(0, createdUser.getId());
         assertEquals(dummyUser.getFirstName(), createdUser.getFirstName());
@@ -83,6 +85,6 @@ class UserRepositoryImplTest {
         assertEquals(dummyUser.getLocation(), createdUser.getLocation());
         assertEquals(dummyUser.getPosition(), createdUser.getPosition());
         assertEquals(dummyUser.getPhoneNumber(), createdUser.getPhoneNumber());
-        assertTrue(userRepositoryUnderTest.existsByEmail(dummyUser.getEmail()));
+        assertTrue(persistenceUserService.existsByEmail(dummyUser.getEmail()));
     }
 }

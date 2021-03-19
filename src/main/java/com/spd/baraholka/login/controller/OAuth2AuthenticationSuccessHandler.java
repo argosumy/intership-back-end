@@ -1,11 +1,11 @@
 package com.spd.baraholka.login.controller;
 
-import com.spd.baraholka.login.dto.OAuth2UserDto;
+import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
 import com.spd.baraholka.role.Role;
-import com.spd.baraholka.user.User;
-import com.spd.baraholka.user.UserMapper;
-import com.spd.baraholka.user.UserService;
+import com.spd.baraholka.user.controller.mappers.UserMapper;
+import com.spd.baraholka.user.persistance.entities.User;
+import com.spd.baraholka.user.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.List;
+import java.util.Objects;
 
 @Component("OAuth2SuccessHandler")
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -42,12 +42,12 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        OAuth2UserDto oAuth2UserDto = Objects.requireNonNull(oAuth2UserService.getUserInfoFromOAuth2(authentication));
+        OAuth2UserDTO oAuth2UserDto = Objects.requireNonNull(oAuth2UserService.getUserInfoFromOAuth2(authentication));
         if (!isEmailDomainInAllowedDomains(oAuth2UserDto.getEmail(), allowedDomains)) {
             throw new BadCredentialsException(DOMAIN_NOT_ALLOWED);
         }
         if (!userService.existsByEmail(oAuth2UserDto.getEmail())) {
-            User user = userMapper.convertToEntity(oAuth2UserDto);
+            User user = userMapper.convertFromOAuth(oAuth2UserDto);
             if (userService.count() == 0) {
                 user.grantRole(Role.MODERATOR);
             }

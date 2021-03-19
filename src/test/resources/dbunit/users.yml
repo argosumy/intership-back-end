@@ -3,7 +3,7 @@ users:
     first_name: "Lucas"
     last_name: "Thompson"
     location: "Kyiv"
-    email: "lucas@ukr.net"
+    e_mail: "lucas@ukr.net"
     position: "Java Developer"
     phone_number: "12345678"
     is_blocked: false
@@ -11,7 +11,7 @@ users:
     first_name: "Mary"
     last_name: "Johnson"
     location: "Lviv"
-    email: "existing@email.com"
+    e_mail: "existing@email.com"
     position: "Javascript Developer"
     phone_number: "87654321"
     is_blocked: false
@@ -19,7 +19,7 @@ users:
     first_name: "George"
     last_name: "Jefferson"
     location: "Dnipro"
-    email: "george@email.com"
+    e_mail: "george@email.com"
     position: "DevOps"
     phone_number: "55555555"
     is_blocked: false

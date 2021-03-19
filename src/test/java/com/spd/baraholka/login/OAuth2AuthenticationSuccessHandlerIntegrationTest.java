@@ -7,11 +7,11 @@ import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 import com.github.database.rider.junit5.DBUnitExtension;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
-import com.spd.baraholka.login.dto.OAuth2UserDto;
+import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
-import com.spd.baraholka.user.User;
-import com.spd.baraholka.user.UserMapper;
-import com.spd.baraholka.user.UserService;
+import com.spd.baraholka.user.controller.mappers.UserMapper;
+import com.spd.baraholka.user.persistance.entities.User;
+import com.spd.baraholka.user.service.UserService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,10 +48,9 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
     private final String existingEmail = "existing@email.com";
 
     private final User dummyUser = new User();
-    private final OAuth2UserDto dummyOAuth2UserDto = new OAuth2UserDto(dummyEmail, dummyGivenName, dummyFamilyName, dummyPicture);
+    private final OAuth2UserDTO dummyOAuth2UserDTO = new OAuth2UserDTO(dummyEmail, dummyGivenName, dummyFamilyName, dummyPicture);
 
-    @Autowired
-    @Spy
+    @Mock
     private UserService userService;
 
     @Mock
@@ -69,8 +68,8 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
         ReflectionTestUtils.setField(oAuth2SuccessHandlerUnderTest, "allowedDomains", Lists.newArrayList("spd-ukraine.com", "email.com"));
     }
 
-    private OAuth2UserDto initExistingDummyOAuth2UserDto() {
-        return new OAuth2UserDto(existingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
+    private OAuth2UserDTO initExistingDummyOAuth2UserDto() {
+        return new OAuth2UserDTO(existingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
     @BeforeEach
@@ -88,14 +87,14 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
     @DisplayName("'Should save a new successfully logged-in user into a database")
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldSaveNewLoggedInUserToDbTest() throws IOException {
-        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
-        when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(dummyUser);
+        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
+        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(userMapper, times(1)).convertToEntity(dummyOAuth2UserDto);
+        verify(userMapper, times(1)).convertFromOAuth(dummyOAuth2UserDTO);
         verify(userService, times(1)).create(dummyUser);
         assertTrue(userService.existsByEmail(dummyUser.getEmail()));
     }
@@ -105,15 +104,16 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     @ExpectedDataSet(value = "/dbunit/users.yml")
     void shouldNotSaveExistingLoggedInUserToDbTest() throws IOException {
-        OAuth2UserDto dummyOAuth2UserDto = initExistingDummyOAuth2UserDto();
+        OAuth2UserDTO dummyOAuth2UserDTO = initExistingDummyOAuth2UserDto();
         dummyUser.setEmail(existingEmail);
-        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
+        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
+        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(userMapper, times(0)).convertToEntity(dummyOAuth2UserDto);
+        verify(userMapper, times(0)).convertFromOAuth(dummyOAuth2UserDTO);
         verify(userService, times(0)).create(dummyUser);
     }
 }

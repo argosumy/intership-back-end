@@ -1,6 +1,6 @@
 package com.spd.baraholka.login.controller;
 
-import com.spd.baraholka.login.dto.OAuth2UserDto;
+import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +18,8 @@ public class OAuth2Controller {
     }
 
     @GetMapping(ENDPOINT_ME_OAUTH)
-    public ResponseEntity<OAuth2UserDto> showOAuth2User() {
-        OAuth2UserDto oAuth2UserDto = oAuth2UserService.getUserInfoFromOAuth2();
+    public ResponseEntity<OAuth2UserDTO> showOAuth2User() {
+        OAuth2UserDTO oAuth2UserDto = oAuth2UserService.getUserInfoFromOAuth2();
         return ResponseEntity.ok().body(oAuth2UserDto);
     }
 }

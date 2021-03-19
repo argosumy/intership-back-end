@@ -2,8 +2,8 @@ package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
-import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
 import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
@@ -46,5 +46,17 @@ public class UserService {
         List<UserAdditionalResourceDTO> additionalResourceDTO = resourceMapper.convertToDTOList(additionalResources);
         userDTO.setAdditionalContactResources(additionalResourceDTO);
         return userDTO;
+    }
+
+    public void create(User user) {
+        persistenceUserService.create(user);
+    }
+
+    public boolean existsByEmail(String email) {
+        return persistenceUserService.existsByEmail(email);
+    }
+
+    public int count() {
+        return persistenceUserService.count();
     }
 }

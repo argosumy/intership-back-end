@@ -2,12 +2,12 @@ package com.spd.baraholka.login;
 
 import com.github.database.rider.junit5.DBUnitExtension;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
-import com.spd.baraholka.login.dto.OAuth2UserDto;
+import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
 import com.spd.baraholka.role.Role;
-import com.spd.baraholka.user.User;
-import com.spd.baraholka.user.UserMapper;
-import com.spd.baraholka.user.UserService;
+import com.spd.baraholka.user.controller.mappers.UserMapper;
+import com.spd.baraholka.user.persistance.entities.User;
+import com.spd.baraholka.user.service.UserService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,7 @@ class OAuth2AuthenticationSuccessHandlerTest {
     private final String dummyFamilyName = "Mock Family Name";
     private final String dummyPicture = "Mock Picture URL";
 
-    private OAuth2UserDto dummyOAuth2UserDto;
+    private OAuth2UserDTO dummyOAuth2UserDTO;
 
     @Spy
     private final User dummyUser = new User();
@@ -79,62 +79,62 @@ class OAuth2AuthenticationSuccessHandlerTest {
 
     @BeforeEach
     void initDummyOAuth2UserDto() {
-        dummyOAuth2UserDto = new OAuth2UserDto(dummyEmail, dummyGivenName, dummyFamilyName, dummyPicture);
+        dummyOAuth2UserDTO = new OAuth2UserDTO(dummyEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
-    private OAuth2UserDto initNotExistingDummyAllowedDomainOAuth2UserDto() {
+    private OAuth2UserDTO initNotExistingDummyAllowedDomainOAuth2UserDto() {
         String notExistingEmail = "notExisting@email.com";
-        return new OAuth2UserDto(notExistingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
+        return new OAuth2UserDTO(notExistingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
-    private OAuth2UserDto initExistingDummyOAuth2UserDto() {
+    private OAuth2UserDTO initExistingDummyOAuth2UserDto() {
         String existingEmail = "existing@email.com";
-        return new OAuth2UserDto(existingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
+        return new OAuth2UserDTO(existingEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
-    private OAuth2UserDto initNotAllowedDummyOAuth2UserDto() {
+    private OAuth2UserDTO initNotAllowedDummyOAuth2UserDto() {
         String notAllowedEmail = "email@notAllowedDomain.com";
-        return new OAuth2UserDto(notAllowedEmail, dummyGivenName, dummyFamilyName, dummyPicture);
+        return new OAuth2UserDTO(notAllowedEmail, dummyGivenName, dummyFamilyName, dummyPicture);
     }
 
     @Test
     @DisplayName("'Should invoke creating of a new successfully logged-in user")
     void shouldInvokeCreateNewLoggedInUserTest() throws IOException {
-        OAuth2UserDto dummyOAuth2UserDto = initNotExistingDummyAllowedDomainOAuth2UserDto();
-        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
-        when(userService.existsByEmail(dummyOAuth2UserDto.getEmail())).thenReturn(false);
-        when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(dummyUser);
+        OAuth2UserDTO dummyOAuth2UserDTO = initNotExistingDummyAllowedDomainOAuth2UserDto();
+        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
+        when(userService.existsByEmail(dummyOAuth2UserDTO.getEmail())).thenReturn(false);
+        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(userMapper, times(1)).convertToEntity(dummyOAuth2UserDto);
+        verify(userMapper, times(1)).convertFromOAuth(dummyOAuth2UserDTO);
         verify(userService, times(1)).create(dummyUser);
     }
 
     @Test
     @DisplayName("'Should not invoke creating of an existing successfully logged-in user")
     void shouldNotInvokeCreateExistingLoggedInUserTest() throws IOException {
-        OAuth2UserDto dummyOAuth2UserDto = initExistingDummyOAuth2UserDto();
-        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
-        when(userService.existsByEmail(dummyOAuth2UserDto.getEmail())).thenReturn(true);
+        OAuth2UserDTO dummyOAuth2UserDTO = initExistingDummyOAuth2UserDto();
+        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
+        when(userService.existsByEmail(dummyOAuth2UserDTO.getEmail())).thenReturn(true);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(userMapper, times(0)).convertToEntity(dummyOAuth2UserDto);
+        verify(userMapper, times(0)).convertFromOAuth(dummyOAuth2UserDTO);
         verify(userService, times(0)).create(dummyUser);
     }
 
     @Test
     @DisplayName("Should grant a 'Moderator' role to a first logged-in user")
     void shouldGrantModeratorRoleToFirstLoggedInUser() throws IOException {
-        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
+        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
         when(userService.existsByEmail(dummyUser.getEmail())).thenReturn(false);
         when(userService.count()).thenReturn(0);
-        when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(dummyUser);
+        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
         assertFalse(dummyUser.getRoles().contains(Role.MODERATOR));
 
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -148,10 +148,10 @@ class OAuth2AuthenticationSuccessHandlerTest {
     @Test
     @DisplayName("Should not grant a 'Moderator' role to a not first logged-in user")
     void shouldNotGrantModeratorRoleToNotFirstLoggedInUser() throws IOException {
-        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
+        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
         when(userService.existsByEmail(dummyUser.getEmail())).thenReturn(false);
         when(userService.count()).thenReturn(1);
-        when(userMapper.convertToEntity(dummyOAuth2UserDto)).thenReturn(dummyUser);
+        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -164,8 +164,8 @@ class OAuth2AuthenticationSuccessHandlerTest {
     @Test
     @DisplayName("'Should throw BadCredentialsException when a user's email domain is not in 'login.allowed-domains' app property")
     void shouldThrowExceptionForNotAllowedDomain() {
-        OAuth2UserDto dummyOAuth2UserDto = initNotAllowedDummyOAuth2UserDto();
-        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDto);
+        OAuth2UserDTO dummyOAuth2UserDTO = initNotAllowedDummyOAuth2UserDto();
+        when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
