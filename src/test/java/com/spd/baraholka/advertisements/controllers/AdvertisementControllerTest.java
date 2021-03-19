@@ -11,6 +11,7 @@ import com.spd.baraholka.advertisements.persistance.CurrencyType;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.mappers.PageRequestMapper;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -35,6 +37,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(AdvertisementController.class)
 class AdvertisementControllerTest {
 
@@ -55,6 +58,7 @@ class AdvertisementControllerTest {
     private Advertisement advertisementActive;
     private Advertisement advertisementDraft;
     private Advertisement advertisementDraftToBeShown;
+    private PageRequest<Advertisement> pageRequest;
     @Autowired
     private ObjectMapper mapper;
 
@@ -68,6 +72,7 @@ class AdvertisementControllerTest {
                 AdvertisementStatus.ACTIVE);
         advertisementDraftToBeShown = createAdvertisement(3, LocalDateTime.of(2019, 2, 2, 2, 10, 2),
                 AdvertisementStatus.DRAFT);
+        pageRequest = createPageRequest();
     }
 
     private Advertisement createAdvertisement(int id, LocalDateTime publication, AdvertisementStatus status) {
@@ -88,6 +93,15 @@ class AdvertisementControllerTest {
         return advertisement;
     }
 
+    private PageRequest<Advertisement> createPageRequest() {
+        PageRequest<Advertisement> pageRequest = new PageRequest<>();
+        pageRequest.setPageNumber(1);
+        pageRequest.setPageSize(2);
+        pageRequest.setTotalPages(1);
+        pageRequest.setContent(List.of(advertisementActive, advertisementDraftToBeShown));
+        return pageRequest;
+    }
+
     @Test
     @DisplayName("Expect list of advertisements filtered by keyword")
     void getFilteredAdsByKeyword() throws Exception {
@@ -102,15 +116,13 @@ class AdvertisementControllerTest {
     }
 
     @Test
-    @DisplayName("Should return list of active ads")
-    void getAllActiveAds() throws Exception {
-        when(advertisementService.getAllActive()).thenReturn(
-                List.of(advertisementActive, advertisementDraftToBeShown)
-        );
+    @DisplayName("Should return filled page request")
+    void getPageRequest() throws Exception {
+        when(pageRequestService.getPageRequest(2, 1)).thenReturn(pageRequest);
 
-        mockMvc.perform(get("/advertisements")
+        mockMvc.perform(get("/advertisements?pageSize=1&pageNumber=1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(getResponseJson(List.of(advertisementActive, advertisementDraftToBeShown))))
+                .content(getResponseJson(pageRequest)))
                 .andExpect(status().isOk());
     }
 
@@ -151,10 +163,10 @@ class AdvertisementControllerTest {
                 .andExpect(status().isOk());
     }
 
-    private String getResponseJson(List<Advertisement> advertisements) throws JsonProcessingException {
+    private String getResponseJson(Object object) throws JsonProcessingException {
         mapper.registerModule(new JavaTimeModule());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        return ow.writeValueAsString(advertisements);
+        return ow.writeValueAsString(object);
     }
 }

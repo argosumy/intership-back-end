@@ -54,8 +54,8 @@ public class PageRequestService {
     }
 
     private void validatePageNumber(int pageNumber, int totalPages) {
-       if (pageNumber > totalPages || pageNumber == 0) {
-           throw new NoContentException();
-       }
+        if (pageNumber > totalPages || pageNumber == 0) {
+            throw new NoContentException();
+        }
     }
 }

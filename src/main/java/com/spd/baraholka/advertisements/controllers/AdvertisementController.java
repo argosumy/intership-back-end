@@ -40,16 +40,9 @@ public class AdvertisementController {
         return advertisementMapper.toAdvertisementDtoList(advertisementList);
     }
 
-//    @GetMapping
-//    public List<AdvertisementDTO> getAllActiveAds() {
-//        List<Advertisement> advertisementList = advertisementService.getAllActive();
-//        return advertisementMapper.toAdvertisementDtoList(advertisementList);
-//    }
-
     @GetMapping
     public PageRequestDto<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                      @RequestParam("pageNumber") int pageNumber) {
-//        pageRequestMapper.getPageRequestDto(pageRequestService.getPageRequest(pageSize, pageNumber));
         return pageRequestMapper.getPageRequestDto(pageRequestService.getPageRequest(pageSize, pageNumber));
     }
 
