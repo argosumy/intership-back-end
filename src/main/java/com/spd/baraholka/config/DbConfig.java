@@ -1,4 +1,4 @@
-package com.spduniversity.configuration;
+package com.spd.baraholka.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

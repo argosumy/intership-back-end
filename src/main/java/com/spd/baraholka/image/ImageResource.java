@@ -1,4 +1,4 @@
-package com.spduniversity.image;
+package com.spd.baraholka.image;
 
 import org.springframework.web.multipart.MultipartFile;
 

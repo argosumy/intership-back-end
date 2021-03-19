@@ -1,7 +1,7 @@
-package com.spduniversity.image.service;
+package com.spd.baraholka.image.service;
 
-import com.spduniversity.image.ImageResource;
-import com.spduniversity.image.repository.ImageRepository;
+import com.spd.baraholka.image.ImageResource;
+import com.spd.baraholka.image.repository.ImageRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;

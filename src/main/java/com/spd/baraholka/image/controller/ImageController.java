@@ -1,7 +1,7 @@
-package com.spduniversity.image.controller;
+package com.spd.baraholka.image.controller;
 
-import com.spduniversity.image.ImageResource;
-import com.spduniversity.image.service.ImageService;
+import com.spd.baraholka.image.ImageResource;
+import com.spd.baraholka.image.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -40,7 +40,7 @@ public class ImageController {
                                       @RequestPart MultipartFile image) {
 
         ImageResource imageResource = imageService.save(
-                ImageResource.of(adId, Boolean.getBoolean(isPrimary), Integer.parseInt(position), image)
+                ImageResource.of(adId, isPrimary, position, image)
         );
 
         return ImageResourceDto.of(

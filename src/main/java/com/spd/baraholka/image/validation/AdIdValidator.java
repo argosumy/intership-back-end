@@ -1,4 +1,4 @@
-//package com.spduniversity.image.validation;
+//package com.spd.baraholka.image.validation;
 //
 //import javax.validation.ConstraintValidator;
 //import javax.validation.ConstraintValidatorContext;

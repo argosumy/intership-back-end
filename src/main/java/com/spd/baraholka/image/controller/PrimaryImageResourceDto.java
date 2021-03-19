@@ -1,4 +1,4 @@
-package com.spduniversity.image.controller;
+package com.spd.baraholka.image.controller;
 
 import java.util.Objects;
 import java.util.StringJoiner;

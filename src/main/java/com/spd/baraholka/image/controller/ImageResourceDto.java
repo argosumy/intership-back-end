@@ -1,4 +1,4 @@
-package com.spduniversity.image.controller;
+package com.spd.baraholka.image.controller;
 
 public class ImageResourceDto {
 
