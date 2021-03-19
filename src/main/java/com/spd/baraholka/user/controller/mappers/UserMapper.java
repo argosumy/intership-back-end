@@ -5,7 +5,6 @@ import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,7 @@ public class UserMapper {
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setBlocked(user.isBlocked());
-        userDTO.setEndDateOfBan(LocalDateTime.now()); //TODO add endDataOfBan field to User
+        userDTO.setEndDateOfBan(user.getEndDateOfBan());
         return userDTO;
     }
 
