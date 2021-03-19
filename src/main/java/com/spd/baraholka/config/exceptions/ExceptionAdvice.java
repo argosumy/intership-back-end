@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotFoundException.class)
     String notFoundHandler(NotFoundException e) {
         return e.getMessage();

@@ -1,5 +1,6 @@
 package com.spd.baraholka.user.service;
 
+import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
 import com.spd.baraholka.user.controller.dto.UserDTO;
@@ -11,6 +12,7 @@ import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -30,8 +32,16 @@ public class UserService {
     }
 
     public UserDTO getUserById(int id) {
-        User user = persistenceUserService.selectUserById(id);
-        List<UserAdditionalResource> additionalResources = persistenceResourceService.selectUserAdditionalResources(id);
+        Optional<User> user = persistenceUserService.selectUserById(id);
+        if (user.isEmpty()) {
+            throw new NotFoundByIdException(id);
+        } else {
+            return collectUserDTO(user.get());
+        }
+    }
+
+    private UserDTO collectUserDTO(User user) {
+        List<UserAdditionalResource> additionalResources = persistenceResourceService.selectUserAdditionalResources(user.getId());
         UserDTO userDTO = userMapper.convertToDTO(user);
         List<UserAdditionalResourceDTO> additionalResourceDTO = resourceMapper.convertToDTOList(additionalResources);
         userDTO.setAdditionalContactResources(additionalResourceDTO);
