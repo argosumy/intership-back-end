@@ -1,4 +1,4 @@
-CREATE TABLE users_additional_resources
+CREATE TABLE IF NOT EXISTS users_additional_resources
 (
     id            SERIAL PRIMARY KEY NOT NULL,
     user_id       int                NOT NULL,
