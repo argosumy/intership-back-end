@@ -20,11 +20,11 @@ INSERT INTO advertisements (user_id, title, description, category, price, curren
 VALUES (2, 'title5', 'description5', 'category5', 17, 'UAH', false, 'city5', 'DRAFT', '2021-03-12T22:54:28.000000',
         '2018-03-12T22:54:35.000000', '2021-03-12T22:54:37.000000');
 
-INSERT INTO users (first_name, last_name, location, email, position, phone_number)
+INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number)
 VALUES ('firstname1', 'lastname2', 'location1', 'test1@mail.com', 'position1', '+123456789001');
-INSERT INTO users (first_name, last_name, location, email, position, phone_number)
+INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number)
 VALUES ('firstname2', 'lastname2', 'location2', 'test2@mail.com', 'position2', '+123456789002');
-INSERT INTO users (first_name, last_name, location, email, position, phone_number)
+INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number)
 VALUES ('firstname3', 'lastname3', 'location3', 'test3@mail.com', 'position3', '+123456789003');
 
 INSERT INTO comments (id, body, created_at, advertisement_id, user_id, parent_id)
