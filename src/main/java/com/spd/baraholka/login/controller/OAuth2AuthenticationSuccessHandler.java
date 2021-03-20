@@ -6,6 +6,7 @@ import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
+import com.spd.baraholka.user.service.UserServiceI;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,9 +25,9 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
     public static final String DOMAIN_NOT_ALLOWED = "Domain is not allowed for login.";
 
-    private final UserService userService;
+    private final UserServiceI userService;
 
-    private final UserMapper userMapper;
+//    private final UserMapper userMapper;
 
     @Value("${login.allowed-domains}")
     private List<String> allowedDomains;
@@ -34,9 +35,9 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
     @Qualifier("Google OAuth2")
     private final OAuth2UserService oAuth2UserService;
 
-    public OAuth2AuthenticationSuccessHandler(UserService userService, UserMapper userMapper, OAuth2UserService oAuth2UserService) {
+    public OAuth2AuthenticationSuccessHandler(UserServiceI userService, /* UserMapper userMapper, */ OAuth2UserService oAuth2UserService) {
         this.userService = userService;
-        this.userMapper = userMapper;
+//        this.userMapper = userMapper;
         this.oAuth2UserService = oAuth2UserService;
     }
 
@@ -47,7 +48,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
             throw new BadCredentialsException(DOMAIN_NOT_ALLOWED);
         }
         if (!userService.existsByEmail(oAuth2UserDto.getEmail())) {
-            User user = userMapper.convertFromOAuth(oAuth2UserDto);
+            User user = userService.convertFromOAuth(oAuth2UserDto);
             if (userService.count() == 0) {
                 user.grantRole(Role.MODERATOR);
             }

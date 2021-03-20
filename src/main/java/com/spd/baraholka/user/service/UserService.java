@@ -1,6 +1,7 @@
 package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceI {
 
     private final PersistenceUserService persistenceUserService;
     private final PersistenceUserAdditionalResourcesService persistenceResourceService;
@@ -58,5 +59,9 @@ public class UserService {
 
     public int count() {
         return persistenceUserService.count();
+    }
+
+    public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
+        return userMapper.convertFromOAuth(oAuth2UserDto);
     }
 }

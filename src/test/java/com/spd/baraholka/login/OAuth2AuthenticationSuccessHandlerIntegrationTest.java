@@ -12,6 +12,7 @@ import com.spd.baraholka.login.service.OAuth2UserService;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
+import com.spd.baraholka.user.service.UserServiceI;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -50,11 +51,12 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
     private final User dummyUser = new User();
     private final OAuth2UserDTO dummyOAuth2UserDTO = new OAuth2UserDTO(dummyEmail, dummyGivenName, dummyFamilyName, dummyPicture);
 
-    @Mock
-    private UserService userService;
+    @Spy
+    @Autowired
+    private UserServiceI userService;
 
-    @Mock
-    private UserMapper userMapper;
+//    @Mock
+//    private UserMapper userMapper;
 
     @Mock
     private OAuth2UserService oAuth2UserService;
@@ -64,7 +66,7 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
 
     @BeforeEach
     void init() {
-        oAuth2SuccessHandlerUnderTest = new OAuth2AuthenticationSuccessHandler(userService, userMapper, oAuth2UserService);
+        oAuth2SuccessHandlerUnderTest = new OAuth2AuthenticationSuccessHandler(userService, oAuth2UserService);
         ReflectionTestUtils.setField(oAuth2SuccessHandlerUnderTest, "allowedDomains", Lists.newArrayList("spd-ukraine.com", "email.com"));
     }
 
@@ -88,13 +90,13 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldSaveNewLoggedInUserToDbTest() throws IOException {
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
-        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
+//        when(userService.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(userMapper, times(1)).convertFromOAuth(dummyOAuth2UserDTO);
+        verify(userService, times(1)).convertFromOAuth(dummyOAuth2UserDTO);
         verify(userService, times(1)).create(dummyUser);
         assertTrue(userService.existsByEmail(dummyUser.getEmail()));
     }
@@ -107,13 +109,13 @@ class OAuth2AuthenticationSuccessHandlerIntegrationTest {
         OAuth2UserDTO dummyOAuth2UserDTO = initExistingDummyOAuth2UserDto();
         dummyUser.setEmail(existingEmail);
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
-        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
+//        when(userService.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(userMapper, times(0)).convertFromOAuth(dummyOAuth2UserDTO);
+        verify(userService, times(0)).convertFromOAuth(dummyOAuth2UserDTO);
         verify(userService, times(0)).create(dummyUser);
     }
 }

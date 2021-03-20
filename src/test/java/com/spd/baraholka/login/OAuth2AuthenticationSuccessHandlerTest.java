@@ -51,8 +51,8 @@ class OAuth2AuthenticationSuccessHandlerTest {
     @Mock
     private UserService userService;
 
-    @Mock
-    private UserMapper userMapper;
+//    @Mock
+//    private UserMapper userMapper;
 
     @Mock
     private OAuth2UserService oAuth2UserService;
@@ -62,7 +62,7 @@ class OAuth2AuthenticationSuccessHandlerTest {
 
     @BeforeEach
     void init() {
-        oAuth2SuccessHandlerUnderTest = new OAuth2AuthenticationSuccessHandler(userService, userMapper, oAuth2UserService);
+        oAuth2SuccessHandlerUnderTest = new OAuth2AuthenticationSuccessHandler(userService, oAuth2UserService);
         ReflectionTestUtils.setField(oAuth2SuccessHandlerUnderTest, "allowedDomains", Lists.newArrayList("spd-ukraine.com", "email.com"));
     }
 
@@ -103,13 +103,13 @@ class OAuth2AuthenticationSuccessHandlerTest {
         OAuth2UserDTO dummyOAuth2UserDTO = initNotExistingDummyAllowedDomainOAuth2UserDto();
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
         when(userService.existsByEmail(dummyOAuth2UserDTO.getEmail())).thenReturn(false);
-        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
+        when(userService.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(userMapper, times(1)).convertFromOAuth(dummyOAuth2UserDTO);
+        verify(userService, times(1)).convertFromOAuth(dummyOAuth2UserDTO);
         verify(userService, times(1)).create(dummyUser);
     }
 
@@ -124,7 +124,7 @@ class OAuth2AuthenticationSuccessHandlerTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(userMapper, times(0)).convertFromOAuth(dummyOAuth2UserDTO);
+        verify(userService, times(0)).convertFromOAuth(dummyOAuth2UserDTO);
         verify(userService, times(0)).create(dummyUser);
     }
 
@@ -134,7 +134,7 @@ class OAuth2AuthenticationSuccessHandlerTest {
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
         when(userService.existsByEmail(dummyUser.getEmail())).thenReturn(false);
         when(userService.count()).thenReturn(0);
-        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
+        when(userService.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
         assertFalse(dummyUser.getRoles().contains(Role.MODERATOR));
 
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -151,7 +151,7 @@ class OAuth2AuthenticationSuccessHandlerTest {
         when(oAuth2UserService.getUserInfoFromOAuth2(any(Authentication.class))).thenReturn(dummyOAuth2UserDTO);
         when(userService.existsByEmail(dummyUser.getEmail())).thenReturn(false);
         when(userService.count()).thenReturn(1);
-        when(userMapper.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
+        when(userService.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
