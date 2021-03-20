@@ -8,13 +8,13 @@ public class ExceptionAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotFoundException.class)
-    String notFoundHandler(NotFoundException e) {
+    String badRequestHandler(NotFoundException e) {
         return e.getMessage();
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NotFoundByIdException.class)
-    String notFoundByIdHandler(NotFoundByIdException e) {
+    @ExceptionHandler(NotFoundException.class)
+    String notFoundHandler(NotFoundException e) {
         return e.getMessage();
     }
 

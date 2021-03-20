@@ -4,7 +4,7 @@ import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementRepository;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.CurrencyType;
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.config.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -148,11 +148,11 @@ class AdvertisementServiceTest {
     @DisplayName("Couldn't find ad by id for editing publication date and thew exception")
     void editPublicationDateThrowException() {
         when(advertisementService.findDraftAdById(100))
-                .thenThrow(new NotFoundByIdException(100));
+                .thenThrow(new NotFoundException());
 
-        assertThrows(NotFoundByIdException.class,
+        assertThrows(NotFoundException.class,
                 () -> advertisementService.editPublicationDate(100, "3333-01-01T10:40:01"),
-                "Could not find by id: 100"
+                "Not found!"
         );
     }
 }

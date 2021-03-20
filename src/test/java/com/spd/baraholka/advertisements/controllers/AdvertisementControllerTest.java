@@ -10,7 +10,7 @@ import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.CurrencyType;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.mappers.PageRequestMapper;
 import com.spd.baraholka.pagination.services.PageRequestService;
@@ -142,12 +142,12 @@ class AdvertisementControllerTest {
     @DisplayName("Advertisement was not found by id and threw exception")
     void editPublicationDateOfNotExistsAdAndThrowException() throws Exception {
         when(advertisementService.editPublicationDate(100, "2023-01-01T10:40:01"))
-                .thenThrow(new NotFoundByIdException(100));
+                .thenThrow(new NotFoundException());
 
         mockMvc.perform(put("/advertisements/100/publish-delayed?publicationDate=2023-01-01T10:40:01"))
                 .andExpect(status().isNotFound())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof NotFoundByIdException))
-                .andExpect(result -> assertEquals("Could not find by id: 100",
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof NotFoundException))
+                .andExpect(result -> assertEquals("Not found!",
                         Objects.requireNonNull(result.getResolvedException()).getMessage()));
     }
 

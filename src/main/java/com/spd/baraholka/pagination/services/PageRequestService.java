@@ -3,6 +3,7 @@ package com.spd.baraholka.pagination.services;
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
 import com.spd.baraholka.config.exceptions.NoContentException;
+import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +56,7 @@ public class PageRequestService {
 
     private void validatePageNumber(int pageNumber, int totalPages) {
         if (pageNumber > totalPages || pageNumber == 0) {
-            throw new NoContentException();
+            throw new NotFoundException();
         }
     }
 }

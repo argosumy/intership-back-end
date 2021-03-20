@@ -2,7 +2,7 @@ package com.spd.baraholka.advertisements.services;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.config.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -77,7 +77,7 @@ public class AdvertisementService {
 
     public int editPublicationDate(int id, String publicationDate) {
         Advertisement advertisement = findDraftAdById(id)
-                .orElseThrow(() -> new NotFoundByIdException(id));
+                .orElseThrow(() -> new NotFoundException());
 
         advertisement.setPublicationDate(LocalDateTime.parse(publicationDate));
         return persistenceAdvertisementService.updateAdvertisement(advertisement);

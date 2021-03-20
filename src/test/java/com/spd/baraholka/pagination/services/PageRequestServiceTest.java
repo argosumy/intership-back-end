@@ -7,6 +7,7 @@ import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
 import com.spd.baraholka.advertisements.services.PersistenceAdvertisementService;
 import com.spd.baraholka.config.exceptions.NoContentException;
+import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.mappers.PageRequestMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -105,9 +107,9 @@ class PageRequestServiceTest {
         PageRequest<Advertisement> pageRequest = PageRequest.of(
                 0, 2, 3, advertisementList);
 
-        assertThrows(NoContentException.class,
+        assertThrows(NotFoundException.class,
                 () -> pageRequestService.getPageRequest(2, 0),
-                "No content!"
+                "Not found!"
         );
     }
 }

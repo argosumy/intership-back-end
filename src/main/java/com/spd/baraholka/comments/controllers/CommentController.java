@@ -46,14 +46,14 @@ public class CommentController {
 
     @PutMapping("/comment/{id}")
     public CommentDto updateComment(@RequestBody @Valid CommentDto commentDto, @PathVariable("id") int id) {
-        Comment comment = commentService.findById(id).orElseThrow(() -> new NotFoundByIdException(id));
+        Comment comment = commentService.findById(id).orElseThrow(NotFoundException::new);
         Comment commentToUpdate = commentDtoMapper.updateExistsComment(comment, commentDto);
         return commentDtoMapper.getCommentDto(commentService.update(commentToUpdate, id));
     }
 
     @GetMapping("/comment/{id}")
     public CommentDto getOneComment(@PathVariable("id") int id) {
-        Comment comment = commentService.findById(id).orElseThrow(() -> new NotFoundByIdException(id));
+        Comment comment = commentService.findById(id).orElseThrow(NotFoundException::new);
         return commentDtoMapper.getCommentDto(comment);
     }
 }

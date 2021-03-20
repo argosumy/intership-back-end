@@ -10,7 +10,7 @@ import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;
 import com.spd.baraholka.comments.services.CommentService;
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -161,7 +161,7 @@ class CommentControllerTest {
     @DisplayName("Comment not found by id")
     void commentNotFoundById() throws Exception {
         when(commentService.findById(2))
-                .thenThrow(new NotFoundByIdException(100));
+                .thenThrow(new NotFoundException());
 
         mockMvc.perform(get("/comment/100"))
                 .andExpect(status().isNotFound());
