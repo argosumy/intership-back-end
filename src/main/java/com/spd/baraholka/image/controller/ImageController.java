@@ -8,6 +8,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,9 +26,10 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @PostMapping("ads/{adId}/images")
     @ResponseStatus(HttpStatus.OK)
+    @PostMapping("ads/{adId}/images")
     public void saveImages(@PathVariable long adId,
+                           @Size(min = 1, max = 10)
                            @RequestPart(value = "images") List<MultipartFile> images) {
 
         List<ImageResource> imageResources = toDomain(adId, images);
@@ -36,7 +40,9 @@ public class ImageController {
     @PostMapping("ads/{adId}/image")
     public ImageResourceDto saveImage(@PathVariable long adId,
                                       @RequestParam(name = "isPrimary") boolean isPrimary,
-                                      @RequestParam(name = "position") int position,
+                                      @Min(1) @Max(10)
+                                      @RequestParam(name = "position")
+                                      int position,
                                       @RequestPart MultipartFile image) {
 
         ImageResource imageResource = imageService.save(
