@@ -4,9 +4,6 @@ import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class AdvertisementUserEmailMapper {
 
@@ -33,12 +30,6 @@ public class AdvertisementUserEmailMapper {
         advertisementUserEmailDTO.setStatusChangeDate(advertisement.getStatusChangeDate());
         advertisementUserEmailDTO.setUserEmail(getUserEmail(advertisement));
         return advertisementUserEmailDTO;
-    }
-
-    public List<AdvertisementUserEmailDTO> toAdvertisementUserEmailDtoList(List<Advertisement> advertisementList) {
-        return advertisementList.stream()
-                .map(this::getAdvertisementUserEmailDto)
-                .collect(Collectors.toList());
     }
 
     private String getUserEmail(Advertisement advertisement) {

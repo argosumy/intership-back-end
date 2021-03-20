@@ -2,12 +2,8 @@ package com.spd.baraholka.advertisements.controllers;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
-import com.spd.baraholka.advertisements.services.AdvertisementDTO;
-import com.spd.baraholka.advertisements.services.AdvertisementMapper;
-import com.spd.baraholka.advertisements.services.AdvertisementService;
-import com.spd.baraholka.advertisements.services.AdvertisementUserEmailDTO;
-import com.spd.baraholka.pagination.dto.PageRequestDto;
-import com.spd.baraholka.pagination.mappers.PageRequestMapper;
+import com.spd.baraholka.advertisements.services.*;
+import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +18,17 @@ public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
     private final AdvertisementMapper advertisementMapper;
+    private final AdvertisementUserEmailMapper advertisementUserEmailMapper;
     private final PageRequestService pageRequestService;
-    private final PageRequestMapper pageRequestMapper;
 
-    public AdvertisementController(AdvertisementService advertisementService, AdvertisementMapper advertisementMapper,
-                                   PageRequestService pageRequestService, PageRequestMapper pageRequestMapper) {
+    public AdvertisementController(AdvertisementService advertisementService,
+                                   AdvertisementMapper advertisementMapper,
+                                   AdvertisementUserEmailMapper advertisementUserEmailMapper,
+                                   PageRequestService pageRequestService) {
         this.advertisementService = advertisementService;
         this.advertisementMapper = advertisementMapper;
+        this.advertisementUserEmailMapper = advertisementUserEmailMapper;
         this.pageRequestService = pageRequestService;
-        this.pageRequestMapper = pageRequestMapper;
     }
 
     @GetMapping("/search")
@@ -41,9 +39,10 @@ public class AdvertisementController {
     }
 
     @GetMapping
-    public PageRequestDto<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
-                                                                     @RequestParam("pageNumber") int pageNumber) {
-        return pageRequestMapper.getPageRequestDto(pageRequestService.getPageRequest(pageSize, pageNumber));
+    public PageRequest<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                                                                  @RequestParam("pageNumber") int pageNumber) {
+        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber);
+        return pageRequest.map(advertisementUserEmailMapper::getAdvertisementUserEmailDto);
     }
 
     @PutMapping("/{id}/publish-delayed")

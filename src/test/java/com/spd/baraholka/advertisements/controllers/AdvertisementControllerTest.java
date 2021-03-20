@@ -10,9 +10,9 @@ import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.CurrencyType;
 import com.spd.baraholka.advertisements.services.AdvertisementMapper;
 import com.spd.baraholka.advertisements.services.AdvertisementService;
+import com.spd.baraholka.advertisements.services.AdvertisementUserEmailMapper;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
-import com.spd.baraholka.pagination.mappers.PageRequestMapper;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +52,7 @@ class AdvertisementControllerTest {
     private AdvertisementMapper advertisementMapper;
     @Autowired
     @MockBean
-    private PageRequestMapper pageRequestMapper;
+    private AdvertisementUserEmailMapper advertisementUserEmailMapper;
     @Autowired
     private MockMvc mockMvc;
     private Advertisement advertisementActive;

@@ -77,7 +77,7 @@ public class AdvertisementService {
 
     public int editPublicationDate(int id, String publicationDate) {
         Advertisement advertisement = findDraftAdById(id)
-                .orElseThrow(() -> new NotFoundException());
+                .orElseThrow(NotFoundException::new);
 
         advertisement.setPublicationDate(LocalDateTime.parse(publicationDate));
         return persistenceAdvertisementService.updateAdvertisement(advertisement);

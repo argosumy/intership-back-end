@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 public class ExceptionAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NotFoundException.class)
-    String badRequestHandler(NotFoundException e) {
+    @ExceptionHandler(BadRequestException.class)
+    String badRequestHandler(BadRequestException e) {
         return e.getMessage();
     }
 

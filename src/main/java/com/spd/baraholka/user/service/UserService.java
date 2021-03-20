@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
 import com.spd.baraholka.user.controller.dto.UserDTO;
@@ -34,7 +34,7 @@ public class UserService {
     public UserDTO getUserById(int id) {
         Optional<User> user = persistenceUserService.selectUserById(id);
         if (user.isEmpty()) {
-            throw new NotFoundByIdException(id);
+            throw new NotFoundException();
         } else {
             return collectUserDTO(user.get());
         }
