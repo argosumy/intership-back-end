@@ -1,8 +1,10 @@
 package com.spd.baraholka.pagination.entities;
 
-import com.spd.baraholka.advertisements.persistance.Advertisement;
-
 import java.util.List;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class PageRequest<T> {
 
@@ -11,8 +13,8 @@ public class PageRequest<T> {
     private int totalPages;
     private List<T> content;
 
-    public static PageRequest<Advertisement> of(int pageNumber, int pageSize, int totalPages, List<Advertisement> content) {
-        PageRequest<Advertisement> pageRequest = new PageRequest<>();
+    public static <T> PageRequest<T> of(int pageNumber, int pageSize, int totalPages, List<T> content) {
+        PageRequest<T> pageRequest = new PageRequest<>();
         pageRequest.setPageNumber(pageNumber);
         pageRequest.setPageSize(pageSize);
         pageRequest.setTotalPages(totalPages);
@@ -51,4 +53,21 @@ public class PageRequest<T> {
     public void setContent(List<T> content) {
         this.content = content;
     }
+
+    public <R> PageRequest<R> map(Function<T, R> mapFunction) {
+        return this.content.stream()
+                .map(mapFunction)
+                .collect(collectingAndThen(toUnmodifiableList(), this::replaceContent));
+    }
+
+    private <R> PageRequest<R> replaceContent(List<R> content) {
+        return PageRequest.of(
+                this.pageNumber,
+                this.pageSize,
+                this.totalPages,
+                content
+        );
+    }
+
+
 }

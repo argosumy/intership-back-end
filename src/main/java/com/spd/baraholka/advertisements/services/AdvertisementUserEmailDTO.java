@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 public class AdvertisementUserEmailDTO {
 
-    @NotNull
     private int advertisementId;
     @NotNull
     private int ownerId;
@@ -27,8 +26,11 @@ public class AdvertisementUserEmailDTO {
     private LocalDateTime statusChangeDate;
     @Size(max = 20)
     private String city;
+    @NotNull
     private String description;
+    @NotNull
     private String category;
+    @NotNull
     private CurrencyType currency;
     private boolean discountAvailability;
     private LocalDateTime publicationDate;
