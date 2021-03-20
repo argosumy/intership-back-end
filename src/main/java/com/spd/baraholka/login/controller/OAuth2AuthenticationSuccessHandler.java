@@ -3,10 +3,8 @@ package com.spd.baraholka.login.controller;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
 import com.spd.baraholka.role.Role;
-import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
-import com.spd.baraholka.user.service.UserServiceI;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,9 +23,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
     public static final String DOMAIN_NOT_ALLOWED = "Domain is not allowed for login.";
 
-    private final UserServiceI userService;
-
-//    private final UserMapper userMapper;
+    private final UserService userService;
 
     @Value("${login.allowed-domains}")
     private List<String> allowedDomains;
@@ -35,9 +31,8 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
     @Qualifier("Google OAuth2")
     private final OAuth2UserService oAuth2UserService;
 
-    public OAuth2AuthenticationSuccessHandler(UserServiceI userService, /* UserMapper userMapper, */ OAuth2UserService oAuth2UserService) {
+    public OAuth2AuthenticationSuccessHandler(UserService userService, OAuth2UserService oAuth2UserService) {
         this.userService = userService;
-//        this.userMapper = userMapper;
         this.oAuth2UserService = oAuth2UserService;
     }
 

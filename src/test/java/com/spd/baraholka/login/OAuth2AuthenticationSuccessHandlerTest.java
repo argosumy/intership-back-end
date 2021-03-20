@@ -5,7 +5,6 @@ import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
 import com.spd.baraholka.role.Role;
-import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
 import org.assertj.core.util.Lists;
@@ -50,9 +49,6 @@ class OAuth2AuthenticationSuccessHandlerTest {
 
     @Mock
     private UserService userService;
-
-//    @Mock
-//    private UserMapper userMapper;
 
     @Mock
     private OAuth2UserService oAuth2UserService;

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserServiceI {
+public class UserService {
 
     private final PersistenceUserService persistenceUserService;
     private final PersistenceUserAdditionalResourcesService persistenceResourceService;
