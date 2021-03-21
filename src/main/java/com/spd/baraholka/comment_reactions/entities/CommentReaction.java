@@ -2,7 +2,7 @@ package com.spd.baraholka.comment_reactions.entities;
 
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
+import com.spd.baraholka.user.persistance.entities.User;
 
 import java.util.Objects;
 
