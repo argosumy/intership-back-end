@@ -1,14 +1,11 @@
 package com.spd.baraholka.user;
 
-import com.github.database.rider.core.api.dataset.DataSet;
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.entities.User;
-import com.spd.baraholka.role.UserAuthority;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.spd.baraholka.role.Role.MODERATOR;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

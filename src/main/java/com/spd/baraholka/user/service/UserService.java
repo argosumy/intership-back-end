@@ -2,6 +2,7 @@ package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
+import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
@@ -10,18 +11,26 @@ import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesServ
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
-public class UserService {
+@Qualifier("UserService")
+public class UserService implements UserDetailsService {
 
     private final PersistenceUserService persistenceUserService;
     private final PersistenceUserAdditionalResourcesService persistenceResourceService;
     private final UserMapper userMapper;
     private final UserAdditionalResourceMapper resourceMapper;
+
+    private static final String USER_NOT_FOUND = "User not found";
 
     public UserService(PersistenceUserService persistenceUserService,
                        PersistenceUserAdditionalResourcesService persistenceResourceService,
@@ -63,5 +72,33 @@ public class UserService {
 
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
         return userMapper.convertFromOAuth(oAuth2UserDto);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = findByEmail(username);
+        Set<Role> authorities = findRolesByUserId(user.getId());
+        user.setRoles(authorities);
+        return user;
+    }
+
+    public Set<Role> findRolesByUserId(int id) {
+        return persistenceUserService.findRolesByUserId(id);
+    }
+
+    public User findByEmail(String email) {
+        Optional<User> optionalUser = persistenceUserService.findByEmail(email);
+        User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
+        Set<Role> roles = findRolesByUserId(user.getId());
+        user.setRoles(roles);
+        return user;
+    }
+
+    private List<GrantedAuthority> buildUserAuthority(Set<Role> roles) {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.name()));
+        }
+        return new ArrayList<>(authorities);
     }
 }

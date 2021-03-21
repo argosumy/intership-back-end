@@ -2,7 +2,6 @@ package com.spd.baraholka.login.controller;
 
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
-import com.spd.baraholka.user.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -23,7 +22,7 @@ public class OAuth2Controller {
     public static final String ENDPOINT_ME_OAUTH = "/me/oauth2";
     public static final String ENDPOINT_ME = "/me";
 
-    public OAuth2Controller(OAuth2UserService oAuth2UserService, @Qualifier("UserDetailsServiceImpl") UserDetailsService userDetailsService) {
+    public OAuth2Controller(OAuth2UserService oAuth2UserService, @Qualifier("UserService") UserDetailsService userDetailsService) {
         this.oAuth2UserService = oAuth2UserService;
         this.userDetailsService = userDetailsService;
     }
@@ -36,10 +35,9 @@ public class OAuth2Controller {
 
     @GetMapping(ENDPOINT_ME)
     public ResponseEntity<UserDetails> showMe(Authentication authentication) {
-        OAuth2UserDto oAuth2UserDto = Objects.requireNonNull(oAuth2UserService.getUserInfoFromOAuth2(authentication));
-        String email = oAuth2UserDto.getEmail();
+        OAuth2UserDTO oAuth2UserDTO = Objects.requireNonNull(oAuth2UserService.getUserInfoFromOAuth2(authentication));
+        String email = oAuth2UserDTO.getEmail();
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-//        User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok().body(userDetails);
     }
 }

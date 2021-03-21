@@ -2,7 +2,6 @@ package com.spd.baraholka.login.controller;
 
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
-import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;

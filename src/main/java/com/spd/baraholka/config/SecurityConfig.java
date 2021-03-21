@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationSuccessHandler oauth2SuccessHandler;
 
     @Autowired
-    @Qualifier("UserDetailsServiceImpl")
+    @Qualifier("UserService")
     private UserDetailsService userDetailsService;
 
     @Autowired

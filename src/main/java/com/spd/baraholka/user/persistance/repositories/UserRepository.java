@@ -84,8 +84,8 @@ public class UserRepository implements PersistenceUserService {
     @Override
     public Optional<User> findByEmail(String email) {
         try {
-            return Optional.ofNullable(parameterizedJdbcTemplate
-                    .queryForObject("SELECT * FROM users WHERE LOWER (email) = LOWER (:email)",
+            return Optional.ofNullable(paramJdbcTemplate
+                    .queryForObject("SELECT * FROM users WHERE LOWER (e_mail) = LOWER (:email)",
                     Map.of("email", email),
                     userRowMapper)
             );
@@ -97,7 +97,7 @@ public class UserRepository implements PersistenceUserService {
     @Override
     public Set<Role> findRolesByUserId(int id) {
         Set<Role> roles = new HashSet<>();
-        List<String> roleNames = parameterizedJdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
+        List<String> roleNames = paramJdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
                 Map.of("user_id", id),
                 String.class);
         for (String role : roleNames) {
