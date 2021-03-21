@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import static com.spd.baraholka.role.Role.MODERATOR;
+
 @Component("OAuth2SuccessHandler")
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -45,7 +47,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         if (!userService.existsByEmail(oAuth2UserDto.getEmail())) {
             User user = userService.convertFromOAuth(oAuth2UserDto);
             if (userService.count() == 0) {
-                user.grantRole(Role.MODERATOR);
+                user.grantRole(MODERATOR);
             }
             userService.create(user);
         }

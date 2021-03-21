@@ -13,10 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class UserRepository implements PersistenceUserService {
@@ -82,6 +79,31 @@ public class UserRepository implements PersistenceUserService {
     public boolean existsByEmail(String email) {
         return paramJdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
                 Map.of("email", email), Boolean.class);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        try {
+            return Optional.ofNullable(parameterizedJdbcTemplate
+                    .queryForObject("SELECT * FROM users WHERE LOWER (email) = LOWER (:email)",
+                    Map.of("email", email),
+                    userRowMapper)
+            );
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Set<Role> findRolesByUserId(int id) {
+        Set<Role> roles = new HashSet<>();
+        List<String> roleNames = parameterizedJdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
+                Map.of("user_id", id),
+                String.class);
+        for (String role : roleNames) {
+            roles.add(Role.valueOf(role));
+        }
+        return roles;
     }
 
     @Override
