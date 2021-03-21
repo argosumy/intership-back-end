@@ -1,7 +1,7 @@
 package com.spd.baraholka.image.service;
 
-import com.spd.baraholka.image.ImageResource;
-import com.spd.baraholka.image.repository.ImageRepository;
+import com.spd.baraholka.image.persistance.entity.ImageResource;
+import com.spd.baraholka.image.persistance.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,7 +56,9 @@ public class ImageService {
     public List<ImageResource> getAllByAdId(long adId) {
         List<ImageResource> imageResources = repository.getAllByAdId(adId);
 
-        if (imageResources.isEmpty()) return imageResources;
+        if (imageResources.isEmpty()) {
+            return imageResources;
+        }
 
         imageResources.sort(COMPARATOR);
 
@@ -74,8 +76,9 @@ public class ImageService {
     public void deleteImage(long imageId) {
         Optional<ImageResource> imageResourceContainer = repository.getImageById(imageId);
 
-        if (imageResourceContainer.isEmpty())
+        if (imageResourceContainer.isEmpty()) {
             throw new NoSuchElementException("Images with id " + imageId + " wasn't found.");
+        }
 
         ImageResource imageResource = imageResourceContainer.get();
         aws3Service.deleteImageFromS3Bucket(imageResource.getImageUrl());

@@ -3,7 +3,7 @@ package com.spd.baraholka.image.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.spd.baraholka.exception.MultipartFileConversionFailureException;
+import com.spd.baraholka.config.exceptions.MultipartFileConversionFailureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

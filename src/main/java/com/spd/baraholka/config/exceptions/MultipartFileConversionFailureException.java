@@ -1,4 +1,4 @@
-package com.spd.baraholka.exception;
+package com.spd.baraholka.config.exceptions;
 
 public class MultipartFileConversionFailureException extends RuntimeException {
 

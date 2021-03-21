@@ -1,4 +1,4 @@
-package com.spd.baraholka.image;
+package com.spd.baraholka.image.persistance.entity;
 
 import org.springframework.web.multipart.MultipartFile;
 

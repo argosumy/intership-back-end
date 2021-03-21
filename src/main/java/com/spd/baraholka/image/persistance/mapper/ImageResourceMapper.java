@@ -1,6 +1,6 @@
-package com.spd.baraholka.image.repository;
+package com.spd.baraholka.image.persistance.mapper;
 
-import com.spd.baraholka.image.ImageResource;
+import com.spd.baraholka.image.persistance.entity.ImageResource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

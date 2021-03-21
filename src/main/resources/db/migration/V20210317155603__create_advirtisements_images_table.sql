@@ -1,4 +1,4 @@
-CREATE TABLE advertisements_images
+CREATE TABLE IF NOT EXISTS advertisements_images
 (
     id         SERIAL PRIMARY KEY,
     ad_id      INT      NOT NULL,

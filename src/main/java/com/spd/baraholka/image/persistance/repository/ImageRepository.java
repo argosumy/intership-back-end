@@ -1,6 +1,6 @@
-package com.spd.baraholka.image.repository;
+package com.spd.baraholka.image.persistance.repository;
 
-import com.spd.baraholka.image.ImageResource;
+import com.spd.baraholka.image.persistance.entity.ImageResource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
