@@ -34,19 +34,5 @@ public EventTypes getType() {
             }
         };
         template.update(sqlInsert, ps);
-
-
-//        try{
-//            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert);
-//            preparedStatement.setInt(1, Integer.parseInt(args.get("sendTo")));
-//            preparedStatement.setString(2,NotificationStatus.NEW.name());
-//            preparedStatement.setString(3,EventTypes.ACCOUNT_BAN.name());
-//            preparedStatement.setDate(4,date);
-//            preparedStatement.setString(5,args.get("reason"));
-//            preparedStatement.executeUpdate();
-//            preparedStatement.close();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
     }
 }

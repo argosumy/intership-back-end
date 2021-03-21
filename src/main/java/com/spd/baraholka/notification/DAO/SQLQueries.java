@@ -1,8 +1,10 @@
 package com.spd.baraholka.notification.DAO;
 
+@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 public class SQLQueries {
     public static final String SAVE_NOTIFICATION_BAN = "INSERT INTO NOTIFICATIONS (send_to,status,event,date,description) VAlUES(?,?,?,?,?)";
-    public static final String SAVE_NOTIFICATION_BLOCK_AD = "INSERT INTO NOTIFICATIONS (send_to,status,event,date,description,ad_id) VAlUES(?,?,?,?,?,?)";
+    public static final String SAVE_NOTIFICATION_AD = "INSERT INTO NOTIFICATIONS (send_to,status,event,date,description,ad_id) VAlUES(?,?,?,?,?,?)";
+    public static final String SAVE_NOTIFICATION_CHANGES_AD = "INSERT INTO NOTIFICATIONS (send_to,status,event,date,description,ad_id) VAlUES(?,?,?,?,?,?)";
     public static final String SAVE_NOTIFICATION_NEW_AD = "INSERT INTO NOTIFICATIONS (send_to,status,event,date,ad_id) VAlUES (?,?,?,?,?)";
     public static final String SAVE_NOTIFICATION_NEW_COMMENT_TO_MY_COMMENT = "INSERT INTO NOTIFICATIONS (send_to,send_from,status,event,date) VALUES (?,?,?,?,?)";
     public static final String GET_ALL_USER_ID = "SELECT ID FROM USERS";

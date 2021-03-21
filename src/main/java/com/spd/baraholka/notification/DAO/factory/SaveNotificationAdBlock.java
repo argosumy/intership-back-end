@@ -1,7 +1,10 @@
 package com.spd.baraholka.notification.DAO.factory;
 
+import com.spd.baraholka.notification.DAO.SQLQueries;
 import com.spd.baraholka.notification.enumes.EventTypes;
+import com.spd.baraholka.notification.enumes.NotificationStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -13,25 +16,20 @@ public class SaveNotificationAdBlock implements SaveNotification {
     @Override
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
-//        try {
-//            PreparedStatement preparedStatement = connection.prepareStatement(SQLQueries.GET_TO_SEND_BLOCK_AD);
-//            preparedStatement.setInt(1,Integer.parseInt(args.get("adId")));
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            int sendTo = resultSet.getInt(1);
-//            resultSet.close();
-//
-//            preparedStatement = connection.prepareStatement(SQLQueries.SAVE_NOTIFICATION_BLOCK_AD);
-//            preparedStatement.setInt(1, sendTo);
-//            preparedStatement.setString(2, NotificationStatus.NEW.name());
-//            preparedStatement.setString(3,EventTypes.ADVERTISEMENT_BLOCK.name());
-//            preparedStatement.setDate(4,date);
-//            preparedStatement.setString(5,args.get("reason"));
-//            preparedStatement.setInt(6, Integer.parseInt(args.get("adId")));
-//            preparedStatement.executeUpdate();
-//            preparedStatement.close();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
+        String sqlInsert = SQLQueries.SAVE_NOTIFICATION_AD;
+        PreparedStatementSetter ps = new PreparedStatementSetter() {
+            @SuppressWarnings("checkstyle:MagicNumber")
+            @Override
+            public void setValues(PreparedStatement ps) throws SQLException {
+                ps.setInt(1, Integer.parseInt(args.get("sendTo")));
+                ps.setString(2, NotificationStatus.NEW.name());
+                ps.setString(3, EventTypes.ADVERTISEMENT_BLOCK.name());
+                ps.setDate(4, date);
+                ps.setString(5, args.get("reason"));
+                ps.setInt(6, Integer.parseInt(args.get("adId")));
+            }
+        };
+        template.update(sqlInsert, ps);
     }
 
     @Override
