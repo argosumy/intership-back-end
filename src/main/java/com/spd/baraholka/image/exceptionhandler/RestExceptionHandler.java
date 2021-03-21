@@ -1,6 +1,7 @@
 package com.spd.baraholka.image.exceptionhandler;
 
 import com.spd.baraholka.image.validation.ErrorDto;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -50,6 +51,20 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<ErrorDto> handleConstraintValidationException(EmptyResultDataAccessException erdae,
+                                                                        HttpServletRequest request) {
+
+        ErrorDto error = new ErrorDto(
+                HttpStatus.NOT_FOUND.value(),
+                "Entity doesn't exist.",
+                LocalDateTime.now(),
+                request.getServletPath()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
 }

@@ -1,10 +1,9 @@
 package com.spd.baraholka.image.service;
 
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.spd.baraholka.image.ImageResource;
+import com.spd.baraholka.exception.MultipartFileConversionFailureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,14 +13,13 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
+import java.util.Objects;
 
 @Service
 public class AWS3Service {
 
-    private static final String AMAZON_DOMAIN = "https://s3-eu-west-1.amazonaws.com/";
-
     private final AmazonS3 amazonS3Client;
+
     private final String bucketName;
 
     @Autowired
@@ -30,20 +28,12 @@ public class AWS3Service {
         this.amazonS3Client = amazonS3Client;
     }
 
-    public String uploadImage(ImageResource imageResource) {
-        File file = convertMultiPartFileToFile(imageResource.getImage());
+    public void uploadImage(String fileName, MultipartFile image) {
+        File file = convertMultiPartFileToFile(image);
 
-        String fileName = generateFileName(imageResource);
-        String fileUrl = AMAZON_DOMAIN + bucketName + "/" + fileName;
-
-        try {
-            uploadFileToS3Bucket(file, fileName);
-            file.delete();
-        } catch (final AmazonServiceException ex) {
-            System.out.println(ex);
-        }
-
-        return fileUrl;
+        amazonS3Client.putObject(
+                new PutObjectRequest(bucketName, fileName, file)
+        );
     }
 
     public boolean deleteImageFromS3Bucket(String fileUrl) {
@@ -59,29 +49,19 @@ public class AWS3Service {
     }
 
     private File convertMultiPartFileToFile(MultipartFile multipartFile) {
-        final File file = new File(multipartFile.getOriginalFilename());
+        final File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
         try (FileOutputStream outputStream = new FileOutputStream(file);
               BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream)) {
             bufferedOutputStream.write(multipartFile.getBytes());
             bufferedOutputStream.flush();
         } catch (IOException ex) {
-            System.out.println(ex);
+            String message = "Failed to convert the Multipart file with name of " + multipartFile.getOriginalFilename() +
+                    " into a regular file before uploading to s3 bucket.";
+
+            throw new MultipartFileConversionFailureException(message);
         }
 
         return file;
-    }
-
-    private void uploadFileToS3Bucket(File file, String fileName) {
-        amazonS3Client.putObject(
-                new PutObjectRequest(bucketName, fileName, file)
-        );
-    }
-
-    private String generateFileName(ImageResource imageResource) {
-        long adId = imageResource.getAdId();
-        MultipartFile multiPart = imageResource.getImage();
-
-        return "ads" + "/" + adId + "/" + new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
     }
 }

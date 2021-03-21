@@ -2,28 +2,43 @@ package com.spd.baraholka.image.service;
 
 import com.spd.baraholka.image.ImageResource;
 import com.spd.baraholka.image.repository.ImageRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ImageService {
 
+    private static final String AMAZON_DOMAIN = "https://s3-eu-west-1.amazonaws.com/";
+
     private final ImageRepository repository;
+
     private final AWS3Service aws3Service;
+
+    private final String bucketName;
 
     private static final Comparator<ImageResource> COMPARATOR = Comparator.comparing(ImageResource::getPosition);
 
-    public ImageService(ImageRepository repository, AWS3Service aws3Service) {
+    public ImageService(ImageRepository repository,
+                        AWS3Service aws3Service,
+                        @Value("${amazonProperties.bucketName}") String bucketName) {
         this.repository = repository;
         this.aws3Service = aws3Service;
+        this.bucketName = bucketName;
     }
 
     public ImageResource save(ImageResource imageResource) {
-        uploadImage(imageResource);
+        String imageName = generateFileName(imageResource);
+        String imageUrl = AMAZON_DOMAIN + bucketName + "/" + imageName;
+
+        aws3Service.uploadImage(imageName, imageResource.getImage());
+
+        long imageId = repository.saveImageUrl(imageUrl);
+
+        imageResource.setId(imageId);
+        imageResource.setImageUrl(imageUrl);
 
         repository.save(imageResource);
 
@@ -67,10 +82,11 @@ public class ImageService {
         repository.deleteImage(imageResource.getId());
     }
 
-    private void uploadImage(ImageResource imageResource) {
-        String imageUrl = aws3Service.uploadImage(imageResource);
-        long imageId = repository.saveImageUrl(imageUrl);
-        imageResource.setId(imageId);
-        imageResource.setImageUrl(imageUrl);
+    private String generateFileName(ImageResource imageResource) {
+        long adId = imageResource.getAdId();
+        MultipartFile multiPart = imageResource.getImage();
+        String originalFileName = Objects.requireNonNull(multiPart.getOriginalFilename()).replace(" ", "_");
+
+        return String.format("ads/%s/%s-%s", adId, new Date().getTime(), originalFileName);
     }
 }
