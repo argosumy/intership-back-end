@@ -6,16 +6,14 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.spd.baraholka.comment_reactions.dto.CommentReactionDto;
-import com.spd.baraholka.comment_reactions.entities.CommentReaction;
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.mappers.CommentReactionDtoMapper;
 import com.spd.baraholka.comment_reactions.services.CommentReactionService;
-import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -28,6 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(CommentReactionController.class)
 class CommentReactionControllerTest {
 
@@ -42,38 +41,15 @@ class CommentReactionControllerTest {
     @Autowired
     private ObjectMapper mapper;
     private CommentReactionDto commentReactionDto;
-//    private Comment comment;
-//    private User user;
-
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-//        comment = createComment();
-//        user = createUser();
         commentReactionDto = createCommentReactionDto();
     }
 
     private CommentReactionDto createCommentReactionDto() {
         return new CommentReactionDto(1, DISLIKE, 1, 1);
-//        CommentReaction commentReaction = new CommentReaction();
-//        commentReaction.setId(1);
-//        commentReaction.setCommentReactionType(DISLIKE);
-//        commentReaction.setComment(comment);
-//        commentReaction.setUser(user);
-//        return commentReaction;
-    }
-
-    private Comment createComment() {
-        Comment comment = new Comment();
-        comment.setId(1);
-        return comment;
-    }
-
-    private User createUser() {
-        User user = new User();
-        user.setId(1);
-        return user;
     }
 
     @Test
