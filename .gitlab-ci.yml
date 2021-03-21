@@ -1,0 +1,70 @@
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_DRIVER: overlay2
+
+stages:
+  - test
+  - build
+  - deploy
+
+check:
+  image: openjdk:11-jdk-slim
+  stage: test
+  tags:
+    - docker
+  except:
+    - prod
+  script:
+    - export GRADLE_USER_HOME=/cache/gradle
+    - ./gradlew clean check --stacktrace
+
+.build:
+  stage: build
+  services:
+    - docker:stable-dind
+  tags:
+    - docker
+  script:
+    - docker login registry.gitlab.com -u $docker_registry_user -p $docker_registry_password
+    - docker build -t registry.gitlab.com/spd-marketplace/back-end:$IMAGE_TAG -f Dockerfile.stage .
+    - docker push registry.gitlab.com/spd-marketplace/back-end:$IMAGE_TAG
+
+build prod:
+  extends: .build
+  variables:
+    IMAGE_TAG: stable
+  only:
+    - prod
+
+build master:
+  extends: .build
+  variables:
+    IMAGE_TAG: latest
+  only:
+    - RC/demo-1
+
+.deploy:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - cd $APP_PATH
+    - docker login registry.gitlab.com -u $docker_registry_user -p $docker_registry_password
+    - docker-compose down
+    - docker-compose pull
+    - docker-compose up -d
+    - docker logout registry.gitlab.com
+
+deploy prod:
+  extends: .deploy
+  variables:
+    APP_PATH: /opt/baraholka-prod
+  only:
+    - prod
+
+deploy stage:
+  extends: .deploy
+  variables:
+    APP_PATH: /opt/baraholka-master
+  only:
+    - RC/demo-1
