@@ -1,6 +1,6 @@
 package com.spd.baraholka.image.controller.dto;
 
-public class ImageResourceDto {
+public final class ImageResourceDto {
 
     private final long id;
     private final long adId;

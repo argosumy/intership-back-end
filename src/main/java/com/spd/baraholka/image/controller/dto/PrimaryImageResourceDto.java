@@ -3,7 +3,7 @@ package com.spd.baraholka.image.controller.dto;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class PrimaryImageResourceDto {
+public final class PrimaryImageResourceDto {
 
     private final long id;
     private final long adId;
@@ -33,8 +33,12 @@ public class PrimaryImageResourceDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         PrimaryImageResourceDto that = (PrimaryImageResourceDto) o;
         return id == that.id &&
                 adId == that.adId &&

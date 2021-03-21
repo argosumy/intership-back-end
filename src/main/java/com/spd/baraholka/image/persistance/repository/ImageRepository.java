@@ -37,7 +37,7 @@ public class ImageRepository {
 
     public void save(ImageResource imageResource) {
         String sql = "INSERT INTO advertisements_images(ad_id, image_id, is_primary, position) " +
-                     "VALUES(:adId, :imageId, :isPrimary, :position)";
+                "VALUES(:adId, :imageId, :isPrimary, :position)";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("adId", imageResource.getAdId());
@@ -50,9 +50,9 @@ public class ImageRepository {
 
     public List<ImageResource> getPrimary(List<Long> adIds) {
         String sql = "SELECT image_id as id, ad_id, is_primary, position, url " +
-                     "FROM advertisements_images " +
-                     "LEFT JOIN images ON advertisements_images.image_id = images.id " +
-                     "WHERE ad_id IN (:adIds) AND is_primary = :isPrimary";
+                "FROM advertisements_images " +
+                "LEFT JOIN images ON advertisements_images.image_id = images.id " +
+                "WHERE ad_id IN (:adIds) AND is_primary = :isPrimary";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("adIds", adIds);
@@ -63,8 +63,8 @@ public class ImageRepository {
 
     public List<ImageResource> getAllByAdId(long adId) {
         String sql = "SELECT images.id as id, ad_id, is_primary, position, url " +
-                     "FROM advertisements_images " +
-                     "LEFT JOIN images ON advertisements_images.image_id = images.id";
+                "FROM advertisements_images " +
+                "LEFT JOIN images ON advertisements_images.image_id = images.id";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("adId", adId);
@@ -74,15 +74,17 @@ public class ImageRepository {
 
     public Optional<ImageResource> getImageById(long imageId) {
         String sql = "SELECT images.id as id, ad_id, is_primary, position, url FROM advertisements_images " +
-                     "LEFT JOIN images ON advertisements_images.image_id = images.id " +
-                     "WHERE image_id = :imageId";
+                "LEFT JOIN images ON advertisements_images.image_id = images.id " +
+                "WHERE image_id = :imageId";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("imageId", imageId);
 
         ImageResource imageResource = jdbcTemplate.queryForObject(sql, parameters, rowMapper);
 
-        if (Objects.isNull(imageResource)) return Optional.empty();
+        if (Objects.isNull(imageResource)) {
+            return Optional.empty();
+        }
 
         return Optional.of(imageResource);
     }
@@ -93,7 +95,8 @@ public class ImageRepository {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("imageId", imageId);
 
-        if (jdbcTemplate.update(sql, parameters) != 1)
+        if (jdbcTemplate.update(sql, parameters) != 1) {
             throw new IllegalStateException("Failed to delete the image with id = " + imageId);
+        }
     }
 }
