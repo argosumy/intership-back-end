@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AdvertisementDataAdapter implements PersistenceAdvertisementService {
+class AdvertisementDataAdapter implements PersistenceAdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
 
-    public AdvertisementDataAdapter(AdvertisementRepository advertisementRepository) {
+    AdvertisementDataAdapter(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
     }
 

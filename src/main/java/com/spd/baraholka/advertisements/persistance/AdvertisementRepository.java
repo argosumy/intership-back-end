@@ -17,9 +17,9 @@ import java.util.Optional;
 @Repository
 public class AdvertisementRepository {
 
-    public static final String STATUS = "status";
-    public static final String STATUS_CHANGE_DATE = "statusChangeDate";
-    public static final String PUBLICATION_DATE = "publicationDate";
+    public static final String STATUS_PARAMETER = "status";
+    public static final String STATUS_CHANGE_DATE_PARAMETER = "statusChangeDate";
+    public static final String PUBLICATION_DATE_PARAMETER = "publicationDate";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final AdvertisementRowMapper advertisementRowMapper;
 
@@ -56,10 +56,10 @@ public class AdvertisementRepository {
         namedParameters.addValue("currency", advertisement.getCurrency().toString());
         namedParameters.addValue("discountAvailability", advertisement.isDiscountAvailability());
         namedParameters.addValue("city", advertisement.getCity());
-        namedParameters.addValue(STATUS, advertisement.getStatus().toString());
+        namedParameters.addValue(STATUS_PARAMETER, advertisement.getStatus().toString());
         namedParameters.addValue("creationDate", Timestamp.valueOf(advertisement.getCreationDate()));
-        namedParameters.addValue(PUBLICATION_DATE, Timestamp.valueOf(advertisement.getPublicationDate()));
-        namedParameters.addValue(STATUS_CHANGE_DATE, Timestamp.valueOf(advertisement.getStatusChangeDate()));
+        namedParameters.addValue(PUBLICATION_DATE_PARAMETER, Timestamp.valueOf(advertisement.getPublicationDate()));
+        namedParameters.addValue(STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(advertisement.getStatusChangeDate()));
         return namedParameters;
     }
 
@@ -72,16 +72,16 @@ public class AdvertisementRepository {
                 Map.entry("currency", advertisement.getCurrency().toString()),
                 Map.entry("discountAvailability", advertisement.isDiscountAvailability()),
                 Map.entry("city", advertisement.getCity()),
-                Map.entry(STATUS, advertisement.getStatus().toString()),
-                Map.entry(STATUS_CHANGE_DATE, Timestamp.valueOf(advertisement.getStatusChangeDate())),
-                Map.entry(PUBLICATION_DATE, Timestamp.valueOf(advertisement.getPublicationDate())),
+                Map.entry(STATUS_PARAMETER, advertisement.getStatus().toString()),
+                Map.entry(STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(advertisement.getStatusChangeDate())),
+                Map.entry(PUBLICATION_DATE_PARAMETER, Timestamp.valueOf(advertisement.getPublicationDate())),
                 Map.entry("advertisementId", advertisement.getAdvertisementId())
         );
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> fillUpdateStatusParameters(int id, AdvertisementStatus status) {
-        return Map.of(STATUS, status,
-                STATUS_CHANGE_DATE, Timestamp.valueOf(LocalDateTime.now()),
+        return Map.of(STATUS_PARAMETER, status,
+                STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(LocalDateTime.now()),
                 "advertisementId", id);
     }
 
@@ -136,7 +136,7 @@ public class AdvertisementRepository {
                         "(a.status=:draft AND a.publication_date<=:publicationDate)",
                 Map.of("active", "ACTIVE",
                         "draft", "DRAFT",
-                        PUBLICATION_DATE, LocalDateTime.now()
+                        PUBLICATION_DATE_PARAMETER, LocalDateTime.now()
                 ),
                 advertisementRowMapper
         );
@@ -147,7 +147,7 @@ public class AdvertisementRepository {
             return Optional.ofNullable(jdbcTemplate.queryForObject(
                     "SELECT * FROM advertisements WHERE id=:id AND status=:status",
                     Map.of("id", id,
-                            STATUS, "DRAFT"
+                            STATUS_PARAMETER, "DRAFT"
                     ),
                     advertisementRowMapper
             ));

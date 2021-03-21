@@ -4,33 +4,25 @@ import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.CurrencyType;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class AdvertisementDTO {
 
-    @NotNull
     private int advertisementId;
-
-    @NotNull
     private int ownerId;
-
     @Size(max = 200)
     private String title;
-
     @NotNull
     private AdvertisementStatus status;
-
     @Positive
     private double price;
-
-    @NotNull
+    @PastOrPresent
     private LocalDateTime creationDate;
-
-    @NotNull
+    @PastOrPresent
     private LocalDateTime statusChangeDate;
-
     @Size(max = 20)
     private String city;
     @NotNull
@@ -40,6 +32,7 @@ public class AdvertisementDTO {
     @NotNull
     private CurrencyType currency;
     private boolean discountAvailability;
+    @NotNull
     private LocalDateTime publicationDate;
 
     public int getAdvertisementId() {

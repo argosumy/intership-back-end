@@ -116,17 +116,6 @@ class AdvertisementControllerTest {
     }
 
     @Test
-    @DisplayName("Should return filled page request")
-    void getPageRequest() throws Exception {
-        when(pageRequestService.getPageRequest(2, 1)).thenReturn(pageRequest);
-
-        mockMvc.perform(get("/advertisements?pageSize=1&pageNumber=1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(getResponseJson(pageRequest)))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     @DisplayName("Advertisement was found by id and updated publication date")
     void editPublicationDate() throws Exception {
         when(advertisementService.findDraftAdById(1))
