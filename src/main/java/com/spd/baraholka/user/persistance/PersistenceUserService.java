@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface PersistenceUserService {
 
     Optional<User> selectUserById(int id);
+
+    int updateUserBlockedStatus(int id, boolean isBlocked);
 }
