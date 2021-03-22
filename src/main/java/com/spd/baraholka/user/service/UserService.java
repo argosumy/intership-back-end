@@ -1,6 +1,7 @@
 package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
@@ -14,8 +15,10 @@ import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -118,6 +121,12 @@ public class UserService implements UserDetailsService {
             }
             create(user);
         }
+        return user;
+    }
+
+    public User getCurrentUser() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = findByEmail(userPrincipal.getUsername());
         return user;
     }
 }

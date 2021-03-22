@@ -63,11 +63,16 @@ public class UserController {
 
     @PreAuthorize("hasRole('MODERATOR')")
     @GetMapping("/me_userdetails")
-    public ResponseEntity<UserDetails> showMe(Authentication authentication) {
-        OAuth2UserDTO oAuth2UserDTO = Objects.requireNonNull(oAuth2UserService.getOAuth2UserDTO(authentication));
-        String email = oAuth2UserDTO.getEmail();
-        UserDetails userDetails = userService.loadUserByUsername(email);
+    public ResponseEntity<UserDetails> showMe(@CurrentUser UserPrincipal userPrincipal) {
+        UserDetails userDetails = userService.loadUserByUsername(userPrincipal.getUsername());
         return ResponseEntity.ok().body(userDetails);
+    }
+
+    @PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping("/me_userservice")
+    public ResponseEntity<User> showMe() {
+        User user = userService.getCurrentUser();
+        return ResponseEntity.ok().body(user);
     }
 
     @PreAuthorize("hasRole('MODERATOR')")
