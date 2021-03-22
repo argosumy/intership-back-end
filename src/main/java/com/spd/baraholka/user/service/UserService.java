@@ -12,6 +12,8 @@ import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static com.spd.baraholka.role.Role.ROLE_MODERATOR;
 
 @Service
 @Qualifier("UserService")
@@ -100,5 +104,20 @@ public class UserService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(role.name()));
         }
         return new ArrayList<>(authorities);
+    }
+
+    public User registerNewUser(OAuth2UserDTO oAuth2UserDTO) {
+        User user = new User();
+//        if (!isEmailDomainInAllowedDomains(oAuth2UserDTO.getEmail(), allowedDomains)) {
+//            throw new BadCredentialsException(DOMAIN_NOT_ALLOWED);
+//        }
+        if (!existsByEmail(oAuth2UserDTO.getEmail())) {
+            user = convertFromOAuth(oAuth2UserDTO);
+            if (count() == 0) {
+                user.grantRole(ROLE_MODERATOR);
+            }
+            create(user);
+        }
+        return user;
     }
 }

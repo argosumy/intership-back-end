@@ -63,7 +63,7 @@ class GoogleOAuth2UserServiceTest {
     @DisplayName("'Should return user's email from Principal")
     void shouldReturnUserEmailFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
+        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getOAuth2UserDTO();
         assertEquals(oAuth2UserDto.getEmail(), dummyEmail);
     }
 
@@ -71,7 +71,7 @@ class GoogleOAuth2UserServiceTest {
     @DisplayName("'Should return user's first name from Principal")
     void shouldReturnUserFirstNameFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
+        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getOAuth2UserDTO();
         assertEquals(oAuth2UserDto.getFirstName(), dummyGivenName);
     }
 
@@ -79,7 +79,7 @@ class GoogleOAuth2UserServiceTest {
     @DisplayName("'Should return user's last name from Principal")
     void shouldReturnUserLastNameFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
+        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getOAuth2UserDTO();
         assertEquals(oAuth2UserDto.getLastName(), dummyFamilyName);
     }
 
@@ -87,7 +87,7 @@ class GoogleOAuth2UserServiceTest {
     @DisplayName("'Should return user's avatar from Principal")
     void shouldReturnUserAvatarFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
+        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getOAuth2UserDTO();
         assertEquals(oAuth2UserDto.getAvatar(), dummyPicture);
     }
 

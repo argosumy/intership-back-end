@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
-import static com.spd.baraholka.role.Role.USER;
+import static com.spd.baraholka.role.Role.ROLE_USER;
 
 public class User
 //        extends org.springframework.security.core.userdetails.User
@@ -27,7 +27,7 @@ public class User
 
     public User() {
         this.roles = new HashSet<>();
-        this.roles.add(USER);
+        this.roles.add(ROLE_USER);
     }
 
     //    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {

@@ -32,15 +32,15 @@ class UserTest {
     @Test
     void shouldGrantModeratorRole() {
         User dummyUser = initDummyUser();
-        assertFalse(dummyUser.getRoles().contains(Role.MODERATOR));
-        dummyUser.grantRole(Role.MODERATOR);
-        assertTrue(dummyUser.getRoles().contains(Role.MODERATOR));
+        assertFalse(dummyUser.getRoles().contains(Role.ROLE_MODERATOR));
+        dummyUser.grantRole(Role.ROLE_MODERATOR);
+        assertTrue(dummyUser.getRoles().contains(Role.ROLE_MODERATOR));
     }
 
     @Test
     void shouldHaveRoleUserByDefault() {
         User dummyUser = initDummyUser();
-        assertTrue(dummyUser.getRoles().contains(Role.USER));
-        assertFalse(dummyUser.getRoles().contains(Role.MODERATOR));
+        assertTrue(dummyUser.getRoles().contains(Role.ROLE_USER));
+        assertFalse(dummyUser.getRoles().contains(Role.ROLE_MODERATOR));
     }
 }
