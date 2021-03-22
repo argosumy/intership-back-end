@@ -1,8 +1,9 @@
 package com.spd.baraholka.login.service;
 
 import com.spd.baraholka.config.exceptions.OAuth2ProcessingException;
-import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.UserPrincipal;
+import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
+//import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;

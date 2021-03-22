@@ -1,6 +1,7 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.login.CurrentUser;
+//import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.GoogleOAuth2UserService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.Objects;
 
 @RequestMapping("/users")
@@ -36,11 +38,19 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/me2")
-//    @PreAuthorize("hasRole('MODERATOR')")
-    public UserPrincipal getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+    @PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping("/me_currentuser")
+    public ResponseEntity<UserPrincipal> getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         Objects.requireNonNull(userPrincipal);
-        return userPrincipal;
+        return ResponseEntity.ok().body(userPrincipal);
+//        return userService.findByEmail(userPrincipal.getEmail());
+    }
+
+    @PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping("/me_principal")
+    public ResponseEntity<Principal> getCurrentUser(Principal principal) {
+        Objects.requireNonNull(principal);
+        return ResponseEntity.ok().body(principal);
 //        return userService.findByEmail(userPrincipal.getEmail());
     }
 
@@ -51,12 +61,18 @@ public class UserController {
 //        return userService.findByEmail(principal.getEmail());
 //    }
 
-//    @PreAuthorize("hasRole('MODERATOR')")
-    @GetMapping("/me")
+    @PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping("/me_userdetails")
     public ResponseEntity<UserDetails> showMe(Authentication authentication) {
         OAuth2UserDTO oAuth2UserDTO = Objects.requireNonNull(oAuth2UserService.getOAuth2UserDTO(authentication));
         String email = oAuth2UserDTO.getEmail();
         UserDetails userDetails = userService.loadUserByUsername(email);
         return ResponseEntity.ok().body(userDetails);
+    }
+
+    @PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping("/me_authentication")
+    public ResponseEntity<Authentication> showMe2(Authentication authentication) {
+        return ResponseEntity.ok().body(authentication);
     }
 }

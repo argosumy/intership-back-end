@@ -33,11 +33,21 @@ public class OAuth2Controller {
         return ResponseEntity.ok().body(oAuth2UserDto);
     }
 
-    @GetMapping(ENDPOINT_ME)
-    public ResponseEntity<UserDetails> showMe(Authentication authentication) {
-        OAuth2UserDTO oAuth2UserDTO = Objects.requireNonNull(oAuth2UserService.getOAuth2UserDTO(authentication));
-        String email = oAuth2UserDTO.getEmail();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-        return ResponseEntity.ok().body(userDetails);
-    }
+//    @PreAuthorize("hasRole('MODERATOR')")
+//    @GetMapping("/users/me3")
+//    public ResponseEntity<UserDetails> showMe(Authentication authentication) {
+//        OAuth2UserDTO oAuth2UserDTO = Objects.requireNonNull(oAuth2UserService.getOAuth2UserDTO(authentication));
+//        String email = oAuth2UserDTO.getEmail();
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+//        return ResponseEntity.ok().body(userDetails);
+//    }
+
+//    @PreAuthorize("hasRole('MODERATOR')")
+//    @GetMapping("/users/me2")
+//    public ResponseEntity<Authentication> showMe2(Authentication authentication) {
+////        OAuth2UserDTO oAuth2UserDTO = Objects.requireNonNull(oAuth2UserService.getOAuth2UserDTO(authentication));
+////        String email = oAuth2UserDTO.getEmail();
+////        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+//        return ResponseEntity.ok().body(authentication);
+//    }
 }
