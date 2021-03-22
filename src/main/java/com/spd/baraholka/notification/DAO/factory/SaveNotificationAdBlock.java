@@ -17,13 +17,15 @@ public class SaveNotificationAdBlock implements SaveNotification {
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         String sqlInsert = SQLQueries.SAVE_NOTIFICATION_AD;
+        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventTypes.ADVERTISEMENT_BLOCK.name());
+        int statusId = template.queryForObject(SQLQueries.GET_ID_STATUS_BY_NAME, Integer.class, NotificationStatus.NEW.name());
         PreparedStatementSetter ps = new PreparedStatementSetter() {
             @SuppressWarnings("checkstyle:MagicNumber")
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
                 ps.setInt(1, Integer.parseInt(args.get("sendTo")));
-                ps.setString(2, NotificationStatus.NEW.name());
-                ps.setString(3, EventTypes.ADVERTISEMENT_BLOCK.name());
+                ps.setInt(2, statusId);
+                ps.setInt(3, eventId);
                 ps.setDate(4, date);
                 ps.setString(5, args.get("reason"));
                 ps.setInt(6, Integer.parseInt(args.get("adId")));

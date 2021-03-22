@@ -6,11 +6,11 @@ import com.spd.baraholka.notification.enumes.NotificationStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Component;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -24,40 +24,27 @@ public class SaveNotificationChangesAd implements SaveNotification {
     @Override
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
-        String sqlInsert = SQLQueries.SAVE_NOTIFICATION_AD;
-        PreparedStatementSetter ps = new PreparedStatementSetter() {
-            @SuppressWarnings("checkstyle:MagicNumber")
-            @Override
-            public void setValues(PreparedStatement ps) throws SQLException {
-                ps.setInt(1, Integer.parseInt(args.get("adId")));
-            }
-        };
-     //   template.execute(SQLQueries.GET_USER_ID_WISHLIST, ps);
-
-
-
-//        PreparedStatement preparedStatement = preparedStatement = connection.prepareStatement(SQLQueries.GET_USER_ID_WISHLIST);
-//        //table wish_list idAD == idUserOrIdAd
-//        preparedStatement.setInt(1, Integer.parseInt(args.get("adId")));
-//        ResultSet resultSet = preparedStatement.executeQuery();
-//        while (resultSet.next()) {
-//            int sendTo = resultSet.getInt(1);
-//            Date date = Date.valueOf(LocalDate.now());
-//            String sqlInsert = SQLQueries.SAVE_NOTIFICATION_NEW_AD;
-//
-//            try {
-//                preparedStatement = connection.prepareStatement(sqlInsert);
-//                preparedStatement.setInt(1,sendTo);
-//                preparedStatement.setString(2,NotificationStatus.NEW.name());
-//                preparedStatement.setString(3,EventTypes.CHANGES_ADVERTISEMENT.name());
-//                preparedStatement.setDate(4,date);
-//                preparedStatement.setString(5,args.get("adId"));
-//                preparedStatement.executeUpdate();
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
-//            preparedStatement.close();
-//            resultSet.close();
-//        }
+        String sqlInsert = SQLQueries.SAVE_NOTIFICATION_CHANGES_AD;
+        String idWhishlist = SQLQueries.GET_USER_ID_WISHLIST;
+        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventTypes.CHANGES_ADVERTISEMENT.name());
+        int statusId = template.queryForObject(SQLQueries.GET_ID_STATUS_BY_NAME, Integer.class, NotificationStatus.NEW.name());
+        int adId = Integer.parseInt(args.get("adId"));
+        List<Map<String, Object>> list = template.queryForList(idWhishlist, adId);
+        for (Map<String, Object> id: list) {
+            int recipient = (int) id.get("id");
+            PreparedStatementSetter ps = new PreparedStatementSetter() {
+                @SuppressWarnings("checkstyle:MagicNumber")
+                @Override
+                public void setValues(PreparedStatement ps) throws SQLException {
+                    ps.setInt(1, recipient);
+                    ps.setInt(2, statusId);
+                    ps.setInt(3, eventId);
+                    ps.setDate(4, date);
+                    ps.setString(5, args.get("reason"));
+                    ps.setInt(6, Integer.parseInt(args.get("adId")));
+                }
+            };
+            template.update(sqlInsert, ps);
+        }
     }
 }

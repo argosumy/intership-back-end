@@ -6,6 +6,7 @@ import java.util.Map;
 
 public interface SaveNotification {
 
-    public void save(Map<String, String> args, JdbcTemplate template);
-    public EventTypes getType();
+    void save(Map<String, String> args, JdbcTemplate template);
+    @SuppressWarnings("checkstyle:EmptyLineSeparator")
+    EventTypes getType();
 }
