@@ -3,6 +3,7 @@ package com.spd.baraholka.image.controller;
 import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.image.controller.dto.ImageResourceDto;
 import com.spd.baraholka.image.service.ImageService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +28,7 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+    @ApiOperation(value = "Upload images of an advertisement to the server", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "ads/{adId}/images", consumes = "multipart/form-data")
     public void saveImages(@PathVariable long adId,
@@ -37,6 +39,7 @@ public class ImageController {
         imageService.saveAll(imageResources);
     }
 
+    @ApiOperation(value = "Upload single advertisement image to the server", response = ImageResourceDto.class)
     @PostMapping(value = "ads/{adId}/image", consumes = "multipart/form-data")
     public ImageResourceDto saveImage(@PathVariable long adId,
                                       @RequestParam(name = "isPrimary") boolean isPrimary,
@@ -57,6 +60,7 @@ public class ImageController {
         );
     }
 
+    @ApiOperation(value = "Fetch all images of an advertisement", response = ImageResourceDto.class, responseContainer = "List")
     @GetMapping("ads/{adId}/images")
     public List<ImageResourceDto> getAllByAdId(@PathVariable long adId) {
         List<ImageResource> imageResources = imageService.getAllByAdId(adId);
@@ -72,12 +76,14 @@ public class ImageController {
                 .collect(Collectors.toList());
     }
 
+    @ApiOperation(value = "Delete a single image")
     @DeleteMapping("images/{imageId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteImage(@PathVariable long imageId) {
         imageService.deleteImage(imageId);
     }
 
+    @ApiOperation(value = "Delete all images of an advertisement")
     @DeleteMapping("ads/{adId}/images")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllImagesByAdId(@PathVariable long adId) {
