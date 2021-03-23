@@ -49,7 +49,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
             }
             userService.create(user);
         }
-        response.sendRedirect("/");
+        response.sendRedirect("/api" + OAuth2Controller.ENDPOINT_ME_OAUTH);
     }
 
     private boolean isEmailDomainInAllowedDomains(String email, List<String> allowedDomains) {
