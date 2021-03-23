@@ -10,9 +10,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AWSS3Config {
-
-//    @Value("${amazonProperties.endpointUrl}")
-//    private String endpointUrl;
     @Value("${amazonProperties.bucketName}")
     private String bucketName;
     @Value("${amazonProperties.accessKey}")

@@ -16,7 +16,7 @@ import java.util.List;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundByIdException.class)
     String notFoundByIdHandler(NotFoundByIdException e) {
         return e.getMessage();
