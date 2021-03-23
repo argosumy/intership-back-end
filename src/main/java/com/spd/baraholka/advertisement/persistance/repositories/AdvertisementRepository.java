@@ -35,7 +35,8 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     public int updateAdvertisement(Advertisement advertisement) {
         String updateSQL = createUpdateSQL();
         Map<String, ? extends Serializable> updateParameters = createUpdateParameters(advertisement);
-        return jdbcTemplate.update(updateSQL, updateParameters);
+        jdbcTemplate.update(updateSQL, updateParameters);
+        return advertisement.getAdvertisementId();
     }
 
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
@@ -69,7 +70,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 "price", advertisement.getPrice(),
                 "currency", advertisement.getCurrency().toString(),
                 "city", advertisement.getCity(),
-                "id", advertisement.getAdvertisementId());
+                "advertisementId", advertisement.getAdvertisementId());
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateStatusParameters(int id, AdvertisementStatus status) {
@@ -89,7 +90,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + "category=:category,"
                 + "price=:price,"
                 + "currency=:currency,"
-                + "city=:city,"
+                + "city=:city "
                 + "WHERE id=:advertisementId";
     }
 
