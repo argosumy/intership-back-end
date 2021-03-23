@@ -1,5 +1,6 @@
 package com.spd.baraholka.config.exceptions;
 
+import com.spd.baraholka.common.dto.ErrorDto;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

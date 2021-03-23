@@ -1,4 +1,4 @@
-package com.spd.baraholka.config.exceptions;
+package com.spd.baraholka.common.dto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

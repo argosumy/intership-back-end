@@ -55,11 +55,10 @@ public class ImageController {
                                       int position,
                                       @RequestPart MultipartFile image) {
         ImageResource imageResource = imageService.save(
-                ImageResource.of(adId, isPrimary, position, image)
+                new ImageResource(adId, isPrimary, position, image)
         );
 
-        return ImageResourceDto.of(
-                                    imageResource.getId(),
+        return new ImageResourceDto(imageResource.getId(),
                                     imageResource.getAdId(),
                                     imageResource.getIsPrimary(),
                                     imageResource.getPosition(),
@@ -74,13 +73,12 @@ public class ImageController {
 
         return imageResources
                 .stream()
-                .map(imgResource -> ImageResourceDto.of(imgResource.getId(),
-                                                        imgResource.getAdId(),
-                                                        imgResource.getIsPrimary(),
-                                                        imgResource.getPosition(),
-                                                        imgResource.getImageUrl())
-                )
-                .collect(Collectors.toList());
+                .map(imageResource -> new ImageResourceDto(imageResource.getId(),
+                        imageResource.getAdId(),
+                        imageResource.getIsPrimary(),
+                        imageResource.getPosition(),
+                        imageResource.getImageUrl())
+                ).collect(Collectors.toList());
     }
 
     @ApiOperation(value = "Delete a single image")
@@ -103,10 +101,10 @@ public class ImageController {
             MultipartFile image = images.get(i);
             // Make the first image be primary
             if (i == 0) {
-                imageResources.add(ImageResource.of(adId, true, i + 1, image));
+                imageResources.add(new ImageResource(adId, true, i + 1, image));
                 continue;
             }
-            imageResources.add(ImageResource.of(adId, false, i + 1, image));
+            imageResources.add(new ImageResource(adId, false, i + 1, image));
         }
 
         return imageResources;

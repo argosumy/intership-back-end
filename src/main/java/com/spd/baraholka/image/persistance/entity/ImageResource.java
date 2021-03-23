@@ -11,7 +11,7 @@ public class ImageResource {
     private MultipartFile image;
     private String imageUrl;
 
-    private ImageResource(long adId, boolean isPrimary, int position, MultipartFile image) {
+    public ImageResource(long adId, boolean isPrimary, int position, MultipartFile image) {
         this.adId = adId;
         this.isPrimary = isPrimary;
         this.position = position;
@@ -24,10 +24,6 @@ public class ImageResource {
         this.isPrimary = isPrimary;
         this.position = position;
         this.imageUrl = imageUrl;
-    }
-
-    public static ImageResource of(long adId, boolean isPrimary, int positionOrder, MultipartFile image) {
-        return new ImageResource(adId, isPrimary, positionOrder, image);
     }
 
     public void setId(long id) {

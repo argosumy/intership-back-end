@@ -11,7 +11,7 @@ import java.util.*;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private static final String AMAZON_DOMAIN = "https://s3-eu-west-1.amazonaws.com/";
+    private final String amazonDomain;
 
     private final ImageRepository repository;
 
@@ -23,16 +23,18 @@ public class ImageServiceImpl implements ImageService {
 
     public ImageServiceImpl(ImageRepository repository,
                             AWS3ServiceImpl aws3Service,
+                            @Value("${amazon.domain}") String amazonDomain,
                             @Value("${amazonProperties.bucketName}") String bucketName) {
         this.repository = repository;
         this.aws3Service = aws3Service;
+        this.amazonDomain = amazonDomain;
         this.bucketName = bucketName;
     }
 
     @Override
     public ImageResource save(ImageResource imageResource) {
         String imageName = generateFileName(imageResource);
-        String imageUrl = AMAZON_DOMAIN + bucketName + "/" + imageName;
+        String imageUrl = amazonDomain + bucketName + "/" + imageName;
 
         aws3Service.uploadImage(imageName, imageResource.getImage());
 
