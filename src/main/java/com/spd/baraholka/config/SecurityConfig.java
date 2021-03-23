@@ -19,7 +19,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
+                .authorizeRequests()
+                .antMatchers("/api/swagger-ui/**").permitAll()
+                .antMatchers("/api/v2/api-docs/**").permitAll()
+                .and()
                 .oauth2Login()
                 .successHandler(oauth2SuccessHandler);
+
+
     }
 }
