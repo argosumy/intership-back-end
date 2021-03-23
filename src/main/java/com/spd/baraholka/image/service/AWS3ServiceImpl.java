@@ -42,7 +42,7 @@ public class AWS3ServiceImpl implements AWS3Service {
 
     @Override
     public boolean deleteImageFromS3Bucket(String fileUrl) {
-        String objectName = fileUrl.substring(fileUrl.lastIndexOf("/ads") + 1);
+        String objectName = fileUrl.substring(fileUrl.lastIndexOf("ads/"));
 
         if (amazonS3Client.doesObjectExist(bucketName, objectName)) {
             amazonS3Client.deleteObject(new DeleteObjectRequest(bucketName, objectName));

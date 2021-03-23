@@ -68,7 +68,8 @@ public class ImageRepositoryImpl implements ImageRepository {
     public List<ImageResource> getAllByAdId(long adId) {
         String sql = "SELECT images.id as id, ad_id, is_primary, position, url " +
                      "FROM advertisements_images " +
-                     "LEFT JOIN images ON advertisements_images.image_id = images.id";
+                     "LEFT JOIN images ON advertisements_images.image_id = images.id " +
+                     "WHERE ad_id = :adId";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("adId", adId);
