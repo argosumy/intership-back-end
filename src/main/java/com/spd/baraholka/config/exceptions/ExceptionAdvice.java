@@ -45,7 +45,6 @@ public class ExceptionAdvice {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<ErrorDto> handleConstraintValidationException(MaxUploadSizeExceededException muse,
                                                                         HttpServletRequest request) {
-
         String message = "Maximum upload size exceeded; The image exceeds its maximum permitted size of 5 Megabytes.";
         ErrorDto error = new ErrorDto(
                 HttpStatus.BAD_REQUEST.value(),
@@ -60,7 +59,6 @@ public class ExceptionAdvice {
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<ErrorDto> handleConstraintValidationException(EmptyResultDataAccessException erdae,
                                                                         HttpServletRequest request) {
-
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
                 "Entity doesn't exist.",
