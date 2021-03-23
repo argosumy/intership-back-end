@@ -27,7 +27,7 @@ public class AdvertisementController {
         return advertisementService.updateAdvertisement(advertisementDTO);
     }
 
-    @PatchMapping("/{id}/{status}")
+    @PutMapping("/{id}/{status}")
     public int updateAdvertisementStatus(@PathVariable int id, @PathVariable AdvertisementStatus status) {
         return advertisementService.updateAdvertisementStatus(id, status);
     }
