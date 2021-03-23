@@ -7,9 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    //TODO delete this ock when images will be implemented 'BE-ACM-003'
-    private static final String IMAGE_URL = "https://baraholka-images-store.s3-eu-west-1.amazonaws.com/users/1/homer3.jpg";
-
     public UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
@@ -19,7 +16,7 @@ public class UserMapper {
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
-        userDTO.setImageUrl(IMAGE_URL);
+        userDTO.setImageUrl(user.getImageUrl());
         return userDTO;
     }
 }
