@@ -16,12 +16,12 @@ public class UserNotificationSettingsService {
         this.userNotificationSettingsService = userNotificationSettingsService;
     }
 
-    public Optional<UserNotificationSettings> getNotificationSettingsByUserId(int userId) {
+    public UserNotificationSettings getNotificationSettingsByUserId(int userId) {
         Optional<UserNotificationSettings> userNotificationSettings = userNotificationSettingsService.getNotificationSettingsByUserId(userId);
         if (userNotificationSettings.isEmpty()) {
             throw new NotFoundByIdException(userId);
         } else {
-            return userNotificationSettings;
+            return userNotificationSettings.get();
         }
     }
 
