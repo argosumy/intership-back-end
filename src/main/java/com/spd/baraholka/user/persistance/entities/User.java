@@ -1,7 +1,5 @@
 package com.spd.baraholka.user.persistance.entities;
 
-import java.util.List;
-
 public class User {
 
     private int id;
@@ -11,7 +9,6 @@ public class User {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private List<UserAdditionalResource> additionalContactResources;
 
     public int getId() {
         return id;
