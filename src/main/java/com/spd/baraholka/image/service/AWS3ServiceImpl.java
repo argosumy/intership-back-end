@@ -31,10 +31,13 @@ public class AWS3ServiceImpl implements AWS3Service {
     @Override
     public void uploadImage(String fileName, MultipartFile image) {
         File file = convertMultiPartFileToFile(image);
-
-        amazonS3Client.putObject(
-                new PutObjectRequest(bucketName, fileName, file)
-        );
+        try {
+            amazonS3Client.putObject(
+                    new PutObjectRequest(bucketName, fileName, file)
+            );
+        } finally {
+            file.delete();
+        }
     }
 
     @Override
