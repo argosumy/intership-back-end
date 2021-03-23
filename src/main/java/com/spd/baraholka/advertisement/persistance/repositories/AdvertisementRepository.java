@@ -76,7 +76,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateStatusParameters(int id, AdvertisementStatus status) {
-        return Map.of("status", status,
+        return Map.of("status", status.toString(),
                 "statusChangeDate", Timestamp.valueOf(LocalDateTime.now()),
                 "advertisementId", id);
     }
