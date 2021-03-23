@@ -22,7 +22,7 @@ public class ImageService {
     private static final Comparator<ImageResource> COMPARATOR = Comparator.comparing(ImageResource::getPosition);
 
     public ImageService(ImageRepository repository,
-                        AWS3Service aws3Service,
+                        AWS3ServiceImpl aws3Service,
                         @Value("${amazonProperties.bucketName}") String bucketName) {
         this.repository = repository;
         this.aws3Service = aws3Service;
