@@ -41,7 +41,7 @@ build master:
   variables:
     IMAGE_TAG: latest
   only:
-    - RC/demo-1
+    - stage
 
 .deploy:
   stage: deploy
@@ -67,4 +67,4 @@ deploy stage:
   variables:
     APP_PATH: /opt/baraholka-master
   only:
-    - RC/demo-1
+    - stage
