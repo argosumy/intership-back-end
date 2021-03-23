@@ -28,7 +28,7 @@ public class ImageController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("ads/{adId}/images")
+    @PostMapping(value = "ads/{adId}/images", consumes = "multipart/form-data")
     public void saveImages(@PathVariable long adId,
                            @Size(min = 1, max = 10)
                            @RequestPart(value = "images") List<MultipartFile> images) {
@@ -37,7 +37,7 @@ public class ImageController {
         imageService.saveAll(imageResources);
     }
 
-    @PostMapping("ads/{adId}/image")
+    @PostMapping(value = "ads/{adId}/image", consumes = "multipart/form-data")
     public ImageResourceDto saveImage(@PathVariable long adId,
                                       @RequestParam(name = "isPrimary") boolean isPrimary,
                                       @Min(1) @Max(10)
