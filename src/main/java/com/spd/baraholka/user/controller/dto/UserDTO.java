@@ -32,6 +32,8 @@ public class UserDTO {
 
     private boolean isBlocked;
 
+    private String location;
+
     public int getId() {
         return id;
     }
@@ -94,5 +96,13 @@ public class UserDTO {
 
     public void setAdditionalContactResources(List<UserAdditionalResourceDTO> additionalContactResources) {
         this.additionalContactResources = additionalContactResources;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
