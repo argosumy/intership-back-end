@@ -32,6 +32,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
+    @Override
     public int updateAdvertisement(Advertisement advertisement) {
         String updateSQL = createUpdateSQL();
         Map<String, ? extends Serializable> updateParameters = createUpdateParameters(advertisement);
@@ -39,6 +40,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         return advertisement.getAdvertisementId();
     }
 
+    @Override
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
         String updateSQL = createUpdateStatusSQL();
         Map<String, ? extends Comparable<? extends Comparable<?>>> updateParameters = createUpdateStatusParameters(id, status);
