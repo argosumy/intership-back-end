@@ -2,7 +2,7 @@ package com.spd.baraholka.notification.model;
 
 import java.util.Date;
 
-public class NotificationForDataBase {
+public class Notification {
     private int id;
     private String description;
     private int recipient;

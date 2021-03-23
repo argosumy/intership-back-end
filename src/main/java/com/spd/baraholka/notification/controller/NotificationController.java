@@ -1,7 +1,7 @@
 package com.spd.baraholka.notification.controller;
 
 import com.spd.baraholka.notification.DAO.NotificationDAO;
-import com.spd.baraholka.notification.enumes.EventTypes;
+import com.spd.baraholka.notification.enums.EventTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import java.util.Map;

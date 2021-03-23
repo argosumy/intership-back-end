@@ -1,8 +1,8 @@
 package com.spd.baraholka.notification.DAO.factory;
 
 import com.spd.baraholka.notification.DAO.SQLQueries;
-import com.spd.baraholka.notification.enumes.EventTypes;
-import com.spd.baraholka.notification.enumes.NotificationStatus;
+import com.spd.baraholka.notification.enums.EventTypes;
+import com.spd.baraholka.notification.enums.NotificationStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Component;
