@@ -1,4 +1,4 @@
-package com.spd.baraholka.image.validation;
+package com.spd.baraholka.config.exceptions;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

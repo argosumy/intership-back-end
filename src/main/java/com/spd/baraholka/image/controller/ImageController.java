@@ -4,6 +4,8 @@ import com.spd.baraholka.image.controller.dto.ImageResourceDto;
 import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.image.service.ImageService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -29,10 +31,15 @@ public class ImageController {
     }
 
     @ApiOperation(value = "Upload images of an advertisement to the server", consumes = "multipart/form-data")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Images are successfully uploaded"),
+            @ApiResponse(code = 400, message = "Can't process the request. Images number min = 1, max = 10"),
+            @ApiResponse(code = 400, message = "Maximum upload size exceeded; The image exceeds its maximum permitted size of 5 Megabytes.")
+    })
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "ads/{adId}/images", consumes = "multipart/form-data")
     public void saveImages(@PathVariable long adId,
-                           @Size(min = 1, max = 10)
+                           @Size(min = 1, max = 10, message = "Can't process the request. Images number min = 1, max = 10")
                            @RequestPart(value = "images") List<MultipartFile> images) {
         List<ImageResource> imageResources = toDomain(adId, images);
 
