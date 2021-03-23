@@ -2,23 +2,22 @@ package com.spd.baraholka.login;
 
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.entities.User;
-import com.spd.baraholka.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class UserPrincipal implements OAuth2User, UserDetails {
 
-    private int id;
-    private String email;
-    private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final int id;
+    private final String email;
+    private final String password;
+    private final Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
 
     private String avatar;
@@ -28,15 +27,8 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private List<String> resourceLinks;
+    private List<UserAdditionalResource> resourceLinks;
     private Set<Role> roles;
-
-//    private transient UserService userService;
-
-//    @Autowired
-//    public UserPrincipal(UserService userService) {
-//        this.userService = userService;
-//    }
 
     public UserPrincipal(int id, String email, String password, Collection<? extends GrantedAuthority> authorities,
                          Map<String, Object> attributes) {
@@ -70,6 +62,42 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         return id;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public List<UserAdditionalResource> getResourceLinks() {
+        return resourceLinks;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;
@@ -77,6 +105,42 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
     public void setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
+    public void setResourceLinks(List<UserAdditionalResource> resourceLinks) {
+        this.resourceLinks = resourceLinks;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -112,24 +176,17 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     }
 
     public static UserPrincipal create(User user) {
-//        List<GrantedAuthority> authorities = Collections.
-//                singletonList(new SimpleGrantedAuthority("ROLE_USER"));
         UserPrincipal principal = new UserPrincipal(user.getId(), user.getEmail(), user.getPassword(), user.getAuthorities());
-        principal.firstName = user.getFirstName();
-        principal.lastName = user.getLastName();
-        principal.avatar = user.getAvatar();
-        principal.location = user.getLocation();
-        principal.position = user.getPosition();
-        principal.phoneNumber = user.getPhoneNumber();
-        principal.roles = user.getRoles();
+        principal.setFirstName(user.getFirstName());
+        principal.setLastName(user.getLastName());
+        principal.setAvatar(user.getAvatar());
+        principal.setLocation(user.getLocation());
+        principal.setPosition(user.getPosition());
+        principal.setPhoneNumber(user.getPhoneNumber());
+        principal.setRoles(user.getRoles());
+        principal.setResourceLinks(user.getResourceLinks());
+        principal.setBlocked(user.isBlocked());
         return principal;
-
-//        return new UserPrincipal(
-//                user.getId(),
-//                user.getEmail(),
-//                user.getPassword(),
-//                authorities
-//        );
     }
 
     public static UserPrincipal create(User user, Map<String, Object> attributes) {

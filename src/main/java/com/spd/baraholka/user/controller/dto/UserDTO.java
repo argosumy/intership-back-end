@@ -1,9 +1,13 @@
 package com.spd.baraholka.user.controller.dto;
 
+import com.spd.baraholka.role.Role;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class UserDTO {
 
@@ -24,6 +28,14 @@ public class UserDTO {
     private String position;
 
     @NotEmpty
+    @Size(max = 50)
+    private String location;
+
+    @NotEmpty
+    @Size(max = 200)
+    private String avatar;
+
+    @NotEmpty
     @Size(max = 20)
     private String phoneNumber;
 
@@ -31,6 +43,9 @@ public class UserDTO {
     private List<UserAdditionalResourceDTO> additionalContactResources;
 
     private boolean isBlocked;
+
+    @NotEmpty
+    private Set<Role> roles;
 
     public int getId() {
         return id;
@@ -72,6 +87,22 @@ public class UserDTO {
         this.position = position;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -94,5 +125,13 @@ public class UserDTO {
 
     public void setAdditionalContactResources(List<UserAdditionalResourceDTO> additionalContactResources) {
         this.additionalContactResources = additionalContactResources;
+    }
+
+    public Set<Role> getRoles() {
+        return Collections.unmodifiableSet(roles);
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

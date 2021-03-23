@@ -9,9 +9,7 @@ import java.util.*;
 
 import static com.spd.baraholka.role.Role.ROLE_USER;
 
-public class User
-//        extends org.springframework.security.core.userdetails.User
-        implements UserDetails {
+public class User implements UserDetails {
 
     private int id;
     private String avatar;
@@ -22,22 +20,13 @@ public class User
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private List<String> resourceLinks;
+    private List<UserAdditionalResource> resourceLinks;
     private Set<Role> roles;
 
     public User() {
         this.roles = new HashSet<>();
         this.roles.add(ROLE_USER);
     }
-
-    //    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-//        super(username, password, authorities);
-//    }
-//
-//    public User(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
-//                Collection<? extends GrantedAuthority> authorities) {
-//        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//    }
 
     public int getId() {
         return id;
@@ -111,11 +100,11 @@ public class User
         isBlocked = blocked;
     }
 
-    public List<String> getResourceLinks() {
+    public List<UserAdditionalResource> getResourceLinks() {
         return resourceLinks;
     }
 
-    public void setResourceLinks(List<String> resourceLinks) {
+    public void setResourceLinks(List<UserAdditionalResource> resourceLinks) {
         this.resourceLinks = resourceLinks;
     }
 

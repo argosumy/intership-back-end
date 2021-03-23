@@ -15,8 +15,12 @@ public class UserMapper {
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());
         userDTO.setPosition(user.getPosition());
+        userDTO.setLocation(user.getLocation());
+        userDTO.setAvatar(user.getAvatar());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
+        userDTO.setRoles(user.getRoles());
+//        userDTO.setAdditionalContactResources(user.getResourceLinks());
         return userDTO;
     }
 

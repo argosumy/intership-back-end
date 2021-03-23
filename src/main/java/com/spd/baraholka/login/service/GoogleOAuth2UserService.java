@@ -3,14 +3,10 @@ package com.spd.baraholka.login.service;
 import com.spd.baraholka.config.exceptions.OAuth2ProcessingException;
 import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
-//import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -24,7 +20,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@Qualifier("GoogleOAuth2Service")
 public class GoogleOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final UserService userService;
@@ -43,13 +38,11 @@ public class GoogleOAuth2UserService extends DefaultOAuth2UserService implements
         this.userService = userService;
     }
 
-//    @Override
     public OAuth2UserDTO getOAuth2UserDTO() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return getOAuth2UserDTO(authentication);
     }
 
-//    @Override
     public OAuth2UserDTO getOAuth2UserDTO(OAuth2User oAuth2User) {
         String email = oAuth2User.getAttributes().get(EMAIL_CLAIM_ATTRIBUTE).toString();
         String firstName = oAuth2User.getAttributes().get(FIRST_NAME_CLAIM_ATTRIBUTE).toString();
@@ -58,7 +51,6 @@ public class GoogleOAuth2UserService extends DefaultOAuth2UserService implements
         return new OAuth2UserDTO(email, firstName, lastName, avatar);
     }
 
-//    @Override
     public OAuth2UserDTO getOAuth2UserDTO(Authentication authentication) {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         return getOAuth2UserDTO(oAuth2User);
@@ -67,14 +59,7 @@ public class GoogleOAuth2UserService extends DefaultOAuth2UserService implements
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        try {
-            return processOAuth2User(userRequest, oAuth2User);
-        } catch (AuthenticationException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
-            throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
-        }
+        return processOAuth2User(userRequest, oAuth2User);
     }
 
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
@@ -92,7 +77,6 @@ public class GoogleOAuth2UserService extends DefaultOAuth2UserService implements
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 
-
     private User registerNewUser(OAuth2UserDTO oAuth2UserDTO) {
         if (!isEmailDomainInAllowedDomains(oAuth2UserDTO.getEmail(), allowedDomains)) {
             throw new OAuth2ProcessingException(DOMAIN_NOT_ALLOWED);
@@ -108,17 +92,4 @@ public class GoogleOAuth2UserService extends DefaultOAuth2UserService implements
         }
         return isDomainAllowed;
     }
-
-//    private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserDTO oAuth2UserDTO) {
-//        User user = new User();
-//
-//
-//
-//        user.setProvider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
-//        user.setProviderId(oAuth2UserDTO.getId());
-//        user.setName(oAuth2UserDTO.getName());
-//        user.setEmail(oAuth2UserDTO.getEmail());
-//        user.setImageUrl(oAuth2UserDTO.getImageUrl());
-//        return userRepository.save(user);
-//    }
 }

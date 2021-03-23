@@ -13,9 +13,6 @@ import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -62,7 +59,17 @@ public class UserService implements UserDetailsService {
         UserDTO userDTO = userMapper.convertToDTO(user);
         List<UserAdditionalResourceDTO> additionalResourceDTO = resourceMapper.convertToDTOList(additionalResources);
         userDTO.setAdditionalContactResources(additionalResourceDTO);
+        Set<Role> roles = findRolesByUserId(user.getId());
+        userDTO.setRoles(roles);
         return userDTO;
+    }
+
+    private User collectUser(User user) {
+        Set<Role> roles = findRolesByUserId(user.getId());
+        user.setRoles(roles);
+        List<UserAdditionalResource> additionalResources = persistenceResourceService.selectUserAdditionalResources(user.getId());
+        user.setResourceLinks(additionalResources);
+        return user;
     }
 
     public void create(User user) {
@@ -84,9 +91,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByEmail(username);
-        Set<Role> authorities = findRolesByUserId(user.getId());
-        user.setRoles(authorities);
-        return user;
+        return collectUser(user);
     }
 
     public Set<Role> findRolesByUserId(int id) {
@@ -96,9 +101,7 @@ public class UserService implements UserDetailsService {
     public User findByEmail(String email) {
         Optional<User> optionalUser = persistenceUserService.findByEmail(email);
         User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
-        Set<Role> roles = findRolesByUserId(user.getId());
-        user.setRoles(roles);
-        return user;
+        return collectUser(user);
     }
 
     private List<GrantedAuthority> buildUserAuthority(Set<Role> roles) {
@@ -111,9 +114,6 @@ public class UserService implements UserDetailsService {
 
     public User registerNewUser(OAuth2UserDTO oAuth2UserDTO) {
         User user = new User();
-//        if (!isEmailDomainInAllowedDomains(oAuth2UserDTO.getEmail(), allowedDomains)) {
-//            throw new BadCredentialsException(DOMAIN_NOT_ALLOWED);
-//        }
         if (!existsByEmail(oAuth2UserDTO.getEmail())) {
             user = convertFromOAuth(oAuth2UserDTO);
             if (count() == 0) {
@@ -126,7 +126,12 @@ public class UserService implements UserDetailsService {
 
     public User getCurrentUser() {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return findByEmail(userPrincipal.getUsername());
+    }
+
+    public UserDTO getCurrentUserDTO() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = findByEmail(userPrincipal.getUsername());
-        return user;
+        return collectUserDTO(user);
     }
 }
