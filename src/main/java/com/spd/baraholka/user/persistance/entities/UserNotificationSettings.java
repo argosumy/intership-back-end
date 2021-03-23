@@ -18,7 +18,7 @@ public class UserNotificationSettings {
         this.id = id;
     }
 
-    public int isUserId() {
+    public int getUserId() {
         return userId;
     }
 

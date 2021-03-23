@@ -4,10 +4,13 @@ import com.spd.baraholka.user.persistance.PersistenceUserNotificationSettingsSer
 import com.spd.baraholka.user.persistance.entities.UserNotificationSettings;
 import com.spd.baraholka.user.persistance.mappers.UserNotificationSettingsRowMapper;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -36,6 +39,31 @@ public class UserNotificationSettingsRepository implements PersistenceUserNotifi
 
     @Override
     public int saveNotificationSettings(UserNotificationSettings userNotificationSettings) {
-        return jdbcTemplate.update("INSERT INTO users_settings()");
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource parameterSource = getInsertedParameters(userNotificationSettings);
+        jdbcTemplate.update(getInsertNotificationSettingsSql(), parameterSource, keyHolder);
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
+
+    private String getInsertNotificationSettingsSql() {
+        return "INSERT INTO users_settings(" +
+                "user_id, " +
+                "new_ads_notification, " +
+                "new_comments_to_my_ad_notification, " +
+                "replies_to_my_comments_notification, " +
+                "mentions_in_thread_notification, " +
+                "wishlist_update_notification " +
+                "VALUES(:user_id, :newComment, :reply, :mention, :wishlist))";
+    }
+
+    private MapSqlParameterSource getInsertedParameters(UserNotificationSettings userNotificationSettings) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("user_id", userNotificationSettings.getUserId());
+        namedParameters.addValue("newComment", userNotificationSettings.isNewAdNotification());
+        namedParameters.addValue("reply", userNotificationSettings.isReplyToCommentNotification());
+        namedParameters.addValue("mention", userNotificationSettings.isMentionInNotificationThread());
+        namedParameters.addValue("wishlist", userNotificationSettings.isWishlistUpdateNotification());
+        return namedParameters;
+    }
+
 }
