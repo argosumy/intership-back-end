@@ -1,7 +1,7 @@
 package com.spd.baraholka.image.controller;
 
-import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.image.controller.dto.ImageResourceDto;
+import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.image.service.ImageService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
