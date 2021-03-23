@@ -20,6 +20,7 @@ public class UserRowMapper implements RowMapper<User> {
         user.setPosition(rs.getString("position"));
         user.setPhoneNumber(rs.getString("phone_number"));
         user.setBlocked(rs.getBoolean("is_blocked"));
+        user.setLocation(rs.getString("location"));
         return user;
     }
 }

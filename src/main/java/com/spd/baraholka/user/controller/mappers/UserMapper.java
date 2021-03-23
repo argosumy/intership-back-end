@@ -16,6 +16,7 @@ public class UserMapper {
         user.setPosition(userDTO.getPosition());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setBlocked(userDTO.isBlocked());
+        user.setLocation(userDTO.getLocation());
         return user;
     }
 
@@ -28,6 +29,7 @@ public class UserMapper {
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
+        userDTO.setLocation(user.getLocation());
         return userDTO;
     }
 }
