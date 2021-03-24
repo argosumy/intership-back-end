@@ -22,11 +22,11 @@ public class UserGeneralSettingRepository implements PersistenceUserGeneralSetti
         String updateSQL = createUpdateSQL();
         Map<String, ? extends Serializable> updateParameters = createUpdateUserGeneralSettingsParameters(userGeneralSetting);
         jdbcTemplate.update(updateSQL, updateParameters);
-        return userGeneralSetting.getId();
+        return userGeneralSetting.getUserId();
     }
 
     private Map<String, ? extends Serializable> createUpdateUserGeneralSettingsParameters(UserGeneralSetting userGeneralSetting) {
-        return Map.of("openAdsInNewTab", userGeneralSetting.isOpenAdsInNewTab(), "id", userGeneralSetting.getId());
+        return Map.of("openAdsInNewTab", userGeneralSetting.isOpenAdsInNewTab(), "id", userGeneralSetting.getUserId());
     }
 
     private String createUpdateSQL() {
