@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Disabled
@@ -50,8 +52,8 @@ class UserRepositoryImplTest {
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnTrueWhenUserWithEmailExists() {
         String existingEmail = "existing@email.com";
-        boolean exists = persistenceUserService.existsByEmail(existingEmail);
-        assertTrue(exists);
+        Optional<Boolean> exists = persistenceUserService.existsByEmail(existingEmail);
+        assertTrue(exists.orElse(false));
     }
 
     @Test
@@ -59,15 +61,15 @@ class UserRepositoryImplTest {
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnFalseWhenUserWithEmailDoesntExist() {
         String newEmail = "new@email.com";
-        boolean exists = persistenceUserService.existsByEmail(newEmail);
-        assertFalse(exists);
+        Optional<Boolean> exists = persistenceUserService.existsByEmail(newEmail);
+        assertFalse(exists.orElse(false));
     }
 
     @Test
     @DataSet(value = "/dbunit/users.yml", strategy = SeedStrategy.CLEAN_INSERT)
     void shouldReturnNumberOfAllUsers() {
-        int numberOfUsers = persistenceUserService.count();
-        assertEquals(3, numberOfUsers);
+        Optional<Integer> numberOfUsers = persistenceUserService.count();
+        assertEquals(3, numberOfUsers.orElse(0));
     }
 
     @Test
@@ -75,7 +77,8 @@ class UserRepositoryImplTest {
     void shouldCreateNewUser() {
         User dummyUser = initDummyUser();
         assertEquals(0, dummyUser.getId());
-        assertFalse(persistenceUserService.existsByEmail(dummyUser.getEmail()));
+        Optional<Boolean> exists = persistenceUserService.existsByEmail(dummyUser.getEmail());
+        assertFalse(exists.orElse(false));
 
         User createdUser = persistenceUserService.create(dummyUser);
 
@@ -87,6 +90,6 @@ class UserRepositoryImplTest {
         assertEquals(dummyUser.getLocation(), createdUser.getLocation());
         assertEquals(dummyUser.getPosition(), createdUser.getPosition());
         assertEquals(dummyUser.getPhoneNumber(), createdUser.getPhoneNumber());
-        assertTrue(persistenceUserService.existsByEmail(dummyUser.getEmail()));
+        assertTrue(exists.orElse(false));
     }
 }
