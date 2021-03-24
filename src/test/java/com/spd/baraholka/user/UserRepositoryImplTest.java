@@ -31,12 +31,12 @@ class UserRepositoryImplTest {
         String dummyEmail = "mock@email.com";
         String dummyFirstName = "Mock Given Name";
         String dummyLastName = "Mock Family Name";
-        String dummyAvatar = "Mock Picture URL";
+        String dummyImageUrl = "Mock Picture URL";
         User dummyUser = new User();
         dummyUser.setFirstName(dummyFirstName);
         dummyUser.setLastName(dummyLastName);
         dummyUser.setEmail(dummyEmail);
-        dummyUser.setAvatar(dummyAvatar);
+        dummyUser.setImageUrl(dummyImageUrl);
         dummyUser.setLocation("");
         dummyUser.setPosition("");
         dummyUser.setPhoneNumber("");
@@ -81,7 +81,7 @@ class UserRepositoryImplTest {
         assertEquals(dummyUser.getFirstName(), createdUser.getFirstName());
         assertEquals(dummyUser.getLastName(), createdUser.getLastName());
         assertEquals(dummyUser.getEmail(), createdUser.getEmail());
-        assertEquals(dummyUser.getAvatar(), createdUser.getAvatar());
+        assertEquals(dummyUser.getImageUrl(), createdUser.getImageUrl());
         assertEquals(dummyUser.getLocation(), createdUser.getLocation());
         assertEquals(dummyUser.getPosition(), createdUser.getPosition());
         assertEquals(dummyUser.getPhoneNumber(), createdUser.getPhoneNumber());

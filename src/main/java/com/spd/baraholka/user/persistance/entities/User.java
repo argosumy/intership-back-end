@@ -15,6 +15,12 @@ public class User {
     private String phoneNumber;
     private boolean isBlocked;
     private String imageUrl;
+    private final Set<Role> roles;
+
+    public User() {
+        this.roles = new HashSet<>();
+        roles.add(Role.USER);
+    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -22,13 +28,6 @@ public class User {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-    private List<String> resourceLinks;
-    private final Set<Role> roles;
-
-    public User() {
-        this.roles = new HashSet<>();
-        roles.add(Role.USER);
     }
 
     public int getId() {
@@ -93,5 +92,13 @@ public class User {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public Set<Role> getRoles() {
+        return Collections.unmodifiableSet(roles);
+    }
+
+    public boolean grantRole(Role role) {
+        return roles.add(role);
     }
 }

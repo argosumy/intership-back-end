@@ -44,12 +44,12 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public User create(User user) {
-        final String sql = "INSERT INTO users (avatar, first_name, last_name, e_mail, location, phone_number, position) " +
+        final String sql = "INSERT INTO users (image_url, first_name, last_name, e_mail, location, phone_number, position) " +
                 "VALUES (:avatar, :first_name, :last_name, :email, :location, :phone_number, :position) ";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("avatar", user.getAvatar())
+                .addValue("image_url", user.getImageUrl())
                 .addValue("first_name", user.getFirstName())
                 .addValue("last_name", user.getLastName())
                 .addValue("email", user.getEmail())
