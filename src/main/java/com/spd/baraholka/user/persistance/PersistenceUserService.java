@@ -10,9 +10,9 @@ public interface PersistenceUserService {
 
     Optional<User> selectUserById(int id);
 
-    boolean existsByEmail(String email);
+    Optional<Boolean> existsByEmail(String email);
 
-    int count();
+    Optional<Integer> count();
 
     int updateUserBlockedStatus(int id, boolean isBlocked);
 }
