@@ -1,5 +1,10 @@
 package com.spd.baraholka.characteristic;
 
+import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
+import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
+import com.spd.baraholka.characteristic.persistance.CharacteristicService;
+import com.spd.baraholka.characteristic.service.CharacteristicServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

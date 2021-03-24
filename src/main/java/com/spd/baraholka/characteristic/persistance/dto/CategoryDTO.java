@@ -1,10 +1,15 @@
-package com.spd.baraholka.characteristic;
+package com.spd.baraholka.characteristic.persistance.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
 public class CategoryDTO {
+    @NotNull
+    @Size(max = 100)
     private final String categoryName;
+    @NotNull
     private final Set<String> characteristics;
 
     public CategoryDTO(String categoryName, Set<String> characteristics) {

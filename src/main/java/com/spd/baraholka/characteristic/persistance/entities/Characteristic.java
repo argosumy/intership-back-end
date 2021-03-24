@@ -1,4 +1,4 @@
-package com.spd.baraholka.characteristic;
+package com.spd.baraholka.characteristic.persistance.entities;
 
 import java.util.Objects;
 

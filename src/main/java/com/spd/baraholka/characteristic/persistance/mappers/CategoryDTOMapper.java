@@ -1,5 +1,6 @@
-package com.spd.baraholka.characteristic;
+package com.spd.baraholka.characteristic.persistance.mappers;
 
+import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

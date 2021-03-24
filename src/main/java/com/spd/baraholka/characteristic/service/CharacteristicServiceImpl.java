@@ -1,5 +1,9 @@
-package com.spd.baraholka.characteristic;
+package com.spd.baraholka.characteristic.service;
 
+import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
+import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
+import com.spd.baraholka.characteristic.persistance.CharacteristicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

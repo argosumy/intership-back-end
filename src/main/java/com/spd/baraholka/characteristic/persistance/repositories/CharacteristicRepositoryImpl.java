@@ -1,5 +1,9 @@
-package com.spd.baraholka.characteristic;
+package com.spd.baraholka.characteristic.persistance.repositories;
 
+import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
+import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
+import com.spd.baraholka.characteristic.persistance.mappers.CategoryDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
