@@ -7,7 +7,13 @@ import java.util.List;
 
 public interface PersistenceUserService {
 
+    User create(User user);
+
     Optional<User> selectUserById(int id);
+
+    boolean existsByEmail(String email);
+
+    int count();
 
     List<User> selectAllUsers();
 }
