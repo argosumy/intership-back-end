@@ -16,8 +16,7 @@ import java.util.Map;
 
 @SuppressWarnings("checkstyle:WhitespaceAround")
 @Component
-public class NotificationRepositoryCommentToMyComment implements NotificationRepository {
-    @Override
+public class NotificationRepositoryCommentToMyComment {
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         int idComment = Integer.parseInt("idComment");
@@ -39,7 +38,6 @@ public class NotificationRepositoryCommentToMyComment implements NotificationRep
         template.update(SQLQueries.SAVE_NOTIFICATION_NEW_COMMENT_TO_MY_COMMENT, ps);
     }
 
-    @Override
     public EventType getType() {
         return EventType.NEW_COMMENT_ON_COMMENT;
     }

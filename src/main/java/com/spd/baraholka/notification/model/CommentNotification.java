@@ -3,55 +3,29 @@ package com.spd.baraholka.notification.model;
 import java.util.List;
 
 //New Comments, new Advertisement, Changes Advertisement
-public class CommentNotification extends BaseNotification implements Notification {
-//    private String nameAd;
-    private String sendToOwner;
-    private long price;
-    private String currency;
+public class CommentNotification extends BaseNotification {
+
+    private String ownerName;
     private String mainImage;
     private List<String> images;
-    private String linkAd;
-    private String nameWriter;
-    private String CommentLink;
+    private String adLink;
+    private String writerName;
+    private String commentLink;
 
     public String getCommentLink() {
-        return CommentLink;
+        return commentLink;
     }
 
     public void setCommentLink(String commentLink) {
-        CommentLink = commentLink;
+        this.commentLink = commentLink;
     }
 
-    //    public String getNameAd() {
-//        return nameAd;
-//    }
-//
-//    public void setNameAd(String nameAd) {
-//        this.nameAd = nameAd;
-//    }
-
-    public String getSendToOwner() {
-        return sendToOwner;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setSendToOwner(String sendToOwner) {
-        this.sendToOwner = sendToOwner;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public String getMainImage() {
@@ -70,19 +44,19 @@ public class CommentNotification extends BaseNotification implements Notificatio
         this.images = images;
     }
 
-    public String getLinkAd() {
-        return linkAd;
+    public String getAdLink() {
+        return adLink;
     }
 
-    public void setLinkAd(String linkAd) {
-        this.linkAd = linkAd;
+    public void setAdLink(String adLink) {
+        this.adLink = adLink;
     }
 
-    public String getNameWriter() {
-        return nameWriter;
+    public String getWriterName() {
+        return writerName;
     }
 
-    public void setNameWriter(String nameWriter) {
-        this.nameWriter = nameWriter;
+    public void setWriterName(String writerName) {
+        this.writerName = writerName;
     }
 }

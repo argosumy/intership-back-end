@@ -16,5 +16,7 @@ public interface PersistenceAdvertisementService {
 
     List<Advertisement> getAllActive();
 
-     Optional<Advertisement> findDraftAdById(int id);
+    Optional<Advertisement> findDraftAdById(int id);
+
+    Optional<Advertisement> findAdById(int id);
 }

@@ -65,7 +65,7 @@
                 <div class="main-image">
                     <img
                         class="big-image"
-                        src="${main_image}"
+                        src="${mainImage}"
                         alt=""
                     />
                 </div>
@@ -83,16 +83,16 @@
                 ${description}
             </p>
 
-            <a class="btn" href="${link_ad}">View Details</a>
-            <a class="btn" href="mailto:${send_to_owner}?subject=RE: ${title}`"
+            <a class="btn" href="${adLink}">View Details</a>
+            <a class="btn" href="mailto:${sendTo}?subject=RE: ${title}`"
                 >Contact seller</a
             >
 
             <p class="unsubscribe">
-                You recived this message because you are subscribed to the
+                You received this message because you are subscribed to the
                 Google Groups "Baraholka" group. To unsubscribe from this group
                 and stop receiving emails from it, you can turn off it in
-                <a class="profile-link" href="${profile_link}">Your profile</a> settings
+                <a class="profile-link" href="${profileLink}">Your profile</a> settings
             </p>
         </div>
         ​ ​

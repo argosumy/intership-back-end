@@ -39,14 +39,14 @@
     <body style="margin: 0; padding: 0">
         <div class="container">
             <p class="description">
-                User ${writer} post new comment <#if ad??> in <a href="${ad}">Your ad</a></#if>
+                User ${writer!rrr} post new comment <#if adLink??> in <a href="${adLink}">Your ad</a></#if>
             </p>
 
             <p class="subscribe">
-                You recived this message because you are subscribed to the
+                You received this message because you are subscribed to the
                 Google Groups "Baraholka" group. To unsubscribe from this group
                 and stop receiving emails from it, you can turn off it in
-                <a class="profile-link" href="${link_profile}">Your profile</a> settings
+                <a class="profile-link" href="${profileLink}">Your profile</a> settings
             </p>
         </div>
         ​ ​

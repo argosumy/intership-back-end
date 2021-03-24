@@ -39,17 +39,17 @@
     <body style="margin: 0; padding: 0">
         <div class="container">
             <h2 class="title">
-                Your profile was blocked by moderator till ${block_ends}.
+                Your profile was blocked by moderator till ${blockEnd}.
             </h2>
             <p class="description">
                 Block reason: ${reason}
             </p>
 
             <p class="unsubscribe">
-                You recived this message because you are subscribed to the
+                You received this message because you are subscribed to the
                 Google Groups "Baraholka" group. To unsubscribe from this group
                 and stop receiving emails from it, you can turn off it in
-                <a class="profile-link" href="${profile_link}">Your profile</a> settings
+                <a class="profile-link" href="${profileLink}">Your profile</a> settings
             </p>
         </div>
         ​ ​

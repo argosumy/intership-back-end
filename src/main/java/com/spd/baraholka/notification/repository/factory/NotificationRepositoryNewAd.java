@@ -16,14 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class NotificationRepositoryNewAd implements NotificationRepository {
+public class NotificationRepositoryNewAd  {
 
-    @Override
     public EventType getType() {
         return EventType.NEW_ADVERTISEMENT;
     }
 
-    @Override
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         String category = args.get("category");

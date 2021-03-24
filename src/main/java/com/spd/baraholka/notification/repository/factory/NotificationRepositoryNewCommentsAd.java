@@ -15,8 +15,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Component
-public class NotificationRepositoryNewCommentsAd implements NotificationRepository {
-    @Override
+public class NotificationRepositoryNewCommentsAd {
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         int recipientId = template.queryForObject(SQLQueries.GET_USER_ID_TO_SEND_ACTION_AD, Integer.class, args.get("adId"));
@@ -39,7 +38,6 @@ public class NotificationRepositoryNewCommentsAd implements NotificationReposito
         template.update(SQLQueries.SAVE_NOTIFICATION_COMMENT_TO_AD, ps);
     }
 
-    @Override
     public EventType getType() {
         return EventType.NEW_ADVERTISEMENT_COMMENT;
     }

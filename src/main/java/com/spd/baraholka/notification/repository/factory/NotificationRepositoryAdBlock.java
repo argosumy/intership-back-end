@@ -13,8 +13,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Component
-public class NotificationRepositoryAdBlock implements NotificationRepository {
-    @Override
+public class NotificationRepositoryAdBlock  {
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         String sqlInsert = SQLQueries.SAVE_NOTIFICATION_AD;
@@ -35,7 +34,6 @@ public class NotificationRepositoryAdBlock implements NotificationRepository {
         template.update(sqlInsert, ps);
     }
 
-    @Override
     public EventType getType() {
         return EventType.ADVERTISEMENT_BLOCK;
     }

@@ -39,14 +39,14 @@
     <body style="margin: 0; padding: 0">
         <div class="container">
             <p class="description">
-                <a href="${link_ad}">Ad from your wishlist</a> was ${reason}
+                <a href="${adLink}">Ad from your wishlist</a> was ${reason}
             </p>
 
             <p class="unsubscribe">
-                You recived this message because you are subscribed to the
+                You received this message because you are subscribed to the
                 Google Groups "Baraholka" group. To unsubscribe from this group
                 and stop receiving emails from it, you can turn off it in
-                <a class="profile-link" href="${link_profile}">Your profile</a> settings
+                <a class="profile-link" href="${profileLink}">Your profile</a> settings
             </p>
         </div>
         ​ ​

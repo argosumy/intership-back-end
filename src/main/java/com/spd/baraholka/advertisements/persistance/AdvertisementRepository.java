@@ -155,4 +155,16 @@ public class AdvertisementRepository {
             return Optional.empty();
         }
     }
+
+    public Optional<Advertisement> findAdById(int id) {
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(
+                    "SELECT * FROM advertisements WHERE id=:id",
+                    Map.of("id", id),
+                    advertisementRowMapper
+            ));
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
+    }
 }

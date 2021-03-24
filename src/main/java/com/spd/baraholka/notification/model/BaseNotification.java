@@ -1,23 +1,21 @@
 package com.spd.baraholka.notification.model;
 
-import java.time.LocalDateTime;
+import com.spd.baraholka.notification.enums.NotificationStatus;
 
 public abstract class BaseNotification {
     private String subject;
     private String description;
     private String sendTo;
-    private String status;
-//    private String event;
-    private String nameAd;
-//    private LocalDateTime date;
+    private NotificationStatus status;
+    private String adName;
     private String userProfileLink;
 
-    public String getNameAd() {
-        return nameAd;
+    public String getAdName() {
+        return adName;
     }
 
-    public void setNameAd(String nameAd) {
-        this.nameAd = nameAd;
+    public void setAdName(String adName) {
+        this.adName = adName;
     }
 
     public String getSubject() {
@@ -44,28 +42,12 @@ public abstract class BaseNotification {
         this.sendTo = sendTo;
     }
 
-    public String getStatus() {
+    public NotificationStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(NotificationStatus status) {
         this.status = status;
-    }
-
-    public String getEvent() {
-        return event;
-    }
-
-    public void setEvent(String event) {
-        this.event = event;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
     }
 
     public String getUserProfileLink() {

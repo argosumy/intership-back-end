@@ -2,27 +2,19 @@ package com.spd.baraholka.notification.model;
 
 import java.time.LocalDateTime;
 
-public class BanBlockNotification extends BaseNotification implements Notification {
-    private LocalDateTime dateBanNotification;
-//    private String nameAd;
+public class BanBlockNotification extends BaseNotification {
+    private LocalDateTime banDateNotification;
 
     public BanBlockNotification() {
         super();
     }
 
-    public LocalDateTime getDateBanNotification() {
-        return dateBanNotification;
+    public LocalDateTime getBanDateNotification() {
+        return banDateNotification;
     }
 
-    public void setDateBanNotification(LocalDateTime dateBanNotification) {
-        this.dateBanNotification = dateBanNotification;
+    public void setBanDateNotification(LocalDateTime banDateNotification) {
+        this.banDateNotification = banDateNotification;
     }
 
-//    public String getNameAd() {
-//        return nameAd;
-//    }
-//
-//    public void setNameAd(String nameAd) {
-//        this.nameAd = nameAd;
-//    }
 }

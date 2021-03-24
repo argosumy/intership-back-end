@@ -13,14 +13,12 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Component
-public class NotificationRepositoryAcBan implements NotificationRepository {
+public class NotificationRepositoryAcBan  {
 
-    @Override
     public EventType getType() {
         return EventType.ACCOUNT_BAN;
     }
 
-    @Override
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         String sqlInsert = SQLQueries.SAVE_NOTIFICATION_BAN;

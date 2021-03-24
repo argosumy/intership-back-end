@@ -70,6 +70,16 @@ public class AdvertisementService {
         return result;
     }
 
+    public Optional<Advertisement> findAdById(int id) {
+        Optional<Advertisement> result = persistenceAdvertisementService.findAdById(id);
+
+        if (result.isEmpty()) {
+            logger.warn("IN findAdById - no advertisement found by id: {}", id);
+        }
+        logger.info("IN findAdById - advertisement: {} found by id: {}", result, id);
+        return result;
+    }
+
     public int editPublicationDate(Advertisement advertisement, String publicationDate) {
         advertisement.setPublicationDate(LocalDateTime.parse(publicationDate));
         return persistenceAdvertisementService.updateAdvertisement(advertisement);

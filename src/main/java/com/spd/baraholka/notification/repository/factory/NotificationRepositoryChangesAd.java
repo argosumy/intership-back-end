@@ -15,14 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class NotificationRepositoryChangesAd implements NotificationRepository {
+public class NotificationRepositoryChangesAd {
 
-    @Override
     public EventType getType() {
         return EventType.ADVERTISEMENT_CHANGE;
     }
 
-    @Override
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         String sqlInsert = SQLQueries.SAVE_NOTIFICATION_CHANGES_AD;
