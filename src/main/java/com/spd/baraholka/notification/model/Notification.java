@@ -1,8 +1,9 @@
 package com.spd.baraholka.notification.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Notification {
+
     private int id;
     private String description;
     private int recipient;
@@ -10,7 +11,7 @@ public class Notification {
     private int advertisement;
     private int status;
     private int event;
-    private Date date;
+    private LocalDateTime localDateTime;
 
     public int getId() {
         return id;
@@ -68,11 +69,11 @@ public class Notification {
         this.event = event;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }

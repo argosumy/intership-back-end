@@ -1,7 +1,8 @@
-package com.spd.baraholka.notification.DAO.factory;
+package com.spd.baraholka.notification.repository.factory;
 
-import com.spd.baraholka.notification.DAO.SQLQueries;
-import com.spd.baraholka.notification.enums.EventTypes;
+import com.spd.baraholka.notification.repository.NotificationRepository;
+import com.spd.baraholka.notification.repository.SQLQueries;
+import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.enums.NotificationStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -12,17 +13,18 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Component
-public class SaveNotificationAcBan implements SaveNotification {
-@Override
-public EventTypes getType() {
-        return EventTypes.ACCOUNT_BAN;
+public class NotificationRepositoryAcBan implements NotificationRepository {
+
+    @Override
+    public EventType getType() {
+        return EventType.ACCOUNT_BAN;
     }
 
     @Override
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         String sqlInsert = SQLQueries.SAVE_NOTIFICATION_BAN;
-        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventTypes.ACCOUNT_BAN.name());
+        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.ACCOUNT_BAN.name());
         int statusId = template.queryForObject(SQLQueries.GET_ID_STATUS_BY_NAME, Integer.class, NotificationStatus.NEW.name());
         PreparedStatementSetter ps = new PreparedStatementSetter() {
             @SuppressWarnings("checkstyle:MagicNumber")

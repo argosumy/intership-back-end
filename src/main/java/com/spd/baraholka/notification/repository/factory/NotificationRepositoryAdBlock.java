@@ -1,7 +1,8 @@
-package com.spd.baraholka.notification.DAO.factory;
+package com.spd.baraholka.notification.repository.factory;
 
-import com.spd.baraholka.notification.DAO.SQLQueries;
-import com.spd.baraholka.notification.enums.EventTypes;
+import com.spd.baraholka.notification.repository.NotificationRepository;
+import com.spd.baraholka.notification.repository.SQLQueries;
+import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.enums.NotificationStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -12,12 +13,12 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Component
-public class SaveNotificationAdBlock implements SaveNotification {
+public class NotificationRepositoryAdBlock implements NotificationRepository {
     @Override
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         String sqlInsert = SQLQueries.SAVE_NOTIFICATION_AD;
-        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventTypes.ADVERTISEMENT_BLOCK.name());
+        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.ADVERTISEMENT_BLOCK.name());
         int statusId = template.queryForObject(SQLQueries.GET_ID_STATUS_BY_NAME, Integer.class, NotificationStatus.NEW.name());
         PreparedStatementSetter ps = new PreparedStatementSetter() {
             @SuppressWarnings("checkstyle:MagicNumber")
@@ -35,7 +36,7 @@ public class SaveNotificationAdBlock implements SaveNotification {
     }
 
     @Override
-    public EventTypes getType() {
-        return EventTypes.ADVERTISEMENT_BLOCK;
+    public EventType getType() {
+        return EventType.ADVERTISEMENT_BLOCK;
     }
 }

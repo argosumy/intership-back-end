@@ -1,6 +1,7 @@
 package com.spd.baraholka.notification.enums;
 
-public enum EventTypes {
+public enum EventType {
+
     NEW_ADVERTISEMENT,
     ACCOUNT_BAN,
     ADVERTISEMENT_BLOCK,

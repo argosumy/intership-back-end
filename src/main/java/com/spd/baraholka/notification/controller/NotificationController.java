@@ -1,26 +1,28 @@
 package com.spd.baraholka.notification.controller;
 
-import com.spd.baraholka.notification.DAO.NotificationDAO;
-import com.spd.baraholka.notification.enums.EventTypes;
+import com.spd.baraholka.notification.repository.NotificationDAO;
+import com.spd.baraholka.notification.enums.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Map;
 
-@Controller
+@RestController("/notifications")
 public class NotificationController {
-    private NotificationDAO notificationDAO;
+    private final NotificationDAO notificationDAO;
 
     @Autowired
     public NotificationController(NotificationDAO notificationDAO) {
         this.notificationDAO = notificationDAO;
     }
 
-    @SuppressWarnings("checkstyle:EmptyLineSeparator")
-    public void notification(Map<String, String> args, EventTypes eventTypes) {
-        saveNotification(args, eventTypes);
+    public void notification(Map<String, String> args, EventType eventType) {
+        saveNotification(args, eventType);
     }
 
-    private void saveNotification(Map<String, String> args, EventTypes eventTypes) {
-        notificationDAO.saveNotification(eventTypes, args);
+    @PostMapping
+    private void saveNotification(Map<String, String> args, EventType eventType) {
+        notificationDAO.saveNotification(eventType, args);
     }
 }
