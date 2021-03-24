@@ -2,6 +2,8 @@ package com.spd.baraholka.user.persistance.entities;
 
 import com.spd.baraholka.role.Role;
 
+import java.util.*;
+
 public class User {
 
     private int id;
@@ -12,11 +14,20 @@ public class User {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
+    private String imageUrl;
     private final Set<Role> roles;
 
     public User() {
         this.roles = new HashSet<>();
         roles.add(Role.USER);
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public int getId() {

@@ -55,11 +55,13 @@ public class UserService {
     }
 
     public boolean existsByEmail(String email) {
-        return persistenceUserService.existsByEmail(email);
+        Optional<Boolean> isExist = persistenceUserService.existsByEmail(email);
+        return isExist.orElse(false);
     }
 
     public int count() {
-        return persistenceUserService.count();
+        Optional<Integer> count = persistenceUserService.count();
+        return count.orElse(0);
     }
 
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {

@@ -39,7 +39,7 @@ public class UserMapper {
         user.setFirstName(oAuth2UserDto.getFirstName());
         user.setLastName(oAuth2UserDto.getLastName());
         user.setEmail(oAuth2UserDto.getEmail());
-        user.setAvatar(oAuth2UserDto.getAvatar());
+        user.setImageUrl(oAuth2UserDto.getAvatar());
         user.setLocation("");
         user.setPosition("");
         user.setPhoneNumber("");
