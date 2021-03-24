@@ -51,7 +51,6 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
             }
             userService.create(user);
         }
-        response.sendRedirect(SWAGGER_URL);
     }
 
     private boolean isEmailDomainInAllowedDomains(String email, List<String> allowedDomains) {
