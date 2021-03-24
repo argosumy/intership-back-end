@@ -26,7 +26,11 @@ public class UserMapper {
     }
 
     private String collapseImageUrl(User user) {
-        return awsImageUrl.concat(user.getImageUrl());
+        if (user.getImageUrl().contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
+            return user.getImageUrl();
+        } else {
+            return awsImageUrl.concat(user.getImageUrl());
+        }
     }
 
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
