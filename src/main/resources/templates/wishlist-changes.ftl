@@ -39,7 +39,7 @@
     <body style="margin: 0; padding: 0">
         <div class="container">
             <p class="description">
-                <a href="#">Ad from your wishlist</a> was ${reason}
+                <a href="${link_ad}">Ad from your wishlist</a> was ${reason}
             </p>
 
             <p class="unsubscribe">

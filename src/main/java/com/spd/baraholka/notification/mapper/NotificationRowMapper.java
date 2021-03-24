@@ -1,16 +1,16 @@
 package com.spd.baraholka.notification.mapper;
 
-import com.spd.baraholka.notification.model.Notification;
+import com.spd.baraholka.notification.model.BaseNotification;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class NotificationRowMapper implements RowMapper<Notification> {
+public class NotificationRowMapper implements RowMapper<BaseNotification> {
 
     @Override
-    public Notification mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Notification notification = new Notification();
+    public BaseNotification mapRow(ResultSet rs, int rowNum) throws SQLException {
+        BaseNotification notification = new BaseNotification();
         notification.setId(rs.getInt("id"));
         notification.setDescription(rs.getString("description"));
         notification.setRecipient(rs.getInt("recipient"));

@@ -19,7 +19,7 @@ public class NotificationRepositoryChangesAd implements NotificationRepository {
 
     @Override
     public EventType getType() {
-        return EventType.CHANGES_ADVERTISEMENT;
+        return EventType.ADVERTISEMENT_CHANGE;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class NotificationRepositoryChangesAd implements NotificationRepository {
         Date date = Date.valueOf(LocalDate.now());
         String sqlInsert = SQLQueries.SAVE_NOTIFICATION_CHANGES_AD;
         String idWhishlist = SQLQueries.GET_USER_ID_WISHLIST;
-        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.CHANGES_ADVERTISEMENT.name());
+        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.ADVERTISEMENT_CHANGE.name());
         int statusId = template.queryForObject(SQLQueries.GET_ID_STATUS_BY_NAME, Integer.class, NotificationStatus.NEW.name());
         int adId = Integer.parseInt(args.get("adId"));
         List<Map<String, Object>> list = template.queryForList(idWhishlist, adId);

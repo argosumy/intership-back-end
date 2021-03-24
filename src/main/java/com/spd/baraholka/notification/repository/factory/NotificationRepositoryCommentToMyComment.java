@@ -22,7 +22,7 @@ public class NotificationRepositoryCommentToMyComment implements NotificationRep
         Date date = Date.valueOf(LocalDate.now());
         int idComment = Integer.parseInt("idComment");
         int recipientId = template.queryForObject(SQLQueries.GET_USER_ID_BY_COMMENT, Integer.class, idComment);
-        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.NEW_COMMENTS_TO_MY_COMMENTS.name());
+        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.NEW_COMMENT_ON_COMMENT.name());
         int statusId = template.queryForObject(SQLQueries.GET_ID_STATUS_BY_NAME, Integer.class, NotificationStatus.NEW.name());
         int writerId = Integer.parseInt(args.get("writer"));
         PreparedStatementSetter ps = new PreparedStatementSetter() {
@@ -41,6 +41,6 @@ public class NotificationRepositoryCommentToMyComment implements NotificationRep
 
     @Override
     public EventType getType() {
-        return EventType.NEW_COMMENTS_TO_MY_COMMENTS;
+        return EventType.NEW_COMMENT_ON_COMMENT;
     }
 }

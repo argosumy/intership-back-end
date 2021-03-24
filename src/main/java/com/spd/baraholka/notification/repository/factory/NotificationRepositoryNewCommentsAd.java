@@ -20,7 +20,7 @@ public class NotificationRepositoryNewCommentsAd implements NotificationReposito
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         int recipientId = template.queryForObject(SQLQueries.GET_USER_ID_TO_SEND_ACTION_AD, Integer.class, args.get("adId"));
-        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.NEW_COMMENTS_ADVERTISEMENT.name());
+        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.NEW_ADVERTISEMENT_COMMENT.name());
         int statusId = template.queryForObject(SQLQueries.GET_ID_STATUS_BY_NAME, Integer.class, NotificationStatus.NEW.name());
         int writerId = Integer.parseInt(args.get("writer"));
         int adId = Integer.parseInt(args.get("adId"));
@@ -41,6 +41,6 @@ public class NotificationRepositoryNewCommentsAd implements NotificationReposito
 
     @Override
     public EventType getType() {
-        return EventType.NEW_COMMENTS_ADVERTISEMENT;
+        return EventType.NEW_ADVERTISEMENT_COMMENT;
     }
 }

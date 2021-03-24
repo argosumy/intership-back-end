@@ -27,7 +27,7 @@ public class NotificationRepositoryNewAd implements NotificationRepository {
     public void save(Map<String, String> args, JdbcTemplate template) {
         Date date = Date.valueOf(LocalDate.now());
         String category = args.get("category");
-        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.NEW_COMMENTS_TO_MY_COMMENTS.name());
+        int eventId = template.queryForObject(SQLQueries.GET_ID_EVENT_BY_NAME, Integer.class, EventType.NEW_COMMENT_ON_COMMENT.name());
         int statusId = template.queryForObject(SQLQueries.GET_ID_STATUS_BY_NAME, Integer.class, NotificationStatus.NEW.name());
         int adId = Integer.parseInt(args.get("adId"));
         List<Map<String, Object>> list = template.queryForList(SQLQueries.GET_USER_ID_BY_TERMS_SUBSCRIPTION, category);
