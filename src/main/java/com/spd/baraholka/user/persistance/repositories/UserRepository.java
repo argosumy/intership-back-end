@@ -46,15 +46,20 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
+    public Optional<Integer> count() {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class));
+    }
+
+    @Override
     public List<User> selectAllUsers() {
         String selectSQL = "SELECT id, first_name, last_name, is_blocked, end_date_of_ban FROM users";
         return jdbcTemplate.query(selectSQL, userShortViewRowMapper);
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
-                Map.of("email", email), Boolean.class);
+    public Optional<Boolean> existsByEmail(String email) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
+                Map.of("email", email), Boolean.class));
     }
 
     @Override
@@ -91,10 +96,5 @@ public class UserRepository implements PersistenceUserService {
                     .addValue("role", role.name());
             jdbcTemplate.update(sql, parameters);
         }
-    }
-
-    @Override
-    public int count() {
-        return jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class);
     }
 }
