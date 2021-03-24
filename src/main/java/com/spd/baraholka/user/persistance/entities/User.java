@@ -1,11 +1,16 @@
 package com.spd.baraholka.user.persistance.entities;
 
+import com.spd.baraholka.role.Role;
+
+import java.util.*;
+
 public class User {
 
     private int id;
     private String firstName;
     private String lastName;
     private String email;
+    private String location;
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
@@ -17,6 +22,13 @@ public class User {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    private List<String> resourceLinks;
+    private final Set<Role> roles;
+
+    public User() {
+        this.roles = new HashSet<>();
+        roles.add(Role.USER);
     }
 
     public int getId() {
@@ -49,6 +61,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getPosition() {
