@@ -38,7 +38,7 @@ class UserMapperTest {
         assertEquals(dummyOAuth2UserDTO.getEmail(), dummyUser.getEmail());
         assertEquals(dummyOAuth2UserDTO.getFirstName(), dummyUser.getFirstName());
         assertEquals(dummyOAuth2UserDTO.getLastName(), dummyUser.getLastName());
-        assertEquals(dummyOAuth2UserDTO.getAvatar(), dummyUser.getImageUrl());
+        assertEquals(dummyOAuth2UserDTO.getImageUrl(), dummyUser.getImageUrl());
         assertEquals("", dummyUser.getLocation());
         assertEquals("", dummyUser.getPosition());
         assertEquals("", dummyUser.getPhoneNumber());
