@@ -38,7 +38,7 @@ class UserRepositoryImplTest {
         dummyUser.setFirstName(dummyFirstName);
         dummyUser.setLastName(dummyLastName);
         dummyUser.setEmail(dummyEmail);
-        dummyUser.setAvatar(dummyAvatar);
+        dummyUser.setImageUrl(dummyAvatar);
         dummyUser.setLocation("");
         dummyUser.setPosition("");
         dummyUser.setPhoneNumber("");
@@ -83,7 +83,7 @@ class UserRepositoryImplTest {
         assertEquals(dummyUser.getFirstName(), createdUser.getFirstName());
         assertEquals(dummyUser.getLastName(), createdUser.getLastName());
         assertEquals(dummyUser.getEmail(), createdUser.getEmail());
-        assertEquals(dummyUser.getAvatar(), createdUser.getAvatar());
+        assertEquals(dummyUser.getImageUrl(), createdUser.getImageUrl());
         assertEquals(dummyUser.getLocation(), createdUser.getLocation());
         assertEquals(dummyUser.getPosition(), createdUser.getPosition());
         assertEquals(dummyUser.getPhoneNumber(), createdUser.getPhoneNumber());
