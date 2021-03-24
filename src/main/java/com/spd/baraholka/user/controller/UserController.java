@@ -4,7 +4,7 @@ import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/users")
 @RestController
 public class UserController {
