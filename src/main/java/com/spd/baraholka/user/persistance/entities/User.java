@@ -1,15 +1,23 @@
 package com.spd.baraholka.user.persistance.entities;
 
+import com.spd.baraholka.role.Role;
+
 public class User {
 
     private int id;
     private String firstName;
     private String lastName;
     private String email;
+    private String location;
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private String location;
+    private final Set<Role> roles;
+
+    public User() {
+        this.roles = new HashSet<>();
+        roles.add(Role.USER);
+    }
 
     public int getId() {
         return id;
@@ -43,6 +51,14 @@ public class User {
         this.email = email;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getPosition() {
         return position;
     }
@@ -67,11 +83,11 @@ public class User {
         isBlocked = blocked;
     }
 
-    public String getLocation() {
-        return location;
+    public Set<Role> getRoles() {
+        return Collections.unmodifiableSet(roles);
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public boolean grantRole(Role role) {
+        return roles.add(role);
     }
 }
