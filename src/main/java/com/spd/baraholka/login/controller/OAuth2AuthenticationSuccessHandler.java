@@ -23,6 +23,8 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
     public static final String DOMAIN_NOT_ALLOWED = "Domain is not allowed for login.";
 
+    private static final String SWAGGER_URL = "/api/swagger-ui/index.html";
+
     private final UserService userService;
 
     @Value("${login.allowed-domains}")
@@ -49,7 +51,6 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
             }
             userService.create(user);
         }
-        response.sendRedirect("/api" + OAuth2Controller.ENDPOINT_ME_OAUTH);
     }
 
     private boolean isEmailDomainInAllowedDomains(String email, List<String> allowedDomains) {
