@@ -21,7 +21,7 @@ public class AdvertisementDTO {
     private String title;
 
     @NotNull
-    @AllowedStatus()
+    @AllowedStatus
     private AdvertisementStatus status;
 
     @Positive
