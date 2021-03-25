@@ -7,7 +7,7 @@ import com.github.database.rider.core.api.dataset.SeedStrategy;
 import com.github.database.rider.junit5.DBUnitExtension;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(DBUnitExtension.class)
@@ -42,11 +43,6 @@ class UserRepositoryImplTest {
         dummyUser.setPosition("");
         dummyUser.setPhoneNumber("");
         return dummyUser;
-    }
-
-    @AfterEach
-    @DataSet(cleanAfter = true)
-    void cleanUpDatabase() {
     }
 
     @Test
