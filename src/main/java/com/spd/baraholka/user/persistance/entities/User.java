@@ -12,7 +12,7 @@ import static com.spd.baraholka.role.Role.ROLE_USER;
 public class User implements UserDetails {
 
     private int id;
-    private String avatar;
+    private String imageUrl;
     private String firstName;
     private String lastName;
     private String email;
@@ -36,12 +36,12 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getFirstName() {
@@ -118,41 +118,6 @@ public class User implements UserDetails {
 
     public boolean grantRole(Role role) {
         return roles.add(role);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        User user = (User) o;
-        return id == user.id && isBlocked == user.isBlocked && Objects.equals(avatar, user.avatar)
-                && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName)
-                && Objects.equals(email, user.email) && Objects.equals(position, user.position)
-                && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(resourceLinks, user.resourceLinks);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, avatar, firstName, lastName, email, position, phoneNumber, isBlocked, resourceLinks);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", avatar='" + avatar + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", position='" + position + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", isBlocked=" + isBlocked +
-                ", resourceLinks=" + resourceLinks +
-                '}';
     }
 
     @Override

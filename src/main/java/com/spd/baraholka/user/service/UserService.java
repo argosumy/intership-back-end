@@ -77,11 +77,11 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean existsByEmail(String email) {
-        return persistenceUserService.existsByEmail(email);
+        return persistenceUserService.existsByEmail(email).orElse(false);
     }
 
     public int count() {
-        return persistenceUserService.count();
+        return persistenceUserService.count().orElse(0);
     }
 
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {

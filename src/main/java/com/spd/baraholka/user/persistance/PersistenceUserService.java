@@ -12,11 +12,11 @@ public interface PersistenceUserService {
 
     Optional<User> selectUserById(int id);
 
-    boolean existsByEmail(String email);
+    Optional<Boolean> existsByEmail(String email);
 
     Optional<User> findByEmail(String email);
 
     Set<Role> findRolesByUserId(int id);
 
-    int count();
+    Optional<Integer> count();
 }

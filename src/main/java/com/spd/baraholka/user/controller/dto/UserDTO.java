@@ -33,7 +33,7 @@ public class UserDTO {
 
     @NotEmpty
     @Size(max = 200)
-    private String avatar;
+    private String imageUrl;
 
     @NotEmpty
     @Size(max = 20)
@@ -95,12 +95,12 @@ public class UserDTO {
         this.location = location;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getPhoneNumber() {

@@ -22,7 +22,7 @@ class UserTest {
         dummyUser.setFirstName(dummyFirstName);
         dummyUser.setLastName(dummyLastName);
         dummyUser.setEmail(dummyEmail);
-        dummyUser.setAvatar(dummyAvatar);
+        dummyUser.setImageUrl(dummyAvatar);
         dummyUser.setLocation("");
         dummyUser.setPosition("");
         dummyUser.setPhoneNumber("");

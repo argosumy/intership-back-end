@@ -5,7 +5,6 @@ import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.mappers.UserRowMapper;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -18,12 +17,10 @@ import java.util.*;
 @Repository
 public class UserRepository implements PersistenceUserService {
 
-    private final NamedParameterJdbcTemplate paramJdbcTemplate;
-    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper;
 
-    public UserRepository(NamedParameterJdbcTemplate paramJdbcTemplate, JdbcTemplate jdbcTemplate, UserRowMapper userRowMapper) {
-        this.paramJdbcTemplate = paramJdbcTemplate;
+    public UserRepository(NamedParameterJdbcTemplate jdbcTemplate, UserRowMapper userRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.userRowMapper = userRowMapper;
     }
@@ -33,7 +30,7 @@ public class UserRepository implements PersistenceUserService {
         String selectSQL = "SELECT * FROM users WHERE id=:id";
         Map<String, Integer> selectParameters = Map.of("id", id);
         try {
-            return Optional.ofNullable(paramJdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper));
+            return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper));
         } catch (DataAccessException e) {
             return Optional.empty();
         }
@@ -41,19 +38,20 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public User create(User user) {
-        final String sql = "INSERT INTO users (avatar, first_name, last_name, e_mail, location, phone_number, position) " +
-                "VALUES (:avatar, :first_name, :last_name, :email, :location, :phone_number, :position) ";
+        final String sql = "INSERT INTO users (image_url, first_name, last_name, e_mail, location, phone_number, position) " +
+                "VALUES (:image_url, :first_name, :last_name, :email, :location, :phone_number, :position) ";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("avatar", user.getAvatar())
+                .addValue("image_url", user.getImageUrl())
                 .addValue("first_name", user.getFirstName())
                 .addValue("last_name", user.getLastName())
                 .addValue("email", user.getEmail())
                 .addValue("location", user.getLocation())
                 .addValue("phone_number", user.getPhoneNumber())
-                .addValue("position", user.getPosition());
-        paramJdbcTemplate.update(sql, parameters, keyHolder);
+                .addValue("position", user.getPosition())
+                .addValue("image_url", user.getImageUrl());
+        jdbcTemplate.update(sql, parameters, keyHolder);
         Map<String, Object> keys = Objects.requireNonNull(keyHolder.getKeys());
         if (keys.containsKey("id")) {
             Integer userId = (Integer) keys.get("id");
@@ -71,20 +69,20 @@ public class UserRepository implements PersistenceUserService {
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("user_id", userId)
                     .addValue("role", role.name());
-            paramJdbcTemplate.update(sql, parameters);
+            jdbcTemplate.update(sql, parameters);
         }
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return paramJdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
-                Map.of("email", email), Boolean.class);
+    public Optional<Boolean> existsByEmail(String email) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
+                Map.of("email", email), Boolean.class));
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
         try {
-            return Optional.ofNullable(paramJdbcTemplate
+            return Optional.ofNullable(jdbcTemplate
                     .queryForObject("SELECT * FROM users WHERE LOWER (e_mail) = LOWER (:email)",
                     Map.of("email", email),
                     userRowMapper)
@@ -97,7 +95,7 @@ public class UserRepository implements PersistenceUserService {
     @Override
     public Set<Role> findRolesByUserId(int id) {
         Set<Role> roles = new HashSet<>();
-        List<String> roleNames = paramJdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
+        List<String> roleNames = jdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
                 Map.of("user_id", id),
                 String.class);
         for (String role : roleNames) {
@@ -107,8 +105,8 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public int count() {
-        return jdbcTemplate.queryForObject("SELECT count(*) FROM users", Integer.class);
+    public Optional<Integer> count() {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class));
     }
 }
 

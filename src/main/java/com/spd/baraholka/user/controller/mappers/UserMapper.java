@@ -16,7 +16,7 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setPosition(user.getPosition());
         userDTO.setLocation(user.getLocation());
-        userDTO.setAvatar(user.getAvatar());
+        userDTO.setImageUrl(user.getImageUrl());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
         userDTO.setRoles(user.getRoles());
@@ -29,7 +29,7 @@ public class UserMapper {
         user.setFirstName(oAuth2UserDto.getFirstName());
         user.setLastName(oAuth2UserDto.getLastName());
         user.setEmail(oAuth2UserDto.getEmail());
-        user.setAvatar(oAuth2UserDto.getAvatar());
+        user.setImageUrl(oAuth2UserDto.getImageUrl());
         user.setLocation("");
         user.setPosition("");
         user.setPhoneNumber("");

@@ -179,7 +179,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         UserPrincipal principal = new UserPrincipal(user.getId(), user.getEmail(), user.getPassword(), user.getAuthorities());
         principal.setFirstName(user.getFirstName());
         principal.setLastName(user.getLastName());
-        principal.setAvatar(user.getAvatar());
+        principal.setAvatar(user.getImageUrl());
         principal.setLocation(user.getLocation());
         principal.setPosition(user.getPosition());
         principal.setPhoneNumber(user.getPhoneNumber());
