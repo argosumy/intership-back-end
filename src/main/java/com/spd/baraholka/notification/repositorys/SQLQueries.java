@@ -1,4 +1,4 @@
-package com.spd.baraholka.notification.repository;
+package com.spd.baraholka.notification.repositorys;
 
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 public class SQLQueries {

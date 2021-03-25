@@ -1,7 +1,7 @@
-package com.spd.baraholka.notification.repository;
+package com.spd.baraholka.notification.repositorys;
 
 import com.spd.baraholka.notification.enums.EventType;
-import com.spd.baraholka.notification.repository.factory.SaveNotificationFactory;
+import com.spd.baraholka.notification.repositorys.factory.SaveNotificationFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,6 @@
-package com.spd.baraholka.notification.repository.factory;
+package com.spd.baraholka.notification.repositorys.factory;
 
-import com.spd.baraholka.notification.repository.NotificationRepository;
-import com.spd.baraholka.notification.repository.SQLQueries;
+import com.spd.baraholka.notification.repositorys.SQLQueries;
 import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.enums.NotificationStatus;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -1,7 +1,7 @@
 package com.spd.baraholka.notification.controller;
 
 import com.spd.baraholka.notification.dto.NotificationDto;
-import com.spd.baraholka.notification.repository.NotificationDAO;
+import com.spd.baraholka.notification.repositorys.NotificationDAO;
 import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.service.NotificationService;
 import freemarker.template.TemplateException;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.Map;
 
 @RestController("/notifications")
 public class NotificationController {

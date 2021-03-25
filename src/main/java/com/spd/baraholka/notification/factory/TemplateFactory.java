@@ -20,7 +20,6 @@ public class TemplateFactory {
             case NEW_ADVERTISEMENT_COMMENT:
             case NEW_COMMENT_ON_COMMENT:
                 return "new-comment-ad.ftl";
-            case NEW_MESSAGE_DIRECT:
             default:
                 throw new IllegalStateException("Unexpected value: " + eventType);
         }

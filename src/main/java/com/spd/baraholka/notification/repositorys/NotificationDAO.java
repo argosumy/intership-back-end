@@ -1,4 +1,4 @@
-package com.spd.baraholka.notification.repository;
+package com.spd.baraholka.notification.repositorys;
 
 import com.spd.baraholka.notification.enums.EventType;
 
