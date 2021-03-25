@@ -39,7 +39,8 @@
     <body style="margin: 0; padding: 0">
         <div class="container">
             <p class="description">
-                User ${writer!rrr} post new comment <#if adLink??> in <a href="${adLink}">Your ad</a></#if>
+                User <#if writer??>${writer}</#if>
+                post new comment <#if adLink??> in <a href="${adLink}">Your ad</a></#if>
             </p>
 
             <p class="subscribe">

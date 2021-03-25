@@ -1,22 +1,17 @@
 package com.spd.baraholka.notification.model;
 
-import com.spd.baraholka.notification.enums.NotificationStatus;
+import com.spd.baraholka.notification.enums.EventType;
+
+import java.time.LocalDateTime;
 
 public abstract class BaseNotification {
+
     private String subject;
-    private String description;
-    private String sendTo;
-    private NotificationStatus status;
-    private String adName;
+    private String mailTo;
+    private String objectLink;
     private String userProfileLink;
-
-    public String getAdName() {
-        return adName;
-    }
-
-    public void setAdName(String adName) {
-        this.adName = adName;
-    }
+    private EventType eventType;
+    LocalDateTime creationDate;
 
     public String getSubject() {
         return subject;
@@ -26,28 +21,20 @@ public abstract class BaseNotification {
         this.subject = subject;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMailTo() {
+        return mailTo;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMailTo(String mailTo) {
+        this.mailTo = mailTo;
     }
 
-    public String getSendTo() {
-        return sendTo;
+    public String getObjectLink() {
+        return objectLink;
     }
 
-    public void setSendTo(String sendTo) {
-        this.sendTo = sendTo;
-    }
-
-    public NotificationStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(NotificationStatus status) {
-        this.status = status;
+    public void setObjectLink(String objectLink) {
+        this.objectLink = objectLink;
     }
 
     public String getUserProfileLink() {
@@ -56,5 +43,21 @@ public abstract class BaseNotification {
 
     public void setUserProfileLink(String userProfileLink) {
         this.userProfileLink = userProfileLink;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 }
