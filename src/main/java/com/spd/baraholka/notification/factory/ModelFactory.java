@@ -2,6 +2,7 @@ package com.spd.baraholka.notification.factory;
 
 import com.spd.baraholka.notification.dto.NotificationDto;
 import com.spd.baraholka.notification.enums.EventType;
+import com.spd.baraholka.notification.model.AdvertisementNotification;
 import com.spd.baraholka.notification.model.BanBlockNotification;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.model.CommentNotification;
@@ -16,7 +17,7 @@ public class ModelFactory {
     private ModelFactory() {
     }
 
-    public static Map<String, String> getModel(NotificationDto notification, EventType eventType) {
+    public static Map<String, String> getModel(BaseNotification baseNotification, EventType eventType) {
         Map<String, String> model = new HashMap<>();
 
         switch (eventType) {
@@ -27,25 +28,28 @@ public class ModelFactory {
                 model.put("adLink", notification.getAdLink());
                 break;
 
+            case NEW_ADVERTISEMENT:
             case ADVERTISEMENT_CHANGE:
-                model.put("reason", notification.getDescription());
-                model.put("profileLink", notification.getUserProfileLink());
-                model.put("adLink", ((CommentNotification) notification).getAdLink());
+                model.put("title", ((AdvertisementNotification) baseNotification).getTitle());
+                model.put("description", ((AdvertisementNotification) baseNotification).getDescription());
+                model.put("mailTo", baseNotification.getMailTo());
+                model.put("adLink", baseNotification.getObjectLink());
+                model.put("profileLink", baseNotification.getUserProfileLink());
                 break;
 
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
-                model.put("blockEnd", getBanDate((BanBlockNotification) notification));
-                model.put("reason", notification.getDescription());
-                model.put("profileLink", notification.getUserProfileLink());
+                model.put("blockEnd", ((BanBlockNotification) baseNotification).getEndDate().toString());
+                model.put("reason", ((BanBlockNotification) baseNotification).getReason());
+                model.put("profileLink", baseNotification.getUserProfileLink());
                 break;
 
-            case ADVERTISEMENT_BLOCK:
-                model.put("adName", notification.getAdName());
-                model.put("blockEnd", getBanDate((BanBlockNotification) notification));
-                model.put("reason", notification.getDescription());
-                model.put("profileLink", notification.getUserProfileLink());
-                break;
+//            case ADVERTISEMENT_BLOCK:
+//                model.put("adName", notification.getAdName());
+//                model.put("blockEnd", getBanDate((BanBlockNotification) notification));
+//                model.put("reason", notification.getDescription());
+//                model.put("profileLink", notification.getUserProfileLink());
+//                break;
 
             case NEW_ADVERTISEMENT:
                 model.put("mainImage", ((CommentNotification) notification).getMainImage());

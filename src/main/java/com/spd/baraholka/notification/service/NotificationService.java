@@ -40,9 +40,9 @@ public class NotificationService {
         this.advertisementService = advertisementService;
     }
 
-    public MimeMessage createMessage(NotificationDto notificationDto, EventType eventType) throws MessagingException, IOException, TemplateException {
+    public MimeMessage createMessage(BaseNotification baseNotification, EventType eventType) throws MessagingException, IOException, TemplateException {
 //        BaseNotification notification = getNotification(notificationDto, eventType);
-        Map<String, String> model = getModel(notificationDto, eventType);
+        Map<String, String> model = getModel(baseNotification, eventType);
         Template template = emailConfig.getTemplate(template(eventType));
         String html = getHtml(model, template);
 
@@ -57,8 +57,8 @@ public class NotificationService {
         return message;
     }
 
-    public void sendMessage(NotificationDto notificationDto, EventType eventType) throws MessagingException, IOException, TemplateException {
-        emailSender.send(createMessage(notificationDto, eventType));
+    public void sendMessage(BaseNotification baseNotification, EventType eventType) throws MessagingException, IOException, TemplateException {
+        emailSender.send(createMessage(baseNotification, eventType));
     }
 
     private String getHtml(Map<String, String> model, Template template) throws IOException, TemplateException {
