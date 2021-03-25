@@ -3,10 +3,12 @@ package com.spd.baraholka.notification.mapper;
 import com.spd.baraholka.notification.dao.NotificationDao;
 import com.spd.baraholka.notification.enums.EventType;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class NotificationDaoRowMapper implements RowMapper<NotificationDao> {
 
     @Override

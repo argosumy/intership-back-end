@@ -33,29 +33,35 @@ public class NotificationMapperFactory {
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
                 BanBlockNotification banBlockNotification = new BanBlockNotification();
-                banBlockNotification.setSubject(eventType.name());
-                banBlockNotification.setMailTo(userMailTo.getEmail());
-                banBlockNotification.setObjectLink(notificationDto.getObjectLink());
-                banBlockNotification.setUserProfileLink(notificationDto.getUserProfileLink());
-                banBlockNotification.setEventType(eventType);
-                banBlockNotification.setCreationDate(LocalDateTime.now());
+                setParameters(banBlockNotification, notificationDto, eventType, userMailTo);
                 banBlockNotification.setReason(notificationDto.getReason());
                 banBlockNotification.setEndDate(notificationDto.getBlockEndDate());
                 return banBlockNotification;
             case NEW_ADVERTISEMENT:
             case ADVERTISEMENT_CHANGE:
                 AdvertisementNotification advertisementNotification = new AdvertisementNotification();
+                setParameters(advertisementNotification, notificationDto, eventType, userMailTo);
                 advertisementNotification.setTitle(advertisementById.getTitle());
                 advertisementNotification.setDescription(advertisementById.getDescription());
                 return advertisementNotification;
             case NEW_ADVERTISEMENT_COMMENT:
             case NEW_COMMENT_ON_COMMENT:
                 CommentNotification commentNotification = new CommentNotification();
+                setParameters(commentNotification, notificationDto, eventType, userMailTo);
                 commentNotification.setWriterName(userById.getFirstName() + " " + userById.getLastName());
                 return commentNotification;
             default:
                 throw new IllegalStateException("Unexpected value: " + eventType);
         }
+    }
+
+    private void setParameters(BaseNotification notification, NotificationDto notificationDto, EventType eventType, UserDTO userMailTo) {
+        notification.setSubject(eventType.name());
+        notification.setMailTo(userMailTo.getEmail());
+        notification.setObjectLink(notificationDto.getObjectLink());
+        notification.setUserProfileLink(notificationDto.getUserProfileLink());
+        notification.setEventType(eventType);
+        notification.setCreationDate(LocalDateTime.now());
     }
 
     private UserDTO getUserById(int userId) {
