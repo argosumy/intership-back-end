@@ -2,6 +2,7 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
+import com.spd.baraholka.annotation.abvertisement.AllowedStatus;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -20,6 +21,7 @@ public class AdvertisementDTO {
     private String title;
 
     @NotNull
+    @AllowedStatus()
     private AdvertisementStatus status;
 
     @Positive
