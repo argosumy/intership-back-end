@@ -3,9 +3,7 @@ package com.spd.baraholka.advertisement.controller.dto;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 public class AdvertisementDTO {
@@ -34,11 +32,13 @@ public class AdvertisementDTO {
     @Size(max = 20)
     private String city;
 
+    @FutureOrPresent
+    private LocalDateTime publicationDate;
+
     private String description;
     private String category;
     private CurrencyType currency;
     private boolean discountAvailability;
-    private LocalDateTime publicationDate;
 
     public int getAdvertisementId() {
         return advertisementId;
