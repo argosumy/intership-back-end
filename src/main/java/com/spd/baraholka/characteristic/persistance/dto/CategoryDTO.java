@@ -27,8 +27,12 @@ public class CategoryDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CategoryDTO that = (CategoryDTO) o;
         return Objects.equals(categoryName, that.categoryName) && Objects.equals(characteristics, that.characteristics);
     }

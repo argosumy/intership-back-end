@@ -43,10 +43,18 @@ public class Characteristic {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Characteristic that = (Characteristic) o;
-        return id == that.id && isApproved == that.isApproved && Objects.equals(categoryName, that.categoryName) && Objects.equals(characteristicName, that.characteristicName) && Objects.equals(characteristicValue, that.characteristicValue);
+        return id == that.id
+                && isApproved == that.isApproved
+                && Objects.equals(categoryName, that.categoryName)
+                && Objects.equals(characteristicName, that.characteristicName)
+                && Objects.equals(characteristicValue, that.characteristicValue);
     }
 
     @Override
