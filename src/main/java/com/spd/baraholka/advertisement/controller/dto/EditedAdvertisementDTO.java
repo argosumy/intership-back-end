@@ -2,9 +2,9 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
-import com.spd.baraholka.annotation.abvertisement.EditedStatus;
-import com.spd.baraholka.annotation.abvertisement.AdvertisementExist;
-import com.spd.baraholka.annotation.abvertisement.PresentOrFutureDate;
+import com.spd.baraholka.annotation.advertisement.EditedStatus;
+import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
+import com.spd.baraholka.annotation.advertisement.PresentOrFutureDate;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;

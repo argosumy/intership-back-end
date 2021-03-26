@@ -1,7 +1,7 @@
 package com.spd.baraholka.validation.advertisement;
 
 import com.spd.baraholka.advertisement.service.AdvertisementService;
-import com.spd.baraholka.annotation.abvertisement.AdvertisementExist;
+import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

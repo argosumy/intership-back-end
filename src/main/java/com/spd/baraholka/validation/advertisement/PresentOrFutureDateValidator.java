@@ -1,6 +1,6 @@
 package com.spd.baraholka.validation.advertisement;
 
-import com.spd.baraholka.annotation.abvertisement.PresentOrFutureDate;
+import com.spd.baraholka.annotation.advertisement.PresentOrFutureDate;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

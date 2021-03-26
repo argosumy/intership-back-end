@@ -1,6 +1,6 @@
-package com.spd.baraholka.annotation.abvertisement;
+package com.spd.baraholka.annotation.advertisement;
 
-import com.spd.baraholka.validation.advertisement.AdvertisementEditedStatusValidator;
+import com.spd.baraholka.validation.advertisement.AdvertisementChangedStatusValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,10 +9,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.FIELD)
+@Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = AdvertisementEditedStatusValidator.class)
-public @interface EditedStatus {
+@Constraint(validatedBy = AdvertisementChangedStatusValidator.class)
+public @interface ChangedStatus {
 
     String message() default "Baraholka advertisement status annotation validation";
 

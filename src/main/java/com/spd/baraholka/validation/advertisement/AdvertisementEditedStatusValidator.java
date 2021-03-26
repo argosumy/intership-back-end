@@ -1,7 +1,7 @@
 package com.spd.baraholka.validation.advertisement;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.annotation.abvertisement.EditedStatus;
+import com.spd.baraholka.annotation.advertisement.EditedStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
