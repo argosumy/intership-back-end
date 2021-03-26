@@ -6,6 +6,7 @@ public class Advertisement {
 
     private int advertisementId;
     private int ownerId;
+    private String category;
     private String title;
     private String description;
     private double price;

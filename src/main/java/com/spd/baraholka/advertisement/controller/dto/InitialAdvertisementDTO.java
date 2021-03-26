@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 
 public class InitialAdvertisementDTO {
 
+    @NotNull
+    private String category;
+
     @Size(max = 200)
     private String title;
 

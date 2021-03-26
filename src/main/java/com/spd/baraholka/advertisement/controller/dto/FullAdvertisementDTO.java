@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class FullAdvertisementDTO {
 
     private int advertisementId;
+    private String category;
     private String title;
     private AdvertisementStatus status;
     private double price;
