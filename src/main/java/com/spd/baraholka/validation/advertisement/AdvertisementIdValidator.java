@@ -1,12 +1,12 @@
 package com.spd.baraholka.validation.advertisement;
 
 import com.spd.baraholka.advertisement.service.AdvertisementService;
-import com.spd.baraholka.annotation.abvertisement.Exist;
+import com.spd.baraholka.annotation.abvertisement.AdvertisementExist;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class AdvertisementIdValidator implements ConstraintValidator<Exist, Integer> {
+public class AdvertisementIdValidator implements ConstraintValidator<AdvertisementExist, Integer> {
 
     private final AdvertisementService advertisementService;
 
