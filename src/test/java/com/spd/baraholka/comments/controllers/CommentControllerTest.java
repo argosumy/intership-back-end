@@ -11,11 +11,14 @@ import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;
 import com.spd.baraholka.comments.services.CommentService;
+import com.spd.baraholka.config.SecurityConfig;
+import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -50,6 +53,12 @@ class CommentControllerTest {
     private Comment comment;
     private Advertisement advertisement;
     private User user;
+    @Autowired
+    private SecurityConfig securityConfig;
+    @Autowired
+    @MockBean
+    @Qualifier("OAuth2SuccessHandler")
+    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @BeforeEach
     void setUp() {
