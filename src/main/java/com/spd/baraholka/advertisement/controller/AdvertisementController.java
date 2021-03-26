@@ -4,10 +4,13 @@ import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
+import com.spd.baraholka.annotation.abvertisement.ChangedStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Validated
 @RestController
 @RequestMapping("/advertisement")
 public class AdvertisementController {
@@ -29,7 +32,7 @@ public class AdvertisementController {
     }
 
     @PutMapping("/{id}")
-    public int updateAdvertisementStatus(@PathVariable int id, @RequestParam AdvertisementStatus status) {
+    public int updateAdvertisementStatus(@PathVariable int id, @RequestParam("status") @ChangedStatus AdvertisementStatus status) {
         return advertisementService.updateAdvertisementStatus(id, status);
     }
 }
