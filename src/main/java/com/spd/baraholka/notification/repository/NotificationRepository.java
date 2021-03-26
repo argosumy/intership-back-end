@@ -32,7 +32,7 @@ public class NotificationRepository {
 
     public List<NotificationDao> getNotifications() {
         return jdbcTemplate.query(
-                "SELECT * notifications",
+                "SELECT * FROM notifications",
                 notificationDaoRowMapper
         );
     }

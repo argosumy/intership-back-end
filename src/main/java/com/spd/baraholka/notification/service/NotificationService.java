@@ -1,6 +1,5 @@
 package com.spd.baraholka.notification.service;
 
-import com.spd.baraholka.advertisements.services.AdvertisementService;
 import com.spd.baraholka.notification.dao.NotificationDao;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.repository.NotificationRepository;
@@ -18,6 +17,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 
 import static com.spd.baraholka.notification.factory.ModelFactory.getModel;
@@ -28,19 +28,14 @@ public class NotificationService {
 
     private final JavaMailSender emailSender;
     private final Configuration emailConfig;
-    private final UserService userService;
-    private final AdvertisementService advertisementService;
     private final NotificationRepository notificationRepository;
 
     public NotificationService(JavaMailSender emailSender,
                                @Qualifier("freeMarker") Configuration emailConfig,
                                UserService userService,
-                               AdvertisementService advertisementService,
                                NotificationRepository notificationRepository) {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;
-        this.userService = userService;
-        this.advertisementService = advertisementService;
         this.notificationRepository = notificationRepository;
     }
 
@@ -70,5 +65,9 @@ public class NotificationService {
 
     public int saveNotification(NotificationDao notificationDao) {
         return notificationRepository.saveNotification(notificationDao);
+    }
+
+    public List<NotificationDao> getNotifications() {
+        return notificationRepository.getNotifications();
     }
 }

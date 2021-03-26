@@ -4,8 +4,6 @@ public class AdvertisementNotification extends BaseNotification {
 
     private String title;
     private String description;
-//    private String image;
-
 
     public AdvertisementNotification() {
         super();

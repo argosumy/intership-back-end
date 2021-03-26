@@ -72,7 +72,6 @@ public class NotificationMapperFactory {
     }
 
     private Advertisement getAdvertisementById(int advertisementId) {
-        Advertisement advertisement = advertisementService.findAdById(advertisementId).orElseThrow();
-        return advertisement;
+        return advertisementService.findAdById(advertisementId).orElseThrow();
     }
 }
