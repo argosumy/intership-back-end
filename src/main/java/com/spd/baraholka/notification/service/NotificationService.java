@@ -3,7 +3,6 @@ package com.spd.baraholka.notification.service;
 import com.spd.baraholka.notification.dao.NotificationDao;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.repository.NotificationRepository;
-import com.spd.baraholka.user.service.UserService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -32,7 +31,6 @@ public class NotificationService {
 
     public NotificationService(JavaMailSender emailSender,
                                @Qualifier("freeMarker") Configuration emailConfig,
-                               UserService userService,
                                NotificationRepository notificationRepository) {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;

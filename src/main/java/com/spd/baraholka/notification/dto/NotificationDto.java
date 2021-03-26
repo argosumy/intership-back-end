@@ -1,18 +1,31 @@
 package com.spd.baraholka.notification.dto;
 
 import com.spd.baraholka.notification.enums.EventType;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 public class NotificationDto {
 
-    private Integer userId;
-    private Integer userMailToId;
-    private Integer advertisementId;
+    @Positive
+    private int userId;
+    @Positive
+    private int userMailToId;
+    @Positive
+    private int advertisementId;
+    @NotNull()
+    @Length(min = 5, max = 255)
     private String reason;
+    @NotNull
     private String objectLink;
+    @NotNull
     private String userProfileLink;
+    @NotNull
     private EventType eventType;
+    @FutureOrPresent
     private LocalDateTime blockEndDate;
 
     public int getUserId() {
