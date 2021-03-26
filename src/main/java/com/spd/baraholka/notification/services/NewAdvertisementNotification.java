@@ -50,7 +50,7 @@
 //
 //        MimeMessage message = this.emailSender.createMimeMessage();
 //        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-//        Template template = emailConfig.getTemplate("new-Ad.ftl");
+//        Template template = emailConfig.getTemplate("advertisement-new.ftl");
 //        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 //
 //        mimeMessageHelper.setText(html, true);

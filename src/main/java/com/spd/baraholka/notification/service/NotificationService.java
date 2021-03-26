@@ -1,7 +1,9 @@
 package com.spd.baraholka.notification.service;
 
 import com.spd.baraholka.advertisements.services.AdvertisementService;
+import com.spd.baraholka.notification.dao.NotificationDao;
 import com.spd.baraholka.notification.model.BaseNotification;
+import com.spd.baraholka.notification.repository.NotificationRepository;
 import com.spd.baraholka.user.service.UserService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -28,13 +30,18 @@ public class NotificationService {
     private final Configuration emailConfig;
     private final UserService userService;
     private final AdvertisementService advertisementService;
+    private final NotificationRepository notificationRepository;
 
-    public NotificationService(JavaMailSender emailSender, @Qualifier("freeMarker") Configuration emailConfig, UserService userService,
-                               AdvertisementService advertisementService) {
+    public NotificationService(JavaMailSender emailSender,
+                               @Qualifier("freeMarker") Configuration emailConfig,
+                               UserService userService,
+                               AdvertisementService advertisementService,
+                               NotificationRepository notificationRepository) {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;
         this.userService = userService;
         this.advertisementService = advertisementService;
+        this.notificationRepository = notificationRepository;
     }
 
     public MimeMessage createMessage(BaseNotification baseNotification) throws MessagingException, IOException, TemplateException {
@@ -59,5 +66,9 @@ public class NotificationService {
 
     private String getHtml(Map<String, String> model, Template template) throws IOException, TemplateException {
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+    }
+
+    public int saveNotification(NotificationDao notificationDao) {
+        return notificationRepository.saveNotification(notificationDao);
     }
 }

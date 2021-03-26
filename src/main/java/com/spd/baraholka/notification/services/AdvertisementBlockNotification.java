@@ -51,7 +51,7 @@
 //        model.put("profileLink", notification.getUserProfileLink());
 //        MimeMessage message = this.emailSender.createMimeMessage();
 //        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-//        Template template = emailConfig.getTemplate("ad-block.ftl");
+//        Template template = emailConfig.getTemplate("advertisement-block.ftl");
 //        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 //        mimeMessageHelper.setTo(notification.getSendTo());
 //        mimeMessageHelper.setText(html, true);

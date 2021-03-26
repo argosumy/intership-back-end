@@ -42,6 +42,6 @@ public class AdvertisementDataAdapter implements PersistenceAdvertisementService
 
     @Override
     public Optional<Advertisement> findAdById(int id) {
-        return Optional.empty();
+        return advertisementRepository.findAdById(id);
     }
 }

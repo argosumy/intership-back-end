@@ -39,7 +39,7 @@
     <body style="margin: 0; padding: 0">
         <div class="container">
             <h2 class="title">
-                Your Ad ${adName} was blocked by moderator till ${blockEnd}.
+                <a class="profile-link" href="${objectLink}">Your Ad </a> was blocked by moderator till ${blockEnd}.
             </h2>
             <p class="description">
                 Block reason: ${reason}

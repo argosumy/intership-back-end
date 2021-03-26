@@ -23,10 +23,10 @@ public class NotificationRepository {
         return jdbcTemplate.update(
                 "INSERT INTO notifications(user_mail_to_id, advertisement_id, event_type, send_date)" +
                         "VALUES(:mailTo, :adId, :eventType, :sendDate)",
-                Map.of("userMailToId", notificationDao.getUserMailToId(),
-                        "advertisement_id", notificationDao.getAdvertisementId(),
-                        "event_type", notificationDao.getEventType().name(),
-                        "send_date", notificationDao.getSendDate())
+                Map.of("mailTo", notificationDao.getUserMailToId(),
+                        "adId", notificationDao.getAdvertisementId(),
+                        "eventType", notificationDao.getEventType().name(),
+                        "sendDate", notificationDao.getSendDate())
         );
     }
 

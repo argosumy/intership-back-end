@@ -59,11 +59,11 @@ public class NotificationMapperFactory {
     }
 
     private void setParameters(BaseNotification notification, NotificationDto notificationDto, UserDTO userMailTo) {
-        notification.setSubject(notification.getEventType().name());
+        notification.setSubject(notificationDto.getEventType().name());
         notification.setMailTo(userMailTo.getEmail());
         notification.setObjectLink(notificationDto.getObjectLink());
         notification.setUserProfileLink(notificationDto.getUserProfileLink());
-        notification.setEventType(notification.getEventType());
+        notification.setEventType(notificationDto.getEventType());
         notification.setCreationDate(LocalDateTime.now());
     }
 
@@ -72,6 +72,7 @@ public class NotificationMapperFactory {
     }
 
     private Advertisement getAdvertisementById(int advertisementId) {
-        return advertisementService.findAdById(advertisementId).orElseThrow();
+        Advertisement advertisement = advertisementService.findAdById(advertisementId).orElseThrow();
+        return advertisement;
     }
 }

@@ -80,7 +80,7 @@
 ////
 ////        MimeMessage message = this.emailSender.createMimeMessage();
 ////        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-////        Template template = emailConfig.template("new-comment-ad.ftl");
+////        Template template = emailConfig.template("new-advertisement-comment.ftl");
 ////        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 ////
 ////        mimeMessageHelper.setTo(notification.getSendTo());

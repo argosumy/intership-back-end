@@ -1,15 +1,14 @@
 package com.spd.baraholka.notification.dto;
 
 import com.spd.baraholka.notification.enums.EventType;
-import jdk.jshell.EvalException;
 
 import java.time.LocalDateTime;
 
 public class NotificationDto {
 
-    private int userId;
-    private int userMailToId;
-    private int advertisementId;
+    private Integer userId;
+    private Integer userMailToId;
+    private Integer advertisementId;
     private String reason;
     private String objectLink;
     private String userProfileLink;

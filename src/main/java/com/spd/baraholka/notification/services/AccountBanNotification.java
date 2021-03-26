@@ -50,7 +50,7 @@
 //        model.put("profile_link", notification.getUserProfileLink());
 //        MimeMessage message = this.emailSender.createMimeMessage();
 //        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-//        Template template = emailConfig.getTemplate("profile-block.ftl");
+//        Template template = emailConfig.getTemplate("account-ban.ftl");
 //        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 //        mimeMessageHelper.setTo(notification.getSendTo());
 //        mimeMessageHelper.setText(html, true);
