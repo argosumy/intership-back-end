@@ -116,7 +116,6 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + " VALUES (:ownerId, "
                 + ":title,"
                 + " :description,"
-                + " :category,"
                 + " :price,"
                 + " :currency,"
                 + " :discountAvailability,"
