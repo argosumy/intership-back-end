@@ -10,14 +10,14 @@ import java.util.Optional;
 @Service
 public class UserNotificationSettingsService {
 
-    private final PersistenceUserNotificationSettingsService userNotificationSettingsService;
+    private final PersistenceUserNotificationSettingsService persistenceUserNotificationSettingsService;
 
-    public UserNotificationSettingsService(PersistenceUserNotificationSettingsService userNotificationSettingsService) {
-        this.userNotificationSettingsService = userNotificationSettingsService;
+    public UserNotificationSettingsService(PersistenceUserNotificationSettingsService persistenceUserNotificationSettingsService) {
+        this.persistenceUserNotificationSettingsService = persistenceUserNotificationSettingsService;
     }
 
     public UserNotificationSettings getNotificationSettingsByUserId(int userId) {
-        Optional<UserNotificationSettings> userNotificationSettings = userNotificationSettingsService.getNotificationSettingsByUserId(userId);
+        Optional<UserNotificationSettings> userNotificationSettings = persistenceUserNotificationSettingsService.getNotificationSettingsByUserId(userId);
         if (userNotificationSettings.isEmpty()) {
             throw new NotFoundByIdException(userId);
         } else {
@@ -26,6 +26,6 @@ public class UserNotificationSettingsService {
     }
 
     public int saveNotificationSettings(UserNotificationSettings userNotificationSettings) {
-        return userNotificationSettingsService.saveNotificationSettings(userNotificationSettings);
+        return persistenceUserNotificationSettingsService.saveNotificationSettings(userNotificationSettings);
     }
 }

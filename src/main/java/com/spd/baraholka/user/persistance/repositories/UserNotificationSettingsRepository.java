@@ -41,7 +41,7 @@ public class UserNotificationSettingsRepository implements PersistenceUserNotifi
     public int saveNotificationSettings(UserNotificationSettings userNotificationSettings) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = getInsertedParameters(userNotificationSettings);
-        jdbcTemplate.update(getInsertNotificationSettingsSql(), parameterSource, keyHolder);
+        jdbcTemplate.update(getInsertNotificationSettingsSql(), parameterSource, keyHolder, new String[] {"id"});
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
@@ -66,5 +66,4 @@ public class UserNotificationSettingsRepository implements PersistenceUserNotifi
         namedParameters.addValue("wishlistUpdate", userNotificationSettings.isWishlistUpdateNotification());
         return namedParameters;
     }
-
 }
