@@ -37,6 +37,10 @@ public class InitialAdvertisementDTO {
     @PresentOrFutureDate
     private LocalDateTime publicationDate;
 
+    public String getCategory() {
+        return category;
+    }
+
     public String getTitle() {
         return title;
     }

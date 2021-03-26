@@ -22,6 +22,14 @@ public class Advertisement {
         return advertisementId;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public void setAdvertisementId(int advertisementId) {
         this.advertisementId = advertisementId;
     }

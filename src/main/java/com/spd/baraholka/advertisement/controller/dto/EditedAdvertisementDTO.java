@@ -41,6 +41,10 @@ public class EditedAdvertisementDTO {
     @PresentOrFutureDate
     private LocalDateTime publicationDate;
 
+    public String getCategory() {
+        return category;
+    }
+
     public int getAdvertisementId() {
         return advertisementId;
     }
