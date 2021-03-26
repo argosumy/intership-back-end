@@ -51,6 +51,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("ownerId", advertisement.getOwnerId());
+        namedParameters.addValue("category", advertisement.getCategory());
         namedParameters.addValue("title", advertisement.getTitle());
         namedParameters.addValue("description", advertisement.getDescription());
         namedParameters.addValue("price", advertisement.getPrice());
@@ -103,6 +104,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
 
     private String createInsertSQL() {
         return "INSERT INTO advertisements (user_id, "
+                + "category=:category,"
                 + "title,"
                 + "description,"
                 + "price,"

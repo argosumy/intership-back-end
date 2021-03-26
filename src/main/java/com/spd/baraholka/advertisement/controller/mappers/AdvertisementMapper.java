@@ -31,7 +31,6 @@ public class AdvertisementMapper {
         Advertisement advertisement = new Advertisement();
         advertisement.setAdvertisementId(advertisementDTO.getAdvertisementId());
         advertisement.setOwnerId(1); //TODO must be replace by user id from cookies session
-        advertisement.setCategory(advertisementDTO.getCategory());
         advertisement.setTitle(advertisementDTO.getTitle());
         advertisement.setDescription(advertisementDTO.getDescription());
         advertisement.setPrice(advertisementDTO.getPrice());

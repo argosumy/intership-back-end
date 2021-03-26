@@ -14,9 +14,6 @@ public class EditedAdvertisementDTO {
     @Min(1)
     private int advertisementId;
 
-    @NotNull
-    private String category;
-
     @Size(max = 200)
     private String title;
 
@@ -40,10 +37,6 @@ public class EditedAdvertisementDTO {
 
     @PresentOrFutureDate
     private LocalDateTime publicationDate;
-
-    public String getCategory() {
-        return category;
-    }
 
     public int getAdvertisementId() {
         return advertisementId;
