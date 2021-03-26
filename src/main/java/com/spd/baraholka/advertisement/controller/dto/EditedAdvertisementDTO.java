@@ -37,4 +37,40 @@ public class EditedAdvertisementDTO {
 
     @FutureOrPresent
     private LocalDateTime publicationDate;
+
+    public int getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public AdvertisementStatus getStatus() {
+        return status;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public CurrencyType getCurrency() {
+        return currency;
+    }
+
+    public boolean isDiscountAvailability() {
+        return discountAvailability;
+    }
+
+    public LocalDateTime getPublicationDate() {
+        return publicationDate;
+    }
 }

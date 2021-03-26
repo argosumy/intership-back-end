@@ -1,6 +1,6 @@
 package com.spd.baraholka.advertisement.service;
 
-import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
+import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
@@ -25,7 +25,7 @@ public class AdvertisementService {
         return persistenceAdvertisementService.insertAdvertisement(advertisement);
     }
 
-    public int updateAdvertisement(AdvertisementDTO advertisementDTO) {
+    public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
         return persistenceAdvertisementService.updateAdvertisement(advertisement);
     }

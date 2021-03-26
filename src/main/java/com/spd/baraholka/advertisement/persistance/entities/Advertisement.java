@@ -8,7 +8,6 @@ public class Advertisement {
     private int ownerId;
     private String title;
     private String description;
-    private String category;
     private double price;
     private CurrencyType currency;
     private boolean discountAvailability;
@@ -48,14 +47,6 @@ public class Advertisement {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public double getPrice() {

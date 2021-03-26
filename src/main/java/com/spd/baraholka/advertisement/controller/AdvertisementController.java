@@ -1,8 +1,8 @@
 package com.spd.baraholka.advertisement.controller;
 
+import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +24,7 @@ public class AdvertisementController {
     }
 
     @PutMapping
-    public int updateAdvertisement(@RequestBody @Valid AdvertisementDTO advertisementDTO) {
+    public int updateAdvertisement(@RequestBody @Valid EditedAdvertisementDTO advertisementDTO) {
         return advertisementService.updateAdvertisement(advertisementDTO);
     }
 
