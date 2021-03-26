@@ -2,7 +2,7 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
-import com.spd.baraholka.annotation.abvertisement.InitialStatus;
+import com.spd.baraholka.annotation.abvertisement.EditedStatus;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ public class EditedAdvertisementDTO {
     private String title;
 
     @NotBlank
-    @InitialStatus
+    @EditedStatus
     private AdvertisementStatus status;
 
     @Positive

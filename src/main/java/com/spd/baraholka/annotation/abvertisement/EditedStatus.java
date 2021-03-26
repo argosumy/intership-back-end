@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = AdvertisementEditedStatusValidator.class)
+@InitialStatus
 public @interface EditedStatus {
 
     String message() default "Baraholka advertisement status annotation validation";
