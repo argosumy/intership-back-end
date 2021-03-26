@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 public class AdvertisementRepository implements PersistenceAdvertisementService {
@@ -46,6 +47,12 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         Map<String, ? extends Comparable<? extends Comparable<?>>> updateParameters = createUpdateStatusParameters(id, status);
         jdbcTemplate.update(updateSQL, updateParameters);
         return id;
+    }
+
+    @Override
+    public Optional<Boolean> isExist(int id) {
+        String isExistQuery = "SELECT count(*) <> 0 FROM advertisements WHERE id=:id";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {

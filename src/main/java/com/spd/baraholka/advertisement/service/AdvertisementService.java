@@ -8,6 +8,8 @@ import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AdvertisementService {
 
@@ -32,5 +34,10 @@ public class AdvertisementService {
 
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
         return persistenceAdvertisementService.updateAdvertisementStatus(id, status);
+    }
+
+    public boolean isAdvertisementExist(int id) {
+        Optional<Boolean> exist = persistenceAdvertisementService.isExist(id);
+        return exist.orElse(false);
     }
 }
