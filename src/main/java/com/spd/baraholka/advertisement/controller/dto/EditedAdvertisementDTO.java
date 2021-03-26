@@ -3,6 +3,7 @@ package com.spd.baraholka.advertisement.controller.dto;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.annotation.abvertisement.EditedStatus;
+import com.spd.baraholka.annotation.abvertisement.PresentOrFutureDate;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
@@ -16,7 +17,6 @@ public class EditedAdvertisementDTO {
     @Size(max = 200)
     private String title;
 
-    @NotBlank
     @EditedStatus
     private AdvertisementStatus status;
 
@@ -29,13 +29,13 @@ public class EditedAdvertisementDTO {
     @Size(max = 2000)
     private String description;
 
-    @NotBlank
+    @NotNull
     private CurrencyType currency;
 
-    @NotBlank
+    @NotNull
     private boolean discountAvailability;
 
-    @FutureOrPresent
+    @PresentOrFutureDate
     private LocalDateTime publicationDate;
 
     public int getAdvertisementId() {
