@@ -13,11 +13,7 @@ public class AdvertisementEditedStatusValidator implements ConstraintValidator<E
 
     @Override
     public boolean isValid(AdvertisementStatus value, ConstraintValidatorContext context) {
-        return isAllowed(value);
-    }
-
-    private boolean isAllowed(AdvertisementStatus status) {
         List<AdvertisementStatus> statuses = List.of(ARCHIVED, DELETED, DRAFT, ACTIVE, DELAYED_PUBLICATION);
-        return statuses.contains(status);
+        return statuses.contains(value);
     }
 }
