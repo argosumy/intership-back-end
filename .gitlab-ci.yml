@@ -12,11 +12,22 @@ check:
   stage: test
   tags:
     - docker
+  services:
+    - postgres
+  variables:
+    DB_HOST: postgres
+    DB_URL: "jdbc:postgresql://${DB_HOST}:5432/baraholka_test"
+    POSTGRES_DB: baraholka_test
+    POSTGRES_USER: baraholka_test
+    POSTGRES_PASSWORD: baraholka_test
   except:
     - prod
   script:
     - export GRADLE_USER_HOME=/cache/gradle
     - ./gradlew clean check --stacktrace
+  artifacts:
+    reports:
+      junit: build/test-results/test/TEST-*.xml
 
 .build:
   stage: build
@@ -41,7 +52,7 @@ build master:
   variables:
     IMAGE_TAG: latest
   only:
-    - RC/demo-1
+    - stage
 
 .deploy:
   stage: deploy
@@ -67,4 +78,4 @@ deploy stage:
   variables:
     APP_PATH: /opt/baraholka-master
   only:
-    - RC/demo-1
+    - stage
