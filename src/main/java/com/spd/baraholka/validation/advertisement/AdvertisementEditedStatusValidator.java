@@ -17,7 +17,7 @@ public class AdvertisementEditedStatusValidator implements ConstraintValidator<E
     }
 
     private boolean isAllowed(AdvertisementStatus status) {
-        List<AdvertisementStatus> statuses = List.of(ARCHIVED, DELETED);
+        List<AdvertisementStatus> statuses = List.of(ARCHIVED, DELETED, DRAFT, ACTIVE, DELAYED_PUBLICATION);
         return statuses.contains(status);
     }
 }

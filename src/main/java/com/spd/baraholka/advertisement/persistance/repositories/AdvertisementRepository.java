@@ -66,7 +66,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
 
     private Map<String, ? extends Serializable> createUpdateParameters(Advertisement advertisement) {
         return Map.of("title", advertisement.getTitle(),
-                "status", advertisement.getStatus(),
+                "status", advertisement.getStatus().toString(),
                 "discountAvailability", advertisement.isDiscountAvailability(),
                 "publicationDate", advertisement.getPublicationDate(),
                 "statusChangeDate", advertisement.getStatusChangeDate(),
@@ -82,7 +82,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + "status=:status, "
                 + "discount_availability=:discountAvailability, "
                 + "publication_date=:publicationDate, "
-                + "status_change_date=:statusChangeDate"
+                + "status_change_date=:statusChangeDate,"
                 + "description=:description,"
                 + "price=:price,"
                 + "currency=:currency,"
