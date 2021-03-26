@@ -9,10 +9,13 @@ import com.spd.baraholka.comment_reactions.dto.CommentReactionDto;
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.mappers.CommentReactionDtoMapper;
 import com.spd.baraholka.comment_reactions.services.CommentReactionService;
+import com.spd.baraholka.config.SecurityConfig;
+import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -41,6 +44,12 @@ class CommentReactionControllerTest {
     @Autowired
     private ObjectMapper mapper;
     private CommentReactionDto commentReactionDto;
+    @Autowired
+    private SecurityConfig securityConfig;
+    @Autowired
+    @MockBean
+    @Qualifier("OAuth2SuccessHandler")
+    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @BeforeEach
     void setUp() {
