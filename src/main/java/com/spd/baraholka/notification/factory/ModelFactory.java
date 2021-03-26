@@ -33,7 +33,7 @@ public class ModelFactory {
                 model.put("title", ((AdvertisementNotification) baseNotification).getTitle());
                 model.put("description", ((AdvertisementNotification) baseNotification).getDescription());
                 model.put("mailTo", baseNotification.getMailTo());
-                model.put("adLink", baseNotification.getObjectLink());
+                model.put("objectLink", baseNotification.getObjectLink());
                 model.put(PROFILE_LINK, baseNotification.getUserProfileLink());
                 break;
 
@@ -41,6 +41,7 @@ public class ModelFactory {
             case ADVERTISEMENT_BLOCK:
                 model.put("blockEnd", ((BanBlockNotification) baseNotification).getEndDate().toString());
                 model.put("reason", ((BanBlockNotification) baseNotification).getReason());
+                model.put("objectLink", baseNotification.getUserProfileLink());
                 model.put(PROFILE_LINK, baseNotification.getUserProfileLink());
                 break;
 

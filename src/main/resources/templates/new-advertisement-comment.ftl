@@ -40,10 +40,10 @@
         <div class="container">
             <p class="description">
                 User <#if writer??>${writer}</#if>
-                post new comment <#if objectLink??> in <a href="${objectLink}">Your ad</a></#if>
+                post new comment <#if objectLink??> on <a href="${objectLink}">Your ad</a></#if>
             </p>
 
-            <p class="subscribe">
+            <p class="unsubscribe">
                 You received this message because you are subscribed to the
                 Google Groups "Baraholka" group. To unsubscribe from this group
                 and stop receiving emails from it, you can turn off it in

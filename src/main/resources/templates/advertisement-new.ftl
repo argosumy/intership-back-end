@@ -83,7 +83,7 @@
                 ${description}
             </p>
 
-            <a class="btn" href="${adLink}">View Details</a>
+            <a class="btn" href="${objectLink}">View Details</a>
             <a class="btn" href="mailto:${mailTo}?subject=RE: ${title}`"
                 >Contact seller</a
             >

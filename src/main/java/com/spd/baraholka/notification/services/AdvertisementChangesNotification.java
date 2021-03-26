@@ -46,7 +46,7 @@
 //        model.put("link_ad", notificationAd.getAdLink());
 //        MimeMessage message = this.emailSender.createMimeMessage();
 //        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-//        Template template = emailConfig.getTemplate("wishlist-changes.ftl");
+//        Template template = emailConfig.getTemplate("wishlist-change.ftl");
 //        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 //        mimeMessageHelper.setTo(notificationAd.getSendTo());
 //        mimeMessageHelper.setText(html, true);
