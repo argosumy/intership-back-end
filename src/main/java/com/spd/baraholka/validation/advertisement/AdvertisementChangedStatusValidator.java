@@ -11,9 +11,10 @@ import static com.spd.baraholka.advertisement.persistance.entities.Advertisement
 
 public class AdvertisementChangedStatusValidator implements ConstraintValidator<ChangedStatus, AdvertisementStatus> {
 
+    private static final List<AdvertisementStatus> STATUSES = List.of(ON_HOLD, ARCHIVED);
+
     @Override
     public boolean isValid(AdvertisementStatus value, ConstraintValidatorContext context) {
-        List<AdvertisementStatus> statuses = List.of(ON_HOLD, ARCHIVED);
-        return statuses.contains(value);
+        return STATUSES.contains(value);
     }
 }
