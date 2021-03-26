@@ -38,6 +38,6 @@ public class NotificationController {
 
     @PostMapping
     public void sendNotification(@RequestBody NotificationDto notificationDto) throws MessagingException, IOException, TemplateException {
-        notificationService.sendMessage(notificationMapperFactory.getNotification(notificationDto, EventType.NEW_ADVERTISEMENT_COMMENT));
+        notificationService.sendMessage(notificationMapperFactory.getNotification(notificationDto));
     }
 }

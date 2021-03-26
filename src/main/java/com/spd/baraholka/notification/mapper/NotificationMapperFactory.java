@@ -10,9 +10,11 @@ import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.model.CommentNotification;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.service.UserService;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@Component
 public class NotificationMapperFactory {
 
     private final UserService userService;
@@ -23,31 +25,32 @@ public class NotificationMapperFactory {
         this.advertisementService = advertisementService;
     }
 
-    public BaseNotification getNotification(NotificationDto notificationDto, EventType eventType) {
+    public BaseNotification getNotification(NotificationDto notificationDto) {
 
         UserDTO userMailTo = getUserById(notificationDto.getUserMailToId());
         UserDTO userById = getUserById(notificationDto.getUserId());
         Advertisement advertisementById = getAdvertisementById(notificationDto.getAdvertisementId());
+        EventType eventType = notificationDto.getEventType();
 
         switch (eventType) {
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
                 BanBlockNotification banBlockNotification = new BanBlockNotification();
-                setParameters(banBlockNotification, notificationDto, eventType, userMailTo);
+                setParameters(banBlockNotification, notificationDto, userMailTo);
                 banBlockNotification.setReason(notificationDto.getReason());
                 banBlockNotification.setEndDate(notificationDto.getBlockEndDate());
                 return banBlockNotification;
             case NEW_ADVERTISEMENT:
             case ADVERTISEMENT_CHANGE:
                 AdvertisementNotification advertisementNotification = new AdvertisementNotification();
-                setParameters(advertisementNotification, notificationDto, eventType, userMailTo);
+                setParameters(advertisementNotification, notificationDto, userMailTo);
                 advertisementNotification.setTitle(advertisementById.getTitle());
                 advertisementNotification.setDescription(advertisementById.getDescription());
                 return advertisementNotification;
             case NEW_ADVERTISEMENT_COMMENT:
             case NEW_COMMENT_ON_COMMENT:
                 CommentNotification commentNotification = new CommentNotification();
-                setParameters(commentNotification, notificationDto, eventType, userMailTo);
+                setParameters(commentNotification, notificationDto, userMailTo);
                 commentNotification.setWriterName(userById.getFirstName() + " " + userById.getLastName());
                 return commentNotification;
             default:
@@ -55,12 +58,12 @@ public class NotificationMapperFactory {
         }
     }
 
-    private void setParameters(BaseNotification notification, NotificationDto notificationDto, EventType eventType, UserDTO userMailTo) {
-        notification.setSubject(eventType.name());
+    private void setParameters(BaseNotification notification, NotificationDto notificationDto, UserDTO userMailTo) {
+        notification.setSubject(notification.getEventType().name());
         notification.setMailTo(userMailTo.getEmail());
         notification.setObjectLink(notificationDto.getObjectLink());
         notification.setUserProfileLink(notificationDto.getUserProfileLink());
-        notification.setEventType(eventType);
+        notification.setEventType(notification.getEventType());
         notification.setCreationDate(LocalDateTime.now());
     }
 

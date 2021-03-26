@@ -16,8 +16,9 @@ public class ModelFactory {
     private ModelFactory() {
     }
 
-    public static Map<String, String> getModel(BaseNotification baseNotification, EventType eventType) {
+    public static Map<String, String> getModel(BaseNotification baseNotification) {
         Map<String, String> model = new HashMap<>();
+        EventType eventType = baseNotification.getEventType();
 
         switch (eventType) {
             case NEW_ADVERTISEMENT_COMMENT:

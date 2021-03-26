@@ -1,5 +1,8 @@
 package com.spd.baraholka.notification.dto;
 
+import com.spd.baraholka.notification.enums.EventType;
+import jdk.jshell.EvalException;
+
 import java.time.LocalDateTime;
 
 public class NotificationDto {
@@ -10,6 +13,7 @@ public class NotificationDto {
     private String reason;
     private String objectLink;
     private String userProfileLink;
+    private EventType eventType;
     private LocalDateTime blockEndDate;
 
     public int getUserId() {
@@ -66,5 +70,13 @@ public class NotificationDto {
 
     public void setUserProfileLink(String userProfileLink) {
         this.userProfileLink = userProfileLink;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 }
