@@ -52,17 +52,18 @@ public class UserNotificationSettingsRepository implements PersistenceUserNotifi
                 "new_comments_to_my_ad_notification, " +
                 "replies_to_my_comments_notification, " +
                 "mentions_in_thread_notification, " +
-                "wishlist_update_notification " +
-                "VALUES(:user_id, :newComment, :reply, :mention, :wishlist))";
+                "wishlist_update_notification) " +
+                "VALUES(:user_id, :newAd, :newAdComment, :replyComment, :mentionInThread, :wishlistUpdate)";
     }
 
     private MapSqlParameterSource getInsertedParameters(UserNotificationSettings userNotificationSettings) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("user_id", userNotificationSettings.getUserId());
-        namedParameters.addValue("newComment", userNotificationSettings.isNewAdNotification());
-        namedParameters.addValue("reply", userNotificationSettings.isReplyToCommentNotification());
-        namedParameters.addValue("mention", userNotificationSettings.isMentionInNotificationThread());
-        namedParameters.addValue("wishlist", userNotificationSettings.isWishlistUpdateNotification());
+        namedParameters.addValue("newAd", userNotificationSettings.isNewAdNotification());
+        namedParameters.addValue("newAdComment", userNotificationSettings.isNewCommentToAdNotification());
+        namedParameters.addValue("replyComment", userNotificationSettings.isReplyToCommentNotification());
+        namedParameters.addValue("mentionInThread", userNotificationSettings.isMentionInNotificationThread());
+        namedParameters.addValue("wishlistUpdate", userNotificationSettings.isWishlistUpdateNotification());
         return namedParameters;
     }
 
