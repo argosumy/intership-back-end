@@ -1,5 +1,6 @@
 package com.spd.baraholka.advertisement.controller;
 
+import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
@@ -18,7 +19,7 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public int saveAdvertisement(@RequestBody @Valid AdvertisementDTO advertisementDTO) {
+    public int saveAdvertisement(@RequestBody @Valid InitialAdvertisementDTO advertisementDTO) {
         return advertisementService.saveAdvertisement(advertisementDTO);
     }
 
