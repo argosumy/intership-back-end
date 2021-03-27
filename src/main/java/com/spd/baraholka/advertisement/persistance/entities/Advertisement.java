@@ -6,9 +6,9 @@ public class Advertisement {
 
     private int advertisementId;
     private int ownerId;
+    private String category;
     private String title;
     private String description;
-    private String category;
     private double price;
     private CurrencyType currency;
     private boolean discountAvailability;
@@ -20,6 +20,14 @@ public class Advertisement {
 
     public int getAdvertisementId() {
         return advertisementId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public void setAdvertisementId(int advertisementId) {
@@ -48,14 +56,6 @@ public class Advertisement {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public double getPrice() {
