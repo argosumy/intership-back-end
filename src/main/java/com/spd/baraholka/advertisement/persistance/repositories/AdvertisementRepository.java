@@ -111,7 +111,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
 
     private String createInsertSQL() {
         return "INSERT INTO advertisements (user_id, "
-                + "category=:category,"
+                + "category,"
                 + "title,"
                 + "description,"
                 + "price,"
@@ -122,7 +122,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + "creation_date,"
                 + "publication_date,"
                 + "status_change_date)"
-                + " VALUES (:ownerId, "
+                + " VALUES (:ownerId, :category,"
                 + ":title,"
                 + " :description,"
                 + " :price,"
