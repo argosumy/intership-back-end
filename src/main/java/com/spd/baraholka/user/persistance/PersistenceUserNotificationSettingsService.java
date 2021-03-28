@@ -10,5 +10,5 @@ public interface PersistenceUserNotificationSettingsService {
 
     int saveNotificationSettings(UserNotificationSettings userNotificationSettings);
 
-    int updateNotificationSettings(UserNotificationSettings userNotificationSettings);
+    int updateNotificationSettings(UserNotificationSettings userNotificationSettings, int id);
 }

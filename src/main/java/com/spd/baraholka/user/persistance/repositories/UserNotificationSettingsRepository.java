@@ -41,14 +41,14 @@ public class UserNotificationSettingsRepository implements PersistenceUserNotifi
     public int saveNotificationSettings(UserNotificationSettings userNotificationSettings) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = getInsertedParameters(userNotificationSettings);
-        jdbcTemplate.update(getInsertNotificationSettingsSql(), parameterSource, keyHolder);
+        jdbcTemplate.update(getInsertNotificationSettingsSql(), parameterSource, keyHolder, new String[] {"id"});
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
     @Override
-    public int updateNotificationSettings(UserNotificationSettings userNotificationSettings) {
-        jdbcTemplate.update(getUpdateNotificationSettingsSql(), getInsertedParameters(userNotificationSettings));
-        return userNotificationSettings.getId();
+    public int updateNotificationSettings(UserNotificationSettings userNotificationSettings, int id) {
+        jdbcTemplate.update(getUpdateNotificationSettingsSql(), getUpdatedParameters(userNotificationSettings, id));
+        return id;
     }
 
     private String getInsertNotificationSettingsSql() {
@@ -63,25 +63,35 @@ public class UserNotificationSettingsRepository implements PersistenceUserNotifi
     }
 
     private String getUpdateNotificationSettingsSql() {
-        return "UPDATE users_settings SET(" +
-                "user_id, " +
-                "new_ads_notification, " +
-                "new_comments_to_my_ad_notification, " +
-                "replies_to_my_comments_notification, " +
-                "mentions_in_thread_notification, " +
-                "wishlist_update_notification) " +
-                "VALUES(:user_id, :newAd, :newAdComment, :replyComment, :mentionInThread, :wishlistUpdate) " +
-                "WHERE user_id=:id";
+        return "UPDATE users_settings SET " +
+                "user_id=:user_id, " +
+                "new_ads_notification=:newAd, " +
+                "new_comments_to_my_ad_notification=:newAdComment, " +
+                "replies_to_my_comments_notification=:replyComment, " +
+                "mentions_in_thread_notification=:mentionInThread, " +
+                "wishlist_update_notification=:wishlistUpdate " +
+                "WHERE id=:id";
     }
 
     private MapSqlParameterSource getInsertedParameters(UserNotificationSettings userNotificationSettings) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        getGeneralParameters(userNotificationSettings, namedParameters);
+        return namedParameters;
+    }
+
+    private MapSqlParameterSource getUpdatedParameters(UserNotificationSettings userNotificationSettings, int id) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
+        getGeneralParameters(userNotificationSettings, namedParameters);
+        return namedParameters;
+    }
+
+    private void getGeneralParameters(UserNotificationSettings userNotificationSettings, MapSqlParameterSource namedParameters) {
         namedParameters.addValue("user_id", userNotificationSettings.getUserId());
         namedParameters.addValue("newAd", userNotificationSettings.isNewAdNotification());
         namedParameters.addValue("newAdComment", userNotificationSettings.isNewCommentToAdNotification());
         namedParameters.addValue("replyComment", userNotificationSettings.isReplyToCommentNotification());
         namedParameters.addValue("mentionInThread", userNotificationSettings.isMentionInNotificationThread());
         namedParameters.addValue("wishlistUpdate", userNotificationSettings.isWishlistUpdateNotification());
-        return namedParameters;
     }
 }

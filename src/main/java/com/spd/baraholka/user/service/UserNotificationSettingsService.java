@@ -30,6 +30,6 @@ public class UserNotificationSettingsService {
                 persistenceUserNotificationSettingsService.getNotificationSettingsByUserId(userNotificationSettings.getUserId());
         return notificationSettings.isEmpty() ?
                 persistenceUserNotificationSettingsService.saveNotificationSettings(userNotificationSettings) :
-                persistenceUserNotificationSettingsService.updateNotificationSettings(userNotificationSettings);
+                persistenceUserNotificationSettingsService.updateNotificationSettings(userNotificationSettings, notificationSettings.get().getId());
     }
 }
