@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.spd.baraholka.notification.factory.ModelFactory.getModel;
-import static com.spd.baraholka.notification.factory.TemplateFactory.template;
 
 @Service
 public class NotificationService {
@@ -37,11 +36,20 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    public MimeMessage createMessage(BaseNotification baseNotification) throws MessagingException, IOException, TemplateException {
+    public void sendMessage(BaseNotification baseNotification) throws MessagingException, IOException, TemplateException {
+        emailSender.send(createMessage(baseNotification));
+    }
+
+    private MimeMessage createMessage(BaseNotification baseNotification) throws MessagingException, IOException, TemplateException {
         Map<String, String> model = getModel(baseNotification);
-        Template template = emailConfig.getTemplate(template(baseNotification.getEventType()));
+        var templateLabel = baseNotification.getEventType().getTemplateLabel();
+        Template template = emailConfig.getTemplate(templateLabel);
         String html = getHtml(model, template);
 
+        return getMimeMessage(baseNotification, html);
+    }
+
+    private MimeMessage getMimeMessage(BaseNotification baseNotification, String html) throws MessagingException {
         MimeMessage message = this.emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
 
@@ -49,12 +57,7 @@ public class NotificationService {
         mimeMessageHelper.setText(html, true);
         mimeMessageHelper.setSubject(baseNotification.getSubject());
         mimeMessageHelper.setFrom("Admin");
-
         return message;
-    }
-
-    public void sendMessage(BaseNotification baseNotification) throws MessagingException, IOException, TemplateException {
-        emailSender.send(createMessage(baseNotification));
     }
 
     private String getHtml(Map<String, String> model, Template template) throws IOException, TemplateException {

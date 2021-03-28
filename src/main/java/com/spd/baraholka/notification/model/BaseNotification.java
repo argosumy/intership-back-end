@@ -11,7 +11,7 @@ public abstract class BaseNotification {
     private String objectLink;
     private String userProfileLink;
     private EventType eventType;
-    LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
     public String getSubject() {
         return subject;
