@@ -52,7 +52,7 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public List<User> selectAllUsers() {
-        String selectSQL = "SELECT id, first_name, last_name, is_blocked, end_date_of_ban FROM users";
+        String selectSQL = "SELECT id, first_name, last_name, is_blocked, end_date_of_ban, avatar FROM users";
         return jdbcTemplate.query(selectSQL, userShortViewRowMapper);
     }
 
@@ -65,7 +65,7 @@ public class UserRepository implements PersistenceUserService {
     @Override
     public User create(User user) {
         final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, avatar) " +
-                "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :image_url) ";
+                "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :avatar) ";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
