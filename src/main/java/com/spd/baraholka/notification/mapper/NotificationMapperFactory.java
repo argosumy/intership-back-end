@@ -1,7 +1,7 @@
 package com.spd.baraholka.notification.mapper;
 
-import com.spd.baraholka.advertisements.persistance.Advertisement;
-import com.spd.baraholka.advertisements.services.AdvertisementService;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.notification.dto.NotificationDto;
 import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.model.AdvertisementNotification;

@@ -40,4 +40,8 @@ public class AdvertisementService {
         Optional<Boolean> exist = persistenceAdvertisementService.isExist(id);
         return exist.orElse(false);
     }
+
+    public Optional<Advertisement> findAdById(int advertisementId) {
+        return Optional.empty();
+    }
 }
