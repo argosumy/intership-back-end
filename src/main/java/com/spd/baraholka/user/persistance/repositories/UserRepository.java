@@ -41,7 +41,7 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public User create(User user) {
-        final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, image_url) " +
+        final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, avatar) " +
                 "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :image_url) ";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -52,7 +52,7 @@ public class UserRepository implements PersistenceUserService {
                 .addValue("location", user.getLocation())
                 .addValue("phone_number", user.getPhoneNumber())
                 .addValue("position", user.getPosition())
-                .addValue("image_url", user.getImageUrl());
+                .addValue("avatar", user.getImageUrl());
         jdbcTemplate.update(sql, parameters, keyHolder);
         Map<String, Object> keys = Objects.requireNonNull(keyHolder.getKeys());
         if (keys.containsKey("id")) {
