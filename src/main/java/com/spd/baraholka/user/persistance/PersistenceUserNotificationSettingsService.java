@@ -9,4 +9,6 @@ public interface PersistenceUserNotificationSettingsService {
     Optional<UserNotificationSettings> getNotificationSettingsByUserId(int userId);
 
     int saveNotificationSettings(UserNotificationSettings userNotificationSettings);
+
+    int updateNotificationSettings(UserNotificationSettings userNotificationSettings);
 }
