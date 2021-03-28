@@ -29,7 +29,7 @@ public class UserNotificationSettingsRepository implements PersistenceUserNotifi
     public Optional<UserNotificationSettings> getNotificationSettingsByUserId(int userId) {
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(
-                    "SELECT * FROM users_settings WHERE user_id=:id",
+                    "SELECT * FROM users_settings WHERE user_id = :id",
                     Map.of("id", userId),
                     userNotificationSettingsRowMapper));
         } catch (DataAccessException e) {
@@ -41,7 +41,7 @@ public class UserNotificationSettingsRepository implements PersistenceUserNotifi
     public int saveNotificationSettings(UserNotificationSettings userNotificationSettings) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = getInsertedParameters(userNotificationSettings);
-        jdbcTemplate.update(getInsertNotificationSettingsSql(), parameterSource, keyHolder, new String[] {"id"});
+        jdbcTemplate.update(getInsertNotificationSettingsSql(), parameterSource, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 

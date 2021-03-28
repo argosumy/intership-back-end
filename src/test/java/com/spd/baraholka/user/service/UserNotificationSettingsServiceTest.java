@@ -32,7 +32,7 @@ class UserNotificationSettingsServiceTest {
     }
 
     private UserNotificationSettings createUserNotificationSettings() {
-        UserNotificationSettings userNotificationSettings = new UserNotificationSettings;
+        UserNotificationSettings userNotificationSettings = new UserNotificationSettings();
         userNotificationSettings.setUserId(1);
         userNotificationSettings.setNewAdNotification(true);
         userNotificationSettings.setNewCommentToAdNotification(true);
@@ -54,5 +54,4 @@ class UserNotificationSettingsServiceTest {
 
         assertThat(returnedId).isEqualTo(1);
     }
-
 }
