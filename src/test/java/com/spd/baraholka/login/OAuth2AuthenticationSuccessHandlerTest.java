@@ -8,10 +8,7 @@ import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
 import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -31,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)

@@ -1,7 +1,6 @@
 package com.spd.baraholka.user.persistance.repositories;
 
 import com.spd.baraholka.user.persistance.PersistenceUserNotificationSettingsService;
-import com.spd.baraholka.user.persistance.entities.UserGeneralSetting;
 import com.spd.baraholka.user.persistance.entities.UserNotificationSettings;
 import com.spd.baraholka.user.persistance.mappers.UserNotificationSettingsRowMapper;
 import org.springframework.dao.DataAccessException;
@@ -10,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
