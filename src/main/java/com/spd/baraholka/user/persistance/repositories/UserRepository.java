@@ -42,7 +42,7 @@ public class UserRepository implements PersistenceUserService {
     @Override
     public User create(User user) {
         final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, avatar) " +
-                "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :image_url) ";
+                "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :avatar) ";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
