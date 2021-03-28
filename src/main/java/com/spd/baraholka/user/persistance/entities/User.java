@@ -7,6 +7,7 @@ import java.util.*;
 public class User {
 
     private int id;
+    private String imageUrl;
     private String firstName;
     private String lastName;
     private String email;
@@ -14,20 +15,11 @@ public class User {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private String imageUrl;
     private final Set<Role> roles;
 
     public User() {
         this.roles = new HashSet<>();
         roles.add(Role.USER);
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public int getId() {
@@ -36,6 +28,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getFirstName() {
