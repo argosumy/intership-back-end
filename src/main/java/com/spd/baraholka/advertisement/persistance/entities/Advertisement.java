@@ -22,6 +22,7 @@ public class Advertisement {
     public Advertisement() {
     }
 
+    @SuppressWarnings("checkstyle:ParameterNumber")
     public Advertisement(int advertisementId, int ownerId, String title, String description, String category, double price,
                          CurrencyType currency, boolean discountAvailability, String city, AdvertisementStatus status, LocalDateTime creationDate,
                          LocalDateTime publicationDate, LocalDateTime statusChangeDate) {

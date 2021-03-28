@@ -20,7 +20,6 @@ public class NotificationController {
     private final NotificationMapperFactory notificationMapperFactory;
     private final NotificationDaoMapper notificationDaoMapper;
 
-
     @Autowired
     public NotificationController(NotificationService notificationService,
                                   NotificationMapperFactory notificationMapperFactory,

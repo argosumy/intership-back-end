@@ -9,7 +9,7 @@ import com.spd.baraholka.notification.model.CommentNotification;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ModelFactory {
+public final class ModelFactory {
 
     public static final String PROFILE_LINK = "profileLink";
     public static final String OBJECT_LINK = "objectLink";

@@ -26,7 +26,6 @@ public class NotificationMapperFactory {
     }
 
     public BaseNotification getNotification(NotificationDto notificationDto) {
-
         UserDTO userMailTo = getUserById(notificationDto.getUserMailToId());
         UserDTO userById = getUserById(notificationDto.getUserId());
         Advertisement advertisementById = getAdvertisementById(notificationDto.getAdvertisementId());
