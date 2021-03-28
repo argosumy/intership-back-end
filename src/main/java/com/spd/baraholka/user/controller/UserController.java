@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.controller;
 
-import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.controller.dto.UserProfileDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable int id) {
+    public UserProfileDTO getUserById(@PathVariable int id) {
         return userService.getUserById(id);
     }
 

@@ -5,7 +5,7 @@ import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
-import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.controller.dto.UserProfileDTO;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
@@ -33,7 +33,7 @@ public class UserService {
         this.resourceMapper = resourceMapper;
     }
 
-    public UserDTO getUserById(int id) {
+    public UserProfileDTO getUserById(int id) {
         Optional<User> user = persistenceUserService.selectUserById(id);
         if (user.isEmpty()) {
             throw new NotFoundByIdException(id);
@@ -42,12 +42,12 @@ public class UserService {
         }
     }
 
-    private UserDTO collectUserDTO(User user) {
+    private UserProfileDTO collectUserDTO(User user) {
         List<UserAdditionalResource> additionalResources = persistenceResourceService.selectUserAdditionalResources(user.getId());
-        UserDTO userDTO = userMapper.convertToDTO(user);
+        UserProfileDTO userProfileDTO = userMapper.convertToDTO(user);
         List<UserAdditionalResourceDTO> additionalResourceDTO = resourceMapper.convertToDTOList(additionalResources);
-        userDTO.setAdditionalContactResources(additionalResourceDTO);
-        return userDTO;
+        userProfileDTO.setAdditionalContactResources(additionalResourceDTO);
+        return userProfileDTO;
     }
 
     public List<UserShortViewDTO> getAllUsers() {
