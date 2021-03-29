@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,60 +32,86 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         this.advertisementRowMapper = advertisementRowMapper;
     }
 
-    public int addAdvertisement(Advertisement advertisement) {
+    @Override
+    public int insertAdvertisement(Advertisement advertisement) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        MapSqlParameterSource namedParameters = fillInsertParameters(advertisement);
         String insertSQL = createInsertSQL();
-        jdbcTemplate.update(insertSQL, namedParameters, keyHolder);
+        MapSqlParameterSource insertParameters = createInsertParameters(advertisement);
+        jdbcTemplate.update(insertSQL, insertParameters, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
+    @Override
     public int updateAdvertisement(Advertisement advertisement) {
         String updateSQL = createUpdateSQL();
-        return jdbcTemplate.update(updateSQL, fillUpdateParameters(advertisement));
+        Map<String, ? extends Serializable> updateParameters = createUpdateParameters(advertisement);
+        jdbcTemplate.update(updateSQL, updateParameters);
+        return advertisement.getAdvertisementId();
     }
 
+    @Override
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
-        String updateStatusSQL = createUpdateStatusSQL();
-        jdbcTemplate.update(updateStatusSQL, fillUpdateStatusParameters(id, status));
+        String updateSQL = createUpdateStatusSQL();
+        Map<String, ? extends Comparable<? extends Comparable<?>>> updateParameters = createUpdateStatusParameters(id, status);
+        jdbcTemplate.update(updateSQL, updateParameters);
         return id;
     }
 
-    private MapSqlParameterSource fillInsertParameters(Advertisement advertisement) {
+    @Override
+    public Optional<Boolean> isExist(int id) {
+        String isExistQuery = "SELECT count(*) <> 0 FROM advertisements WHERE id=:id";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
+    }
+
+
+    private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("ownerId", advertisement.getOwnerId());
+        namedParameters.addValue("category", advertisement.getCategory());
         namedParameters.addValue("title", advertisement.getTitle());
         namedParameters.addValue("description", advertisement.getDescription());
-        namedParameters.addValue("category", advertisement.getCategory());
         namedParameters.addValue("price", advertisement.getPrice());
         namedParameters.addValue("currency", advertisement.getCurrency().toString());
         namedParameters.addValue("discountAvailability", advertisement.isDiscountAvailability());
         namedParameters.addValue("city", advertisement.getCity());
-        namedParameters.addValue(STATUS_PARAMETER, advertisement.getStatus().toString());
+        namedParameters.addValue("status", advertisement.getStatus().toString());
         namedParameters.addValue("creationDate", Timestamp.valueOf(advertisement.getCreationDate()));
-        namedParameters.addValue(PUBLICATION_DATE_PARAMETER, Timestamp.valueOf(advertisement.getPublicationDate()));
-        namedParameters.addValue(STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(advertisement.getStatusChangeDate()));
+        namedParameters.addValue("publicationDate", Timestamp.valueOf(advertisement.getPublicationDate()));
+        namedParameters.addValue("statusChangeDate", Timestamp.valueOf(advertisement.getStatusChangeDate()));
         return namedParameters;
     }
 
-    private Map<String, Object> fillUpdateParameters(Advertisement advertisement) {
-        return Map.ofEntries(
-                Map.entry("title", advertisement.getTitle()),
-                Map.entry("description", advertisement.getDescription()),
-                Map.entry("category", advertisement.getCategory()),
-                Map.entry("price", advertisement.getPrice()),
-                Map.entry("currency", advertisement.getCurrency().toString()),
-                Map.entry("discountAvailability", advertisement.isDiscountAvailability()),
-                Map.entry("city", advertisement.getCity()),
-                Map.entry(STATUS_PARAMETER, advertisement.getStatus().toString()),
-                Map.entry(STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(advertisement.getStatusChangeDate())),
-                Map.entry(PUBLICATION_DATE_PARAMETER, Timestamp.valueOf(advertisement.getPublicationDate())),
-                Map.entry("advertisementId", advertisement.getAdvertisementId())
-        );
+
+    private Map<String, ? extends Serializable> createUpdateParameters(Advertisement advertisement) {
+        return Map.of("title", advertisement.getTitle(),
+                "status", advertisement.getStatus().toString(),
+                "discountAvailability", advertisement.isDiscountAvailability(),
+                "publicationDate", advertisement.getPublicationDate(),
+                "statusChangeDate", advertisement.getStatusChangeDate(),
+                "description", advertisement.getDescription(),
+                "price", advertisement.getPrice(),
+                "currency", advertisement.getCurrency().toString(),
+                "city", advertisement.getCity(),
+                "advertisementId", advertisement.getAdvertisementId());
     }
 
-    private Map<String, ? extends Comparable<? extends Comparable<?>>> fillUpdateStatusParameters(int id, AdvertisementStatus status) {
-        return Map.of(STATUS_PARAMETER, status,
-                STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(LocalDateTime.now()),
+
+    private String createUpdateSQL() {
+        return "UPDATE advertisements SET title=:title, "
+                + "status=:status, "
+                + "discount_availability=:discountAvailability, "
+                + "publication_date=:publicationDate, "
+                + "status_change_date=:statusChangeDate,"
+                + "description=:description,"
+                + "price=:price,"
+                + "currency=:currency,"
+                + "city=:city "
+                + "WHERE id=:advertisementId";
+    }
+
+    private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateStatusParameters(int id, AdvertisementStatus status) {
+        return Map.of("status", status.toString(),
+                "statusChangeDate", Timestamp.valueOf(LocalDateTime.now()),
                 "advertisementId", id);
     }
 
@@ -93,24 +120,11 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 "SET status=:status, status_change_date=:statusChangeDate WHERE id=:advertisementId";
     }
 
-    private String createUpdateSQL() {
-        return "UPDATE advertisements SET title=:title,"
-                + "description=:description,"
-                + "category=:category,"
-                + "price=:price,"
-                + "currency=:currency,"
-                + "discount_availability=:discountAvailability,"
-                + "city=:city,"
-                + "status=:status,"
-                + "status_change_date=:statusChangeDate,"
-                + "publication_date=:publicationDate "
-                + "WHERE id=:advertisementId";
-    }
-
     private String createInsertSQL() {
-        return "INSERT INTO advertisements (title,"
-                + "description,"
+        return "INSERT INTO advertisements (user_id, "
                 + "category,"
+                + "title,"
+                + "description,"
                 + "price,"
                 + "currency,"
                 + "discount_availability,"
@@ -119,9 +133,9 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + "creation_date,"
                 + "publication_date,"
                 + "status_change_date)"
-                + " VALUES (:title,"
+                + " VALUES (:ownerId, :category,"
+                + ":title,"
                 + " :description,"
-                + " :category,"
                 + " :price,"
                 + " :currency,"
                 + " :discountAvailability,"

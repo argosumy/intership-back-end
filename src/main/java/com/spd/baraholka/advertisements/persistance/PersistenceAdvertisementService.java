@@ -10,8 +10,6 @@ import java.util.Optional;
 @Repository
 public interface PersistenceAdvertisementService {
 
-    int saveAdvertisement(Advertisement advertisement);
-
     int updateAdvertisement(Advertisement advertisement);
 
     int updateAdvertisementStatus(int id, AdvertisementStatus status);
