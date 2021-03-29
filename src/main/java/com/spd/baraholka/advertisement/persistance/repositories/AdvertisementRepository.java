@@ -3,6 +3,7 @@ package com.spd.baraholka.advertisement.persistance.repositories;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.mappers.AdvertisementRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -19,9 +20,11 @@ import java.util.Optional;
 public class AdvertisementRepository implements PersistenceAdvertisementService {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final AdvertisementRowMapper advertisementMapper;
 
-    public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+    public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate, AdvertisementRowMapper advertisementRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.advertisementMapper = advertisementRowMapper;
     }
 
     @Override
@@ -57,7 +60,8 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
 
     @Override
     public Advertisement selectAdvertisementById(int id) {
-        return null;
+        String selectSQL = createSelectSQL();
+        return jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), advertisementMapper);
     }
 
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
@@ -90,6 +94,10 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 "advertisementId", advertisement.getAdvertisementId());
     }
 
+    private String createSelectSQL() {
+        return "SELECT id, title, description, price, category, currency, discount_availability, city, status, publication_date FROM advertisements WHERE id=:id";
+    }
+
     private String createUpdateSQL() {
         return "UPDATE advertisements SET title=:title, "
                 + "status=:status, "
@@ -110,8 +118,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     private String createUpdateStatusSQL() {
-        return "UPDATE  advertisements " +
-                "SET status=:status, status_change_date=:statusChangeDate WHERE id=:advertisementId";
+        return "UPDATE  advertisements SET status=:status, status_change_date=:statusChangeDate WHERE id=:advertisementId";
     }
 
     private String createInsertSQL() {
