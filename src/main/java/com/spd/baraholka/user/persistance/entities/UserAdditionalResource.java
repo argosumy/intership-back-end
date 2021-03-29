@@ -3,7 +3,6 @@ package com.spd.baraholka.user.persistance.entities;
 public class UserAdditionalResource {
 
     private int id;
-    private int userId;
     private String resourceName;
     private String resourceUrl;
 
@@ -13,14 +12,6 @@ public class UserAdditionalResource {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getResourceName() {

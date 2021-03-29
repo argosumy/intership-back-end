@@ -21,7 +21,6 @@ public class UserAdditionalResourceMapper {
     private UserAdditionalResource convertToEntity(UserAdditionalResourceDTO additionalResourceDTO) {
         UserAdditionalResource userAdditionalResource = new UserAdditionalResource();
         userAdditionalResource.setId(additionalResourceDTO.getId());
-        userAdditionalResource.setUserId(additionalResourceDTO.getUserId());
         userAdditionalResource.setResourceName(additionalResourceDTO.getResourceName());
         userAdditionalResource.setResourceUrl(additionalResourceDTO.getResourceUrl());
         return userAdditionalResource;
@@ -30,7 +29,6 @@ public class UserAdditionalResourceMapper {
     private UserAdditionalResourceDTO convertToDTO(UserAdditionalResource additionalResource) {
         UserAdditionalResourceDTO additionalResourceDTO = new UserAdditionalResourceDTO();
         additionalResourceDTO.setId(additionalResource.getId());
-        additionalResourceDTO.setUserId(additionalResource.getUserId());
         additionalResourceDTO.setResourceName(additionalResource.getResourceName());
         additionalResourceDTO.setResourceUrl(additionalResource.getResourceUrl());
         return additionalResourceDTO;
