@@ -7,13 +7,13 @@ public class OAuth2UserDTO {
     private final String email;
     private final String firstName;
     private final String lastName;
-    private final String avatar;
+    private final String imageUrl;
 
-    public OAuth2UserDTO(String email, String firstName, String lastName, String avatar) {
+    public OAuth2UserDTO(String email, String firstName, String lastName, String imageUrl) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.avatar = avatar;
+        this.imageUrl = imageUrl;
     }
 
     public String getEmail() {
@@ -28,8 +28,8 @@ public class OAuth2UserDTO {
         return lastName;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class OAuth2UserDTO {
                 "email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", avatar='" + avatar + '\'' +
+                ", avatar='" + imageUrl + '\'' +
                 '}';
     }
 }
