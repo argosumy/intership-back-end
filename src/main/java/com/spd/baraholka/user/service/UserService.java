@@ -25,7 +25,8 @@ public class UserService {
 
     public UserService(PersistenceUserService persistenceUserService,
                        PersistenceUserAdditionalResourcesService persistenceResourceService,
-                       UserMapper userMapper, UserAdditionalResourceMapper resourceMapper) {
+                       UserMapper userMapper,
+                       UserAdditionalResourceMapper resourceMapper) {
         this.persistenceUserService = persistenceUserService;
         this.persistenceResourceService = persistenceResourceService;
         this.userMapper = userMapper;
