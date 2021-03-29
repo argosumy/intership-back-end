@@ -9,11 +9,13 @@ public interface PersistenceUserService {
 
     User create(User user);
 
-    Optional<User> selectUserById(int id);
+    User selectUserById(int id);
 
     Optional<Boolean> existsByEmail(String email);
 
     Optional<Integer> count();
 
     List<User> selectAllUsers();
+
+    Optional<Boolean> isExist(int value);
 }

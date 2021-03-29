@@ -1,6 +1,5 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
@@ -33,21 +32,17 @@ public class UserService {
         this.resourceMapper = resourceMapper;
     }
 
-    public UserProfileDTO getUserById(int id) {
-        Optional<User> user = persistenceUserService.selectUserById(id);
-        if (user.isEmpty()) {
-            throw new NotFoundByIdException(id);
-        } else {
-            return collectUserDTO(user.get());
-        }
+    public UserDTO getUserById(int id) {
+        User user = persistenceUserService.selectUserById(id);
+        return collectUserDTO(user);
     }
 
-    private UserProfileDTO collectUserDTO(User user) {
+    private UserDTO collectUserDTO(User user) {
         List<UserAdditionalResource> additionalResources = persistenceResourceService.selectUserAdditionalResources(user.getId());
-        UserProfileDTO userProfileDTO = userMapper.convertToDTO(user);
+        UserDTO userDTO = userMapper.convertToDTO(user);
         List<UserAdditionalResourceDTO> additionalResourceDTO = resourceMapper.convertToDTOList(additionalResources);
-        userProfileDTO.setAdditionalContactResources(additionalResourceDTO);
-        return userProfileDTO;
+        userDTO.setAdditionalContactResources(additionalResourceDTO);
+        return userDTO;
     }
 
     public List<UserShortViewDTO> getAllUsers() {
@@ -71,5 +66,10 @@ public class UserService {
 
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
         return userMapper.convertFromOAuth(oAuth2UserDto);
+    }
+
+    public boolean isUserExist(int id) {
+        Optional<Boolean> exist = persistenceUserService.isExist(id);
+        return exist.orElse(false);
     }
 }

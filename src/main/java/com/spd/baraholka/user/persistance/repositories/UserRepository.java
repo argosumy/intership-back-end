@@ -5,7 +5,6 @@ import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.mappers.UserShortViewRowMapper;
 import com.spd.baraholka.user.persistance.mappers.UserRowMapper;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -35,14 +34,10 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public Optional<User> selectUserById(int id) {
+    public User selectUserById(int id) {
         String selectSQL = "SELECT * FROM users WHERE id=:id";
         Map<String, Integer> selectParameters = Map.of("id", id);
-        try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper));
-        } catch (DataAccessException e) {
-            return Optional.empty();
-        }
+        return jdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper);
     }
 
     @Override
@@ -96,6 +91,23 @@ public class UserRepository implements PersistenceUserService {
                     .addValue("role", role.name());
             jdbcTemplate.update(sql, parameters);
         }
+    }
+
+    @Override
+    public Optional<Boolean> existsByEmail(String email) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
+                Map.of("email", email), Boolean.class));
+    }
+
+    @Override
+    public Optional<Integer> count() {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class));
+    }
+
+    @Override
+    public Optional<Boolean> isExist(int id) {
+        String isExistQuery = "SELECT count(*) <> 0 FROM users WHERE id=:id";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 }
 
