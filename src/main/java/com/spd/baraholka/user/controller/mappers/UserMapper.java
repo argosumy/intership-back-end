@@ -36,7 +36,7 @@ public class UserMapper {
     private UserShortViewDTO convertToShortViewDTO(User user) {
         UserShortViewDTO userDTO = new UserShortViewDTO();
         userDTO.setId(user.getId());
-        userDTO.setImageUrl(user.getImageUrl());
+        userDTO.setImageUrl(collapseImageUrl(user));
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setBlocked(user.isBlocked());
