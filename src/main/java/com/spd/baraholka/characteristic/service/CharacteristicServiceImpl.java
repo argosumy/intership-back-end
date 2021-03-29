@@ -1,6 +1,6 @@
 package com.spd.baraholka.characteristic.service;
 
-import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.CategoryDTO;
 import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
 import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
 import com.spd.baraholka.characteristic.persistance.CharacteristicService;

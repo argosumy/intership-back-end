@@ -1,6 +1,7 @@
 package com.spd.baraholka.characteristic.persistance.mappers;
 
-import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.Category;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,6 @@ public class CategoryDTOMapper implements RowMapper<CategoryDTO> {
         Set<String> targetSet = new HashSet<>();
         Collections.addAll(targetSet, array);
 
-        return new CategoryDTO(rs.getString("category_name"), targetSet);
+        return new CategoryDTO(Category.valueOf(rs.getString("category_name")), targetSet);
     }
 }

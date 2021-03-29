@@ -1,6 +1,6 @@
 package com.spd.baraholka.characteristic.persistance;
 
-import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.CategoryDTO;
 import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
 
 import java.util.List;

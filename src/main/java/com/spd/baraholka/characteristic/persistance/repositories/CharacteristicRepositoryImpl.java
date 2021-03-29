@@ -1,6 +1,6 @@
 package com.spd.baraholka.characteristic.persistance.repositories;
 
-import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.CategoryDTO;
 import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
 import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
 import com.spd.baraholka.characteristic.persistance.mappers.CategoryDTOMapper;
@@ -31,7 +31,7 @@ public class CharacteristicRepositoryImpl implements CharacteristicRepository {
                 "VALUES (:category_name, :characteristics_name, :characteristics_value, :is_approved) RETURNING id";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("category_name", characteristic.getCategoryName())
+                .addValue("category_name", characteristic.getCategory())
                 .addValue("characteristics_name", characteristic.getCharacteristicName())
                 .addValue("characteristics_value", characteristic.getCharacteristicValue())
                 .addValue("is_approved", characteristic.isApproved());

@@ -1,6 +1,7 @@
 package com.spd.baraholka.characteristic;
 
-import com.spd.baraholka.characteristic.persistance.dto.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.Category;
 import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
 import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
 import com.spd.baraholka.characteristic.persistance.CharacteristicService;
@@ -27,11 +28,11 @@ class CharacteristicServiceImplTest {
         characteristicRepository = Mockito.mock(CharacteristicRepository.class);
         characteristicService = new CharacteristicServiceImpl(characteristicRepository);
         characteristic = new Characteristic(1,
-                "OTHER",
+                Category.OTHER,
                 "color",
                 "red",
                 true);
-        categoryDTOList = List.of(new CategoryDTO("OTHER", Set.of("color", "weight")));
+        categoryDTOList = List.of(new CategoryDTO(Category.OTHER, Set.of("color", "weight")));
     }
 
     @Test
