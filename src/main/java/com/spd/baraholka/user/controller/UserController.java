@@ -2,7 +2,6 @@ package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.user.controller.dto.UserDTO;
-import com.spd.baraholka.user.controller.dto.UserProfileDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.validation.annotation.Validated;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Validated
 import java.util.List;
 
+@Validated
 @RequestMapping("/users")
 @RestController
 public class UserController {

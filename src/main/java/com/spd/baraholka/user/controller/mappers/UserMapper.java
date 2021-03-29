@@ -1,7 +1,7 @@
 package com.spd.baraholka.user.controller.mappers;
 
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
-import com.spd.baraholka.user.controller.dto.UserProfileDTO;
+import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.beans.factory.annotation.Value;
