@@ -1,4 +1,4 @@
-package com.spd.baraholka.advertisements.controllers;
+package com.spd.baraholka.advertisements.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,9 +8,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
 import com.spd.baraholka.advertisements.persistance.CurrencyType;
-import com.spd.baraholka.advertisements.services.AdvertisementMapper;
-import com.spd.baraholka.advertisements.services.AdvertisementService;
-import com.spd.baraholka.advertisements.services.AdvertisementUserEmailMapper;
+import com.spd.baraholka.advertisements.service.AdvertisementMapper;
+import com.spd.baraholka.advertisements.service.AdvertisementService;
+import com.spd.baraholka.advertisements.service.AdvertisementUserEmailMapper;
 import com.spd.baraholka.config.SecurityConfig;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;

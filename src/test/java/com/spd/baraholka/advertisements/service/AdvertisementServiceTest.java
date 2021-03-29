@@ -1,4 +1,4 @@
-package com.spd.baraholka.advertisements.services;
+package com.spd.baraholka.advertisements.service;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementRepository;

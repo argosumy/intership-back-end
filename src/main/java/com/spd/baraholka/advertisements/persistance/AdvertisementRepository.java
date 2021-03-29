@@ -1,6 +1,6 @@
 package com.spd.baraholka.advertisements.persistance;
 
-import com.spd.baraholka.advertisements.services.AdvertisementRowMapper;
+import com.spd.baraholka.advertisements.service.AdvertisementRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

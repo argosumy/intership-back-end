@@ -1,8 +1,8 @@
-package com.spd.baraholka.advertisements.controllers;
+package com.spd.baraholka.advertisements.controller;
 
 import com.spd.baraholka.advertisements.persistance.Advertisement;
 import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
-import com.spd.baraholka.advertisements.services.*;
+import com.spd.baraholka.advertisements.service.*;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.springframework.format.annotation.DateTimeFormat;
