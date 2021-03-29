@@ -14,6 +14,7 @@ public class UserAdditionalResourceRowMapper implements RowMapper<UserAdditional
     public UserAdditionalResource mapRow(ResultSet rs, int rowNum) throws SQLException {
         UserAdditionalResource additionalResource = new UserAdditionalResource();
         additionalResource.setId(rs.getInt("id"));
+        additionalResource.setUserId(rs.getInt("user_id"));
         additionalResource.setResourceName(rs.getString("resource_name"));
         additionalResource.setResourceUrl(rs.getString("resource_url"));
         return additionalResource;
