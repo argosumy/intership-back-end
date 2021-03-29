@@ -55,6 +55,11 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 
+    @Override
+    public Advertisement selectAdvertisementById(int id) {
+        return null;
+    }
+
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("ownerId", advertisement.getOwnerId());
