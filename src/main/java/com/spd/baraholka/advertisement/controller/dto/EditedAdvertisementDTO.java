@@ -75,4 +75,40 @@ public class EditedAdvertisementDTO {
     public LocalDateTime getPublicationDate() {
         return publicationDate;
     }
+
+    public void setAdvertisementId(int advertisementId) {
+        this.advertisementId = advertisementId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setStatus(AdvertisementStatus status) {
+        this.status = status;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCurrency(CurrencyType currency) {
+        this.currency = currency;
+    }
+
+    public void setDiscountAvailability(boolean discountAvailability) {
+        this.discountAvailability = discountAvailability;
+    }
+
+    public void setPublicationDate(LocalDateTime publicationDate) {
+        this.publicationDate = publicationDate;
+    }
 }

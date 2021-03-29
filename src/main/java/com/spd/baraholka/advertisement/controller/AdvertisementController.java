@@ -2,6 +2,8 @@ package com.spd.baraholka.advertisement.controller;
 
 import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.AdvertisementUserEmailDTO;
+import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
+import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
@@ -77,5 +79,4 @@ public class AdvertisementController {
     public int updateAdvertisementStatus(@PathVariable int id, @RequestParam("status") @ChangedStatus AdvertisementStatus status) {
         return advertisementService.updateAdvertisementStatus(id, status);
     }
-
 }
