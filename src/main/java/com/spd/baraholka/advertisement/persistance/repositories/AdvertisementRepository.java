@@ -63,7 +63,6 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 
-
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("ownerId", advertisement.getOwnerId());
@@ -81,7 +80,6 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         return namedParameters;
     }
 
-
     private Map<String, ? extends Serializable> createUpdateParameters(Advertisement advertisement) {
         return Map.of("title", advertisement.getTitle(),
                 STATUS_PARAMETER, advertisement.getStatus().toString(),
@@ -94,7 +92,6 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 "city", advertisement.getCity(),
                 "advertisementId", advertisement.getAdvertisementId());
     }
-
 
     private String createUpdateSQL() {
         return "UPDATE advertisements SET title=:title, "

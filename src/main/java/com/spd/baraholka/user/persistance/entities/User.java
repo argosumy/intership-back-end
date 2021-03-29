@@ -111,4 +111,7 @@ public class User {
     public void setEndDateOfBan(LocalDateTime endDateOfBan) {
         this.endDateOfBan = endDateOfBan;
     }
+
+    public void setAvatar(String dummyAvatar) {
+    }
 }

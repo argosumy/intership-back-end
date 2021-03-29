@@ -48,7 +48,6 @@ public class AdvertisementService {
         return exist.orElse(false);
     }
 
-
     public List<Advertisement> getFilteredAdsByKeyword(String keyword, Integer size) {
         List<Advertisement> advertisementList = getAllActive();
         return advertisementList.stream()

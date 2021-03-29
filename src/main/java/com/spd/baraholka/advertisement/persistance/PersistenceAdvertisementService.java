@@ -21,5 +21,4 @@ public interface PersistenceAdvertisementService {
     int insertAdvertisement(Advertisement advertisement);
 
     Optional<Boolean> isExist(int intValue);
-
 }
