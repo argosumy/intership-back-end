@@ -41,6 +41,7 @@ public class UserMapper {
         userDTO.setLastName(user.getLastName());
         userDTO.setBlocked(user.isBlocked());
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
+        userDTO.setEmail(user.getEmail());
         return userDTO;
     }
 
