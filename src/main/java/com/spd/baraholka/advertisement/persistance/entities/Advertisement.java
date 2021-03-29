@@ -1,4 +1,4 @@
-package com.spd.baraholka.advertisements.entities;
+package com.spd.baraholka.advertisement.persistance.entities;
 
 public class Advertisement {
 
