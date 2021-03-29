@@ -1,7 +1,7 @@
-package com.spd.baraholka.advertisements.controller.mappers;
+package com.spd.baraholka.advertisement.controller.mappers;
 
-import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
-import com.spd.baraholka.advertisements.controller.dto.AdvertisementDTO;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

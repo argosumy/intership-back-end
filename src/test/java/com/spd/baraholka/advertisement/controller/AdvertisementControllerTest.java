@@ -1,16 +1,16 @@
-package com.spd.baraholka.advertisements.controller;
+package com.spd.baraholka.advertisement.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
-import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.advertisements.persistance.entities.CurrencyType;
-import com.spd.baraholka.advertisements.controller.mappers.AdvertisementMapper;
-import com.spd.baraholka.advertisements.service.AdvertisementService;
-import com.spd.baraholka.advertisements.controller.mappers.AdvertisementUserEmailMapper;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
+import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
+import com.spd.baraholka.advertisement.service.AdvertisementService;
+import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
 import com.spd.baraholka.config.SecurityConfig;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;

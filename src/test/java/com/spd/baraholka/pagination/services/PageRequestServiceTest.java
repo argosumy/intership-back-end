@@ -1,12 +1,12 @@
 package com.spd.baraholka.pagination.services;
 
-import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
-import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.advertisements.persistance.entities.CurrencyType;
-import com.spd.baraholka.advertisements.controller.mappers.AdvertisementMapper;
-import com.spd.baraholka.advertisements.service.AdvertisementService;
-import com.spd.baraholka.advertisements.controller.mappers.AdvertisementUserEmailMapper;
-import com.spd.baraholka.advertisements.persistance.PersistenceAdvertisementService;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
+import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
+import com.spd.baraholka.advertisement.service.AdvertisementService;
+import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
+import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import org.junit.jupiter.api.BeforeEach;

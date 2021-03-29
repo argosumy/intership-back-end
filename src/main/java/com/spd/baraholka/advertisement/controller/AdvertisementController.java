@@ -1,12 +1,12 @@
-package com.spd.baraholka.advertisements.controller;
+package com.spd.baraholka.advertisement.controller;
 
-import com.spd.baraholka.advertisements.controller.dto.AdvertisementDTO;
-import com.spd.baraholka.advertisements.controller.dto.AdvertisementUserEmailDTO;
-import com.spd.baraholka.advertisements.controller.mappers.AdvertisementMapper;
-import com.spd.baraholka.advertisements.controller.mappers.AdvertisementUserEmailMapper;
-import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
-import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.advertisements.service.*;
+import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
+import com.spd.baraholka.advertisement.controller.dto.AdvertisementUserEmailDTO;
+import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
+import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.service.*;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.springframework.format.annotation.DateTimeFormat;

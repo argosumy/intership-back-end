@@ -1,8 +1,8 @@
-package com.spd.baraholka.advertisements.controller.mappers;
+package com.spd.baraholka.advertisement.controller.mappers;
 
-import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
-import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.advertisements.persistance.entities.CurrencyType;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

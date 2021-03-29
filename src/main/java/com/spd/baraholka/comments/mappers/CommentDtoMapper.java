@@ -1,6 +1,6 @@
 package com.spd.baraholka.comments.mappers;
 
-import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.user.persistance.entities.User;

@@ -1,7 +1,7 @@
-package com.spd.baraholka.advertisements.controller.dto;
+package com.spd.baraholka.advertisement.controller.dto;
 
-import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.advertisements.persistance.entities.CurrencyType;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;

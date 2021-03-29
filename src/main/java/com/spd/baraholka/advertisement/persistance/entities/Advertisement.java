@@ -1,4 +1,4 @@
-package com.spd.baraholka.advertisements.persistance.entities;
+package com.spd.baraholka.advertisement.persistance.entities;
 
 import java.time.LocalDateTime;
 

@@ -1,7 +1,7 @@
-package com.spd.baraholka.advertisements.persistance;
+package com.spd.baraholka.advertisement.persistance;
 
-import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
-import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
