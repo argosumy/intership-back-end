@@ -1,7 +1,11 @@
 package com.spd.baraholka.advertisements.controller;
 
-import com.spd.baraholka.advertisements.persistance.Advertisement;
-import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
+import com.spd.baraholka.advertisements.controller.dto.AdvertisementDTO;
+import com.spd.baraholka.advertisements.controller.dto.AdvertisementUserEmailDTO;
+import com.spd.baraholka.advertisements.controller.mappers.AdvertisementMapper;
+import com.spd.baraholka.advertisements.controller.mappers.AdvertisementUserEmailMapper;
+import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisements.service.*;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
@@ -12,8 +16,9 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Validated
 @RestController
-@RequestMapping("/advertisements")
+@RequestMapping("/advertisement")
 public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
@@ -58,17 +63,18 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public int saveAdvertisement(@RequestBody @Valid AdvertisementDTO advertisementDTO) {
+    public int saveAdvertisement(@RequestBody @Valid InitialAdvertisementDTO advertisementDTO) {
         return advertisementService.saveAdvertisement(advertisementDTO);
     }
 
     @PutMapping
-    public int updateAdvertisement(@RequestBody @Valid AdvertisementDTO advertisementDTO) {
+    public int updateAdvertisement(@RequestBody @Valid EditedAdvertisementDTO advertisementDTO) {
         return advertisementService.updateAdvertisement(advertisementDTO);
     }
 
-    @PutMapping("/{id}/{status}")
-    public int updateAdvertisementStatus(@PathVariable int id, @PathVariable AdvertisementStatus status) {
+    @PutMapping("/{id}")
+    public int updateAdvertisementStatus(@PathVariable int id, @RequestParam("status") @ChangedStatus AdvertisementStatus status) {
         return advertisementService.updateAdvertisementStatus(id, status);
     }
+
 }

@@ -1,6 +1,6 @@
 package com.spd.baraholka.pagination.services;
 
-import com.spd.baraholka.advertisements.persistance.Advertisement;
+import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisements.service.AdvertisementService;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;

@@ -1,9 +1,11 @@
 package com.spd.baraholka.advertisements.service;
 
-import com.spd.baraholka.advertisements.persistance.Advertisement;
-import com.spd.baraholka.advertisements.persistance.AdvertisementRepository;
-import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
-import com.spd.baraholka.advertisements.persistance.CurrencyType;
+import com.spd.baraholka.advertisements.controller.mappers.AdvertisementMapper;
+import com.spd.baraholka.advertisements.persistance.*;
+import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisements.persistance.entities.CurrencyType;
+import com.spd.baraholka.advertisements.persistance.repositories.AdvertisementRepository;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

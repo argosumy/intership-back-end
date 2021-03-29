@@ -1,7 +1,9 @@
 package com.spd.baraholka.advertisements.service;
 
-import com.spd.baraholka.advertisements.persistance.Advertisement;
-import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
+import com.spd.baraholka.advertisements.controller.mappers.AdvertisementMapper;
+import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisements.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +27,12 @@ public class AdvertisementService {
         this.advertisementMapper = advertisementMapper;
     }
 
-    public int saveAdvertisement(AdvertisementDTO advertisementDTO) {
+    public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
-        return persistenceAdvertisementService.saveAdvertisement(advertisement);
+        return persistenceAdvertisementService.insertAdvertisement(advertisement);
     }
 
-    public int updateAdvertisement(AdvertisementDTO advertisementDTO) {
+    public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
         return persistenceAdvertisementService.updateAdvertisement(advertisement);
     }
@@ -38,6 +40,12 @@ public class AdvertisementService {
     public int updateAdvertisementStatus(int id, AdvertisementStatus status) {
         return persistenceAdvertisementService.updateAdvertisementStatus(id, status);
     }
+
+    public boolean isAdvertisementExist(int id) {
+        Optional<Boolean> exist = persistenceAdvertisementService.isExist(id);
+        return exist.orElse(false);
+    }
+
 
     public List<Advertisement> getFilteredAdsByKeyword(String keyword, Integer size) {
         List<Advertisement> advertisementList = getAllActive();

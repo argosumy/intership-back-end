@@ -1,6 +1,9 @@
-package com.spd.baraholka.advertisements.persistance;
+package com.spd.baraholka.advertisements.persistance.repositories;
 
-import com.spd.baraholka.advertisements.service.AdvertisementRowMapper;
+import com.spd.baraholka.advertisements.persistance.PersistenceAdvertisementService;
+import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisements.controller.mappers.AdvertisementRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -15,7 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-public class AdvertisementRepository {
+public class AdvertisementRepository implements PersistenceAdvertisementService {
 
     public static final String STATUS_PARAMETER = "status";
     public static final String STATUS_CHANGE_DATE_PARAMETER = "statusChangeDate";

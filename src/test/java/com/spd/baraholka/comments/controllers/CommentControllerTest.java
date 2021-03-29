@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.spd.baraholka.advertisements.persistance.Advertisement;
+import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;

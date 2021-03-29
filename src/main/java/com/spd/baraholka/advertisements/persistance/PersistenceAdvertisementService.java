@@ -1,7 +1,7 @@
-package com.spd.baraholka.advertisements.service;
+package com.spd.baraholka.advertisements.persistance;
 
-import com.spd.baraholka.advertisements.persistance.Advertisement;
-import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
+import com.spd.baraholka.advertisements.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +19,9 @@ public interface PersistenceAdvertisementService {
     List<Advertisement> getAllActive();
 
     Optional<Advertisement> findDraftAdById(int id);
+
+    int insertAdvertisement(Advertisement advertisement);
+
+    Optional<Boolean> isExist(int intValue);
+
 }

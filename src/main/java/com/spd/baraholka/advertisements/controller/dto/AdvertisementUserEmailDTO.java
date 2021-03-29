@@ -1,15 +1,12 @@
-package com.spd.baraholka.advertisements.service;
+package com.spd.baraholka.advertisements.controller.dto;
 
-import com.spd.baraholka.advertisements.persistance.AdvertisementStatus;
-import com.spd.baraholka.advertisements.persistance.CurrencyType;
+import com.spd.baraholka.advertisements.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisements.persistance.entities.CurrencyType;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
-public class AdvertisementDTO {
+public class AdvertisementUserEmailDTO {
 
     private int advertisementId;
     private int ownerId;
@@ -34,6 +31,16 @@ public class AdvertisementDTO {
     private boolean discountAvailability;
     @NotNull
     private LocalDateTime publicationDate;
+    @Email
+    private String userEmail;
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
     public int getAdvertisementId() {
         return advertisementId;
