@@ -2,7 +2,9 @@ package com.spd.baraholka.user.persistance.repositories;
 
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
+import com.spd.baraholka.user.persistance.entities.Owner;
 import com.spd.baraholka.user.persistance.entities.User;
+import com.spd.baraholka.user.persistance.mappers.OwnerRowMapper;
 import com.spd.baraholka.user.persistance.mappers.UserShortViewRowMapper;
 import com.spd.baraholka.user.persistance.mappers.UserRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,13 +26,16 @@ public class UserRepository implements PersistenceUserService {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper;
     private final UserShortViewRowMapper userShortViewRowMapper;
+    private final OwnerRowMapper ownerRowMapper;
 
     public UserRepository(NamedParameterJdbcTemplate jdbcTemplate,
                           UserRowMapper userRowMapper,
-                          UserShortViewRowMapper userShortViewRowMapper) {
+                          UserShortViewRowMapper userShortViewRowMapper,
+                          OwnerRowMapper ownerRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.userRowMapper = userRowMapper;
         this.userShortViewRowMapper = userShortViewRowMapper;
+        this.ownerRowMapper = ownerRowMapper;
     }
 
     @Override
@@ -97,6 +102,12 @@ public class UserRepository implements PersistenceUserService {
     public Optional<Boolean> isExist(int id) {
         String isExistQuery = "SELECT count(*) <> 0 FROM users WHERE id=:id";
         return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
+    }
+
+    @Override
+    public Owner selectOwner(int id) {
+        String selectSQL = "SELECT id, first_name, last_name, avatar, e_mail FROM users WHERE id=:id";
+        return jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), ownerRowMapper);
     }
 }
 
