@@ -47,3 +47,23 @@ INSERT INTO advertisements(user_id, title, description, category, price, currenc
                            publication_date, status_change_date)
 VALUES ('3', 'Playstation 4', 'new generation console', 'electronica', '230', 'EUR', 'Cherkassy', 'ACTIVE',
         '2021-03-18T07:26:10.717220', '2021-03-18T07:26:10.717220', '2021-03-18T07:26:10.717220');
+
+INSERT INTO comments (id, body, created_at, advertisement_id, user_id, parent_id)
+VALUES (0, ' ', '2000-01-01 00:00:00.000000', 1, 1, NULL);
+INSERT INTO comments (body, created_at, advertisement_id, user_id, parent_id)
+VALUES ('some comment2', '2021-03-12 00:00:00.000000', 1, 1, NULL);
+INSERT INTO comments (body, created_at, advertisement_id, user_id, parent_id)
+VALUES ('some comment3', '1888-03-12 00:00:00.000000', 2, 2, 1);
+INSERT INTO comments (body, created_at, advertisement_id, user_id, parent_id)
+VALUES ('some comment4', '1999-03-12 00:00:00.000000', 1, 1, 1);
+INSERT INTO comments (body, created_at, advertisement_id, user_id, parent_id)
+VALUES ('some comment5', '2000-03-12 00:00:00.000000', 1, 2, 2);
+
+INSERT INTO comment_reactions (reaction, user_id, comment_id) VALUES ('LIKE', 1, 1);
+INSERT INTO comment_reactions (reaction, user_id, comment_id) VALUES ('LIKE', 1, 2);
+INSERT INTO comment_reactions (reaction, user_id, comment_id) VALUES ('LIKE', 1, 3);
+INSERT INTO comment_reactions (reaction, user_id, comment_id) VALUES ('DISLIKE', 2, 1);
+INSERT INTO comment_reactions (reaction, user_id, comment_id) VALUES ('LIKE', 2, 3);
+INSERT INTO comment_reactions (reaction, user_id, comment_id) VALUES ('DISLIKE', 2, 2);
+INSERT INTO comment_reactions (reaction, user_id, comment_id) VALUES ('LIKE', 3, 3);
+INSERT INTO comment_reactions (reaction, user_id, comment_id) VALUES ('DISLIKE', 2, 3);
