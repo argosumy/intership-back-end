@@ -1,11 +1,11 @@
-INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number)
-VALUES ('Ivan', 'Ivanov', 'Smila', 'ivan@spd-ukraine.com', 'developer', '+380685489524');
-INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number)
-VALUES ('Petua', 'Petrov', 'Kyiv', 'petua@spd-ukraine.com', 'developer', '+380676548921');
-INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number)
-VALUES ('Gena', 'Genov', 'Charkiv', 'gena@spd-ukraine.com', 'developer', '+380685686243');
-INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number)
-VALUES ('Vasua', 'Ivanov', 'Odessa', 'vasua@spd-ukraine.com', 'developer', '+38068658958');
+INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
+VALUES ('Ivan', 'Ivanov', 'Smila', 'ivan@spd-ukraine.com', 'developer', '+380685489524', 'users/1/homer3.jpg');
+INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
+VALUES ('Petua', 'Petrov', 'Kyiv', 'petua@spd-ukraine.com', 'developer', '+380676548921', 'users/1/homer3.jpg');
+INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
+VALUES ('Gena', 'Genov', 'Charkiv', 'gena@spd-ukraine.com', 'developer', '+380685686243', 'users/1/homer3.jpg');
+INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
+VALUES ('Vasua', 'Ivanov', 'Odessa', 'vasua@spd-ukraine.com', 'developer', '+38068658958', 'users/1/homer3.jpg');
 INSERT INTO users_additional_resources (user_id, resource_name, resource_url)
 VALUES (1, 'vk', 'vk.com');
 INSERT INTO users_additional_resources (user_id, resource_name, resource_url)
