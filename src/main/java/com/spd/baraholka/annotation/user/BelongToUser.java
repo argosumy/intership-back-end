@@ -1,6 +1,5 @@
 package com.spd.baraholka.annotation.user;
 
-
 import com.spd.baraholka.validation.user.AdditionalResourceBelongToUserValidator;
 
 import javax.validation.Constraint;
