@@ -41,8 +41,8 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public User create(User user) {
-        final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position) " +
-                "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position) ";
+        final String sql = "INSERT INTO users (avatar, first_name, last_name, e_mail, location, phone_number, position) " +
+                "VALUES (:avatar, :first_name, :last_name, :email, :location, :phone_number, :position) ";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -51,7 +51,8 @@ public class UserRepository implements PersistenceUserService {
                 .addValue("email", user.getEmail())
                 .addValue("location", user.getLocation())
                 .addValue("phone_number", user.getPhoneNumber())
-                .addValue("position", user.getPosition());
+                .addValue("position", user.getPosition())
+                .addValue("avatar", user.getImageUrl());
         jdbcTemplate.update(sql, parameters, keyHolder);
         Map<String, Object> keys = Objects.requireNonNull(keyHolder.getKeys());
         if (keys.containsKey("id")) {
@@ -85,3 +86,4 @@ public class UserRepository implements PersistenceUserService {
         return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class));
     }
 }
+
