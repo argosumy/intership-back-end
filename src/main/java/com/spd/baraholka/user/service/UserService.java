@@ -9,6 +9,7 @@ import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
+import com.spd.baraholka.user.persistance.entities.Owner;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,7 @@ public class UserService {
     }
 
     public OwnerDTO getOwner(int id) {
-        return null;
+        Owner owner = persistenceUserService.selectOwner(id);
+        return userMapper.convertToDTO(owner);
     }
 }
