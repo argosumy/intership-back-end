@@ -64,4 +64,9 @@ public class UserService {
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
         return userMapper.convertFromOAuth(oAuth2UserDto);
     }
+
+    public boolean isUserExist(int id) {
+        Optional<Boolean> exist = persistenceUserService.isExist(id);
+        return exist.orElse(false);
+    }
 }

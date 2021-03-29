@@ -13,4 +13,6 @@ public interface PersistenceUserService {
     boolean existsByEmail(String email);
 
     int count();
+
+    Optional<Boolean> isExist(int id);
 }
