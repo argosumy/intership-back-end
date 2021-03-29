@@ -2,12 +2,13 @@ package com.spd.baraholka.user.persistance.entities;
 
 import com.spd.baraholka.role.Role;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class User {
 
     private int id;
-    private String avatar;
+    private String imageUrl;
     private String firstName;
     private String lastName;
     private String email;
@@ -15,7 +16,7 @@ public class User {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private List<String> resourceLinks;
+    private LocalDateTime endDateOfBan;
     private final Set<Role> roles;
 
     public User() {
@@ -31,12 +32,12 @@ public class User {
         this.id = id;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getFirstName() {
@@ -95,14 +96,6 @@ public class User {
         isBlocked = blocked;
     }
 
-    public List<String> getResourceLinks() {
-        return resourceLinks;
-    }
-
-    public void setResourceLinks(List<String> resourceLinks) {
-        this.resourceLinks = resourceLinks;
-    }
-
     public Set<Role> getRoles() {
         return Collections.unmodifiableSet(roles);
     }
@@ -111,38 +104,11 @@ public class User {
         return roles.add(role);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        User user = (User) o;
-        return id == user.id && isBlocked == user.isBlocked && Objects.equals(avatar, user.avatar)
-                && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName)
-                && Objects.equals(email, user.email) && Objects.equals(position, user.position)
-                && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(resourceLinks, user.resourceLinks);
+    public LocalDateTime getEndDateOfBan() {
+        return endDateOfBan;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, avatar, firstName, lastName, email, position, phoneNumber, isBlocked, resourceLinks);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", avatar='" + avatar + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", position='" + position + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", isBlocked=" + isBlocked +
-                ", resourceLinks=" + resourceLinks +
-                '}';
+    public void setEndDateOfBan(LocalDateTime endDateOfBan) {
+        this.endDateOfBan = endDateOfBan;
     }
 }

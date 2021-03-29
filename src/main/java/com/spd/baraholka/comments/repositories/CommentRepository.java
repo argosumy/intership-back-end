@@ -39,7 +39,7 @@ public class CommentRepository implements CommentPersistence {
                         "VALUES (:body, :createdDate, :adId, :userId, :parentId)",
                 Map.of("body", comment.getBody(),
                         "createdDate", comment.getCreatedDate(),
-                        "adId", comment.getAdvertisement().getId(),
+                        "adId", comment.getAdvertisement().getAdvertisementId(),
                         "userId", comment.getUser().getId(),
                         "parentId", comment.getParent().getId())
         );
@@ -73,7 +73,7 @@ public class CommentRepository implements CommentPersistence {
                 "UPDATE comments SET body=:body, created_at=:createdDate, advertisement_id=:adId, user_id=:userId, parent_id=:parentId WHERE id=:id",
                 Map.of("body", updatedComment.getBody(),
                         "createdDate", updatedComment.getCreatedDate(),
-                        "adId", updatedComment.getAdvertisement().getId(),
+                        "adId", updatedComment.getAdvertisement().getAdvertisementId(),
                         "userId", updatedComment.getUser().getId(),
                         "parentId", updatedComment.getParent().getId(),
                         "id", id)

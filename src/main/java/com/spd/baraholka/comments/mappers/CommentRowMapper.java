@@ -32,7 +32,7 @@ public class CommentRowMapper implements RowMapper<Comment> {
 
     private Advertisement getMappedAdvertisement(ResultSet rs) throws SQLException {
         Advertisement advertisement = new Advertisement();
-        advertisement.setId(rs.getInt("ad_id"));
+        advertisement.setAdvertisementId(rs.getInt("ad_id"));
         return advertisement;
     }
 

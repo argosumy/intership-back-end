@@ -98,7 +98,7 @@ class CommentControllerTest {
 
     private Advertisement createAdvertisement() {
         Advertisement advertisement = new Advertisement();
-        advertisement.setId(1);
+        advertisement.setAdvertisementId(1);
         return advertisement;
     }
 
