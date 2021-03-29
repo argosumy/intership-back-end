@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/general")
-    public int updateUserGeneralSettings(@PathVariable int id, @RequestParam("openAdsInNewTab") boolean openAdsInNewTab) {
+    public int updateUserGeneralSettings(@PathVariable("id") @UserExist int id, @RequestParam("openAdsInNewTab") boolean openAdsInNewTab) {
         return userSettingsService.updateUserGeneralSettings(id, openAdsInNewTab);
     }
 
