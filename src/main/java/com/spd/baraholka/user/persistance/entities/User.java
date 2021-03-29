@@ -2,6 +2,7 @@ package com.spd.baraholka.user.persistance.entities;
 
 import com.spd.baraholka.role.Role;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class User {
@@ -15,6 +16,7 @@ public class User {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
+    private LocalDateTime endDateOfBan;
     private final Set<Role> roles;
 
     public User() {
@@ -100,5 +102,13 @@ public class User {
 
     public boolean grantRole(Role role) {
         return roles.add(role);
+    }
+
+    public LocalDateTime getEndDateOfBan() {
+        return endDateOfBan;
+    }
+
+    public void setEndDateOfBan(LocalDateTime endDateOfBan) {
+        this.endDateOfBan = endDateOfBan;
     }
 }
