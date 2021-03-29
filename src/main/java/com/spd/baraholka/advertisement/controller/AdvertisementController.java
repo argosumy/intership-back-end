@@ -9,6 +9,7 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmail
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.service.*;
+import com.spd.baraholka.annotation.advertisement.ChangedStatus;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.springframework.format.annotation.DateTimeFormat;

@@ -6,5 +6,6 @@ public enum AdvertisementStatus {
     ACTIVE,
     ON_HOLD,
     ARCHIVED,
-    DELETED
+    DELETED,
+    DELAYED_PUBLICATION
 }

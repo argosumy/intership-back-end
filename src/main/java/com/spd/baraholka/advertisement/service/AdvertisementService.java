@@ -3,9 +3,9 @@ package com.spd.baraholka.advertisement.service;
 import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
+import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +70,6 @@ public class AdvertisementService {
         active.forEach(ad -> {
             if (ad.getStatus() == (AdvertisementStatus.DRAFT)) {
                 ad.setStatus(AdvertisementStatus.ACTIVE);
-//                updateAdvertisement(advertisementMapper.getAdvertisementDto(ad));
                 updateAdvertisement(advertisementMapper.convertToEditedAdvertisementDTO(ad));
             }
         });
