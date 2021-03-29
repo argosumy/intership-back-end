@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = AdvertisementIdValidator.class)
 public @interface AdvertisementExist {
 
-    String message() default "Baraholka advertisement status annotation validation";
+    String message() default "Advertisement not exist in system";
 
     Class<?>[] groups() default {};
 
