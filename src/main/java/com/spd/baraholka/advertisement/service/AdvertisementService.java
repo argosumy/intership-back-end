@@ -1,6 +1,7 @@
 package com.spd.baraholka.advertisement.service;
 
 import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
+import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
@@ -39,5 +40,10 @@ public class AdvertisementService {
     public boolean isAdvertisementExist(int id) {
         Optional<Boolean> exist = persistenceAdvertisementService.isExist(id);
         return exist.orElse(false);
+    }
+
+    public FullAdvertisementDTO getAdvertisementById(int id) {
+        Advertisement advertisement = persistenceAdvertisementService.selectAdvertisementById(id);
+        return advertisementMapper.convertToDTO(advertisement);
     }
 }
