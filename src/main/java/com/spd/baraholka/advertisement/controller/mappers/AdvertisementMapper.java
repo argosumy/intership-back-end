@@ -1,6 +1,7 @@
 package com.spd.baraholka.advertisement.controller.mappers;
 
 import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
+import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import org.springframework.stereotype.Component;
@@ -41,5 +42,9 @@ public class AdvertisementMapper {
         advertisement.setPublicationDate(advertisementDTO.getPublicationDate());
         advertisement.setStatusChangeDate(LocalDateTime.now());
         return advertisement;
+    }
+
+    public FullAdvertisementDTO convertToDTO(Advertisement advertisement) {
+        return null;
     }
 }
