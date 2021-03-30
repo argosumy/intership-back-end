@@ -3,7 +3,6 @@ package com.spd.baraholka.comments.mappers;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.user.persistance.entities.User;
-import com.spd.baraholka.user.persistance.mappers.UserRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
