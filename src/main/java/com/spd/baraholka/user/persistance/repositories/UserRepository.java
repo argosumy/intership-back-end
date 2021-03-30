@@ -52,6 +52,12 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
+    public Optional<Boolean> existsByEmail(String email) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
+                Map.of("email", email), Boolean.class));
+    }
+
+    @Override
     public User create(User user) {
         final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, avatar) " +
                 "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :avatar) ";
@@ -75,24 +81,6 @@ public class UserRepository implements PersistenceUserService {
         return user;
     }
 
-    private void saveUserRoles(User user) {
-        Set<Role> roles = Objects.requireNonNull(user.getRoles());
-        int userId = user.getId();
-        final String sql = "INSERT INTO users_roles (user_id, role) values (:user_id, :role)";
-        for (Role role : roles) {
-            SqlParameterSource parameters = new MapSqlParameterSource()
-                    .addValue("user_id", userId)
-                    .addValue("role", role.name());
-            jdbcTemplate.update(sql, parameters);
-        }
-    }
-
-    @Override
-    public Optional<Boolean> existsByEmail(String email) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
-                Map.of("email", email), Boolean.class));
-    }
-
     @Override
     public Optional<Integer> count() {
         return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class));
@@ -108,6 +96,18 @@ public class UserRepository implements PersistenceUserService {
     public Owner selectOwner(int id) {
         String selectSQL = "SELECT id, first_name, last_name, avatar, e_mail FROM users WHERE id=:id";
         return jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), ownerRowMapper);
+    }
+
+    private void saveUserRoles(User user) {
+        Set<Role> roles = Objects.requireNonNull(user.getRoles());
+        int userId = user.getId();
+        final String sql = "INSERT INTO users_roles (user_id, role) values (:user_id, :role)";
+        for (Role role : roles) {
+            SqlParameterSource parameters = new MapSqlParameterSource()
+                    .addValue("user_id", userId)
+                    .addValue("role", role.name());
+            jdbcTemplate.update(sql, parameters);
+        }
     }
 }
 
