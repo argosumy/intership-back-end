@@ -1,4 +1,4 @@
-package com.spd.baraholka.advertisements;
+package com.spd.baraholka.ad;
 
 public interface AdvertisementService {
     void deleteOldArchiveAdvertisements();

@@ -1,4 +1,4 @@
-package com.spd.baraholka.advertisements;
+package com.spd.baraholka.ad;
 
 import org.awaitility.Duration;
 import org.junit.jupiter.api.Test;
