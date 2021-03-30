@@ -20,6 +20,7 @@ public class UserShortViewRowMapper implements RowMapper<User> {
         user.setLastName(rs.getString("last_name"));
         user.setBlocked(rs.getBoolean("is_blocked"));
         setUserEndDateOfBan(user, rs);
+        user.setEmail(rs.getString("e_mail"));
         return user;
     }
 
