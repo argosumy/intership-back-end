@@ -7,7 +7,6 @@ import com.github.database.rider.core.api.dataset.SeedStrategy;
 import com.github.database.rider.junit5.DBUnitExtension;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +19,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(DBUnitExtension.class)
