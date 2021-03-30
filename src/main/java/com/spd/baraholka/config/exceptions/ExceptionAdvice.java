@@ -25,6 +25,12 @@ public class ExceptionAdvice {
         return e.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    String notFoundHandler(NotFoundException e) {
+        return e.getMessage();
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<List<ErrorDto>> handleConstraintValidationException(ConstraintViolationException cve,
                                                                               HttpServletRequest request) {
