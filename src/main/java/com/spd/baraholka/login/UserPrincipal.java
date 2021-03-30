@@ -2,13 +2,11 @@ package com.spd.baraholka.login;
 
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.entities.User;
-import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +16,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     private final String email;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
-    private Map<String, Object> attributes;
+    private transient Map<String, Object> attributes;
 
     private String avatar;
     private String firstName;
@@ -27,17 +25,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private List<UserAdditionalResource> resourceLinks;
     private Set<Role> roles;
-
-//    public UserPrincipal(int id, String email, String password, Collection<? extends GrantedAuthority> authorities,
-//                         Map<String, Object> attributes) {
-//        this.id = id;
-//        this.email = email;
-//        this.password = password;
-//        this.authorities = authorities;
-//        this.attributes = attributes;
-//    }
 
     @Override
     public String getName() {
@@ -90,10 +78,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         return isBlocked;
     }
 
-    public List<UserAdditionalResource> getResourceLinks() {
-        return resourceLinks;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -133,10 +117,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
-    }
-
-    public void setResourceLinks(List<UserAdditionalResource> resourceLinks) {
-        this.resourceLinks = resourceLinks;
     }
 
     public void setRoles(Set<Role> roles) {
@@ -184,7 +164,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         principal.setPosition(user.getPosition());
         principal.setPhoneNumber(user.getPhoneNumber());
         principal.setRoles(user.getRoles());
-        principal.setResourceLinks(user.getResourceLinks());
         principal.setBlocked(user.isBlocked());
         return principal;
     }

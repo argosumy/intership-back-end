@@ -11,7 +11,7 @@ public interface PersistenceUserService {
 
     User create(User user);
 
-    User selectUserById(int id);
+    Optional<User> selectUserById(int id);
 
     Optional<Boolean> existsByEmail(String email);
 

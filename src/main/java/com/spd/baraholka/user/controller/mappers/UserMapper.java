@@ -23,7 +23,6 @@ public class UserMapper {
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());
         userDTO.setPosition(user.getPosition());
-        userDTO.setLocation(user.getLocation());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
         userDTO.setImageUrl(collapseImageUrl(user));
