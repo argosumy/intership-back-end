@@ -138,6 +138,9 @@ class CommentControllerTest {
     @Test
     @DisplayName("Comment was deleted")
     void deleteComment() throws Exception {
+        when(commentService.findById(1))
+                .thenReturn(Optional.ofNullable(comment));
+
         mockMvc.perform(delete("/comment/1"))
                 .andExpect(status().isOk());
 

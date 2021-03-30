@@ -42,6 +42,7 @@ public class CommentController {
 
     @DeleteMapping("/comment/{id}")
     public void deleteComment(@PathVariable("id") int id) {
+        commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
         commentService.deleteById(id);
     }
 

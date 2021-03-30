@@ -44,6 +44,7 @@ public class CommentService {
     }
 
     public void deleteById(int id) {
+//        findById(id).orElseThrow(() -> new CommentNotFoundException(id));
         commentRepository.deleteById(id);
         logger.info("IN delete - comment with id: {} successfully deleted", id);
     }
