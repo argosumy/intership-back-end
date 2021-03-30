@@ -95,7 +95,8 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     private String createSelectSQL() {
-        return "SELECT id, title, description, price, category, currency, discount_availability, city, status, publication_date FROM advertisements WHERE id=:id";
+        return "SELECT id, title, description, price, category, currency, discount_availability, city, status, publication_date, user_id"
+                + " FROM advertisements WHERE id=:id";
     }
 
     private String createUpdateSQL() {
