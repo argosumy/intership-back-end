@@ -6,6 +6,7 @@ import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ public class CommentDtoMapper {
         return new Comment(
                 commentDto.getId(),
                 commentDto.getBody(),
-                commentDto.getCreatedDate(),
+                LocalDate.now(),
                 getAdvertisement(commentDto),
                 getUser(commentDto),
                 getParentComment(commentDto)
