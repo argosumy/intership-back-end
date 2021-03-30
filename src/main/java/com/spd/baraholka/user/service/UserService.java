@@ -1,7 +1,6 @@
 package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
-import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
@@ -9,7 +8,6 @@ import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
-import com.spd.baraholka.user.persistance.entities.Owner;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.stereotype.Service;
@@ -73,10 +71,5 @@ public class UserService {
     public boolean isUserExist(int id) {
         Optional<Boolean> exist = persistenceUserService.isExist(id);
         return exist.orElse(false);
-    }
-
-    public OwnerDTO getOwner(int id) {
-        Owner owner = persistenceUserService.selectOwner(id);
-        return userMapper.convertToDTO(owner);
     }
 }
