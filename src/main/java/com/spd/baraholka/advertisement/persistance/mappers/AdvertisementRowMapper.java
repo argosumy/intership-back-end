@@ -18,6 +18,7 @@ public class AdvertisementRowMapper implements RowMapper<Advertisement> {
     public Advertisement mapRow(ResultSet rs, int rowNum) throws SQLException {
         Advertisement advertisement = new Advertisement();
         advertisement.setAdvertisementId(rs.getInt("id"));
+        advertisement.setOwnerId(rs.getInt("user_id"));
         advertisement.setTitle(rs.getString("title"));
         advertisement.setDescription(rs.getString("description"));
         advertisement.setPrice(rs.getDouble("price"));
