@@ -35,12 +35,12 @@ class UserRepositoryImplTest {
         String dummyEmail = "mock@email.com";
         String dummyFirstName = "Mock Given Name";
         String dummyLastName = "Mock Family Name";
-        String dummyAvatar = "Mock Picture URL";
+        String dummyImageUrl = "Mock Picture URL";
         User dummyUser = new User();
         dummyUser.setFirstName(dummyFirstName);
         dummyUser.setLastName(dummyLastName);
         dummyUser.setEmail(dummyEmail);
-        dummyUser.setImageUrl(dummyAvatar);
+        dummyUser.setImageUrl(dummyImageUrl);
         dummyUser.setLocation("");
         dummyUser.setPosition("");
         dummyUser.setPhoneNumber("");

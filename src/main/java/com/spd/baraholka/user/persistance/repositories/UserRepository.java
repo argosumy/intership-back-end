@@ -3,6 +3,7 @@ package com.spd.baraholka.user.persistance.repositories;
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
+import com.spd.baraholka.user.persistance.mappers.UserShortViewRowMapper;
 import com.spd.baraholka.user.persistance.mappers.UserRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -19,10 +20,14 @@ public class UserRepository implements PersistenceUserService {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper;
+    private final UserShortViewRowMapper userShortViewRowMapper;
 
-    public UserRepository(NamedParameterJdbcTemplate jdbcTemplate, UserRowMapper userRowMapper) {
+    public UserRepository(NamedParameterJdbcTemplate jdbcTemplate,
+                          UserRowMapper userRowMapper,
+                          UserShortViewRowMapper userShortViewRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.userRowMapper = userRowMapper;
+        this.userShortViewRowMapper = userShortViewRowMapper;
     }
 
     @Override
@@ -37,20 +42,25 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
+    public List<User> selectAllUsers() {
+        String selectSQL = "SELECT id, first_name, last_name, is_blocked, end_date_of_ban, avatar FROM users";
+        return jdbcTemplate.query(selectSQL, userShortViewRowMapper);
+    }
+
+    @Override
     public User create(User user) {
-        final String sql = "INSERT INTO users (image_url, first_name, last_name, e_mail, location, phone_number, position) " +
-                "VALUES (:image_url, :first_name, :last_name, :email, :location, :phone_number, :position) ";
+        final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, avatar) " +
+                "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :avatar) ";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("image_url", user.getImageUrl())
                 .addValue("first_name", user.getFirstName())
                 .addValue("last_name", user.getLastName())
                 .addValue("email", user.getEmail())
                 .addValue("location", user.getLocation())
                 .addValue("phone_number", user.getPhoneNumber())
                 .addValue("position", user.getPosition())
-                .addValue("image_url", user.getImageUrl());
+                .addValue("avatar", user.getImageUrl());
         jdbcTemplate.update(sql, parameters, keyHolder);
         Map<String, Object> keys = Objects.requireNonNull(keyHolder.getKeys());
         if (keys.containsKey("id")) {
@@ -75,11 +85,21 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public Optional<Boolean> existsByEmail(String email) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER(e_mail) = LOWER(:email)",
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
                 Map.of("email", email), Boolean.class));
     }
 
     @Override
+    public Optional<Integer> count() {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class));
+    }
+
+    @Override
+    public Optional<Boolean> isExist(int id) {
+        String isExistQuery = "SELECT count(*) <> 0 FROM users WHERE id=:id";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
+    }
+
     public Optional<User> findByEmail(String email) {
         try {
             return Optional.ofNullable(jdbcTemplate
@@ -102,11 +122,6 @@ public class UserRepository implements PersistenceUserService {
             roles.add(Role.valueOf(role));
         }
         return roles;
-    }
-
-    @Override
-    public Optional<Integer> count() {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class));
     }
 }
 

@@ -5,6 +5,7 @@ import com.spd.baraholka.role.UserAuthority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.spd.baraholka.role.Role.ROLE_USER;
@@ -20,7 +21,7 @@ public class User implements UserDetails {
     private String position;
     private String phoneNumber;
     private boolean isBlocked;
-    private List<UserAdditionalResource> resourceLinks;
+    private LocalDateTime endDateOfBan;
     private Set<Role> roles;
 
     public User() {
@@ -100,14 +101,6 @@ public class User implements UserDetails {
         isBlocked = blocked;
     }
 
-    public List<UserAdditionalResource> getResourceLinks() {
-        return resourceLinks;
-    }
-
-    public void setResourceLinks(List<UserAdditionalResource> resourceLinks) {
-        this.resourceLinks = resourceLinks;
-    }
-
     public Set<Role> getRoles() {
         return Collections.unmodifiableSet(roles);
     }
@@ -118,6 +111,10 @@ public class User implements UserDetails {
 
     public boolean grantRole(Role role) {
         return roles.add(role);
+    }
+
+    public LocalDateTime getEndDateOfBan() {
+        return endDateOfBan;
     }
 
     @Override
@@ -152,6 +149,10 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    public void setEndDateOfBan(LocalDateTime endDateOfBan) {
+        this.endDateOfBan = endDateOfBan;
     }
 
     @Override

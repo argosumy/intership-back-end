@@ -5,8 +5,9 @@ import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
-import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
+import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
@@ -21,7 +22,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.spd.baraholka.role.Role.ROLE_MODERATOR;
 
@@ -72,20 +75,33 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    public List<UserShortViewDTO> getAllUsers() {
+        List<User> users = persistenceUserService.selectAllUsers();
+        return userMapper.convertToDTOList(users);
+    }
+
     public void create(User user) {
         persistenceUserService.create(user);
     }
 
     public boolean existsByEmail(String email) {
+        Optional<Boolean> isExist = persistenceUserService.existsByEmail(email);
+        return isExist.orElse(false);
         return persistenceUserService.existsByEmail(email).orElse(false);
     }
 
     public int count() {
-        return persistenceUserService.count().orElse(0);
+        Optional<Integer> count = persistenceUserService.count();
+        return count.orElse(0);
     }
 
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
         return userMapper.convertFromOAuth(oAuth2UserDto);
+    }
+
+    public boolean isUserExist(int id) {
+        Optional<Boolean> exist = persistenceUserService.isExist(id);
+        return exist.orElse(false);
     }
 
     @Override

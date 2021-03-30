@@ -28,14 +28,6 @@ public class UserDTO {
     private String position;
 
     @NotEmpty
-    @Size(max = 50)
-    private String location;
-
-    @NotEmpty
-    @Size(max = 200)
-    private String imageUrl;
-
-    @NotEmpty
     @Size(max = 20)
     private String phoneNumber;
 
@@ -46,6 +38,16 @@ public class UserDTO {
 
     @NotEmpty
     private Set<Role> roles;
+
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public int getId() {
         return id;
@@ -85,22 +87,6 @@ public class UserDTO {
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getPhoneNumber() {
