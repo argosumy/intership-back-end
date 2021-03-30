@@ -26,6 +26,8 @@ public class UserMapper {
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
         userDTO.setImageUrl(collapseImageUrl(user));
+        userDTO.setEndDateOfBan(user.getEndDateOfBan());
+        userDTO.setLocation(user.getLocation());
         userDTO.setRoles(user.getRoles());
         return userDTO;
     }
@@ -42,6 +44,7 @@ public class UserMapper {
         userDTO.setLastName(user.getLastName());
         userDTO.setBlocked(user.isBlocked());
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
+        userDTO.setEmail(user.getEmail());
         return userDTO;
     }
 

@@ -6,6 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collections;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,8 @@ public class UserDTO {
     private Set<Role> roles;
 
     private String imageUrl;
+    private LocalDateTime endDateOfBan;
+    private String location;
 
     public String getImageUrl() {
         return imageUrl;
@@ -111,6 +114,22 @@ public class UserDTO {
 
     public void setAdditionalContactResources(List<UserAdditionalResourceDTO> additionalContactResources) {
         this.additionalContactResources = additionalContactResources;
+    }
+
+    public LocalDateTime getEndDateOfBan() {
+        return endDateOfBan;
+    }
+
+    public void setEndDateOfBan(LocalDateTime endDateOfBan) {
+        this.endDateOfBan = endDateOfBan;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Set<Role> getRoles() {
