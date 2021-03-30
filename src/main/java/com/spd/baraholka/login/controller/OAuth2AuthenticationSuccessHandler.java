@@ -15,6 +15,6 @@ import java.io.IOException;
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        response.setStatus(HttpStatus.OK.value());
+        response.sendRedirect("http://localhost:3002");
     }
 }
