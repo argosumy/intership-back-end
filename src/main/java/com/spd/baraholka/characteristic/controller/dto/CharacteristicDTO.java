@@ -1,4 +1,6 @@
-package com.spd.baraholka.characteristic.persistance.entities;
+package com.spd.baraholka.characteristic.controller.dto;
+
+import com.spd.baraholka.characteristic.persistance.entities.Category;
 
 import java.util.Objects;
 

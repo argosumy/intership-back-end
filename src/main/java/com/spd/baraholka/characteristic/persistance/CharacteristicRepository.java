@@ -2,7 +2,7 @@ package com.spd.baraholka.characteristic.persistance;
 
 import com.spd.baraholka.characteristic.persistance.entities.CategoryModel;
 import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
-import com.spd.baraholka.characteristic.persistance.entities.CharacteristicDTO;
+import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 
 import java.util.List;
 

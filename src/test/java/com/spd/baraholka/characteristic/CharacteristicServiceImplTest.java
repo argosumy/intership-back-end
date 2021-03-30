@@ -4,7 +4,7 @@ import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
 import com.spd.baraholka.characteristic.persistance.CharacteristicService;
 import com.spd.baraholka.characteristic.persistance.entities.Category;
 import com.spd.baraholka.characteristic.persistance.entities.CategoryModel;
-import com.spd.baraholka.characteristic.persistance.entities.CharacteristicDTO;
+import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 import com.spd.baraholka.characteristic.service.CharacteristicServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

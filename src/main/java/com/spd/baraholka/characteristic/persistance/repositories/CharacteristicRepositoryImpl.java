@@ -3,7 +3,7 @@ package com.spd.baraholka.characteristic.persistance.repositories;
 import com.spd.baraholka.characteristic.persistance.entities.CategoryModel;
 import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
 import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
-import com.spd.baraholka.characteristic.persistance.entities.CharacteristicDTO;
+import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 import com.spd.baraholka.characteristic.persistance.mappers.CategoryMapper;
 import com.spd.baraholka.characteristic.persistance.mappers.CharacteristicMapper;
 import org.springframework.beans.factory.annotation.Autowired;

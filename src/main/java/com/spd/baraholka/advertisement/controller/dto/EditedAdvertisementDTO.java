@@ -5,7 +5,7 @@ import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
 import com.spd.baraholka.annotation.advertisement.EditedStatus;
 import com.spd.baraholka.annotation.advertisement.PresentOrFutureDate;
-import com.spd.baraholka.characteristic.persistance.entities.CharacteristicDTO;
+import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
