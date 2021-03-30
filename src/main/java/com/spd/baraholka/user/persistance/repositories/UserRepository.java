@@ -75,7 +75,7 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public Optional<Boolean> existsByEmail(String email) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER(e_mail) = LOWER(:email)",
                 Map.of("email", email), Boolean.class));
     }
 
@@ -83,7 +83,7 @@ public class UserRepository implements PersistenceUserService {
     public Optional<User> findByEmail(String email) {
         try {
             return Optional.ofNullable(jdbcTemplate
-                    .queryForObject("SELECT * FROM users WHERE LOWER (e_mail) = LOWER (:email)",
+                    .queryForObject("SELECT * FROM users WHERE LOWER(e_mail) = LOWER(:email)",
                     Map.of("email", email),
                     userRowMapper)
             );

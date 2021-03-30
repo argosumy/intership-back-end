@@ -30,14 +30,14 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     private List<UserAdditionalResource> resourceLinks;
     private Set<Role> roles;
 
-    public UserPrincipal(int id, String email, String password, Collection<? extends GrantedAuthority> authorities,
-                         Map<String, Object> attributes) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-        this.attributes = attributes;
-    }
+//    public UserPrincipal(int id, String email, String password, Collection<? extends GrantedAuthority> authorities,
+//                         Map<String, Object> attributes) {
+//        this.id = id;
+//        this.email = email;
+//        this.password = password;
+//        this.authorities = authorities;
+//        this.attributes = attributes;
+//    }
 
     @Override
     public String getName() {
