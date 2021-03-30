@@ -2,6 +2,7 @@ package com.spd.baraholka.comments.mappers;
 
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
+import com.spd.baraholka.comments.dto.UpdatedCommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.stereotype.Component;
@@ -59,13 +60,9 @@ public class CommentDtoMapper {
         return advertisement;
     }
 
-    public Comment updateExistsComment(Comment comment, CommentDto commentDto) {
-        comment.setId(commentDto.getId());
-        comment.setBody(commentDto.getBody());
-        comment.setCreatedDate(commentDto.getCreatedDate());
-        comment.setAdvertisement(getAdvertisement(commentDto));
-        comment.setUser(getUser(commentDto));
-        comment.setParent(getParentComment(commentDto));
+    public Comment updateExistsComment(Comment comment, UpdatedCommentDto updatedCommentDto) {
+        comment.setBody(updatedCommentDto.getBody());
+        comment.setCreatedDate(LocalDate.now());
         return comment;
     }
 }
