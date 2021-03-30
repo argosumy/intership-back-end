@@ -7,8 +7,6 @@ import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
 import com.spd.baraholka.annotation.advertisement.ChangedStatus;
-import com.spd.baraholka.user.controller.dto.OwnerDTO;
-import com.spd.baraholka.user.service.UserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +18,9 @@ import javax.validation.Valid;
 public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
-    private final UserService userService;
 
-    public AdvertisementController(AdvertisementService advertisementService, UserService userService) {
+    public AdvertisementController(AdvertisementService advertisementService) {
         this.advertisementService = advertisementService;
-        this.userService = userService;
     }
 
     @PostMapping
@@ -44,9 +40,6 @@ public class AdvertisementController {
 
     @GetMapping("/{id}")
     public FullAdvertisementDTO getAdvertisement(@PathVariable("id") @AdvertisementExist int id) {
-        FullAdvertisementDTO advertisementDTO = advertisementService.getAdvertisementById(id);
-        OwnerDTO ownerDTO = userService.getOwner(id);
-        advertisementDTO.setAdvertisementOwner(ownerDTO);
-        return advertisementDTO;
+        return advertisementService.getAdvertisementById(id);
     }
 }
