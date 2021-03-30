@@ -9,7 +9,7 @@ CREATE TABLE "advertisements"
     currency              VARCHAR(3),
     discount_availability BOOLEAN DEFAULT false,
     city                  VARCHAR(20),
-    status                VARCHAR(15)        NOT NULL,
+    status                VARCHAR(20)        NOT NULL,
     creation_date         TIMESTAMP          NOT NULL,
     publication_date      TIMESTAMP,
     status_change_date    TIMESTAMP          NOT NULL
