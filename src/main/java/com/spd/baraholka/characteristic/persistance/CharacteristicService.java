@@ -1,12 +1,23 @@
 package com.spd.baraholka.characteristic.persistance;
 
-import com.spd.baraholka.characteristic.persistance.entities.CategoryDTO;
+import com.spd.baraholka.characteristic.persistance.entities.CategoryModel;
 import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
+import com.spd.baraholka.characteristic.persistance.entities.CharacteristicDTO;
 
 import java.util.List;
 
 public interface CharacteristicService {
-    int save(Characteristic characteristic);
+    void save(int adId, CharacteristicDTO characteristic);
 
-    List<CategoryDTO> read();
+    void update(int id, List<CharacteristicDTO> characteristics);
+
+    void updateApproveStatus(int id);
+
+    void delete(int id);
+
+    List<CategoryModel> readAllCategoryWithCharacteristics();
+
+    List<Characteristic> readForAdId(int adId);
+
+    List<Characteristic> readNotApproved();
 }

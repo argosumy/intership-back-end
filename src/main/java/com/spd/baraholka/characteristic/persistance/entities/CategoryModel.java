@@ -5,14 +5,14 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
-public class CategoryDTO {
+public class CategoryModel {
     @NotNull
     @Size(max = 100)
     private final Category category;
     @NotNull
     private final Set<String> characteristicsName;
 
-    public CategoryDTO(Category category, Set<String> characteristicsName) {
+    public CategoryModel(Category category, Set<String> characteristicsName) {
         this.category = category;
         this.characteristicsName = characteristicsName;
     }
@@ -33,7 +33,7 @@ public class CategoryDTO {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CategoryDTO that = (CategoryDTO) o;
+        CategoryModel that = (CategoryModel) o;
         return category == that.category && Objects.equals(characteristicsName, that.characteristicsName);
     }
 

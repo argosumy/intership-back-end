@@ -1,10 +1,10 @@
 package com.spd.baraholka.characteristic;
 
-import com.spd.baraholka.characteristic.persistance.entities.CategoryDTO;
-import com.spd.baraholka.characteristic.persistance.entities.Category;
-import com.spd.baraholka.characteristic.persistance.entities.Characteristic;
 import com.spd.baraholka.characteristic.persistance.CharacteristicRepository;
 import com.spd.baraholka.characteristic.persistance.CharacteristicService;
+import com.spd.baraholka.characteristic.persistance.entities.Category;
+import com.spd.baraholka.characteristic.persistance.entities.CategoryModel;
+import com.spd.baraholka.characteristic.persistance.entities.CharacteristicDTO;
 import com.spd.baraholka.characteristic.service.CharacteristicServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,32 +20,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CharacteristicServiceImplTest {
     private CharacteristicService characteristicService;
     private CharacteristicRepository characteristicRepository;
-    private Characteristic characteristic;
-    private List<CategoryDTO> categoryDTOList;
+    private CharacteristicDTO characteristic;
+    private List<CategoryModel> categoryModelList;
 
     @BeforeEach
     void initializing() {
         characteristicRepository = Mockito.mock(CharacteristicRepository.class);
         characteristicService = new CharacteristicServiceImpl(characteristicRepository);
-        characteristic = new Characteristic(1,
-                Category.OTHER,
-                "color",
+        characteristic = new CharacteristicDTO("color",
                 "red",
-                true);
-        categoryDTOList = List.of(new CategoryDTO(Category.OTHER, Set.of("color", "weight")));
-    }
-
-    @Test
-    @DisplayName("save Characteristic return id")
-    void testSave() {
-        Mockito.when(characteristicRepository.save(characteristic)).thenReturn(1);
-        assertAll(() -> assertEquals(1, characteristicService.save(characteristic)));
+                true,
+                Category.OTHER);
+        categoryModelList = List.of(new CategoryModel(Category.OTHER, Set.of("color", "weight")));
     }
 
     @Test
     @DisplayName("get all categories with his characteristics")
     void testRead() {
-        Mockito.when(characteristicRepository.read()).thenReturn(categoryDTOList);
-        assertAll(() -> assertEquals(categoryDTOList, characteristicService.read()));
+        Mockito.when(characteristicRepository.readAllCategoryWithCharacteristics()).thenReturn(categoryModelList);
+        assertAll(() -> assertEquals(categoryModelList, characteristicService.readAllCategoryWithCharacteristics()));
     }
 }
