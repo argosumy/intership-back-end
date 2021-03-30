@@ -1,10 +1,8 @@
 package com.spd.baraholka.user.controller.mappers;
 
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
-import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
-import com.spd.baraholka.user.persistance.entities.Owner;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -66,15 +64,5 @@ public class UserMapper {
         user.setPosition("");
         user.setPhoneNumber("");
         return user;
-    }
-
-    public OwnerDTO convertToDTO(Owner owner) {
-        OwnerDTO ownerDTO = new OwnerDTO();
-        ownerDTO.setId(owner.getId());
-        ownerDTO.setFullName(owner.getFullName());
-        String imageUrl = collapseImageUrl(owner.getImageUrl());
-        ownerDTO.setImageUrl(imageUrl);
-        ownerDTO.setEmail(owner.getEmail());
-        return ownerDTO;
     }
 }
