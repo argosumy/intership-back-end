@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.spd.baraholka.role.Role.ROLE_MODERATOR;
+import static com.spd.baraholka.role.Role.MODERATOR;
 
 @Service
 @Qualifier("UserService")
@@ -120,7 +120,7 @@ public class UserService implements UserDetailsService {
         if (!existsByEmail(oAuth2UserDTO.getEmail())) {
             user = convertFromOAuth(oAuth2UserDTO);
             if (count() == 0) {
-                user.grantRole(ROLE_MODERATOR);
+                user.grantRole(MODERATOR);
             }
             create(user);
         }

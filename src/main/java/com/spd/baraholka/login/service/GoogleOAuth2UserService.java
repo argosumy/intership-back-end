@@ -22,14 +22,15 @@ import java.util.Objects;
 @Service
 public class GoogleOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final UserService userService;
-
     public static final String EMAIL_CLAIM_ATTRIBUTE = "email";
     public static final String FIRST_NAME_CLAIM_ATTRIBUTE = "given_name";
     public static final String LAST_NAME_CLAIM_ATTRIBUTE = "family_name";
     public static final String AVATAR_CLAIM_ATTRIBUTE = "picture";
 
     public static final String DOMAIN_NOT_ALLOWED = "Domain is not allowed for login.";
+    public static final String EMAIL_NOT_PROVIDED = "Email not found from OAuth2 provider.";
+
+    private final UserService userService;
 
     @Value("${login.allowed-domains}")
     private List<String> allowedDomains;
@@ -65,7 +66,7 @@ public class GoogleOAuth2UserService extends DefaultOAuth2UserService implements
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         OAuth2UserDTO oAuth2UserDTO = getOAuth2UserDTO(oAuth2User);
         if (oAuth2UserDTO.getEmail() == null) {
-            throw new OAuth2ProcessingException("Email not found from OAuth2 provider");
+            throw new OAuth2ProcessingException(EMAIL_NOT_PROVIDED);
         }
         User user;
         try {

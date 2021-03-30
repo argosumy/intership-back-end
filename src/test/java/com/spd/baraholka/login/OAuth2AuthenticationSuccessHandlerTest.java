@@ -124,14 +124,14 @@ class OAuth2AuthenticationSuccessHandlerTest {
         when(userService.existsByEmail(dummyUser.getEmail())).thenReturn(false);
         when(userService.count()).thenReturn(0);
         when(userService.convertFromOAuth(dummyOAuth2UserDTO)).thenReturn(dummyUser);
-        assertFalse(dummyUser.getRoles().contains(Role.ROLE_MODERATOR));
+        assertFalse(dummyUser.getRoles().contains(Role.MODERATOR));
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(dummyUser, times(1)).grantRole(Role.ROLE_MODERATOR);
-        assertTrue(dummyUser.getRoles().contains(Role.ROLE_MODERATOR));
+        verify(dummyUser, times(1)).grantRole(Role.MODERATOR);
+        assertTrue(dummyUser.getRoles().contains(Role.MODERATOR));
     }
 
     @Test
@@ -141,8 +141,8 @@ class OAuth2AuthenticationSuccessHandlerTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
         oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class));
 
-        verify(dummyUser, times(0)).grantRole(Role.ROLE_MODERATOR);
-        assertFalse(dummyUser.getRoles().contains(Role.ROLE_MODERATOR));
+        verify(dummyUser, times(0)).grantRole(Role.MODERATOR);
+        assertFalse(dummyUser.getRoles().contains(Role.MODERATOR));
     }
 
     @Test

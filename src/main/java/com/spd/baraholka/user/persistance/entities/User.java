@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static com.spd.baraholka.role.Role.ROLE_USER;
+import static com.spd.baraholka.role.Role.USER;
 
 public class User implements UserDetails {
 
@@ -26,7 +26,7 @@ public class User implements UserDetails {
 
     public User() {
         this.roles = new HashSet<>();
-        this.roles.add(ROLE_USER);
+        this.roles.add(USER);
     }
 
     public int getId() {
