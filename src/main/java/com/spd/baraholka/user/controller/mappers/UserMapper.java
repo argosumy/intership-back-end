@@ -13,18 +13,6 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
 
-    public User convertToEntity(UserDTO userDTO) {
-        User user = new User();
-        user.setId(userDTO.getId());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setPosition(userDTO.getPosition());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setBlocked(userDTO.isBlocked());
-        return user;
-    }
-
     @Value("${amazonProperties.imagesUrl}")
     private String awsImageUrl;
 
