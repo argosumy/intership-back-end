@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface StatisticRepository {
-    Map<String, List<Integer>> getCountByGroupCategory();
+    Map<String, Integer> getCountByGroupCategory();
 
-    Map<String, List<Integer>> getNewAdvertisementForPeriod(PeriodStatistic period);
+    List<Map<String, Integer>> getCountNewAdvertisementByCategoryForPeriod(PeriodStatistic period);
 
     Map<String, List<Integer>> getCountByCategoryForPeriod(PeriodStatistic period);
 }

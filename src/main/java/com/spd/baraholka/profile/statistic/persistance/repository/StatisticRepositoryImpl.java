@@ -23,71 +23,73 @@ public class StatisticRepositoryImpl implements StatisticRepository {
     }
 
     @Override
-    public Map<String, List<Integer>> getCountByGroupCategory() {
-        Map<String, List<Integer>> resultMap = new HashMap<>();
-        resultMap = template.query("SELECT ad.category, count(*)" +
-                                       "FROM history_of_views INNER JOIN advertisement AS ad ON history_of_views.ad_id = ad.id" +
-                                       "GROUP BY ad.category", new ResultSetExtractor<Map<String, List<Integer>>>() {
+    public Map<String, Integer> getCountByGroupCategory() {
+        Map<String, Integer> resultMap;
+        resultMap = template.query("SELECT category, count(*) FROM advertisements GROUP BY category", new ResultSetExtractor<Map<String, Integer>>() {
             @Override
-            public Map<String, List<Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                Map<String, List<Integer>> rsMapExtract = new HashMap<>();
+            public Map<String, Integer> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                Map<String, Integer> result = new HashMap<>();
                 while (rs.next()) {
-                    List<Integer> list = new ArrayList<>();
-                    list.add(rs.getInt("count"));
-                    rsMapExtract.put(rs.getString("category"), list);
+                    result.put(rs.getString("category"), rs.getInt("count"));
                 }
-                return rsMapExtract;
+                return result;
             }
         });
         return resultMap;
     }
 
     @Override
-    public Map<String, List<Integer>> getNewAdvertisementForPeriod(PeriodStatistic period) {
-        LocalDateTime start = LocalDateTime.now();//period.getPeriods().get("START");
-        LocalDateTime end = LocalDateTime.now();//period.getPeriods().get("END");
-        Map<String, List<Integer>> resultMap = new HashMap<>();
-        resultMap = resultMap = template.query("SELECT count(*) FROM advertisementes AS ad WHERE ad.created_at ",
-                new ResultSetExtractor<Map<String, List<Integer>>>() {
-                    @Override
-                    public Map<String, List<Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                        Map<String, List<Integer>> rsMapExtract = new HashMap<>();
-                        while (rs.next()) {
-                            List<Integer> list = new ArrayList<>();
-                            list.add(rs.getInt("count"));
-                            rsMapExtract.put(rs.getString("category"), list);
-                        }
-                        return rsMapExtract;
-                    }
-                }, start, end);
-        return null;
+    public List<Map<String, Integer>> getCountNewAdvertisementByCategoryForPeriod(PeriodStatistic period) {
+        List<Map<String, Integer>> result = new ArrayList<>();
+        for (List<LocalDateTime> listPeriod : period.getPeriods()) {
+            result.add(getCountByGroupCategoryForPeriod(listPeriod.get(0), listPeriod.get(1)));
+        }
+        return result;
+    }
+
+    private Map<String, Integer> getCountByGroupCategoryForPeriod(LocalDateTime start, LocalDateTime end) {
+        Map<String, Integer> resultMap;
+        resultMap = template.query("SELECT category, count(*) " +
+                "FROM advertisements " +
+                "WHERE publication_date >= ? AND publication_date < ? " +
+                "GROUP BY category", new ResultSetExtractor<Map<String, Integer>>() {
+            @Override
+            public Map<String, Integer> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                Map<String, Integer> result = new HashMap<>();
+                while (rs.next()) {
+                    result.put(rs.getString("category"), rs.getInt("count"));
+                }
+                return result;
+            }
+        }, start, end);
+        return resultMap;
     }
 
     @Override
     public Map<String, List<Integer>> getCountByCategoryForPeriod(PeriodStatistic period) {
-        Map<Integer, List<LocalDateTime>> realPeriod = period.getPeriods();
-        Map<String, List<Integer>> result = new HashMap<>();
-        String sql = "";
-        for (Map.Entry<Integer, List<LocalDateTime>> entry : realPeriod.entrySet()) {
-            LocalDateTime start = entry.getValue().get(1);
-            LocalDateTime end = entry.getValue().get(2);
-            template.query("SELECT ad.category, count(*)" +
-                    "FROM history_of_views INNER JOIN advertisements AS ad ON history_of_views.ad_id = ad.id" +
-                    "WHERE " +
-                    "GROUP BY ad.category", new ResultSetExtractor<Map<String, List<Integer>>>() {
-                @Override
-                public Map<String, List<Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                    Map<String, List<Integer>> rsMapExtract = new HashMap<>();
-                    while (rs.next()) {
-                        List<Integer> list = new ArrayList<>();
-                        list.add(rs.getInt("count"));
-                        rsMapExtract.put(rs.getString("category"), list);
-                    }
-                    return rsMapExtract;
-                }
-            });
-        }
-        template.queryForList(sql, "");
+//        Map<Integer, List<LocalDateTime>> realPeriod = period.getPeriods();
+//        Map<String, List<Integer>> result = new HashMap<>();
+//        String sql = "";
+//        for (Map.Entry<Integer, List<LocalDateTime>> entry : realPeriod.entrySet()) {
+//            LocalDateTime start = entry.getValue().get(1);
+//            LocalDateTime end = entry.getValue().get(2);
+//            template.query("SELECT ad.category, count(*)" +
+//                    "FROM history_of_views INNER JOIN advertisements AS ad ON history_of_views.ad_id = ad.id" +
+//                    "WHERE " +
+//                    "GROUP BY ad.category", new ResultSetExtractor<Map<String, List<Integer>>>() {
+//                @Override
+//                public Map<String, List<Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+//                    Map<String, List<Integer>> rsMapExtract = new HashMap<>();
+//                    while (rs.next()) {
+//                        List<Integer> list = new ArrayList<>();
+//                        list.add(rs.getInt("count"));
+//                        rsMapExtract.put(rs.getString("category"), list);
+//                    }
+//                    return rsMapExtract;
+//                }
+//            });
+//        }
+   //     template.queryForList(sql, "");
         return null;
     }
 }
