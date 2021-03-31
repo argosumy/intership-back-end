@@ -8,7 +8,7 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.advertisement.service.*;
+import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.annotation.advertisement.ChangedStatus;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
@@ -40,6 +40,21 @@ public class AdvertisementController {
         this.pageRequestService = pageRequestService;
     }
 
+    @PostMapping
+    public int saveAdvertisement(@RequestBody @Valid InitialAdvertisementDTO advertisementDTO) {
+        return advertisementService.saveAdvertisement(advertisementDTO);
+    }
+
+    @PutMapping
+    public int updateAdvertisement(@RequestBody @Valid EditedAdvertisementDTO advertisementDTO) {
+        return advertisementService.updateAdvertisement(advertisementDTO);
+    }
+
+    @PutMapping("/{id}")
+    public int updateAdvertisementStatus(@PathVariable int id, @RequestParam("status") @ChangedStatus AdvertisementStatus status) {
+        return advertisementService.updateAdvertisementStatus(id, status);
+    }
+
     @GetMapping("/search")
     public List<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
                                                         @RequestParam(value = "size", required = false) Integer size) {
@@ -64,20 +79,5 @@ public class AdvertisementController {
     public int cancelDelayedPublicationOfExistsAd(@PathVariable("id") int id) {
         String presentDate = String.valueOf(LocalDateTime.now());
         return advertisementService.editPublicationDate(id, presentDate);
-    }
-
-    @PostMapping
-    public int saveAdvertisement(@RequestBody @Valid InitialAdvertisementDTO advertisementDTO) {
-        return advertisementService.saveAdvertisement(advertisementDTO);
-    }
-
-    @PutMapping
-    public int updateAdvertisement(@RequestBody @Valid EditedAdvertisementDTO advertisementDTO) {
-        return advertisementService.updateAdvertisement(advertisementDTO);
-    }
-
-    @PutMapping("/{id}")
-    public int updateAdvertisementStatus(@PathVariable int id, @RequestParam("status") @ChangedStatus AdvertisementStatus status) {
-        return advertisementService.updateAdvertisementStatus(id, status);
     }
 }
