@@ -59,9 +59,9 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     @Override
-    public Advertisement selectAdvertisementById(int id) {
+    public Optional<Advertisement> selectAdvertisementById(int id) {
         String selectSQL = createSelectSQL();
-        return jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), advertisementMapper);
+        return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), advertisementMapper));
     }
 
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {

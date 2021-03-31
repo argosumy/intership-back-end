@@ -7,6 +7,7 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.service.OwnerService;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,12 @@ public class AdvertisementService {
     }
 
     public FullAdvertisementDTO getAdvertisementById(int id) {
-        Advertisement advertisement = persistenceAdvertisementService.selectAdvertisementById(id);
-        return collectFullAdvertisementDTO(advertisement);
+        Optional<Advertisement> advertisement = persistenceAdvertisementService.selectAdvertisementById(id);
+        if (advertisement.isPresent()) {
+            return collectFullAdvertisementDTO(advertisement.get());
+        } else {
+            throw new NotFoundByIdException(id);
+        }
     }
 
     private FullAdvertisementDTO collectFullAdvertisementDTO(Advertisement advertisement) {
