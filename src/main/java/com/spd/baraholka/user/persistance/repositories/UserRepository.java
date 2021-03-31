@@ -7,6 +7,7 @@ import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.mappers.OwnerRowMapper;
 import com.spd.baraholka.user.persistance.mappers.UserShortViewRowMapper;
 import com.spd.baraholka.user.persistance.mappers.UserRowMapper;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -95,7 +96,11 @@ public class UserRepository implements PersistenceUserService {
     @Override
     public Optional<Owner> selectOwner(int id) {
         String selectSQL = "SELECT id, first_name, last_name, avatar, e_mail FROM users WHERE id=:id";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), ownerRowMapper));
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), ownerRowMapper));
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     private void saveUserRoles(User user) {
