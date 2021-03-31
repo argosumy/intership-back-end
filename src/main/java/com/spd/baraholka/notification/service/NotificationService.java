@@ -1,7 +1,7 @@
 package com.spd.baraholka.notification.service;
 
-import com.spd.baraholka.notification.model.Notification;
 import com.spd.baraholka.notification.model.BaseNotification;
+import com.spd.baraholka.notification.model.Notification;
 import com.spd.baraholka.notification.repository.NotificationRepository;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -16,7 +16,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 
 import static com.spd.baraholka.notification.factory.ModelFactory.getModel;
@@ -37,16 +36,13 @@ public class NotificationService {
     }
 
     public void sendMessage(BaseNotification baseNotification) throws MessagingException, IOException, TemplateException {
-        emailSender.send(createMessage(baseNotification));
-    }
-
-    private MimeMessage createMessage(BaseNotification baseNotification) throws MessagingException, IOException, TemplateException {
         Map<String, String> model = getModel(baseNotification);
         var templateLabel = baseNotification.getEventType().getTemplateLabel();
         Template template = emailConfig.getTemplate(templateLabel);
         String html = getHtml(model, template);
+        MimeMessage message = getMimeMessage(baseNotification, html);
 
-        return getMimeMessage(baseNotification, html);
+        emailSender.send(message);
     }
 
     private MimeMessage getMimeMessage(BaseNotification baseNotification, String html) throws MessagingException {
@@ -66,9 +62,5 @@ public class NotificationService {
 
     public int saveNotification(Notification notification) {
         return notificationRepository.saveNotification(notification);
-    }
-
-    public List<Notification> getNotifications() {
-        return notificationRepository.getNotifications();
     }
 }

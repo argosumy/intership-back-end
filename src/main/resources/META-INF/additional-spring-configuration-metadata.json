@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "dao.username",
-      "type": "java.lang.String",
-      "description": "Description for dao.username."
-  }
-] }

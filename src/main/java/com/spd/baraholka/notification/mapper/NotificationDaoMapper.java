@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Component
 public class NotificationDaoMapper {
 
-    public Notification toNotificationDao(NotificationDto notificationDto) {
+    public Notification toNotification(NotificationDto notificationDto) {
         Notification notification = new Notification();
         notification.setUserMailToId(notificationDto.getUserMailToId());
         notification.setAdvertisementId(notificationDto.getAdvertisementId());

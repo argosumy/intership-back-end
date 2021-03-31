@@ -31,7 +31,7 @@ public class NotificationController {
 
     @PostMapping
     public int sendNotification(@RequestBody NotificationDto notificationDto) throws MessagingException, IOException, TemplateException {
-        int savedNotificationId = notificationService.saveNotification(notificationDaoMapper.toNotificationDao(notificationDto));
+        int savedNotificationId = notificationService.saveNotification(notificationDaoMapper.toNotification(notificationDto));
         notificationService.sendMessage(notificationMapperFactory.getNotification(notificationDto));
         return savedNotificationId;
     }
