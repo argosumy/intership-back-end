@@ -40,6 +40,7 @@ public class AdvertisementController {
         this.pageRequestService = pageRequestService;
     }
 
+
     @PostMapping
     public int saveAdvertisement(@RequestBody @Valid InitialAdvertisementDTO advertisementDTO) {
         return advertisementService.saveAdvertisement(advertisementDTO);
