@@ -1,7 +1,7 @@
 package com.spd.baraholka.notification.controller;
 
 import com.spd.baraholka.notification.dto.NotificationDto;
-import com.spd.baraholka.notification.mapper.NotificationDaoMapper;
+import com.spd.baraholka.notification.mapper.NotificationMapper;
 import com.spd.baraholka.notification.mapper.NotificationMapperFactory;
 import com.spd.baraholka.notification.service.NotificationService;
 import freemarker.template.TemplateException;
@@ -18,20 +18,20 @@ public class NotificationController {
 
     private final NotificationService notificationService;
     private final NotificationMapperFactory notificationMapperFactory;
-    private final NotificationDaoMapper notificationDaoMapper;
+    private final NotificationMapper notificationMapper;
 
     @Autowired
     public NotificationController(NotificationService notificationService,
                                   NotificationMapperFactory notificationMapperFactory,
-                                  NotificationDaoMapper notificationDaoMapper) {
+                                  NotificationMapper notificationMapper) {
         this.notificationService = notificationService;
         this.notificationMapperFactory = notificationMapperFactory;
-        this.notificationDaoMapper = notificationDaoMapper;
+        this.notificationMapper = notificationMapper;
     }
 
     @PostMapping
     public int sendNotification(@RequestBody NotificationDto notificationDto) throws MessagingException, IOException, TemplateException {
-        int savedNotificationId = notificationService.saveNotification(notificationDaoMapper.toNotification(notificationDto));
+        int savedNotificationId = notificationService.saveNotification(notificationMapper.toNotification(notificationDto));
         notificationService.sendMessage(notificationMapperFactory.getNotification(notificationDto));
         return savedNotificationId;
     }

@@ -27,20 +27,17 @@ public final class ModelFactory {
             case NEW_COMMENT_ON_COMMENT:
                 model.put("writer", ((CommentNotification) baseNotification).getWriterName());
                 break;
-
             case NEW_ADVERTISEMENT:
             case ADVERTISEMENT_CHANGE:
                 model.put("title", ((AdvertisementNotification) baseNotification).getTitle());
                 model.put("description", ((AdvertisementNotification) baseNotification).getDescription());
                 model.put("mailTo", baseNotification.getMailTo());
                 break;
-
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
                 model.put("blockEnd", ((BanBlockNotification) baseNotification).getEndDate().toString());
                 model.put("reason", ((BanBlockNotification) baseNotification).getReason());
                 break;
-
             default:
                 throw new IllegalStateException("Unexpected value: " + eventType);
         }

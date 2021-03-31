@@ -42,6 +42,6 @@ public class AdvertisementService {
     }
 
     public Optional<Advertisement> findAdById(int advertisementId) {
-        return Optional.empty();
+        return Optional.empty();  //TODO implement findAdById
     }
 }

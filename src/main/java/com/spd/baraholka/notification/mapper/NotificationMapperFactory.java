@@ -26,9 +26,9 @@ public class NotificationMapperFactory {
     }
 
     public BaseNotification getNotification(NotificationDto notificationDto) {
+        UserDTO userById;
+        Advertisement advertisementById;
         UserDTO userMailTo = getUserById(notificationDto.getUserMailToId());
-        UserDTO userById = getUserById(notificationDto.getUserId());
-        Advertisement advertisementById = getAdvertisementById(notificationDto.getAdvertisementId());
         EventType eventType = notificationDto.getEventType();
 
         switch (eventType) {
@@ -42,6 +42,7 @@ public class NotificationMapperFactory {
             case NEW_ADVERTISEMENT:
             case ADVERTISEMENT_CHANGE:
                 AdvertisementNotification advertisementNotification = new AdvertisementNotification();
+                advertisementById = getAdvertisementById(notificationDto.getAdvertisementId());
                 setParameters(advertisementNotification, notificationDto, userMailTo);
                 advertisementNotification.setTitle(advertisementById.getTitle());
                 advertisementNotification.setDescription(advertisementById.getDescription());
@@ -49,6 +50,7 @@ public class NotificationMapperFactory {
             case NEW_ADVERTISEMENT_COMMENT:
             case NEW_COMMENT_ON_COMMENT:
                 CommentNotification commentNotification = new CommentNotification();
+                userById = getUserById(notificationDto.getUserId());
                 setParameters(commentNotification, notificationDto, userMailTo);
                 commentNotification.setWriterName(userById.getFirstName() + " " + userById.getLastName());
                 return commentNotification;
