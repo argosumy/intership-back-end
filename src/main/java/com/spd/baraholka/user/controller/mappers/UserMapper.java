@@ -25,7 +25,7 @@ public class UserMapper {
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
-        userDTO.setImageUrl(collapseImageUrl(user));
+//      userDTO.setImageUrl(collapseImageUrl(user));  //TODO temporary mock
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setLocation(user.getLocation());
         return userDTO;

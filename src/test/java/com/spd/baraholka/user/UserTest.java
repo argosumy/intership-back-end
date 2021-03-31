@@ -10,7 +10,6 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 class UserTest {
