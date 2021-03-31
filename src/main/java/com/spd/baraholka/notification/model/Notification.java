@@ -1,10 +1,10 @@
-package com.spd.baraholka.notification.dao;
+package com.spd.baraholka.notification.model;
 
 import com.spd.baraholka.notification.enums.EventType;
 
 import java.time.LocalDateTime;
 
-public class NotificationDao {
+public class Notification {
 
     private int userMailToId;
     private int advertisementId;

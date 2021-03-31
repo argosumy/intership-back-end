@@ -1,6 +1,6 @@
 package com.spd.baraholka.notification.service;
 
-import com.spd.baraholka.notification.dao.NotificationDao;
+import com.spd.baraholka.notification.model.Notification;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.repository.NotificationRepository;
 import freemarker.template.Configuration;
@@ -64,11 +64,11 @@ public class NotificationService {
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
     }
 
-    public int saveNotification(NotificationDao notificationDao) {
-        return notificationRepository.saveNotification(notificationDao);
+    public int saveNotification(Notification notification) {
+        return notificationRepository.saveNotification(notification);
     }
 
-    public List<NotificationDao> getNotifications() {
+    public List<Notification> getNotifications() {
         return notificationRepository.getNotifications();
     }
 }

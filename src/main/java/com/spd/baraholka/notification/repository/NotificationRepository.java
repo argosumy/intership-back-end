@@ -1,6 +1,6 @@
 package com.spd.baraholka.notification.repository;
 
-import com.spd.baraholka.notification.dao.NotificationDao;
+import com.spd.baraholka.notification.model.Notification;
 import com.spd.baraholka.notification.mapper.NotificationDaoRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,18 +19,18 @@ public class NotificationRepository {
         this.notificationDaoRowMapper = notificationDaoRowMapper;
     }
 
-    public int saveNotification(NotificationDao notificationDao) {
+    public int saveNotification(Notification notification) {
         return jdbcTemplate.update(
                 "INSERT INTO notifications(user_mail_to_id, advertisement_id, event_type, send_date)" +
                         "VALUES(:mailTo, :adId, :eventType, :sendDate)",
-                Map.of("mailTo", notificationDao.getUserMailToId(),
-                        "adId", notificationDao.getAdvertisementId(),
-                        "eventType", notificationDao.getEventType().name(),
-                        "sendDate", notificationDao.getSendDate())
+                Map.of("mailTo", notification.getUserMailToId(),
+                        "adId", notification.getAdvertisementId(),
+                        "eventType", notification.getEventType().name(),
+                        "sendDate", notification.getSendDate())
         );
     }
 
-    public List<NotificationDao> getNotifications() {
+    public List<Notification> getNotifications() {
         return jdbcTemplate.query(
                 "SELECT * FROM notifications",
                 notificationDaoRowMapper

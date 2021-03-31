@@ -20,13 +20,12 @@ public final class ModelFactory {
     public static Map<String, String> getModel(BaseNotification baseNotification) {
         Map<String, String> model = new HashMap<>();
         EventType eventType = baseNotification.getEventType();
+        setLinks(baseNotification, model);
 
         switch (eventType) {
             case NEW_ADVERTISEMENT_COMMENT:
             case NEW_COMMENT_ON_COMMENT:
                 model.put("writer", ((CommentNotification) baseNotification).getWriterName());
-                model.put(OBJECT_LINK, baseNotification.getObjectLink());
-                model.put(PROFILE_LINK, baseNotification.getUserProfileLink());
                 break;
 
             case NEW_ADVERTISEMENT:
@@ -34,21 +33,22 @@ public final class ModelFactory {
                 model.put("title", ((AdvertisementNotification) baseNotification).getTitle());
                 model.put("description", ((AdvertisementNotification) baseNotification).getDescription());
                 model.put("mailTo", baseNotification.getMailTo());
-                model.put(OBJECT_LINK, baseNotification.getObjectLink());
-                model.put(PROFILE_LINK, baseNotification.getUserProfileLink());
                 break;
 
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
                 model.put("blockEnd", ((BanBlockNotification) baseNotification).getEndDate().toString());
                 model.put("reason", ((BanBlockNotification) baseNotification).getReason());
-                model.put(OBJECT_LINK, baseNotification.getUserProfileLink());
-                model.put(PROFILE_LINK, baseNotification.getUserProfileLink());
                 break;
 
             default:
                 throw new IllegalStateException("Unexpected value: " + eventType);
         }
         return model;
+    }
+
+    private static void setLinks(BaseNotification baseNotification, Map<String, String> model) {
+        model.put(OBJECT_LINK, baseNotification.getObjectLink());
+        model.put(PROFILE_LINK, baseNotification.getUserProfileLink());
     }
 }
