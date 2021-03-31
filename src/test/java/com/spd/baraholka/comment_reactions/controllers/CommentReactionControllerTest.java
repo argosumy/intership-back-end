@@ -9,6 +9,8 @@ import com.spd.baraholka.comment_reactions.dto.CommentReactionDto;
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.mappers.CommentReactionDtoMapper;
 import com.spd.baraholka.comment_reactions.services.CommentReactionService;
+import com.spd.baraholka.comments.entities.Comment;
+import com.spd.baraholka.comments.services.CommentService;
 import com.spd.baraholka.config.SecurityConfig;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +23,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 import static com.spd.baraholka.comment_reactions.enums.CommentReactionType.DISLIKE;
 import static com.spd.baraholka.comment_reactions.enums.CommentReactionType.LIKE;
@@ -37,6 +41,9 @@ class CommentReactionControllerTest {
     @MockBean
     private CommentReactionService commentReactionService;
     @Autowired
+    @MockBean
+    private CommentService commentService;
+    @Autowired
     private MockMvc mockMvc;
     @Autowired
     @MockBean
@@ -44,6 +51,8 @@ class CommentReactionControllerTest {
     @Autowired
     private ObjectMapper mapper;
     private CommentReactionDto commentReactionDto;
+    @MockBean
+    private Comment comment;
     @Autowired
     private SecurityConfig securityConfig;
     @Autowired
@@ -80,6 +89,9 @@ class CommentReactionControllerTest {
 
     @Test
     void deleteCommentReaction() throws Exception {
+        when(commentService.findById(1))
+                .thenReturn(Optional.ofNullable(comment));
+
         mockMvc.perform(delete("/comment-reaction/1/LIKE"))
                 .andExpect(status().isOk());
 

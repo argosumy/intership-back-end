@@ -5,6 +5,8 @@ import com.spd.baraholka.comment_reactions.entities.CommentReaction;
 import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.mappers.CommentReactionDtoMapper;
 import com.spd.baraholka.comment_reactions.services.CommentReactionService;
+import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
+import com.spd.baraholka.comments.services.CommentService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,11 +15,13 @@ import javax.validation.Valid;
 public class CommentReactionController {
 
     private final CommentReactionService commentReactionService;
+    private final CommentService commentService;
     private final CommentReactionDtoMapper commentReactionDtoMapper;
 
     public CommentReactionController(CommentReactionService commentReactionService,
-                                     CommentReactionDtoMapper commentReactionDtoMapper) {
+                                     CommentService commentService, CommentReactionDtoMapper commentReactionDtoMapper) {
         this.commentReactionService = commentReactionService;
+        this.commentService = commentService;
         this.commentReactionDtoMapper = commentReactionDtoMapper;
     }
 
@@ -36,6 +40,7 @@ public class CommentReactionController {
     @DeleteMapping("/comment-reaction/{commentId}/{commentReaction}")
     public void deleteCommentReaction(@PathVariable("commentId") int commentId,
                                       @PathVariable("commentReaction") CommentReactionType commentReactionType) {
+        commentService.findById(commentId).orElseThrow(() -> new CommentNotFoundException(commentId));
         commentReactionService.deleteLastRecordByCommentId(commentId, commentReactionType);
     }
 }
