@@ -8,12 +8,14 @@ EXPOSE 8080
 WORKDIR /home/spring/${APP_NAME}
 
 COPY ./src/ ./src
+COPY ./test-data ./test-data
 COPY ./gradle ./gradle
 COPY ./build.gradle ./gradlew ./
 
 RUN addgroup spring && adduser spring --quiet --disabled-password --gecos "" --ingroup spring && \
-    chown -R spring:spring /home/spring/${APP_NAME} && \
-    ./gradlew bootJar
+    chown -R spring:spring /home/spring/${APP_NAME}
+
+RUN ./gradlew bootJar
 
 USER spring:spring
 
