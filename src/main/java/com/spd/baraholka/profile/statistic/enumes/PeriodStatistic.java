@@ -1,4 +1,4 @@
-package com.spd.baraholka.profile.statistic;
+package com.spd.baraholka.profile.statistic.enumes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.spd.baraholka.profile.statistic.service;
 
-import com.spd.baraholka.profile.statistic.repository.StatisticRepository;
+import com.spd.baraholka.profile.statistic.persistance.repository.StatisticRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

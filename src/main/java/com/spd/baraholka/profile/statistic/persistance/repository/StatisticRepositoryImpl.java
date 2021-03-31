@@ -1,6 +1,6 @@
-package com.spd.baraholka.profile.statistic.repository;
+package com.spd.baraholka.profile.statistic.persistance.repository;
 
-import com.spd.baraholka.profile.statistic.PeriodStatistic;
+import com.spd.baraholka.profile.statistic.enumes.PeriodStatistic;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -44,8 +44,8 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 
     @Override
     public Map<String, List<Integer>> getNewAdvertisementForPeriod(PeriodStatistic period) {
-        LocalDateTime start = period.getStartEnd().get("START");
-        LocalDateTime end = period.getStartEnd().get("END");
+        LocalDateTime start = LocalDateTime.now();//period.getPeriods().get("START");
+        LocalDateTime end = LocalDateTime.now();//period.getPeriods().get("END");
         Map<String, List<Integer>> resultMap = new HashMap<>();
         resultMap = resultMap = template.query("SELECT count(*) FROM advertisementes AS ad WHERE ad.created_at ",
                 new ResultSetExtractor<Map<String, List<Integer>>>() {
@@ -86,7 +86,6 @@ public class StatisticRepositoryImpl implements StatisticRepository {
                     return rsMapExtract;
                 }
             });
-
         }
         template.queryForList(sql, "");
         return null;

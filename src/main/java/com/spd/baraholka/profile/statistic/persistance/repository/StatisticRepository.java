@@ -1,6 +1,6 @@
-package com.spd.baraholka.profile.statistic.repository;
+package com.spd.baraholka.profile.statistic.persistance.repository;
 
-import com.spd.baraholka.profile.statistic.PeriodStatistic;
+import com.spd.baraholka.profile.statistic.enumes.PeriodStatistic;
 
 import java.util.List;
 import java.util.Map;
