@@ -4,6 +4,7 @@ import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementServi
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.mappers.AdvertisementRowMapper;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -61,7 +62,11 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     @Override
     public Optional<Advertisement> selectAdvertisementById(int id) {
         String selectSQL = createSelectSQL();
-        return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), advertisementMapper));
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), advertisementMapper));
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
