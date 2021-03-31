@@ -2,7 +2,10 @@ package com.spd.baraholka.login;
 
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.OAuth2UserService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,7 +24,6 @@ import static com.spd.baraholka.login.service.GoogleOAuth2UserService.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -86,7 +88,7 @@ class GoogleOAuth2UserServiceTest {
     void shouldReturnUserAvatarFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
         OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
-//        assertEquals(oAuth2UserDto.getAvatar(), dummyPicture);
+        assertEquals(oAuth2UserDto.getImageUrl(), dummyPicture);
     }
 
     @AfterEach

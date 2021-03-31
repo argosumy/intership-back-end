@@ -65,7 +65,7 @@ class OAuth2AuthenticationSuccessHandlerTest {
         dummyUser.setEmail(dummyEmail);
         dummyUser.setFirstName(dummyGivenName);
         dummyUser.setLastName(dummyFamilyName);
-        dummyUser.setAvatar(dummyPicture);
+        dummyUser.setImageUrl(dummyPicture);
         dummyUser.setLocation("");
         dummyUser.setPhoneNumber("");
         dummyUser.setPosition("");

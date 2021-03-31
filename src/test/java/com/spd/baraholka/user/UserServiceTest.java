@@ -42,7 +42,10 @@ class UserServiceTest {
 
     @BeforeEach
     void init() {
-        userServiceUnderTest = new UserService(persistenceUserService, persistenceUserAdditionalResourcesService, userMapper, userAdditionalResourceMapper);
+        userServiceUnderTest = new UserService(persistenceUserService,
+                persistenceUserAdditionalResourcesService,
+                userMapper,
+                userAdditionalResourceMapper);
     }
 
     @Test

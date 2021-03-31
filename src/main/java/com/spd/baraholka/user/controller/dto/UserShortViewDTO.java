@@ -10,6 +10,7 @@ public class UserShortViewDTO {
     private String lastName;
     private boolean isBlocked;
     private LocalDateTime endDateOfBan;
+    private String email;
 
     public int getId() {
         return id;
@@ -57,5 +58,13 @@ public class UserShortViewDTO {
 
     public LocalDateTime getEndDateOfBan() {
         return endDateOfBan;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

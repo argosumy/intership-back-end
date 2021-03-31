@@ -1,10 +1,8 @@
 package com.spd.baraholka.advertisement.persistance.repositories;
 
-import com.spd.baraholka.advertisement.controller.mappers.AdvertisementRowMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,14 +19,9 @@ import java.util.Optional;
 public class AdvertisementRepository implements PersistenceAdvertisementService {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final AdvertisementRowMapper advertisementRowMapper;
-    public static final String STATUS_PARAMETER = "status";
-    public static final String STATUS_CHANGE_DATE_PARAMETER = "statusChangeDate";
-    public static final String PUBLICATION_DATE_PARAMETER = "publicationDate";
 
-    public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate, AdvertisementRowMapper advertisementRowMapper) {
+    public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.advertisementRowMapper = advertisementRowMapper;
     }
 
     @Override
@@ -73,19 +65,19 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         namedParameters.addValue("currency", advertisement.getCurrency().toString());
         namedParameters.addValue("discountAvailability", advertisement.isDiscountAvailability());
         namedParameters.addValue("city", advertisement.getCity());
-        namedParameters.addValue(STATUS_PARAMETER, advertisement.getStatus().toString());
+        namedParameters.addValue("status", advertisement.getStatus().toString());
         namedParameters.addValue("creationDate", Timestamp.valueOf(advertisement.getCreationDate()));
-        namedParameters.addValue(PUBLICATION_DATE_PARAMETER, Timestamp.valueOf(advertisement.getPublicationDate()));
-        namedParameters.addValue(STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(advertisement.getStatusChangeDate()));
+        namedParameters.addValue("publicationDate", Timestamp.valueOf(advertisement.getPublicationDate()));
+        namedParameters.addValue("statusChangeDate", Timestamp.valueOf(advertisement.getStatusChangeDate()));
         return namedParameters;
     }
 
     private Map<String, ? extends Serializable> createUpdateParameters(Advertisement advertisement) {
         return Map.of("title", advertisement.getTitle(),
-                STATUS_PARAMETER, advertisement.getStatus().toString(),
+                "status", advertisement.getStatus().toString(),
                 "discountAvailability", advertisement.isDiscountAvailability(),
-                PUBLICATION_DATE_PARAMETER, advertisement.getPublicationDate(),
-                STATUS_CHANGE_DATE_PARAMETER, advertisement.getStatusChangeDate(),
+                "publicationDate", advertisement.getPublicationDate(),
+                "statusChangeDate", advertisement.getStatusChangeDate(),
                 "description", advertisement.getDescription(),
                 "price", advertisement.getPrice(),
                 "currency", advertisement.getCurrency().toString(),
@@ -107,8 +99,8 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateStatusParameters(int id, AdvertisementStatus status) {
-        return Map.of(STATUS_PARAMETER, status.toString(),
-                STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(LocalDateTime.now()),
+        return Map.of("status", status.toString(),
+                "statusChangeDate", Timestamp.valueOf(LocalDateTime.now()),
                 "advertisementId", id);
     }
 
@@ -142,31 +134,5 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + " :publicationDate,"
                 + " :statusChangeDate)"
                 + " RETURNING id";
-    }
-
-    public List<Advertisement> getAllActive() {
-        return jdbcTemplate.query(
-                "SELECT * FROM advertisements a WHERE a.status=:active OR " +
-                        "(a.status=:draft AND a.publication_date<=:publicationDate)",
-                Map.of("active", "ACTIVE",
-                        "draft", "DRAFT",
-                        PUBLICATION_DATE_PARAMETER, LocalDateTime.now()
-                ),
-                advertisementRowMapper
-        );
-    }
-
-    public Optional<Advertisement> findDraftAdById(int id) {
-        try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(
-                    "SELECT * FROM advertisements WHERE id=:id AND status=:status",
-                    Map.of("id", id,
-                            STATUS_PARAMETER, "DRAFT"
-                    ),
-                    advertisementRowMapper
-            ));
-        } catch (DataAccessException e) {
-            return Optional.empty();
-        }
     }
 }
