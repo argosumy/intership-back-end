@@ -28,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -165,7 +164,7 @@ class OAuth2AuthenticationSuccessHandlerTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
         Exception exception = Assertions.assertThrows(BadCredentialsException.class,
                 () -> oAuth2SuccessHandlerUnderTest.onAuthenticationSuccess(request, response, mock(Authentication.class))
-                );
+        );
         String expectedMessage = OAuth2AuthenticationSuccessHandler.DOMAIN_NOT_ALLOWED;
         String actualMessage = exception.getMessage();
 

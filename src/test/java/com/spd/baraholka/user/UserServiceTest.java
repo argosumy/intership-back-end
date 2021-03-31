@@ -6,7 +6,6 @@ import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesServ
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +18,6 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)

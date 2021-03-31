@@ -21,7 +21,6 @@ import static com.spd.baraholka.login.service.GoogleOAuth2UserService.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
