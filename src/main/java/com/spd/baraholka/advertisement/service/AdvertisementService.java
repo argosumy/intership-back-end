@@ -6,11 +6,14 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@EnableScheduling
 public class AdvertisementService {
 
     private final PersistenceAdvertisementService persistenceAdvertisementService;
@@ -39,5 +42,10 @@ public class AdvertisementService {
     public boolean isAdvertisementExist(int id) {
         Optional<Boolean> exist = persistenceAdvertisementService.isExist(id);
         return exist.orElse(false);
+    }
+
+    @Scheduled(cron = "${baraholka.scheduled.delete-old-archive-task}")
+    public void deleteOldArchiveAdvertisements() {
+        persistenceAdvertisementService.changeStatusArchivedOnDeleted();
     }
 }

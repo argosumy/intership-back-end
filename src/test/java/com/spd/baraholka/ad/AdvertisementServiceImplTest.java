@@ -1,5 +1,6 @@
 package com.spd.baraholka.ad;
 
+import com.spd.baraholka.advertisement.service.AdvertisementService;
 import org.awaitility.Duration;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.verify;
 class AdvertisementServiceImplTest {
 
     @SpyBean
-    private AdvertisementServiceImpl advertisementService;
+    private AdvertisementService advertisementService;
 
     @Test
     void whenWaitTenSecondsThenScheduledIsCalledAtLeastOneTimes() {

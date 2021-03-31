@@ -55,6 +55,19 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 
+    @Override
+    public void changeStatusArchivedOnDeleted() {
+        String sql = "UPDATE advertisements SET status = :del, status_change_date = now() " +
+                "WHERE status = :arch " +
+                "AND (now() - status_change_date) < INTERVAL '60 DAY'";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("del", "DELETED");
+        params.addValue("arch", "ARCHIVED");
+
+        jdbcTemplate.update(sql, params);
+    }
+
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("ownerId", advertisement.getOwnerId());
