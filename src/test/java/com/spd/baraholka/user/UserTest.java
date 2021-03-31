@@ -2,7 +2,6 @@ package com.spd.baraholka.user;
 
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.entities.User;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

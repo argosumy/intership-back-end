@@ -32,8 +32,6 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         this.advertisementRowMapper = advertisementRowMapper;
     }
 
-
-
     @Override
     public int insertAdvertisement(Advertisement advertisement) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -171,5 +169,4 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
             return Optional.empty();
         }
     }
-
 }
