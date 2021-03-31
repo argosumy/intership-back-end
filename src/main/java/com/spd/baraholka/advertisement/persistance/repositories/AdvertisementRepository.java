@@ -5,6 +5,7 @@ import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,15 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
 
     public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public void updatePromotionDate(int idAdvertisement) {
+        LocalDateTime realDate = LocalDateTime.now();
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
+                .addValue("date", realDate)
+                .addValue("id", idAdvertisement);
+        jdbcTemplate.update("UPDATE advertisements SET promoted_at = :date WHERE id = :id", sqlParameterSource);
     }
 
     @Override

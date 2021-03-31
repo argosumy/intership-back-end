@@ -40,4 +40,8 @@ public class AdvertisementService {
         Optional<Boolean> exist = persistenceAdvertisementService.isExist(id);
         return exist.orElse(false);
     }
+
+    public void promotionAd(int advertisementId) {
+        persistenceAdvertisementService.updatePromotionDate(advertisementId);
+    }
 }

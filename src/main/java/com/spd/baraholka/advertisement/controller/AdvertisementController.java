@@ -35,4 +35,9 @@ public class AdvertisementController {
     public int updateAdvertisementStatus(@PathVariable int id, @RequestParam("status") @ChangedStatus AdvertisementStatus status) {
         return advertisementService.updateAdvertisementStatus(id, status);
     }
+
+    @PutMapping("/{id}/promotion")
+    public void promotionAd(@PathVariable(value = "id") int adId) {
+        advertisementService.promotionAd(adId);
+    }
 }
