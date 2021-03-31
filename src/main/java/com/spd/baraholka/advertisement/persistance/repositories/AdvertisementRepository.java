@@ -73,19 +73,19 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         namedParameters.addValue("currency", advertisement.getCurrency().toString());
         namedParameters.addValue("discountAvailability", advertisement.isDiscountAvailability());
         namedParameters.addValue("city", advertisement.getCity());
-        namedParameters.addValue("status", advertisement.getStatus().toString());
+        namedParameters.addValue(STATUS_PARAMETER, advertisement.getStatus().toString());
         namedParameters.addValue("creationDate", Timestamp.valueOf(advertisement.getCreationDate()));
-        namedParameters.addValue("publicationDate", Timestamp.valueOf(advertisement.getPublicationDate()));
-        namedParameters.addValue("statusChangeDate", Timestamp.valueOf(advertisement.getStatusChangeDate()));
+        namedParameters.addValue(PUBLICATION_DATE_PARAMETER, Timestamp.valueOf(advertisement.getPublicationDate()));
+        namedParameters.addValue(STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(advertisement.getStatusChangeDate()));
         return namedParameters;
     }
 
     private Map<String, ? extends Serializable> createUpdateParameters(Advertisement advertisement) {
         return Map.of("title", advertisement.getTitle(),
-                "status", advertisement.getStatus().toString(),
+                STATUS_PARAMETER, advertisement.getStatus().toString(),
                 "discountAvailability", advertisement.isDiscountAvailability(),
-                "publicationDate", advertisement.getPublicationDate(),
-                "statusChangeDate", advertisement.getStatusChangeDate(),
+                PUBLICATION_DATE_PARAMETER, advertisement.getPublicationDate(),
+                STATUS_CHANGE_DATE_PARAMETER, advertisement.getStatusChangeDate(),
                 "description", advertisement.getDescription(),
                 "price", advertisement.getPrice(),
                 "currency", advertisement.getCurrency().toString(),
@@ -107,8 +107,8 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateStatusParameters(int id, AdvertisementStatus status) {
-        return Map.of("status", status.toString(),
-                "statusChangeDate", Timestamp.valueOf(LocalDateTime.now()),
+        return Map.of(STATUS_PARAMETER, status.toString(),
+                STATUS_CHANGE_DATE_PARAMETER, Timestamp.valueOf(LocalDateTime.now()),
                 "advertisementId", id);
     }
 
