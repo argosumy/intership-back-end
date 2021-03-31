@@ -31,6 +31,12 @@ public class ExceptionAdvice {
         return e.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BadRequestException.class)
+    String badRequestHandler(BadRequestException e) {
+        return e.getMessage();
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<List<ErrorDto>> handleConstraintValidationException(ConstraintViolationException cve,
                                                                               HttpServletRequest request) {

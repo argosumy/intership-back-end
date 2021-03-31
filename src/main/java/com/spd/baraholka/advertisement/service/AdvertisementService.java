@@ -6,6 +6,7 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.config.exceptions.BadRequestException;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +89,12 @@ public class AdvertisementService {
         Advertisement advertisement = findDraftAdById(id)
                 .orElseThrow(NotFoundException::new);
 
-        advertisement.setPublicationDate(LocalDateTime.parse(publicationDate));
-        return persistenceAdvertisementService.updateAdvertisement(advertisement);
+        var parsedDate = LocalDateTime.parse(publicationDate);
+        if (parsedDate.isBefore(LocalDateTime.now())) {
+            throw new BadRequestException();
+        } else {
+            advertisement.setPublicationDate(parsedDate);
+            return persistenceAdvertisementService.updateAdvertisement(advertisement);
+        }
     }
 }
