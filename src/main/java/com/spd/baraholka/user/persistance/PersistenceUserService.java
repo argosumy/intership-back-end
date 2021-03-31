@@ -20,5 +20,5 @@ public interface PersistenceUserService {
 
     Optional<Boolean> isExist(int value);
 
-    Owner selectOwner(int id);
+    Optional<Owner> selectOwner(int id);
 }

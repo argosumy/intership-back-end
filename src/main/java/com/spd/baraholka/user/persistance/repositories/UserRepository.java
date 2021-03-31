@@ -93,9 +93,9 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public Owner selectOwner(int id) {
+    public Optional<Owner> selectOwner(int id) {
         String selectSQL = "SELECT id, first_name, last_name, avatar, e_mail FROM users WHERE id=:id";
-        return jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), ownerRowMapper);
+        return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), ownerRowMapper));
     }
 
     private void saveUserRoles(User user) {
