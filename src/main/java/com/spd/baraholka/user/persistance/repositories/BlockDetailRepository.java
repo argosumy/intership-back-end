@@ -8,7 +8,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 public class BlockDetailRepository implements PersistenceUserBlockService {
@@ -26,6 +28,12 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
         MapSqlParameterSource insertParameters = createInsertParameters(blockDetail);
         jdbcTemplate.update(insertSQL, insertParameters, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
+    }
+
+    @Override
+    public Optional<Boolean> isUserAlreadyBlocked(int id) {
+        String isExistQuery = "SELECT count(*) <> 0 FROM users WHERE id=:id";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 
     private MapSqlParameterSource createInsertParameters(BlockDetail blockDetailDTO) {
