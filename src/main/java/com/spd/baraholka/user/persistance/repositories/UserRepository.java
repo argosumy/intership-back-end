@@ -42,7 +42,7 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public List<User> selectAllUsers() {
-        String selectSQL = "SELECT id, first_name, last_name, is_blocked, end_date_of_ban, avatar, e_mail FROM users";
+        String selectSQL = "SELECT id, first_name, last_name, avatar, e_mail FROM users";
         return jdbcTemplate.query(selectSQL, userShortViewRowMapper);
     }
 
