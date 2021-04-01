@@ -46,10 +46,6 @@ public class UserService {
         return userDTO;
     }
 
-    public int changeUserBlockedStatus(int id, boolean isBlocked) {
-        return persistenceUserService.updateUserBlockedStatus(id, isBlocked);
-    }
-
     public List<UserShortViewDTO> getAllUsers() {
         List<User> users = persistenceUserService.selectAllUsers();
         return userMapper.convertToDTOList(users);
