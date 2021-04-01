@@ -1,4 +1,4 @@
-CREATE TABLE users_ban_details
+CREATE TABLE users_block_details
 (
     id          SERIAL PRIMARY KEY NOT NULL,
     user_id     int                NOT NULL,
