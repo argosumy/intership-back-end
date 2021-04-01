@@ -20,7 +20,7 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
     }
 
     @Override
-    public int blockUser(BlockDetail blockDetail) {
+    public int insertBlockDetails(BlockDetail blockDetail) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         String insertSQL = "INSERT INTO users_block_details (user_id, baned_until, reason, is_notify) VALUES (:userId, :banedUntil, :reason, :isNotify) RETURNING id";
         MapSqlParameterSource insertParameters = createInsertParameters(blockDetail);

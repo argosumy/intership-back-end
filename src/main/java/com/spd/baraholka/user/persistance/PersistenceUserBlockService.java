@@ -4,5 +4,5 @@ import com.spd.baraholka.user.persistance.entities.BlockDetail;
 
 public interface PersistenceUserBlockService {
 
-    int blockUser(BlockDetail blockDetailDTO);
+    int insertBlockDetails(BlockDetail blockDetailDTO);
 }

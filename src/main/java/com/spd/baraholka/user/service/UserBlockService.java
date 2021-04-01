@@ -19,6 +19,6 @@ public class UserBlockService {
 
     public int blockUser(BlockDetailDTO blockDetailDTO) {
         BlockDetail blockDetail = blockDetailMapper.convertToEntity(blockDetailDTO);
-        return persistenceUserBlockService.blockUser(blockDetail);
+        return persistenceUserBlockService.insertBlockDetails(blockDetail);
     }
 }
