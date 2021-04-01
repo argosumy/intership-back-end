@@ -9,6 +9,7 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmail
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
+import com.spd.baraholka.user.service.OwnerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,13 +33,15 @@ class PageRequestServiceTest {
     private AdvertisementUserEmailMapper advertisementUserEmailMapper;
     @Mock
     private PersistenceAdvertisementService persistenceAdvertisementService;
+    @Mock
+    private OwnerService ownerService;
     private PageRequest<Advertisement> pageRequest;
     private Advertisement advertisement;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        advertisementService = new AdvertisementService(persistenceAdvertisementService, advertisementMapper);
+        advertisementService = new AdvertisementService(persistenceAdvertisementService, advertisementMapper, ownerService);
         pageRequestService = new PageRequestService(advertisementService);
         MockitoAnnotations.openMocks(this);
         advertisement = createAdvertisement();

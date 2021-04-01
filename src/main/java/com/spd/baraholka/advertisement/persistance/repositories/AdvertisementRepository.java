@@ -1,11 +1,9 @@
 package com.spd.baraholka.advertisement.persistance.repositories;
 
-import com.spd.baraholka.advertisement.controller.mappers.AdvertisementRowMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.mappers.AdvertisementRowMapper;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -169,7 +167,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                         "draft", "DRAFT",
                         PUBLICATION_DATE_PARAMETER, LocalDateTime.now()
                 ),
-                advertisementRowMapper
+                advertisementMapper
         );
     }
 
@@ -180,7 +178,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                     Map.of("id", id,
                             STATUS_PARAMETER, "DRAFT"
                     ),
-                    advertisementRowMapper
+                    advertisementMapper
             ));
         } catch (DataAccessException e) {
             return Optional.empty();
