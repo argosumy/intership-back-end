@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.user.controller.dto.BanDetailDTO;
+import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
 import com.spd.baraholka.user.persistance.PersistenceUserBlockService;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class UserBlockService {
         this.persistenceUserBlockService = persistenceUserBlockService;
     }
 
-    public int changeUserBlockedStatus(BanDetailDTO banDetailDTO) {
-        return persistenceUserBlockService.blockUser(banDetailDTO);
+    public int changeUserBlockedStatus(BlockDetailDTO blockDetailDTO) {
+        return persistenceUserBlockService.blockUser(blockDetailDTO);
     }
 }

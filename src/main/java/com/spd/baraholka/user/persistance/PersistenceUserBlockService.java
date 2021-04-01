@@ -1,8 +1,8 @@
 package com.spd.baraholka.user.persistance;
 
-import com.spd.baraholka.user.controller.dto.BanDetailDTO;
+import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
 
 public interface PersistenceUserBlockService {
 
-    int blockUser(BanDetailDTO banDetailDTO);
+    int blockUser(BlockDetailDTO blockDetailDTO);
 }

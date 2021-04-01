@@ -1,7 +1,7 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
-import com.spd.baraholka.user.controller.dto.BanDetailDTO;
+import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserBlockService;
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PutMapping("/settings/block")
-    public int changeUserBlockedStatus(@RequestBody @Valid BanDetailDTO banDetailDTO) {
-        return userBlockService.changeUserBlockedStatus(banDetailDTO);
+    public int changeUserBlockedStatus(@RequestBody @Valid BlockDetailDTO blockDetailDTO) {
+        return userBlockService.changeUserBlockedStatus(blockDetailDTO);
     }
 }
