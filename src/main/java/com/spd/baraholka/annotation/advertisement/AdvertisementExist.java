@@ -9,12 +9,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = AdvertisementIdValidator.class)
 public @interface AdvertisementExist {
 
-    String message() default "Baraholka advertisement status annotation validation";
+    String message() default "Advertisement not exist in system";
 
     Class<?>[] groups() default {};
 
