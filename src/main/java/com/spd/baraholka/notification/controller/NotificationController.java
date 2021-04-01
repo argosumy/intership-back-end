@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController("/notifications")
@@ -30,7 +31,7 @@ public class NotificationController {
     }
 
     @PostMapping
-    public int sendNotification(@RequestBody NotificationDto notificationDto) throws MessagingException, IOException, TemplateException {
+    public int sendNotification(@RequestBody @Valid NotificationDto notificationDto) throws MessagingException, IOException, TemplateException {
         int savedNotificationId = notificationService.saveNotification(notificationMapper.toNotification(notificationDto));
         notificationService.sendMessage(notificationMapperFactory.getNotification(notificationDto));
         return savedNotificationId;

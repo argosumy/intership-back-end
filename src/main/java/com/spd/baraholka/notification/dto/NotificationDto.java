@@ -2,6 +2,7 @@ package com.spd.baraholka.notification.dto;
 
 import com.spd.baraholka.notification.enums.EventType;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
@@ -10,11 +11,9 @@ import java.time.LocalDateTime;
 
 public class NotificationDto {
 
-    @Positive
     private int userId;
     @Positive
     private int userMailToId;
-    @Positive
     private int advertisementId;
     @NotNull()
     @Length(min = 5, max = 255)
