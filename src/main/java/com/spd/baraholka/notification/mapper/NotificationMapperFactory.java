@@ -1,6 +1,6 @@
 package com.spd.baraholka.notification.mapper;
 
-import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.notification.dto.NotificationDto;
 import com.spd.baraholka.notification.enums.EventType;
@@ -27,7 +27,7 @@ public class NotificationMapperFactory {
 
     public BaseNotification getNotification(NotificationDto notificationDto) {
         UserDTO userById;
-        Advertisement advertisementById;
+        FullAdvertisementDTO advertisementById;
         UserDTO userMailTo = getUserById(notificationDto.getUserMailToId());
         EventType eventType = notificationDto.getEventType();
 
@@ -72,7 +72,7 @@ public class NotificationMapperFactory {
         return userService.getUserById(userId);
     }
 
-    private Advertisement getAdvertisementById(int advertisementId) {
-        return advertisementService.findAdById(advertisementId).orElseThrow();
+    private FullAdvertisementDTO getAdvertisementById(int advertisementId) {
+        return advertisementService.getAdvertisementById(advertisementId);
     }
 }
