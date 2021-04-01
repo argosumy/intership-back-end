@@ -24,8 +24,7 @@ public class AdvertisementService {
     private final CharacteristicService characteristicService;
 
     public AdvertisementService(PersistenceAdvertisementService persistenceAdvertisementService,
-                                AdvertisementMapper advertisementMapper,
-                                CharacteristicService characteristicService) {
+                                CharacteristicService characteristicService,
                                 AdvertisementMapper advertisementMapper,
                                 OwnerService ownerService) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
