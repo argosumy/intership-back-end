@@ -36,18 +36,19 @@ public class UserMapper {
     private UserShortViewDTO convertToShortViewDTO(User user) {
         UserShortViewDTO userDTO = new UserShortViewDTO();
         userDTO.setId(user.getId());
-        userDTO.setImageUrl(collapseImageUrl(user));
+        String imageUrl = collapseImageUrl(user.getImageUrl());
+        userDTO.setImageUrl(imageUrl);
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());
         return userDTO;
     }
 
-    private String collapseImageUrl(User user) {
-        if (user.getImageUrl().contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
-            return user.getImageUrl();
+    private String collapseImageUrl(String imageUrl) {
+        if (imageUrl.contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
+            return imageUrl;
         } else {
-            return awsImageUrl.concat(user.getImageUrl());
+            return awsImageUrl.concat(imageUrl);
         }
     }
 
