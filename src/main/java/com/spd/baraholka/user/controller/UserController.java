@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/{isBlocked}")
-    public int changeUserBlockedStatus(@PathVariable int id, @PathVariable boolean isBlocked) {
+    public int changeUserBlockedStatus(@PathVariable("id") @UserExist int id, @PathVariable boolean isBlocked) {
         return userService.changeUserBlockedStatus(id, isBlocked);
     }
 }
