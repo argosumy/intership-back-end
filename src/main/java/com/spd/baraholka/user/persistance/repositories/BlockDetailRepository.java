@@ -36,6 +36,21 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
         return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 
+    @Override
+    public int updateBlockDetails(BlockDetail blockDetail) {
+        String updateSQL = "UPDATE users_block_details SET baned_until=:banedUntil, reason=:reason, is_notify=:isNotify WHERE user_id=:userId";
+        Map<String, ? extends Comparable<? extends Comparable<?>>> updateParameters = createUpdateParameters(blockDetail);
+        jdbcTemplate.update(updateSQL, updateParameters);
+        return blockDetail.getUserId();
+    }
+
+    private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateParameters(BlockDetail blockDetail) {
+        return Map.of("banedUntil", blockDetail.getBanedUntil(),
+                "reason", blockDetail.getReason(),
+                "isNotify", blockDetail.isNotify(),
+                "userId", blockDetail.getUserId());
+    }
+
     private MapSqlParameterSource createInsertParameters(BlockDetail blockDetailDTO) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("userId", blockDetailDTO.getUserId());
