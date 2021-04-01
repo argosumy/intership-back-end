@@ -1,6 +1,7 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
+import com.spd.baraholka.user.controller.dto.BanDetailDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spd.baraholka.user.service.UserSettingsService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Validated
@@ -32,7 +34,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PutMapping("/{id}/general")
+    @PutMapping("/{id}/settings/general")
     public int updateUserGeneralSettings(@PathVariable("id") @UserExist int id, @RequestParam("openAdsInNewTab") boolean openAdsInNewTab) {
         return userSettingsService.updateUserGeneralSettings(id, openAdsInNewTab);
     }
@@ -42,8 +44,8 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/{id}")
-    public int changeUserBlockedStatus(@PathVariable("id") @UserExist int id, @RequestParam("isBlocked") boolean isBlocked) {
-        return userService.changeUserBlockedStatus(id, isBlocked);
+    @PutMapping("/settings/block")
+    public int changeUserBlockedStatus(@RequestBody @Valid BanDetailDTO banDetailDTO) {
+        return userService.changeUserBlockedStatus(banDetailDTO);
     }
 }
