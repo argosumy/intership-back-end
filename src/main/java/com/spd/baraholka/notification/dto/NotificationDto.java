@@ -6,13 +6,16 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 public class NotificationDto {
 
+    @PositiveOrZero
     private int userId;
     @Positive
     private int userMailToId;
+    @PositiveOrZero
     private int advertisementId;
     @NotNull()
     @Length(min = 5, max = 255)
