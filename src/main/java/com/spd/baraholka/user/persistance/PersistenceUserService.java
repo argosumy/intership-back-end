@@ -15,8 +15,6 @@ public interface PersistenceUserService {
 
     Optional<Integer> count();
 
-    int updateUserBlockedStatus(int id, boolean isBlocked);
-
     List<User> selectAllUsers();
 
     Optional<Boolean> isExist(int value);
