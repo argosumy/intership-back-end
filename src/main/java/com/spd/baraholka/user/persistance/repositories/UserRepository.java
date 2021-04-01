@@ -103,23 +103,6 @@ public class UserRepository implements PersistenceUserService {
         }
     }
 
-    @Override
-    public Optional<Boolean> existsByEmail(String email) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
-                Map.of("email", email), Boolean.class));
-    }
-
-    @Override
-    public Optional<Boolean> isExist(int id) {
-        String isExistQuery = "SELECT count(*) <> 0 FROM users WHERE id=:id";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
-    }
-
-    @Override
-    public Optional<Integer> count() {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) FROM users", Map.of(), Integer.class));
-    }
-
     private void saveUserRoles(User user) {
         Set<Role> roles = Objects.requireNonNull(user.getRoles());
         int userId = user.getId();

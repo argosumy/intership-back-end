@@ -24,7 +24,8 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
-        userDTO.setImageUrl(collapseImageUrl(user));
+        String imageUrl = collapseImageUrl(user.getImageUrl());
+        userDTO.setImageUrl(imageUrl);
         userDTO.setLocation(user.getLocation());
         return userDTO;
     }
