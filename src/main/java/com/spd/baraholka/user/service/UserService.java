@@ -71,6 +71,6 @@ public class UserService {
 
     public boolean isUserExist(int id) {
         Optional<Boolean> exist = persistenceUserService.isExist(id);
-        return exist.isEmpty();
+        return exist.orElse(false);
     }
 }
