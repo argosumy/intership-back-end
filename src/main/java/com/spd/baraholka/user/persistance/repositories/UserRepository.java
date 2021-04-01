@@ -47,14 +47,6 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public int updateUserBlockedStatus(int id, boolean isBlocked) {
-        String updateSQL = "UPDATE users SET is_blocked=:isBlocked WHERE id=:id";
-        Map<String, Object> updateParameters = Map.of("isBlocked", isBlocked, "id", id);
-        jdbcTemplate.update(updateSQL, updateParameters);
-        return id;
-    }
-
-    @Override
     public User create(User user) {
         final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, avatar) " +
                 "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :avatar) ";
