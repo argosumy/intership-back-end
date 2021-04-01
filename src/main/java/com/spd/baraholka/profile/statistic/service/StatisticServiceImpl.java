@@ -17,17 +17,16 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     @Override
-    public Map<String, Integer> getCountByGroupCategoryFull(String sql) {
-        return repository.getCountByGroupCategory(sql);
+    public Map<String, Integer> getCountCategoryByGroupFull(String sql) {
+        return repository.getCountCategoryByGroup(sql);
     }
 
     @Override
-    public Map<String, Map<String, List<Integer>>> getCountNewAdvertisementByCategoryForPeriod(String sql) {
+    public Map<String, Map<String, List<Integer>>> getCountCategoryByGroupForPeriod(String sql) {
         Map<String, Map<String, List<Integer>>> result = new HashMap<>();
-        result.put(PeriodStatistic.DAY.name(), parser(getCountNewAdvertisementByCategoryForPeriod(PeriodStatistic.DAY, sql)));
-        result.put(PeriodStatistic.WEEK.name(), parser(getCountNewAdvertisementByCategoryForPeriod(PeriodStatistic.WEEK, sql)));
-        result.put(PeriodStatistic.MONTH.name(), parser(getCountNewAdvertisementByCategoryForPeriod(PeriodStatistic.MONTH, sql)));
-        System.out.println(result.toString());
+        result.put(PeriodStatistic.DAY.name(), parser(getCountCategoryByGroupForPeriod(PeriodStatistic.DAY, sql)));
+        result.put(PeriodStatistic.WEEK.name(), parser(getCountCategoryByGroupForPeriod(PeriodStatistic.WEEK, sql)));
+        result.put(PeriodStatistic.MONTH.name(), parser(getCountCategoryByGroupForPeriod(PeriodStatistic.MONTH, sql)));
         return result;
     }
 
@@ -48,12 +47,12 @@ public class StatisticServiceImpl implements StatisticService {
         return result;
     }
 
-    private List<Map<String, Integer>> getCountNewAdvertisementByCategoryForPeriod(PeriodStatistic period, String sql) {
+    private List<Map<String, Integer>> getCountCategoryByGroupForPeriod(PeriodStatistic period, String sql) {
         List<Map<String, Integer>> result = new ArrayList<>();
-        Map<String, Integer> allCategory = repository.getCountByGroupCategory(sql);
+        Map<String, Integer> allCategory = repository.getCountCategoryByGroup(SQLQueries.GET_COUNT_CATEGORY_VIEW_FULL);
         for (List<LocalDateTime> listPeriod : period.getPeriods()) {
-            Map<String, Integer> categoryForPeriod = new HashMap<>();
-            categoryForPeriod = repository.getCountCategoryByGroupForPeriod(listPeriod.get(0), listPeriod.get(1), SQLQueries.GET_COUNT_CATEGORY_BY_GROUP_FOR_PERIOD_NEW);
+            Map<String, Integer> categoryForPeriod;
+            categoryForPeriod = repository.getCountCategoryByGroupForPeriod(listPeriod.get(0), listPeriod.get(1), sql);
             for (String category : allCategory.keySet()) {
                 if (!categoryForPeriod.containsKey(category)) {
                     categoryForPeriod.put(category, 0);

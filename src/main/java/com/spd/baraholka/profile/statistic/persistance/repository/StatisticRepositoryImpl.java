@@ -19,7 +19,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
     }
 
     @Override
-    public Map<String, Integer> getCountByGroupCategory(String sql) {
+    public Map<String, Integer> getCountCategoryByGroup(String sql) {
         Map<String, Integer> resultMap;
         resultMap = template.query(sql, new ResultSetExtractor<Map<String, Integer>>() {
             @Override

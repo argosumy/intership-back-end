@@ -6,7 +6,7 @@ public final class SQLQueries {
             + "FROM advertisements AS ad INNER JOIN history_of_views AS history ON ad.id = history.ad_id "
             + "GROUP BY category";
     public static final String GET_COUNT_CATEGORY_BY_GROUP_FOR_PERIOD_NEW = "SELECT category, count(*) "
-            + "FROM advertisements"
+            + "FROM advertisements "
             + "WHERE publication_date >= ? AND publication_date < ? "
             + "GROUP BY category";
     public static final String GET_COUNT_CATEGORY_VIEW_FOR_PERIOD = "SELECT ad.category, count(*) "
