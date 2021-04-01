@@ -42,8 +42,8 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/{id}/{isBlocked}")
-    public int changeUserBlockedStatus(@PathVariable("id") @UserExist int id, @PathVariable boolean isBlocked) {
+    @PutMapping("/{id}")
+    public int changeUserBlockedStatus(@PathVariable("id") @UserExist int id, @RequestParam("isBlocked") boolean isBlocked) {
         return userService.changeUserBlockedStatus(id, isBlocked);
     }
 }
