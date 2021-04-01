@@ -46,8 +46,6 @@ public class UserDTO {
         this.imageUrl = imageUrl;
     }
 
-    private String location;
-
     public int getId() {
         return id;
     }
