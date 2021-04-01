@@ -18,7 +18,13 @@ public class UserBlockService {
     }
 
     public int blockUser(BlockDetailDTO blockDetailDTO) {
+        int id = blockDetailDTO.getUserId();
         BlockDetail blockDetail = blockDetailMapper.convertToEntity(blockDetailDTO);
-        return persistenceUserBlockService.insertBlockDetails(blockDetail);
+        boolean alreadyBlocked = persistenceUserBlockService.isUserAlreadyBlocked(id).orElse(false);
+        if (alreadyBlocked) {
+            return persistenceUserBlockService.updateBlockDetails(blockDetail);
+        } else {
+            return persistenceUserBlockService.insertBlockDetails(blockDetail);
+        }
     }
 }
