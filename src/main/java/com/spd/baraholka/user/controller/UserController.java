@@ -4,6 +4,7 @@ import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.user.controller.dto.BanDetailDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
+import com.spd.baraholka.user.service.UserBlockService;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +24,12 @@ public class UserController {
 
     private final UserService userService;
     private final UserSettingsService userSettingsService;
+    private final UserBlockService userBlockService;
 
-    public UserController(UserService userService, UserSettingsService userSettingsService) {
+    public UserController(UserService userService, UserSettingsService userSettingsService, UserBlockService userBlockService) {
         this.userService = userService;
         this.userSettingsService = userSettingsService;
+        this.userBlockService = userBlockService;
     }
 
     @GetMapping("/{id}")
@@ -46,6 +49,6 @@ public class UserController {
 
     @PutMapping("/settings/block")
     public int changeUserBlockedStatus(@RequestBody @Valid BanDetailDTO banDetailDTO) {
-        return userService.changeUserBlockedStatus(banDetailDTO);
+        return userBlockService.changeUserBlockedStatus(banDetailDTO);
     }
 }
