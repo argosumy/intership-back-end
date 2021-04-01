@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface StatisticService {
-    Map<String, Integer> getCountByGroupCategory();
+    Map<String, Integer> getCountByGroupCategoryFull(String sql);
 
-    Map<String, List<Map<String, Integer>>> getCountNewAdvertisementByCategoryForPeriod();
+    Map<String, Map<String, List<Integer>>> getCountNewAdvertisementByCategoryForPeriod(String sql);
 }

@@ -1,14 +1,10 @@
 package com.spd.baraholka.profile.statistic.persistance.repository;
 
-import com.spd.baraholka.profile.statistic.enumes.PeriodStatistic;
-
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public interface StatisticRepository {
-    Map<String, Integer> getCountByGroupCategory();
+    Map<String, Integer> getCountByGroupCategory(String sql);
 
-    List<Map<String, Integer>> getCountNewAdvertisementByCategoryForPeriod(PeriodStatistic period);
-
-    Map<String, List<Integer>> getCountByCategoryForPeriod(PeriodStatistic period);
+    Map<String, Integer> getCountCategoryByGroupForPeriod(LocalDateTime start, LocalDateTime end, String sql);
 }
