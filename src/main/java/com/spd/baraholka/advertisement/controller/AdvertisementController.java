@@ -3,12 +3,14 @@ package com.spd.baraholka.advertisement.controller;
 import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.AdvertisementUserEmailDTO;
 import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
+import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
+import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
 import com.spd.baraholka.annotation.advertisement.ChangedStatus;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
@@ -79,5 +81,10 @@ public class AdvertisementController {
     public int cancelDelayedPublicationOfExistsAd(@PathVariable("id") int id) {
         String presentDate = String.valueOf(LocalDateTime.now());
         return advertisementService.editPublicationDate(id, presentDate);
+    }
+
+    @GetMapping("/{id}")
+    public FullAdvertisementDTO getAdvertisement(@PathVariable("id") @AdvertisementExist int id) {
+        return advertisementService.getAdvertisementById(id);
     }
 }

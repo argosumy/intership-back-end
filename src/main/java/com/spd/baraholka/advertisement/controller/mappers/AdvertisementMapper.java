@@ -2,6 +2,7 @@ package com.spd.baraholka.advertisement.controller.mappers;
 
 import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
+import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
 import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import org.springframework.stereotype.Component;
@@ -82,5 +83,20 @@ public class AdvertisementMapper {
         editedAdvertisementDTO.setStatus(advertisement.getStatus());
         editedAdvertisementDTO.setPublicationDate(advertisement.getPublicationDate());
         return editedAdvertisementDTO;
+    }
+
+    public FullAdvertisementDTO convertToDTO(Advertisement advertisement) {
+        FullAdvertisementDTO advertisementDTO = new FullAdvertisementDTO();
+        advertisementDTO.setAdvertisementId(advertisement.getAdvertisementId());
+        advertisementDTO.setTitle(advertisement.getTitle());
+        advertisementDTO.setDescription(advertisement.getDescription());
+        advertisementDTO.setPrice(advertisement.getPrice());
+        advertisementDTO.setCategory(advertisement.getCategory());
+        advertisementDTO.setCurrency(advertisement.getCurrency());
+        advertisementDTO.setDiscountAvailability(advertisement.isDiscountAvailability());
+        advertisementDTO.setCity(advertisement.getCity());
+        advertisementDTO.setStatus(advertisement.getStatus());
+        advertisementDTO.setPublicationDate(advertisement.getPublicationDate());
+        return advertisementDTO;
     }
 }
