@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class UserDTO {
@@ -33,6 +34,17 @@ public class UserDTO {
     private List<UserAdditionalResourceDTO> additionalContactResources;
 
     private boolean isBlocked;
+    private String imageUrl;
+    private LocalDateTime endDateOfBan;
+    private String location;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     private String location;
 
@@ -98,6 +110,14 @@ public class UserDTO {
 
     public void setAdditionalContactResources(List<UserAdditionalResourceDTO> additionalContactResources) {
         this.additionalContactResources = additionalContactResources;
+    }
+
+    public LocalDateTime getEndDateOfBan() {
+        return endDateOfBan;
+    }
+
+    public void setEndDateOfBan(LocalDateTime endDateOfBan) {
+        this.endDateOfBan = endDateOfBan;
     }
 
     public String getLocation() {

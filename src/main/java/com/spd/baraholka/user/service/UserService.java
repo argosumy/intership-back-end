@@ -1,10 +1,10 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
-import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
+import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
@@ -26,7 +26,8 @@ public class UserService {
 
     public UserService(PersistenceUserService persistenceUserService,
                        PersistenceUserAdditionalResourcesService persistenceResourceService,
-                       UserMapper userMapper, UserAdditionalResourceMapper resourceMapper) {
+                       UserMapper userMapper,
+                       UserAdditionalResourceMapper resourceMapper) {
         this.persistenceUserService = persistenceUserService;
         this.persistenceResourceService = persistenceResourceService;
         this.userMapper = userMapper;
@@ -34,12 +35,8 @@ public class UserService {
     }
 
     public UserDTO getUserById(int id) {
-        Optional<User> user = persistenceUserService.selectUserById(id);
-        if (user.isEmpty()) {
-            throw new NotFoundByIdException(id);
-        } else {
-            return collectUserDTO(user.get());
-        }
+        User user = persistenceUserService.selectUserById(id);
+        return collectUserDTO(user);
     }
 
     private UserDTO collectUserDTO(User user) {
@@ -48,6 +45,11 @@ public class UserService {
         List<UserAdditionalResourceDTO> additionalResourceDTO = resourceMapper.convertToDTOList(additionalResources);
         userDTO.setAdditionalContactResources(additionalResourceDTO);
         return userDTO;
+    }
+
+    public List<UserShortViewDTO> getAllUsers() {
+        List<User> users = persistenceUserService.selectAllUsers();
+        return userMapper.convertToDTOList(users);
     }
 
     public void create(User user) {
@@ -66,6 +68,11 @@ public class UserService {
 
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
         return userMapper.convertFromOAuth(oAuth2UserDto);
+    }
+
+    public boolean isUserExist(int id) {
+        Optional<Boolean> exist = persistenceUserService.isExist(id);
+        return exist.orElse(false);
     }
 
     @Transactional
