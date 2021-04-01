@@ -32,7 +32,7 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
 
     @Override
     public Optional<Boolean> isUserAlreadyBlocked(int id) {
-        String isExistQuery = "SELECT count(*) <> 0 FROM users WHERE id=:id";
+        String isExistQuery = "SELECT count(*) <> 0 FROM users_block_details WHERE user_id=:id";
         return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 
