@@ -1,8 +1,8 @@
 package com.spd.baraholka.user.persistance;
 
-import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
+import com.spd.baraholka.user.persistance.entities.BlockDetail;
 
 public interface PersistenceUserBlockService {
 
-    int blockUser(BlockDetailDTO blockDetailDTO);
+    int blockUser(BlockDetail blockDetailDTO);
 }
