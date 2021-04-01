@@ -13,7 +13,7 @@ public class UserBlockService {
         this.persistenceUserBlockService = persistenceUserBlockService;
     }
 
-    public int changeUserBlockedStatus(BlockDetailDTO blockDetailDTO) {
+    public int blockUser(BlockDetailDTO blockDetailDTO) {
         return persistenceUserBlockService.blockUser(blockDetailDTO);
     }
 }
