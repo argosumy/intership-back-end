@@ -13,8 +13,12 @@ public class CommentUserInfoDto {
     private LocalDate createdDate;
     @Positive
     private int advertisementId;
-    @Positive
-    private int userId;
+    @NotNull
+    private String userName;
+    @NotNull
+    private String userLastName;
+    @NotNull
+    private String userImageUrl;
     @PositiveOrZero
     private int parentCommentId;
 
@@ -50,19 +54,35 @@ public class CommentUserInfoDto {
         this.advertisementId = advertisementId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public int getParentCommentId() {
         return parentCommentId;
     }
 
     public void setParentCommentId(int parentCommentId) {
         this.parentCommentId = parentCommentId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+    }
+
+    public String getUserImageUrl() {
+        return userImageUrl;
+    }
+
+    public void setUserImageUrl(String userImageUrl) {
+        this.userImageUrl = userImageUrl;
     }
 }

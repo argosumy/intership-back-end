@@ -1,10 +1,12 @@
 package com.spd.baraholka.comments.controllers;
 
 import com.spd.baraholka.comments.dto.CommentDto;
+import com.spd.baraholka.comments.dto.CommentUserInfoDto;
 import com.spd.baraholka.comments.dto.UpdatedCommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;
+import com.spd.baraholka.comments.mappers.CommentUserInfoDtoMapper;
 import com.spd.baraholka.comments.services.CommentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,22 +18,27 @@ public class CommentController {
 
     private final CommentService commentService;
     private final CommentDtoMapper commentDtoMapper;
+    private final CommentUserInfoDtoMapper commentUserInfoDtoMapper;
 
-    public CommentController(CommentService commentService, CommentDtoMapper commentDtoMapper) {
+    public CommentController(CommentService commentService, CommentDtoMapper commentDtoMapper,
+                             CommentUserInfoDtoMapper commentUserInfoDtoMapper) {
         this.commentService = commentService;
         this.commentDtoMapper = commentDtoMapper;
+        this.commentUserInfoDtoMapper = commentUserInfoDtoMapper;
     }
 
     @GetMapping("/comments/{adId}")
-    public List<CommentDto> getCommentsByAdId(@PathVariable("adId") int adId) {
+    public List<CommentUserInfoDto> getCommentsByAdId(@PathVariable("adId") int adId) {
         List<Comment> commentList = commentService.getAllByAdId(adId);
-        return commentDtoMapper.toCommentDtoList(commentList);
+//        return commentDtoMapper.toCommentDtoList(commentList);
+        return commentUserInfoDtoMapper.toCommentDtoList(commentList);
     }
 
     @GetMapping("/comments/limit/{adId}")
-    public List<CommentDto> getLimitCommentsByAdId(@PathVariable("adId") int adId) {
+    public List<CommentUserInfoDto> getLimitCommentsByAdId(@PathVariable("adId") int adId) {
         List<Comment> commentList = commentService.getLimitCommentsByAdId(adId);
-        return commentDtoMapper.toCommentDtoList(commentList);
+//        return commentDtoMapper.toCommentDtoList(commentList);
+        return commentUserInfoDtoMapper.toCommentDtoList(commentList);
     }
 
     @PostMapping("/comments")
@@ -54,8 +61,9 @@ public class CommentController {
     }
 
     @GetMapping("/comment/{id}")
-    public CommentDto getOneComment(@PathVariable("id") int id) {
+    public CommentUserInfoDto getOneComment(@PathVariable("id") int id) {
         Comment comment = commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
-        return commentDtoMapper.getCommentDto(comment);
+//        return commentDtoMapper.getCommentDto(comment);
+        return commentUserInfoDtoMapper.getCommentUserInfoDto(comment);
     }
 }
