@@ -1,8 +1,6 @@
 package com.spd.baraholka.user;
 
-import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
-import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
