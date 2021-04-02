@@ -75,12 +75,12 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
     }
 
     private MapSqlParameterSource createUpdateParameters(BlockDetail blockDetail) {
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("blockedUntil", blockDetail.getBlockedUntil());
-        params.addValue("reason", blockDetail.getReason());
-        params.addValue("isNotify", blockDetail.isNotify());
-        params.addValue("userId", blockDetail.getUserId());
-        return params;
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("blockedUntil", blockDetail.getBlockedUntil());
+        namedParameters.addValue("reason", blockDetail.getReason());
+        namedParameters.addValue("isNotify", blockDetail.isNotify());
+        namedParameters.addValue("userId", blockDetail.getUserId());
+        return namedParameters;
     }
 
     private MapSqlParameterSource createInsertParameters(BlockDetail blockDetailDTO) {
