@@ -7,6 +7,7 @@ import com.spd.baraholka.user.persistance.PersistenceUserBlockService;
 import com.spd.baraholka.user.persistance.entities.BlockDetail;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +39,11 @@ public class UserBlockService {
         } else {
             return createDefaultDTO();
         }
+    }
+
+    public List<ShortViewBlockDetailDTO> getAllUsersBlockDetails() {
+        List<BlockDetail> blockDetails = persistenceUserBlockService.selectAllUsersBlockDetails();
+        return blockDetailMapper.convertToDTOList(blockDetails);
     }
 
     private ShortViewBlockDetailDTO createDefaultDTO() {
