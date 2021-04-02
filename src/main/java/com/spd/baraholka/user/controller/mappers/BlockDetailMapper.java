@@ -5,6 +5,9 @@ import com.spd.baraholka.user.controller.dto.ShortViewBlockDetailDTO;
 import com.spd.baraholka.user.persistance.entities.BlockDetail;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class BlockDetailMapper {
 
@@ -19,8 +22,13 @@ public class BlockDetailMapper {
 
     public ShortViewBlockDetailDTO convertToDTO(BlockDetail blockDetail) {
         ShortViewBlockDetailDTO blockDetailDTO = new ShortViewBlockDetailDTO();
+        blockDetailDTO.setUserId(blockDetail.getUserId());
         blockDetailDTO.setBlocked(blockDetail.isBlocked());
         blockDetailDTO.setBlockedUntil(blockDetail.getBlockedUntil());
         return blockDetailDTO;
+    }
+
+    public List<ShortViewBlockDetailDTO> convertToDTOList(List<BlockDetail> blockDetails) {
+        return blockDetails.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 }
