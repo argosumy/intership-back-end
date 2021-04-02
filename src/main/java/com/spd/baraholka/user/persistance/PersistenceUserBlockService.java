@@ -7,13 +7,15 @@ import java.util.Optional;
 
 public interface PersistenceUserBlockService {
 
-    int insertBlockDetails(BlockDetail blockDetail);
+    BlockDetail insertBlockDetails(BlockDetail blockDetail);
 
     Optional<Boolean> isUserAlreadyBlocked(int id);
 
-    int updateBlockDetails(BlockDetail blockDetail);
+    BlockDetail updateBlockDetails(BlockDetail blockDetail);
 
     Optional<BlockDetail> selectShortBlockDetailInfo(int userId);
 
     List<BlockDetail> selectAllUsersBlockDetails();
+
+    BlockDetail selectBlockDetailByUserId(int userId);
 }
