@@ -35,7 +35,9 @@ public class UserProfileService {
     }
 
     public List<UserShortViewDTO> getAllUsers() {
-        return userService.getAllUsers();
+        List<UserShortViewDTO> users = userService.getAllUsers();
+        List<ShortViewBlockDetailDTO> blockDetails = userBlockService.getAllUsersBlockDetails();
+        return collectShortViewUserDTO(users, blockDetails);
     }
 
     public int blockUser(BlockDetailDTO blockDetailDTO) {
@@ -47,5 +49,18 @@ public class UserProfileService {
         user.setBlocked(blockDetail.isBlocked());
         user.setEndDateOfBan(blockDetail.getBlockedUntil());
         return user;
+    }
+
+    //TODO replace with lambda
+    private List<UserShortViewDTO> collectShortViewUserDTO(List<UserShortViewDTO> users, List<ShortViewBlockDetailDTO> blockDetails) {
+        for (UserShortViewDTO user : users) {
+            for (ShortViewBlockDetailDTO blockDetail : blockDetails) {
+                if (user.getId() == blockDetail.getUserId()) {
+                    user.setBlocked(blockDetail.isBlocked());
+                    user.setEndDateOfBan(blockDetail.getBlockedUntil());
+                }
+            }
+        }
+        return users;
     }
 }
