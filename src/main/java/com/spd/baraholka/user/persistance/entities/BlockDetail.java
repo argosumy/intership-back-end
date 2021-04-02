@@ -5,9 +5,10 @@ import java.time.LocalDateTime;
 public class BlockDetail {
 
     private int userId;
-    private LocalDateTime banedUntil;
+    private LocalDateTime blockedUntil;
     private String reason;
     private boolean isNotify;
+    private boolean isBlocked;
 
     public int getUserId() {
         return userId;
@@ -17,12 +18,12 @@ public class BlockDetail {
         this.userId = userId;
     }
 
-    public LocalDateTime getBanedUntil() {
-        return banedUntil;
+    public LocalDateTime getBlockedUntil() {
+        return blockedUntil;
     }
 
-    public void setBanedUntil(LocalDateTime banedUntil) {
-        this.banedUntil = banedUntil;
+    public void setBlockedUntil(LocalDateTime blockedUntil) {
+        this.blockedUntil = blockedUntil;
     }
 
     public String getReason() {
@@ -39,5 +40,13 @@ public class BlockDetail {
 
     public void setNotify(boolean notify) {
         isNotify = notify;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 }
