@@ -17,4 +17,14 @@ public class NotificationMapper {
         notification.setSendDate(LocalDateTime.now());
         return notification;
     }
+
+    public NotificationDto getNotificationDto( {
+        NotificationDto notificationDto = new NotificationDto();
+        notificationDto.
+        notification.setUserMailToId(notificationDto.getUserMailToId());
+        notification.setAdvertisementId(notificationDto.getAdvertisementId());
+        notification.setEventType(notificationDto.getEventType());
+        notification.setSendDate(LocalDateTime.now());
+        return notification;
+    }
 }

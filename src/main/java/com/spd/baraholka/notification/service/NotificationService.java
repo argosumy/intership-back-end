@@ -1,5 +1,6 @@
 package com.spd.baraholka.notification.service;
 
+import com.spd.baraholka.notification.dto.NotificationDto;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.model.Notification;
 import com.spd.baraholka.notification.repository.NotificationRepository;
@@ -62,5 +63,9 @@ public class NotificationService {
 
     public int saveNotification(Notification notification) {
         return notificationRepository.saveNotification(notification);
+    }
+
+    public void sendAllUsersNotification(NotificationDto notificationDto) {
+
     }
 }

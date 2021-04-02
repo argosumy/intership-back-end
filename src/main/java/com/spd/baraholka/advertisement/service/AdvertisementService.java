@@ -8,8 +8,12 @@ import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementServi
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.notification.dto.NotificationDto;
+import com.spd.baraholka.notification.service.NotificationService;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
+import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.OwnerService;
+import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,13 +24,17 @@ public class AdvertisementService {
     private final PersistenceAdvertisementService persistenceAdvertisementService;
     private final AdvertisementMapper advertisementMapper;
     private final OwnerService ownerService;
+    private final UserService userService;
+    private final NotificationService notificationService;
 
     public AdvertisementService(PersistenceAdvertisementService persistenceAdvertisementService,
                                 AdvertisementMapper advertisementMapper,
-                                OwnerService ownerService) {
+                                OwnerService ownerService, UserService userService, NotificationService notificationService) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
         this.advertisementMapper = advertisementMapper;
         this.ownerService = ownerService;
+        this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
@@ -64,7 +72,12 @@ public class AdvertisementService {
         return advertisementDTO;
     }
 
-    public Optional<Advertisement> findAdById(int advertisementId) {
-        return Optional.empty();  //TODO implement findAdById
+    public void sendAllUsersNotification(InitialAdvertisementDTO advertisementDTO) {
+        NotificationDto notificationDto = new NotificationDto();
+        userService.getAllUsers().stream()
+                .map(UserShortViewDTO::getId)
+                .peek(notificationDto::setUserMailToId)
+                .forEach(notificationService.sendMessage(notificationDto));
+
     }
 }
