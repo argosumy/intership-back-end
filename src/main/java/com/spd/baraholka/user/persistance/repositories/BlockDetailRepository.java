@@ -2,17 +2,16 @@ package com.spd.baraholka.user.persistance.repositories;
 
 import com.spd.baraholka.user.persistance.PersistenceUserBlockService;
 import com.spd.baraholka.user.persistance.entities.BlockDetail;
+import com.spd.baraholka.user.persistance.mappers.BlockDetailRowMapper;
 import com.spd.baraholka.user.persistance.mappers.ShortViewBlockDetailsRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -24,20 +23,24 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
     private static final String UPDATE_SQL = "UPDATE users_block_details SET blocked_until=:blockedUntil, reason=:reason, is_notify=:isNotify WHERE user_id=:userId";
     private static final String SHORT_VIEW_SELECT_SQL = "SELECT is_blocked, blocked_until, user_id FROM users_block_details WHERE user_id=:userId";
     private static final String ALL_USERS_BLOCK_DETAILS_SELECT_SQL = "SELECT is_blocked, blocked_until, user_id FROM users_block_details";
+    private static final String SELECT_BLOCK_DETAIL_BY_ROW_ID = "SELECT * FROM users_block_details WHERE user_id=:userId";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final ShortViewBlockDetailsRowMapper shortViewBlockDetailsRowMapper;
+    private final BlockDetailRowMapper blockDetailRowMapper;
 
-    public BlockDetailRepository(NamedParameterJdbcTemplate jdbcTemplate, ShortViewBlockDetailsRowMapper shortViewBlockDetailsRowMapper) {
+    public BlockDetailRepository(NamedParameterJdbcTemplate jdbcTemplate,
+                                 ShortViewBlockDetailsRowMapper shortViewBlockDetailsRowMapper,
+                                 BlockDetailRowMapper blockDetailRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.shortViewBlockDetailsRowMapper = shortViewBlockDetailsRowMapper;
+        this.blockDetailRowMapper = blockDetailRowMapper;
     }
 
     @Override
-    public int insertBlockDetails(BlockDetail blockDetail) {
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+    public BlockDetail insertBlockDetails(BlockDetail blockDetail) {
         MapSqlParameterSource insertParameters = createInsertParameters(blockDetail);
-        jdbcTemplate.update(INSERT_SQL, insertParameters, keyHolder);
-        return Objects.requireNonNull(keyHolder.getKey()).intValue();
+        jdbcTemplate.update(INSERT_SQL, insertParameters);
+        return selectBlockDetailByUserId(blockDetail.getUserId());
     }
 
     @Override
@@ -46,10 +49,10 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
     }
 
     @Override
-    public int updateBlockDetails(BlockDetail blockDetail) {
+    public BlockDetail updateBlockDetails(BlockDetail blockDetail) {
         Map<String, ? extends Comparable<? extends Comparable<?>>> updateParameters = createUpdateParameters(blockDetail);
         jdbcTemplate.update(UPDATE_SQL, updateParameters);
-        return blockDetail.getUserId();
+        return selectBlockDetailByUserId(blockDetail.getUserId());
     }
 
     @Override
@@ -59,6 +62,11 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
         } catch (DataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public BlockDetail selectBlockDetailByUserId(int userId) {
+        return jdbcTemplate.queryForObject(SELECT_BLOCK_DETAIL_BY_ROW_ID, Map.of("userId", userId), blockDetailRowMapper);
     }
 
     public List<BlockDetail> selectAllUsersBlockDetails() {
