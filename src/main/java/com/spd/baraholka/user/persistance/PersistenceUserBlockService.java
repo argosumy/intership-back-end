@@ -11,4 +11,6 @@ public interface PersistenceUserBlockService {
     Optional<Boolean> isUserAlreadyBlocked(int id);
 
     int updateBlockDetails(BlockDetail blockDetail);
+
+    Optional<BlockDetail> selectShortBlockDetailInfo(int userId);
 }
