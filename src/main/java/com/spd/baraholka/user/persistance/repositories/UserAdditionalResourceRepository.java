@@ -12,6 +12,7 @@ import java.util.Map;
 @Repository
 public class UserAdditionalResourceRepository implements PersistenceUserAdditionalResourcesService {
 
+    private static final String SELECT_USER_ADDITIONAL_RESOURCES_SQL = "SELECT * FROM users_additional_resources WHERE user_id=:id";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserAdditionalResourceRowMapper resourceRowMapper;
 
@@ -23,8 +24,6 @@ public class UserAdditionalResourceRepository implements PersistenceUserAddition
 
     @Override
     public List<UserAdditionalResource> selectUserAdditionalResources(int id) {
-        String selectSQL = "SELECT * FROM users_additional_resources WHERE user_id=:id";
-        Map<String, Integer> selectParameters = Map.of("id", id);
-        return jdbcTemplate.query(selectSQL, selectParameters, resourceRowMapper);
+        return jdbcTemplate.query(SELECT_USER_ADDITIONAL_RESOURCES_SQL, Map.of("id", id), resourceRowMapper);
     }
 }
