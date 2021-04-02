@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping("/settings/block")
-    public int changeUserBlockedStatus(@RequestBody @Valid BlockDetailDTO blockDetailDTO) {
+    public int blockUser(@RequestBody @Valid BlockDetailDTO blockDetailDTO) {
         return userService.blockUser(blockDetailDTO);
     }
 }
