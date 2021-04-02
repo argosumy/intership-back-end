@@ -15,7 +15,7 @@ public class BlockDetailMapper {
     public BlockDetail convertToEntity(EditBlockDetailDTO editBlockDetailDTO) {
         BlockDetail blockDetail = new BlockDetail();
         blockDetail.setUserId(editBlockDetailDTO.getUserId());
-        blockDetail.setBlockedUntil(editBlockDetailDTO.getBanedUntil());
+        blockDetail.setBlockedUntil(editBlockDetailDTO.getBlockedUntil());
         blockDetail.setReason(editBlockDetailDTO.getReason());
         blockDetail.setNotify(editBlockDetailDTO.isNotify());
         return blockDetail;

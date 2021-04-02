@@ -17,7 +17,7 @@ public class EditBlockDetailDTO {
     private int userId;
 
     @PresentOrFutureDate
-    private LocalDateTime banedUntil;
+    private LocalDateTime blockedUntil;
 
     @NotEmpty
     @Size(max = 200)
@@ -34,12 +34,12 @@ public class EditBlockDetailDTO {
         this.userId = userId;
     }
 
-    public LocalDateTime getBanedUntil() {
-        return banedUntil;
+    public LocalDateTime getBlockedUntil() {
+        return blockedUntil;
     }
 
-    public void setBanedUntil(LocalDateTime banedUntil) {
-        this.banedUntil = banedUntil;
+    public void setBlockedUntil(LocalDateTime blockedUntil) {
+        this.blockedUntil = blockedUntil;
     }
 
     public String getReason() {
