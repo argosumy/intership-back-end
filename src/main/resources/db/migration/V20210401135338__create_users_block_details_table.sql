@@ -5,6 +5,6 @@ CREATE TABLE users_block_details
     blocked_until TIMESTAMP,
     reason        VARCHAR(200),
     is_notify     BOOLEAN DEFAULT false,
-    is_blocked    BOOLEAN DEFAULT true
+    is_blocked    BOOLEAN DEFAULT NOT NULL
 
 );
