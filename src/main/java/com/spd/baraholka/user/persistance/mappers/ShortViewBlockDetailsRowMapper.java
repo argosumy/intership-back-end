@@ -23,7 +23,11 @@ public class ShortViewBlockDetailsRowMapper implements RowMapper<BlockDetail> {
 
     private void setBannedUntil(ResultSet resultSet, BlockDetail blockDetail) throws SQLException {
         Timestamp blockedUntilTimeStamp = resultSet.getTimestamp("blocked_until");
-        LocalDateTime blockedUntilDate = blockedUntilTimeStamp.toLocalDateTime();
-        blockDetail.setBlockedUntil(blockedUntilDate);
+        if (blockedUntilTimeStamp == null) {
+            blockDetail.setBlockedUntil(null);
+        } else {
+            LocalDateTime blockedUntilDate = blockedUntilTimeStamp.toLocalDateTime();
+            blockDetail.setBlockedUntil(blockedUntilDate);
+        }
     }
 }
