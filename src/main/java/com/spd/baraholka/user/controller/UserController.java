@@ -39,12 +39,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/settings/block")
+    @PutMapping("/settings/blocking")
     public FullBlockDetailDTO blockUser(@RequestBody @Valid BlockDetailDTO blockDetailDTO) {
         return userService.blockUser(blockDetailDTO);
     }
 
-    @PutMapping("/settings/block/{id}")
+    @PutMapping("/settings/blocking/{id}")
     public ShortViewBlockDetailDTO unBlockUser(@PathVariable("id") @UserExist int userId, @RequestParam("isNotify") boolean isNotify) {
         return userService.unBlockUser(userId, isNotify);
     }
