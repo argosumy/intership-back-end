@@ -49,15 +49,20 @@ public class UserBlockService {
         return blockDetailMapper.convertToDTOList(blockDetails);
     }
 
-    public ShortViewBlockDetailDTO unBlockUser(int userId) {
-        BlockDetail newBlockDetail = new BlockDetail();
-        newBlockDetail.setUserId(userId);
-        newBlockDetail.setReason(null);
-        newBlockDetail.setBlockedUntil(null);
-        newBlockDetail.setBlocked(false);
-        newBlockDetail.setNotify(false);
-        persistenceUserBlockService.updateBlockDetails(newBlockDetail);
-        return blockDetailMapper.convertToShortViewDTO(newBlockDetail);
+    public ShortViewBlockDetailDTO unBlockUser(int userId, boolean isNotify) {
+        BlockDetail unblockDetail = createUnblockDetail(userId, isNotify);
+        BlockDetail blockDetail = persistenceUserBlockService.updateBlockDetails(unblockDetail);
+        return blockDetailMapper.convertToShortViewDTO(blockDetail);
+    }
+
+    private BlockDetail createUnblockDetail(int userId, boolean isNotify) {
+        BlockDetail blockDetail = new BlockDetail();
+        blockDetail.setUserId(userId);
+        blockDetail.setReason(null);
+        blockDetail.setBlockedUntil(null);
+        blockDetail.setBlocked(false);
+        blockDetail.setNotify(isNotify);
+        return blockDetail;
     }
 
     private ShortViewBlockDetailDTO createDefaultDTO() {
