@@ -1,12 +1,10 @@
 package com.spd.baraholka.comments.mappers;
 
-import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.dto.CommentUserInfoDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,18 +35,6 @@ public class CommentUserInfoDtoMapper {
         commentUserInfoDto.setUserImageUrl(getUserImageUrl(comment));
         return commentUserInfoDto;
     }
-
-//    public Comment toComment(CommentDto commentDto) {
-//        return new Comment(
-//                commentDto.getId(),
-//                commentDto.getBody(),
-//                LocalDate.now(),
-//                getAdvertisement(commentDto),
-//                getUser(commentDto),
-//                getParentComment(commentDto)
-//        );
-//    }
-
 
     private String getUserName(Comment comment) {
         return userService.getUserById(comment.getUser().getId()).getFirstName();

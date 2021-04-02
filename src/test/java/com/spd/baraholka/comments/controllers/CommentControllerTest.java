@@ -10,6 +10,7 @@ import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;
+import com.spd.baraholka.comments.mappers.CommentUserInfoDtoMapper;
 import com.spd.baraholka.comments.services.CommentService;
 import com.spd.baraholka.config.SecurityConfig;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
@@ -47,6 +48,9 @@ class CommentControllerTest {
     @Autowired
     @MockBean
     private CommentDtoMapper commentDtoMapper;
+    @Autowired
+    @MockBean
+    private CommentUserInfoDtoMapper commentUserInfoDtoMapper;
     @Autowired
     private ObjectMapper mapper;
     private CommentDto commentDto;
