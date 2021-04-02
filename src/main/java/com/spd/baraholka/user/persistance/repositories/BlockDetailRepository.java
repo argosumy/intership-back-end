@@ -69,6 +69,7 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
         return jdbcTemplate.queryForObject(SELECT_BLOCK_DETAIL_BY_ROW_ID, Map.of("userId", userId), blockDetailRowMapper);
     }
 
+    @Override
     public List<BlockDetail> selectAllUsersBlockDetails() {
         return jdbcTemplate.query(ALL_USERS_BLOCK_DETAILS_SELECT_SQL, shortViewBlockDetailsRowMapper);
     }
