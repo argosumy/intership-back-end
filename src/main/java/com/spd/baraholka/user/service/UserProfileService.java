@@ -46,8 +46,8 @@ public class UserProfileService {
         return userBlockService.blockUser(blockDetailDTO);
     }
 
-    public ShortViewBlockDetailDTO unBlockUser(int userId) {
-        return userBlockService.unBlockUser(userId);
+    public ShortViewBlockDetailDTO unBlockUser(int userId, boolean isNotify) {
+        return userBlockService.unBlockUser(userId, isNotify);
     }
 
     private UserDTO collectUserDTO(UserDTO user, List<UserAdditionalResourceDTO> additionalResources, ShortViewBlockDetailDTO blockDetail) {
