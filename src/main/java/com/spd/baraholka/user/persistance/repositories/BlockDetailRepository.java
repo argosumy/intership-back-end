@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,7 +22,8 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
             "INSERT INTO users_block_details (user_id, blocked_until, reason, is_notify) VALUES (:userId, :blockedUntil, :reason, :isNotify) RETURNING id";
     private static final String IS_EXIST_SQL = "SELECT count(*) <> 0 FROM users_block_details WHERE user_id=:id";
     private static final String UPDATE_SQL = "UPDATE users_block_details SET blocked_until=:blockedUntil, reason=:reason, is_notify=:isNotify WHERE user_id=:userId";
-    private static final String SHORT_VIEW_SELECT_SQL = "SELECT is_blocked, blocked_until FROM users_block_details WHERE user_id=:userId";
+    private static final String SHORT_VIEW_SELECT_SQL = "SELECT is_blocked, blocked_until, user_id FROM users_block_details WHERE user_id=:userId";
+    private static final String ALL_USERS_BLOCK_DETAILS_SELECT_SQL = "SELECT is_blocked, blocked_until, user_id FROM users_block_details";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final BlockDetailsRowMapper blockDetailsRowMapper;
 
@@ -57,6 +59,10 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
         } catch (DataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    public List<BlockDetail> selectAllUsersBlockDetails() {
+        return jdbcTemplate.query(ALL_USERS_BLOCK_DETAILS_SELECT_SQL, blockDetailsRowMapper);
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateParameters(BlockDetail blockDetail) {
