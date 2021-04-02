@@ -1,9 +1,6 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
-import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
-import com.spd.baraholka.user.controller.dto.UserDTO;
-import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
+import com.spd.baraholka.user.controller.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,8 +26,8 @@ public class UserProfileService {
     public UserDTO getUserById(int id) {
         UserDTO user = userService.getUserById(id);
         List<UserAdditionalResourceDTO> additionalResources = userAdditionalResourceService.getUserAdditionalResources(user.getId());
-        user.setAdditionalContactResources(additionalResources);
-        return user;
+        ShortViewBlockDetailDTO blockDetail = userBlockService.getShortViewUserBlockDetail(user.getId());
+        return collectUserDTO(user, additionalResources, blockDetail);
     }
 
     public int updateUserGeneralSettings(int id, boolean openAdsInNewTab) {
@@ -43,5 +40,12 @@ public class UserProfileService {
 
     public int blockUser(BlockDetailDTO blockDetailDTO) {
         return userBlockService.blockUser(blockDetailDTO);
+    }
+
+    private UserDTO collectUserDTO(UserDTO user, List<UserAdditionalResourceDTO> additionalResources, ShortViewBlockDetailDTO blockDetail) {
+        user.setAdditionalContactResources(additionalResources);
+        user.setBlocked(blockDetail.isBlocked());
+        user.setEndDateOfBan(blockDetail.getBlockedUntil());
+        return user;
     }
 }
