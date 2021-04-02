@@ -86,14 +86,16 @@ public class NotificationMapperFactory {
         EventType eventType = (EventType) parameters[0];
         Advertisement advertisement = (Advertisement) parameters[1];
         UserDTO userMailTo = (UserDTO) parameters[2];
+        Comment comment = parameters[3];
 
         switch (eventType) {
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
                 BanBlockNotification banBlockNotification = new BanBlockNotification();
-                setParameters(banBlockNotification, notificationDto, userMailTo);
-                banBlockNotification.setReason(notificationDto.getReason());
-                banBlockNotification.setEndDate(notificationDto.getBlockEndDate());
+
+                setParameters(banBlockNotification, advertisement, userMailTo);
+                banBlockNotification.setReason("SPAM DETECTED!");
+                banBlockNotification.setEndDate(userMailTo.getEndDateOfBan());
                 return banBlockNotification;
             case NEW_ADVERTISEMENT:
             case ADVERTISEMENT_CHANGE:
@@ -107,9 +109,9 @@ public class NotificationMapperFactory {
             case NEW_ADVERTISEMENT_COMMENT:
             case NEW_COMMENT_ON_COMMENT:
                 CommentNotification commentNotification = new CommentNotification();
-                userById = getUserById(notificationDto.getUserId());
-                setParameters(commentNotification, notificationDto, userMailTo);
-                commentNotification.setWriterName(userById.getFirstName() + " " + userById.getLastName());
+
+                setParameters(commentNotification, advertisement, userMailTo);
+                commentNotification.setWriterName(commentDto.getFirstName() + " " + commentDto.getLastName());
                 return commentNotification;
             default:
                 throw new IllegalStateException("Unexpected value: " + eventType);
@@ -121,12 +123,17 @@ public class NotificationMapperFactory {
         BaseNotification notification = (BaseNotification) parameters[0];
         Advertisement advertisement = (Advertisement) parameters[1];
         UserDTO userMailTo = (UserDTO) parameters[2];
+        Comment comment = parameters[3];
+
         if (advertisement != null) {
             notification.setObjectLink(HTTP_LOCALHOST_8080_API + "advertisement/" + advertisement.getAdvertisementId());
         }
         if (userMailTo != null) {
             notification.setMailTo(userMailTo.getEmail());
             notification.setUserProfileLink(HTTP_LOCALHOST_8080_API + "users/" + userMailTo.getId());
+        }
+        if (comment != null) {
+
         }
         notification.setSubject(EventType.NEW_ADVERTISEMENT.name());
         notification.setEventType(EventType.NEW_ADVERTISEMENT);
