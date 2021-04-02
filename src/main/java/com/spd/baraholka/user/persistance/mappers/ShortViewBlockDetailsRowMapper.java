@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Component
-public class BlockDetailsRowMapper implements RowMapper<BlockDetail> {
+public class ShortViewBlockDetailsRowMapper implements RowMapper<BlockDetail> {
 
     @Override
     public BlockDetail mapRow(ResultSet rs, int rowNum) throws SQLException {

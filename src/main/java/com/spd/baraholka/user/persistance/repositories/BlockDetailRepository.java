@@ -2,7 +2,7 @@ package com.spd.baraholka.user.persistance.repositories;
 
 import com.spd.baraholka.user.persistance.PersistenceUserBlockService;
 import com.spd.baraholka.user.persistance.entities.BlockDetail;
-import com.spd.baraholka.user.persistance.mappers.BlockDetailsRowMapper;
+import com.spd.baraholka.user.persistance.mappers.ShortViewBlockDetailsRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -25,11 +25,11 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
     private static final String SHORT_VIEW_SELECT_SQL = "SELECT is_blocked, blocked_until, user_id FROM users_block_details WHERE user_id=:userId";
     private static final String ALL_USERS_BLOCK_DETAILS_SELECT_SQL = "SELECT is_blocked, blocked_until, user_id FROM users_block_details";
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final BlockDetailsRowMapper blockDetailsRowMapper;
+    private final ShortViewBlockDetailsRowMapper shortViewBlockDetailsRowMapper;
 
-    public BlockDetailRepository(NamedParameterJdbcTemplate jdbcTemplate, BlockDetailsRowMapper blockDetailsRowMapper) {
+    public BlockDetailRepository(NamedParameterJdbcTemplate jdbcTemplate, ShortViewBlockDetailsRowMapper shortViewBlockDetailsRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.blockDetailsRowMapper = blockDetailsRowMapper;
+        this.shortViewBlockDetailsRowMapper = shortViewBlockDetailsRowMapper;
     }
 
     @Override
@@ -55,14 +55,14 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
     @Override
     public Optional<BlockDetail> selectShortBlockDetailInfo(int userId) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(SHORT_VIEW_SELECT_SQL, Map.of("userId", userId), blockDetailsRowMapper));
+            return Optional.ofNullable(jdbcTemplate.queryForObject(SHORT_VIEW_SELECT_SQL, Map.of("userId", userId), shortViewBlockDetailsRowMapper));
         } catch (DataAccessException e) {
             return Optional.empty();
         }
     }
 
     public List<BlockDetail> selectAllUsersBlockDetails() {
-        return jdbcTemplate.query(ALL_USERS_BLOCK_DETAILS_SELECT_SQL, blockDetailsRowMapper);
+        return jdbcTemplate.query(ALL_USERS_BLOCK_DETAILS_SELECT_SQL, shortViewBlockDetailsRowMapper);
     }
 
     private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateParameters(BlockDetail blockDetail) {
