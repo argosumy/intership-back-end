@@ -1,10 +1,7 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
-import com.spd.baraholka.user.controller.dto.EditBlockDetailDTO;
-import com.spd.baraholka.user.controller.dto.FullBlockDetailDTO;
-import com.spd.baraholka.user.controller.dto.UserDTO;
-import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
+import com.spd.baraholka.user.controller.dto.*;
 import com.spd.baraholka.user.service.UserProfileService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +40,12 @@ public class UserController {
     }
 
     @PutMapping("/settings/block")
-    public FullBlockDetailDTO blockUser(@RequestBody @Valid EditBlockDetailDTO editBlockDetailDTO) {
-        return userService.blockUser(editBlockDetailDTO);
+    public FullBlockDetailDTO blockUser(@RequestBody @Valid BlockDetailDTO blockDetailDTO) {
+        return userService.blockUser(blockDetailDTO);
+    }
+
+    @PutMapping("/settings/block")
+    public ShortViewBlockDetailDTO unBlockUser(@RequestParam("id") @UserExist int userId) {
+        return userService.unBlockUser(userId);
     }
 }

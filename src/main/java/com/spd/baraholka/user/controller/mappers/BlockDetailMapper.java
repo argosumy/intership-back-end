@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.controller.mappers;
 
-import com.spd.baraholka.user.controller.dto.EditBlockDetailDTO;
+import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
 import com.spd.baraholka.user.controller.dto.FullBlockDetailDTO;
 import com.spd.baraholka.user.controller.dto.ShortViewBlockDetailDTO;
 import com.spd.baraholka.user.persistance.entities.BlockDetail;
@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 @Component
 public class BlockDetailMapper {
 
-    public BlockDetail convertToEntity(EditBlockDetailDTO editBlockDetailDTO) {
+    public BlockDetail convertToEntity(BlockDetailDTO blockDetailDTO) {
         BlockDetail blockDetail = new BlockDetail();
-        blockDetail.setUserId(editBlockDetailDTO.getUserId());
-        blockDetail.setBlockedUntil(editBlockDetailDTO.getBlockedUntil());
-        blockDetail.setReason(editBlockDetailDTO.getReason());
-        blockDetail.setNotify(editBlockDetailDTO.isNotify());
+        blockDetail.setUserId(blockDetailDTO.getUserId());
+        blockDetail.setBlockedUntil(blockDetailDTO.getBlockedUntil());
+        blockDetail.setReason(blockDetailDTO.getReason());
+        blockDetail.setNotify(blockDetailDTO.isNotify());
         return blockDetail;
     }
 

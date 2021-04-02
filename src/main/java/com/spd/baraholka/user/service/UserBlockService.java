@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.user.controller.dto.EditBlockDetailDTO;
+import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
 import com.spd.baraholka.user.controller.dto.FullBlockDetailDTO;
 import com.spd.baraholka.user.controller.dto.ShortViewBlockDetailDTO;
 import com.spd.baraholka.user.controller.mappers.BlockDetailMapper;
@@ -22,9 +22,9 @@ public class UserBlockService {
         this.blockDetailMapper = blockDetailMapper;
     }
 
-    public FullBlockDetailDTO blockUser(EditBlockDetailDTO editBlockDetailDTO) {
-        int id = editBlockDetailDTO.getUserId();
-        BlockDetail newBlockDetail = blockDetailMapper.convertToEntity(editBlockDetailDTO);
+    public FullBlockDetailDTO blockUser(BlockDetailDTO blockDetailDTO) {
+        int id = blockDetailDTO.getUserId();
+        BlockDetail newBlockDetail = blockDetailMapper.convertToEntity(blockDetailDTO);
         boolean alreadyBlocked = persistenceUserBlockService.isUserAlreadyBlocked(id).orElse(false);
         BlockDetail blockDetail;
         if (alreadyBlocked) {
@@ -47,6 +47,17 @@ public class UserBlockService {
     public List<ShortViewBlockDetailDTO> getAllUsersBlockDetails() {
         List<BlockDetail> blockDetails = persistenceUserBlockService.selectAllUsersBlockDetails();
         return blockDetailMapper.convertToDTOList(blockDetails);
+    }
+
+    public ShortViewBlockDetailDTO unBlockUser(int userId) {
+        BlockDetail newBlockDetail = new BlockDetail();
+        newBlockDetail.setUserId(userId);
+        newBlockDetail.setReason(null);
+        newBlockDetail.setBlockedUntil(null);
+        newBlockDetail.setBlocked(false);
+        newBlockDetail.setNotify(false);
+        persistenceUserBlockService.updateBlockDetails(newBlockDetail);
+        return blockDetailMapper.convertToShortViewDTO(newBlockDetail);
     }
 
     private ShortViewBlockDetailDTO createDefaultDTO() {

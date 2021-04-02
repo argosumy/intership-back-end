@@ -42,8 +42,12 @@ public class UserProfileService {
         return collectShortViewUserDTO(users, blockDetails);
     }
 
-    public FullBlockDetailDTO blockUser(EditBlockDetailDTO editBlockDetailDTO) {
-        return userBlockService.blockUser(editBlockDetailDTO);
+    public FullBlockDetailDTO blockUser(BlockDetailDTO blockDetailDTO) {
+        return userBlockService.blockUser(blockDetailDTO);
+    }
+
+    public ShortViewBlockDetailDTO unBlockUser(int userId) {
+        return userBlockService.unBlockUser(userId);
     }
 
     private UserDTO collectUserDTO(UserDTO user, List<UserAdditionalResourceDTO> additionalResources, ShortViewBlockDetailDTO blockDetail) {
