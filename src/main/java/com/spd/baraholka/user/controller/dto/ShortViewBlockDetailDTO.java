@@ -4,8 +4,17 @@ import java.time.LocalDateTime;
 
 public class ShortViewBlockDetailDTO {
 
+    private int userId;
     private boolean isBlocked;
     private LocalDateTime blockedUntil;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public boolean isBlocked() {
         return isBlocked;
