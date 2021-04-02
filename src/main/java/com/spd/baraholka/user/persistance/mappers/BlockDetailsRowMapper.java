@@ -15,6 +15,7 @@ public class BlockDetailsRowMapper implements RowMapper<BlockDetail> {
     @Override
     public BlockDetail mapRow(ResultSet rs, int rowNum) throws SQLException {
         BlockDetail blockDetail = new BlockDetail();
+        blockDetail.setUserId(rs.getInt("user_id"));
         blockDetail.setBlocked(rs.getBoolean("is_blocked"));
         setBannedUntil(rs, blockDetail);
         return blockDetail;
