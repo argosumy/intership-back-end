@@ -18,6 +18,7 @@ public class BlockDetailMapper {
         blockDetail.setBlockedUntil(blockDetailDTO.getBlockedUntil());
         blockDetail.setReason(blockDetailDTO.getReason());
         blockDetail.setNotify(blockDetailDTO.isNotify());
+        blockDetail.setBlocked(true);
         return blockDetail;
     }
 
