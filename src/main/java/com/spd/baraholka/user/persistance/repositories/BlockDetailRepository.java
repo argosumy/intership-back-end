@@ -15,6 +15,10 @@ import java.util.Optional;
 @Repository
 public class BlockDetailRepository implements PersistenceUserBlockService {
 
+    private static final String INSERT_SQL =
+            "INSERT INTO users_block_details (user_id, baned_until, reason, is_notify) VALUES (:userId, :banedUntil, :reason, :isNotify) RETURNING id";
+    private static final String IS_EXIST_SQL = "SELECT count(*) <> 0 FROM users_block_details WHERE user_id=:id";
+    private static final String UPDATE_SQL = "UPDATE users_block_details SET baned_until=:banedUntil, reason=:reason, is_notify=:isNotify WHERE user_id=:userId";
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public BlockDetailRepository(NamedParameterJdbcTemplate jdbcTemplate) {
@@ -24,23 +28,20 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
     @Override
     public int insertBlockDetails(BlockDetail blockDetail) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        String insertSQL = "INSERT INTO users_block_details (user_id, baned_until, reason, is_notify) VALUES (:userId, :banedUntil, :reason, :isNotify) RETURNING id";
         MapSqlParameterSource insertParameters = createInsertParameters(blockDetail);
-        jdbcTemplate.update(insertSQL, insertParameters, keyHolder);
+        jdbcTemplate.update(INSERT_SQL, insertParameters, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
     @Override
     public Optional<Boolean> isUserAlreadyBlocked(int id) {
-        String isExistQuery = "SELECT count(*) <> 0 FROM users_block_details WHERE user_id=:id";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(IS_EXIST_SQL, Map.of("id", id), Boolean.class));
     }
 
     @Override
     public int updateBlockDetails(BlockDetail blockDetail) {
-        String updateSQL = "UPDATE users_block_details SET baned_until=:banedUntil, reason=:reason, is_notify=:isNotify WHERE user_id=:userId";
         Map<String, ? extends Comparable<? extends Comparable<?>>> updateParameters = createUpdateParameters(blockDetail);
-        jdbcTemplate.update(updateSQL, updateParameters);
+        jdbcTemplate.update(UPDATE_SQL, updateParameters);
         return blockDetail.getUserId();
     }
 
