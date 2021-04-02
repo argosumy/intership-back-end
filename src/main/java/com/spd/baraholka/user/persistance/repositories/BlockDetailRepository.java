@@ -50,7 +50,7 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
 
     @Override
     public BlockDetail updateBlockDetails(BlockDetail blockDetail) {
-        Map<String, ? extends Comparable<? extends Comparable<?>>> updateParameters = createUpdateParameters(blockDetail);
+        MapSqlParameterSource updateParameters = createUpdateParameters(blockDetail);
         jdbcTemplate.update(UPDATE_SQL, updateParameters);
         return selectBlockDetailByUserId(blockDetail.getUserId());
     }
@@ -73,11 +73,13 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
         return jdbcTemplate.query(ALL_USERS_BLOCK_DETAILS_SELECT_SQL, shortViewBlockDetailsRowMapper);
     }
 
-    private Map<String, ? extends Comparable<? extends Comparable<?>>> createUpdateParameters(BlockDetail blockDetail) {
-        return Map.of("blockedUntil", blockDetail.getBlockedUntil(),
-                "reason", blockDetail.getReason(),
-                "isNotify", blockDetail.isNotify(),
-                "userId", blockDetail.getUserId());
+    private MapSqlParameterSource createUpdateParameters(BlockDetail blockDetail) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("blockedUntil", blockDetail.getBlockedUntil());
+        params.addValue("reason", blockDetail.getReason());
+        params.addValue("isNotify", blockDetail.isNotify());
+        params.addValue("userId", blockDetail.getUserId());
+        return params;
     }
 
     private MapSqlParameterSource createInsertParameters(BlockDetail blockDetailDTO) {
