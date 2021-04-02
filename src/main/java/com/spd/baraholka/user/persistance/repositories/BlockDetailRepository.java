@@ -20,7 +20,8 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
     private static final String INSERT_SQL =
             "INSERT INTO users_block_details (user_id, blocked_until, reason, is_notify) VALUES (:userId, :blockedUntil, :reason, :isNotify) RETURNING id";
     private static final String IS_EXIST_SQL = "SELECT count(*) <> 0 FROM users_block_details WHERE user_id=:id";
-    private static final String UPDATE_SQL = "UPDATE users_block_details SET blocked_until=:blockedUntil, reason=:reason, is_notify=:isNotify WHERE user_id=:userId";
+    private static final String UPDATE_SQL =
+            "UPDATE users_block_details SET blocked_until=:blockedUntil, reason=:reason, is_notify=:isNotify, is_blocked=:isBlocked WHERE user_id=:userId";
     private static final String SHORT_VIEW_SELECT_SQL = "SELECT is_blocked, blocked_until, user_id FROM users_block_details WHERE user_id=:userId";
     private static final String ALL_USERS_BLOCK_DETAILS_SELECT_SQL = "SELECT is_blocked, blocked_until, user_id FROM users_block_details";
     private static final String SELECT_BLOCK_DETAIL_BY_ROW_ID = "SELECT * FROM users_block_details WHERE user_id=:userId";
@@ -80,6 +81,7 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
         namedParameters.addValue("reason", blockDetail.getReason());
         namedParameters.addValue("isNotify", blockDetail.isNotify());
         namedParameters.addValue("userId", blockDetail.getUserId());
+        namedParameters.addValue("isBlocked", blockDetail.isBlocked());
         return namedParameters;
     }
 
