@@ -1,6 +1,7 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
+import com.spd.baraholka.user.controller.dto.EditBlockDetailDTO;
+import com.spd.baraholka.user.controller.dto.FullBlockDetailDTO;
 import com.spd.baraholka.user.controller.dto.ShortViewBlockDetailDTO;
 import com.spd.baraholka.user.controller.mappers.BlockDetailMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserBlockService;
@@ -21,21 +22,23 @@ public class UserBlockService {
         this.blockDetailMapper = blockDetailMapper;
     }
 
-    public int blockUser(BlockDetailDTO blockDetailDTO) {
-        int id = blockDetailDTO.getUserId();
-        BlockDetail blockDetail = blockDetailMapper.convertToEntity(blockDetailDTO);
+    public FullBlockDetailDTO blockUser(EditBlockDetailDTO editBlockDetailDTO) {
+        int id = editBlockDetailDTO.getUserId();
+        BlockDetail newBlockDetail = blockDetailMapper.convertToEntity(editBlockDetailDTO);
         boolean alreadyBlocked = persistenceUserBlockService.isUserAlreadyBlocked(id).orElse(false);
+        BlockDetail blockDetail;
         if (alreadyBlocked) {
-            return persistenceUserBlockService.updateBlockDetails(blockDetail);
+            blockDetail = persistenceUserBlockService.updateBlockDetails(newBlockDetail);
         } else {
-            return persistenceUserBlockService.insertBlockDetails(blockDetail);
+            blockDetail = persistenceUserBlockService.insertBlockDetails(newBlockDetail);
         }
+        return blockDetailMapper.convertToDTO(blockDetail);
     }
 
     public ShortViewBlockDetailDTO getShortViewUserBlockDetail(int userId) {
         Optional<BlockDetail> blockDetail = persistenceUserBlockService.selectShortBlockDetailInfo(userId);
         if (blockDetail.isPresent()) {
-            return blockDetailMapper.convertToDTO(blockDetail.get());
+            return blockDetailMapper.convertToShortViewDTO(blockDetail.get());
         } else {
             return createDefaultDTO();
         }

@@ -1,7 +1,8 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
-import com.spd.baraholka.user.controller.dto.BlockDetailDTO;
+import com.spd.baraholka.user.controller.dto.EditBlockDetailDTO;
+import com.spd.baraholka.user.controller.dto.FullBlockDetailDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserProfileService;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping("/settings/block")
-    public int blockUser(@RequestBody @Valid BlockDetailDTO blockDetailDTO) {
-        return userService.blockUser(blockDetailDTO);
+    public FullBlockDetailDTO blockUser(@RequestBody @Valid EditBlockDetailDTO editBlockDetailDTO) {
+        return userService.blockUser(editBlockDetailDTO);
     }
 }
