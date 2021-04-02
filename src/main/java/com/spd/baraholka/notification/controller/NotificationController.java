@@ -1,6 +1,8 @@
 package com.spd.baraholka.notification.controller;
 
+import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.notification.dto.NotificationDto;
+import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.mapper.NotificationMapper;
 import com.spd.baraholka.notification.mapper.NotificationMapperFactory;
 import com.spd.baraholka.notification.service.NotificationService;
@@ -20,19 +22,24 @@ public class NotificationController {
     private final NotificationService notificationService;
     private final NotificationMapperFactory notificationMapperFactory;
     private final NotificationMapper notificationMapper;
+    private final AdvertisementService advertisementService;
 
     @Autowired
     public NotificationController(NotificationService notificationService,
                                   NotificationMapperFactory notificationMapperFactory,
-                                  NotificationMapper notificationMapper) {
+                                  NotificationMapper notificationMapper, AdvertisementService advertisementService) {
         this.notificationService = notificationService;
         this.notificationMapperFactory = notificationMapperFactory;
         this.notificationMapper = notificationMapper;
+        this.advertisementService = advertisementService;
     }
 
     @PostMapping
-    public int sendNotification(@RequestBody @Valid NotificationDto notificationDto) throws MessagingException, IOException, TemplateException {
+    public int sendNotification(@RequestBody  NotificationDto notificationDto) throws MessagingException, IOException, TemplateException {
         int savedNotificationId = notificationService.saveNotification(notificationMapper.toNotification(notificationDto));
+        if (notificationDto.getEventType() == EventType.NEW_ADVERTISEMENT) {
+            notificationService.sendAllUsersNotification(notificationMapperFactory.getNotification(notificationDto));
+        }
         notificationService.sendMessage(notificationMapperFactory.getNotification(notificationDto));
         return savedNotificationId;
     }

@@ -25,8 +25,8 @@ public class UserMapper {
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
-        userDTO.setImageUrl(imageUrl);
+//        String imageUrl = collapseImageUrl(user.getImageUrl());
+//        userDTO.setImageUrl(imageUrl);
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setLocation(user.getLocation());
         return userDTO;

@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 
 public class InitialAdvertisementDTO {
 
+    private int advertisementId;
+
     @NotNull
     private String category;
 
@@ -71,5 +73,13 @@ public class InitialAdvertisementDTO {
 
     public LocalDateTime getPublicationDate() {
         return publicationDate;
+    }
+
+    public int getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(int advertisementId) {
+        this.advertisementId = advertisementId;
     }
 }

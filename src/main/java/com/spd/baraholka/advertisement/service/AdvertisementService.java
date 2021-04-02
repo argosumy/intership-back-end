@@ -8,10 +8,8 @@ import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementServi
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
-import com.spd.baraholka.notification.dto.NotificationDto;
 import com.spd.baraholka.notification.service.NotificationService;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
-import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.OwnerService;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Service;
@@ -39,6 +37,7 @@ public class AdvertisementService {
 
     public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
+        notificationService.sendAllUsersNotification(advertisement);
         return persistenceAdvertisementService.insertAdvertisement(advertisement);
     }
 
@@ -72,12 +71,6 @@ public class AdvertisementService {
         return advertisementDTO;
     }
 
-    public void sendAllUsersNotification(InitialAdvertisementDTO advertisementDTO) {
-        NotificationDto notificationDto = new NotificationDto();
-        userService.getAllUsers().stream()
-                .map(UserShortViewDTO::getId)
-                .peek(notificationDto::setUserMailToId)
-                .forEach(notificationService.sendMessage(notificationDto));
-
-    }
+    //TODO getUserById
+    //TODO getAllUsers
 }
