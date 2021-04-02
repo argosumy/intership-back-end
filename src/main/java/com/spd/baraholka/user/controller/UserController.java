@@ -44,8 +44,8 @@ public class UserController {
         return userService.blockUser(blockDetailDTO);
     }
 
-    @PutMapping("/settings/block")
-    public ShortViewBlockDetailDTO unBlockUser(@RequestParam("id") @UserExist int userId) {
-        return userService.unBlockUser(userId);
+    @PutMapping("/settings/unblock")
+    public ShortViewBlockDetailDTO unBlockUser(@RequestParam("id") @UserExist int userId, @RequestParam("isNotify") boolean isNotify) {
+        return userService.unBlockUser(userId, isNotify);
     }
 }
