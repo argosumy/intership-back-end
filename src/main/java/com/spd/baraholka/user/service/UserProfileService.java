@@ -4,6 +4,8 @@ import com.spd.baraholka.user.controller.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserProfileService {
@@ -51,16 +53,19 @@ public class UserProfileService {
         return user;
     }
 
-    //TODO replace with lambda
     private List<UserShortViewDTO> collectShortViewUserDTO(List<UserShortViewDTO> users, List<ShortViewBlockDetailDTO> blockDetails) {
-        for (UserShortViewDTO user : users) {
-            for (ShortViewBlockDetailDTO blockDetail : blockDetails) {
-                if (user.getId() == blockDetail.getUserId()) {
-                    user.setBlocked(blockDetail.isBlocked());
-                    user.setEndDateOfBan(blockDetail.getBlockedUntil());
-                }
-            }
-        }
-        return users;
+        return users.stream().map(userShortViewDTO -> matchUserWithBlockDetails(userShortViewDTO, blockDetails)).collect(Collectors.toList());
+    }
+
+    private UserShortViewDTO matchUserWithBlockDetails(UserShortViewDTO userShortViewDTO, List<ShortViewBlockDetailDTO> blockDetails) {
+        Optional<ShortViewBlockDetailDTO> userBlockDetail =
+                blockDetails.stream().filter(blockDetailDTO -> blockDetailDTO.getUserId() == userShortViewDTO.getId()).findFirst();
+        userBlockDetail.ifPresent(blockDetail -> setUserBlockDetail(userShortViewDTO, blockDetail));
+        return userShortViewDTO;
+    }
+
+    private void setUserBlockDetail(UserShortViewDTO shortViewDTO, ShortViewBlockDetailDTO blockDetail) {
+        shortViewDTO.setBlocked(blockDetail.isBlocked());
+        shortViewDTO.setEndDateOfBan(blockDetail.getBlockedUntil());
     }
 }
