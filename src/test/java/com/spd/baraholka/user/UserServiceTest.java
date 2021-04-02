@@ -27,23 +27,14 @@ class UserServiceTest {
     private PersistenceUserService persistenceUserService;
 
     @Mock
-    private PersistenceUserAdditionalResourcesService persistenceUserAdditionalResourcesService;
-
-    @Mock
     private UserMapper userMapper;
-
-    @Mock
-    private UserAdditionalResourceMapper userAdditionalResourceMapper;
 
     @InjectMocks
     private UserService userServiceUnderTest;
 
     @BeforeEach
     void init() {
-        userServiceUnderTest = new UserService(persistenceUserService,
-                persistenceUserAdditionalResourcesService,
-                userMapper,
-                userAdditionalResourceMapper);
+        userServiceUnderTest = new UserService(persistenceUserService, userMapper);
     }
 
     @Test
