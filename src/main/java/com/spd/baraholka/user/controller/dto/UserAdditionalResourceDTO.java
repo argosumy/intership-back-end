@@ -18,8 +18,10 @@ public class UserAdditionalResourceDTO {
     @Positive
     private int userId;
 
-    private int id;
+    @NotEmpty
     private String resourceUrl;
+
+    private int id;
 
     public int getId() {
         return id;

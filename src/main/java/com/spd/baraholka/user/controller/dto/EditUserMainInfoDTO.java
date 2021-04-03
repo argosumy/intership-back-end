@@ -28,6 +28,7 @@ public class EditUserMainInfoDTO {
 
     @Valid
     @NotEmpty
+    @Size(max = 10)
     private List<UserAdditionalResourceDTO> additionalContactResources;
 
     public int getUserId() {
