@@ -1,8 +1,8 @@
 package com.spd.baraholka.user.persistance.repositories;
 
 import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesService;
-import com.spd.baraholka.user.persistance.mappers.UserAdditionalResourceRowMapper;
 import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
+import com.spd.baraholka.user.persistance.mappers.UserAdditionalResourceRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
@@ -16,6 +16,7 @@ public class UserAdditionalResourceRepository implements PersistenceUserAddition
 
     private static final String INSERT_USER_ADDITIONAL_RESOURCE_SQL =
             "INSERT INTO users_additional_resources (user_id, resource_name, resource_url) VALUES (:userId, :resourceName, :resourceUrl)";
+    private static final String SELECT_USER_ADDITIONAL_RESOURCES_ID = "SELECT id FROM users_additional_resources WHERE user_id=:userId";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserAdditionalResourceRowMapper resourceRowMapper;
 
@@ -43,5 +44,10 @@ public class UserAdditionalResourceRepository implements PersistenceUserAddition
     public void insertNewUserAdditionalResources(List<UserAdditionalResource> additionalResources) {
         SqlParameterSource[] batchParameters = SqlParameterSourceUtils.createBatch(additionalResources.toArray());
         jdbcTemplate.batchUpdate(INSERT_USER_ADDITIONAL_RESOURCE_SQL, batchParameters);
+    }
+
+    @Override
+    public List<Integer> selectUserAdditionalResourcesId(int userId) {
+        return jdbcTemplate.queryForList(SELECT_USER_ADDITIONAL_RESOURCES_ID, Map.of("userId", userId), Integer.class);
     }
 }
