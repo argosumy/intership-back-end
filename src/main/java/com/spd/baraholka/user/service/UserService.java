@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -24,6 +27,7 @@ public class UserService {
     private final PersistenceUserAdditionalResourcesService persistenceResourceService;
     private final UserMapper userMapper;
     private final UserAdditionalResourceMapper resourceMapper;
+    private final Predicate<UserAdditionalResource> isResourceNew = additionalResourceDTO -> additionalResourceDTO.getId() == 0;
 
     public UserService(PersistenceUserService persistenceUserService,
                        PersistenceUserAdditionalResourcesService persistenceResourceService,
@@ -79,9 +83,18 @@ public class UserService {
     @Transactional
     public int updateUserMainInfo(EditUserMainInfoDTO mainInfoDTO) {
         User user = userMapper.convertToEntity(mainInfoDTO);
-        List<UserAdditionalResource> additionalResources =
-                resourceMapper.convertToEntityList(mainInfoDTO.getAdditionalContactResources());
-        persistenceResourceService.updateUserAdditionalResources(additionalResources);
+        updateResource(mainInfoDTO.getAdditionalContactResources());
         return persistenceUserService.updateUserMainInfo(user);
+    }
+
+    private void updateResource(List<UserAdditionalResourceDTO> resourcesDTO) {
+        List<UserAdditionalResource> allResources = resourceMapper.convertToEntityList(resourcesDTO);
+        Map<Boolean, List<UserAdditionalResource>> dividedResources = divideByExist(allResources);
+        persistenceResourceService.updateUserAdditionalResources(dividedResources.get(false));
+        persistenceResourceService.insertNewUserAdditionalResources(dividedResources.get(true));
+    }
+
+    private Map<Boolean, List<UserAdditionalResource>> divideByExist(List<UserAdditionalResource> resources) {
+        return resources.stream().collect(Collectors.groupingBy(isResourceNew::test, Collectors.toList()));
     }
 }
