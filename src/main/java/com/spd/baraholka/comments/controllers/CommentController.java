@@ -30,15 +30,13 @@ public class CommentController {
     @GetMapping("/comments/{adId}")
     public List<CommentUserInfoDto> getCommentsByAdId(@PathVariable("adId") int adId) {
         List<Comment> commentList = commentService.getAllByAdId(adId);
-//        return commentDtoMapper.toCommentDtoList(commentList);
-        return commentUserInfoDtoMapper.toCommentDtoList(commentList);
+        return commentUserInfoDtoMapper.toCommentUserInfoDtoList(commentList);
     }
 
     @GetMapping("/comments/limit/{adId}")
     public List<CommentUserInfoDto> getLimitCommentsByAdId(@PathVariable("adId") int adId) {
         List<Comment> commentList = commentService.getLimitCommentsByAdId(adId);
-//        return commentDtoMapper.toCommentDtoList(commentList);
-        return commentUserInfoDtoMapper.toCommentDtoList(commentList);
+        return commentUserInfoDtoMapper.toCommentUserInfoDtoList(commentList);
     }
 
     @PostMapping("/comments")
@@ -63,7 +61,6 @@ public class CommentController {
     @GetMapping("/comment/{id}")
     public CommentUserInfoDto getOneComment(@PathVariable("id") int id) {
         Comment comment = commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
-//        return commentDtoMapper.getCommentDto(comment);
         return commentUserInfoDtoMapper.getCommentUserInfoDto(comment);
     }
 }

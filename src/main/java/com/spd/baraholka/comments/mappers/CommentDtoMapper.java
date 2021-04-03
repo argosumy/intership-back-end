@@ -8,17 +8,9 @@ import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class CommentDtoMapper {
-
-    public List<CommentDto> toCommentDtoList(List<Comment> commentList) {
-        return commentList.stream()
-                .map(this::getCommentDto)
-                .collect(Collectors.toList());
-    }
 
     public CommentDto getCommentDto(Comment comment) {
         return new CommentDto(

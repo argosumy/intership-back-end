@@ -21,6 +21,8 @@ public class CommentUserInfoDto {
     private String userImageUrl;
     @PositiveOrZero
     private int parentCommentId;
+    private int likesAmount;
+    private int dislikesAmount;
 
     public int getId() {
         return id;
@@ -84,5 +86,21 @@ public class CommentUserInfoDto {
 
     public void setUserImageUrl(String userImageUrl) {
         this.userImageUrl = userImageUrl;
+    }
+
+    public int getLikesAmount() {
+        return likesAmount;
+    }
+
+    public void setLikesAmount(int likesAmount) {
+        this.likesAmount = likesAmount;
+    }
+
+    public int getDislikesAmount() {
+        return dislikesAmount;
+    }
+
+    public void setDislikesAmount(int dislikesAmount) {
+        this.dislikesAmount = dislikesAmount;
     }
 }
