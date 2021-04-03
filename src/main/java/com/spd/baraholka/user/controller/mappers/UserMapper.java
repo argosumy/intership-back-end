@@ -91,4 +91,13 @@ public class UserMapper {
         user.setLocation(mainInfoDTO.getLocation());
         return user;
     }
+
+    public EditUserMainInfoDTO convertToInfoDTO(User user) {
+        EditUserMainInfoDTO mainInfoDTO = new EditUserMainInfoDTO();
+        mainInfoDTO.setUserId(user.getId());
+        mainInfoDTO.setPosition(user.getPosition());
+        mainInfoDTO.setPhoneNumber(user.getPhoneNumber());
+        mainInfoDTO.setLocation(user.getLocation());
+        return mainInfoDTO;
+    }
 }
