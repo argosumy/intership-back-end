@@ -1,9 +1,13 @@
 package com.spd.baraholka.notification.model;
 
+import java.util.List;
+
 public class AdvertisementNotification extends BaseNotification {
 
     private String title;
     private String description;
+    private List<String> images;
+    private String mainImage;
 
     public AdvertisementNotification() {
         super();
@@ -23,5 +27,21 @@ public class AdvertisementNotification extends BaseNotification {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 }

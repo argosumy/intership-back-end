@@ -33,14 +33,14 @@ public class NotificationSender implements Sender {
 
     @Override
     public void sendAllUsersNotification(Advertisement advertisement) {
-        List<UserShortViewDTO> allUsers = userService.getAllUsers();
-        for (UserShortViewDTO allUser : allUsers) {
-            notificationService.sendMessage(notificationMapperFactory.getNotification(
-                    EventType.NEW_ADVERTISEMENT, advertisement, allUser, null));
-        }
-//        userService.getAllUsers()
-//                .forEach(userMailTo -> notificationService.sendMessage(notificationMapperFactory.getNotification(
-//                        EventType.NEW_ADVERTISEMENT, advertisement, userMailTo, null)));
+//        List<UserShortViewDTO> allUsers = userService.getAllUsers();
+//        for (UserShortViewDTO allUser : allUsers) {
+//            notificationService.sendMessage(notificationMapperFactory.getNotification(
+//                    EventType.NEW_ADVERTISEMENT, advertisement, allUser, null));
+//        }
+        userService.getAllUsers()
+                .forEach(userMailTo -> notificationService.sendMessage(notificationMapperFactory.getNotification(
+                        EventType.NEW_ADVERTISEMENT, advertisement, userMailTo, null)));
     }
 
     @Override

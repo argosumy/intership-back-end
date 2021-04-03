@@ -32,6 +32,8 @@ public final class ModelFactory {
                 model.put("title", ((AdvertisementNotification) baseNotification).getTitle());
                 model.put("description", ((AdvertisementNotification) baseNotification).getDescription());
                 model.put("mailTo", baseNotification.getMailTo());
+                model.put("mainImage", ((AdvertisementNotification) baseNotification).getMainImage());
+                model.put("images", ((AdvertisementNotification) baseNotification).getImages());
                 break;
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
