@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PutMapping
-    public int updateUserMainInfo(@RequestBody @Valid EditUserMainInfoDTO mainInfoDTO) {
+    public EditUserMainInfoDTO updateUserMainInfo(@RequestBody @Valid EditUserMainInfoDTO mainInfoDTO) {
         return userService.updateUserMainInfo(mainInfoDTO);
     }
 
