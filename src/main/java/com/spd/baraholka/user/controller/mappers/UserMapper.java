@@ -50,27 +50,6 @@ public class UserMapper {
         return users.stream().map(this::convertToShortViewDTO).collect(Collectors.toList());
     }
 
-    private UserShortViewDTO convertToShortViewDTO(User user) {
-        UserShortViewDTO userDTO = new UserShortViewDTO();
-        userDTO.setId(user.getId());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
-        userDTO.setImageUrl(imageUrl);
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setBlocked(user.isBlocked());
-        userDTO.setEndDateOfBan(user.getEndDateOfBan());
-        userDTO.setEmail(user.getEmail());
-        return userDTO;
-    }
-
-    private String collapseImageUrl(String imageUrl) {
-        if (imageUrl.contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
-            return imageUrl;
-        } else {
-            return awsImageUrl.concat(imageUrl);
-        }
-    }
-
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
         User user = new User();
         user.setFirstName(oAuth2UserDto.getFirstName());
@@ -99,5 +78,26 @@ public class UserMapper {
         mainInfoDTO.setPhoneNumber(user.getPhoneNumber());
         mainInfoDTO.setLocation(user.getLocation());
         return mainInfoDTO;
+    }
+
+    private UserShortViewDTO convertToShortViewDTO(User user) {
+        UserShortViewDTO userDTO = new UserShortViewDTO();
+        userDTO.setId(user.getId());
+        String imageUrl = collapseImageUrl(user.getImageUrl());
+        userDTO.setImageUrl(imageUrl);
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setBlocked(user.isBlocked());
+        userDTO.setEndDateOfBan(user.getEndDateOfBan());
+        userDTO.setEmail(user.getEmail());
+        return userDTO;
+    }
+
+    private String collapseImageUrl(String imageUrl) {
+        if (imageUrl.contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
+            return imageUrl;
+        } else {
+            return awsImageUrl.concat(imageUrl);
+        }
     }
 }
