@@ -1,6 +1,5 @@
 package com.spd.baraholka.notification.mapper;
 
-import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.comments.dto.CommentUserInfoDto;
@@ -9,7 +8,7 @@ import com.spd.baraholka.notification.model.AdvertisementNotification;
 import com.spd.baraholka.notification.model.BanBlockNotification;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.model.CommentNotification;
-import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Component;
 
@@ -89,7 +88,7 @@ public class NotificationMapperFactory {
 
         EventType eventType = (EventType) parameters[0];
         Advertisement advertisement = (Advertisement) parameters[1];
-        UserDTO userMailTo = (UserDTO) parameters[2];
+        UserShortViewDTO userMailTo = (UserShortViewDTO) parameters[2];
         CommentUserInfoDto comment = (CommentUserInfoDto) parameters[3];
 
         switch (eventType) {
@@ -97,22 +96,22 @@ public class NotificationMapperFactory {
             case ADVERTISEMENT_BLOCK:
                 BanBlockNotification banBlockNotification = new BanBlockNotification();
 
-                setParameters(eventType, userEndpoint(userMailTo), banBlockNotification, advertisement, userMailTo);
+                setParameters(eventType, userEndpoint(userMailTo), banBlockNotification, advertisement, userMailTo, comment);
                 banBlockNotification.setReason("SPAM DETECTED!");
                 banBlockNotification.setEndDate(userMailTo.getEndDateOfBan());
                 return banBlockNotification;
             case NEW_ADVERTISEMENT:
             case ADVERTISEMENT_CHANGE:
                 AdvertisementNotification advertisementNotification = new AdvertisementNotification();
-                setParameters(eventType, advertisementEndpoint(advertisement), advertisementNotification, advertisement, userMailTo);
+                setParameters(eventType, advertisementEndpoint(advertisement), advertisementNotification, advertisement, userMailTo, comment);
                 advertisementNotification.setTitle(advertisement.getTitle());
                 advertisementNotification.setDescription(advertisement.getDescription());
                 return advertisementNotification;
             case NEW_ADVERTISEMENT_COMMENT:
             case NEW_COMMENT_ON_COMMENT:
                 CommentNotification adCommentNotification = new CommentNotification();
-                String id = getEndpoint(eventType, advertisement, comment);
-                setParameters(eventType, id, adCommentNotification, advertisement, userMailTo, comment);
+                String endpoint = getEndpoint(eventType, advertisement, comment);
+                setParameters(eventType, endpoint, adCommentNotification, advertisement, userMailTo, comment);
                 adCommentNotification.setWriterName(comment.getUserName() + " " + comment.getUserLastName());
                 return adCommentNotification;
             default:
@@ -123,23 +122,19 @@ public class NotificationMapperFactory {
     private void setParameters(EventType eventType, String endpoint, Object... parameters) {
         BaseNotification notification = (BaseNotification) parameters[0];
         Advertisement advertisement = (Advertisement) parameters[1];
-        UserDTO userMailTo = (UserDTO) parameters[2];
+        UserShortViewDTO userMailTo = (UserShortViewDTO) parameters[2];
         CommentUserInfoDto comment = (CommentUserInfoDto) parameters[3];
 
         if (advertisement != null) {
-            notification.setObjectLink(HTTP_LOCALHOST_8080_API + ADVERTISEMENT + advertisement.getAdvertisementId());
+            notification.setObjectLink(HTTP_LOCALHOST_8080_API + endpoint);
         }
         if (userMailTo != null) {
             notification.setMailTo(userMailTo.getEmail());
-            notification.setUserProfileLink(HTTP_LOCALHOST_8080_API + USERS + endpoint);
-        }
-        if (comment != null) {
-
+            notification.setUserProfileLink(HTTP_LOCALHOST_8080_API + userEndpoint(userMailTo));
         }
         notification.setSubject(eventType.name());
         notification.setEventType(eventType);
         notification.setCreationDate(LocalDateTime.now());
-//        notification.setObjectLink(HTTP_LOCALHOST_8080_API + "advertisement/" + advertisement.getAdvertisementId());
     }
 
     private String getEndpoint(EventType eventType, Advertisement advertisement, CommentUserInfoDto comment) {
@@ -152,19 +147,11 @@ public class NotificationMapperFactory {
         return ADVERTISEMENT + advertisement.getAdvertisementId();
     }
 
-    private String userEndpoint(UserDTO user) {
-        return ADVERTISEMENT + user.getId();
+    private String userEndpoint(UserShortViewDTO user) {
+        return USERS + user.getId();
     }
 
     private String commentEndpoint(CommentUserInfoDto comment) {
         return COMMENT + comment.getId();
     }
-//
-//    private UserDTO getUserById(int userId) {
-//        return userService.getUserById(userId);
-//    }
-//
-//    private FullAdvertisementDTO getAdvertisementById(int advertisementId) {
-//        return advertisementService.getAdvertisementById(advertisementId);
-//    }
 }

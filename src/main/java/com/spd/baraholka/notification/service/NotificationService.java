@@ -35,10 +35,7 @@ public class NotificationService {
     private final JavaMailSender emailSender;
     private final Configuration emailConfig;
     private final NotificationRepository notificationRepository;
-    private final NotificationMapperFactory notificationMapperFactory;
-    private final UserService userService;
-    private final AdvertisementService advertisementService;
-    private final CommentService commentService;
+
 
     public NotificationService(JavaMailSender emailSender,
                                @Qualifier("freeMarker") Configuration emailConfig,
@@ -48,13 +45,13 @@ public class NotificationService {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;
         this.notificationRepository = notificationRepository;
-        this.userService = userService;
-        this.notificationMapperFactory = notificationMapperFactory;
-        this.advertisementService = advertisementService;
-        this.commentService = commentService;
+//        this.userService = userService;
+//        this.notificationMapperFactory = notificationMapperFactory;
+//        this.advertisementService = advertisementService;
+//        this.commentService = commentService;
     }
 
-    public void sendMessage(BaseNotification baseNotification) throws MessagingException, IOException, TemplateException {
+    public void sendMessage(BaseNotification baseNotification) {
         try {
             Map<String, String> model = getModel(baseNotification);
             var templateLabel = baseNotification.getEventType().getTemplateLabel();
@@ -85,40 +82,5 @@ public class NotificationService {
 
     public int saveNotification(Notification notification) {
         return notificationRepository.saveNotification(notification);
-    }
-
-    public void sendAllUsersNotification(Advertisement advertisement) {
-        userService.getAllUsers()
-                .forEach(userMailTo -> {
-                    try {
-                        sendMessage(notificationMapperFactory.getNotification(EventType.NEW_ADVERTISEMENT, advertisement, userMailTo));
-                    } catch (MessagingException | IOException | TemplateException e) {
-                        e.printStackTrace();
-                    }
-                });
-    }
-
-    public void sendAdvertisementCommentNotification(Comment comment) {
-        var advertisement = advertisementService.getAdvertisementById(comment.getAdvertisement().getAdvertisementId());
-        var user = userService.getUserById(advertisement.getAdvertisementId());
-
-        try {
-            sendMessage(notificationMapperFactory.getNotification(EventType.NEW_ADVERTISEMENT_COMMENT, advertisement, user, comment));
-        } catch (MessagingException | IOException | TemplateException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendCommentNotification(Comment comment) {
-        var parentComment = commentService.findById(comment.getParent().getId());
-        var user = userService.getUserById(comment.getUser().getId());
-
-        if (parentComment.isPresent() && parentComment.get().getId() != 0) {
-            try {
-                sendMessage(notificationMapperFactory.getNotification(EventType.NEW_COMMENT_ON_COMMENT, null, user, parentComment));
-            } catch (MessagingException | IOException | TemplateException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

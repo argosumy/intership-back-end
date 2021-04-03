@@ -61,24 +61,24 @@
     </head>
     <body style="margin: 0; padding: 0">
         <div class="container">
-<#--            <div class="image-wrapper">-->
-<#--                <div class="main-image">-->
-<#--                    <img-->
-<#--                        class="big-image"-->
-<#--                        src="${mainImage}"-->
-<#--                        alt=""-->
-<#--                    />-->
-<#--                </div>-->
-<#--                <div class="more-images">-->
-<#--                    <#list images as image>-->
-<#--                    <img-->
-<#--                        class="small-image"-->
-<#--                        src="${image}"-->
-<#--                        alt=""-->
-<#--                    />-->
-<#--                    </#list>-->
-<#--                </div>-->
-<#--            </div>-->
+            <div class="image-wrapper">
+                <div class="main-image">
+                    <img
+                        class="big-image"
+                        src="${mainImage}"
+                        alt=""
+                    />
+                </div>
+                <div class="more-images">
+                    <#list images as image>
+                    <img
+                        class="small-image"
+                        src="${image}"
+                        alt=""
+                    />
+                    </#list>
+                </div>
+            </div>
             <p class="description">
                 ${description}
             </p>

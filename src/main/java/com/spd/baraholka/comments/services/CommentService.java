@@ -1,11 +1,12 @@
 package com.spd.baraholka.comments.services;
 
-import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.repositories.CommentRepository;
+import com.spd.baraholka.notification.service.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -20,11 +21,11 @@ public class CommentService {
     @Value("${commentService.topCommentsCount}")
     private int topCommentsCount;
     private final CommentRepository commentRepository;
-//    private final AdvertisementService advertisementService;
+    private final Sender sender;
 
-    public CommentService(CommentRepository commentRepository, AdvertisementService advertisementService) {
+    public CommentService(CommentRepository commentRepository, @Lazy Sender sender) {
         this.commentRepository = commentRepository;
-//        this.advertisementService = advertisementService;
+        this.sender = sender;
     }
 
     public List<Comment> getAllByAdId(int adId) {
@@ -43,6 +44,9 @@ public class CommentService {
     public Comment saveNew(Comment comment) {
         Comment commentToSave = commentRepository.saveNew(comment);
         logger.info("IN save new - comment: {} successfully saved", commentToSave);
+        sender.sendAdvertisementCommentNotification(comment);
+        sender.sendCommentNotification(comment);
+
         return commentToSave;
     }
 

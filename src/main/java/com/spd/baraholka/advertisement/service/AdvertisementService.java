@@ -8,10 +8,10 @@ import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementServi
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
-import com.spd.baraholka.notification.service.NotificationService;
+import com.spd.baraholka.notification.service.Sender;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.service.OwnerService;
-import com.spd.baraholka.user.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,23 +22,23 @@ public class AdvertisementService {
     private final PersistenceAdvertisementService persistenceAdvertisementService;
     private final AdvertisementMapper advertisementMapper;
     private final OwnerService ownerService;
-    private final UserService userService;
-    private final NotificationService notificationService;
+    private final Sender sender;
 
     public AdvertisementService(PersistenceAdvertisementService persistenceAdvertisementService,
                                 AdvertisementMapper advertisementMapper,
-                                OwnerService ownerService, UserService userService, NotificationService notificationService) {
+                                OwnerService ownerService, @Lazy Sender sender) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
         this.advertisementMapper = advertisementMapper;
         this.ownerService = ownerService;
-        this.userService = userService;
-        this.notificationService = notificationService;
+        this.sender = sender;
     }
 
     public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
-        notificationService.sendAllUsersNotification(advertisement);
-        return persistenceAdvertisementService.insertAdvertisement(advertisement);
+        int id = persistenceAdvertisementService.insertAdvertisement(advertisement);
+        advertisement.setAdvertisementId(id);
+        sender.sendAllUsersNotification(advertisement);
+        return id;
     }
 
     public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
