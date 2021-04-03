@@ -14,6 +14,8 @@ import java.util.Map;
 @Repository
 public class UserAdditionalResourceRepository implements PersistenceUserAdditionalResourcesService {
 
+    private static final String INSERT_USER_ADDITIONAL_RESOURCE_SQL =
+            "INSERT INTO users_additional_resources (user_id, resource_name, resource_url) VALUES (:userId, :resourceName, :resourceUrl)";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserAdditionalResourceRowMapper resourceRowMapper;
 
@@ -35,5 +37,11 @@ public class UserAdditionalResourceRepository implements PersistenceUserAddition
         String updateSQL = "UPDATE users_additional_resources SET resource_name=:resourceName, resource_url=:resourceUrl WHERE id=:id";
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(additionalResources.toArray());
         jdbcTemplate.batchUpdate(updateSQL, batch);
+    }
+
+    @Override
+    public void insertNewUserAdditionalResources(List<UserAdditionalResource> additionalResources) {
+        SqlParameterSource[] batchParameters = SqlParameterSourceUtils.createBatch(additionalResources.toArray());
+        jdbcTemplate.batchUpdate(INSERT_USER_ADDITIONAL_RESOURCE_SQL, batchParameters);
     }
 }
