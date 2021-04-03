@@ -1,14 +1,17 @@
 package com.spd.baraholka.validation.user;
 
 import com.spd.baraholka.annotation.user.BelongToUser;
+import com.spd.baraholka.user.controller.dto.EditUserMainInfoDTO;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.service.UserService;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class AdditionalResourceBelongToUserValidator implements ConstraintValidator<BelongToUser, UserAdditionalResourceDTO> {
+public class AdditionalResourceBelongToUserValidator implements ConstraintValidator<BelongToUser, EditUserMainInfoDTO> {
 
     private final UserService userService;
 
@@ -17,14 +20,11 @@ public class AdditionalResourceBelongToUserValidator implements ConstraintValida
     }
 
     @Override
-    public boolean isValid(UserAdditionalResourceDTO value, ConstraintValidatorContext context) {
-        int id = value.getId();
+    public boolean isValid(EditUserMainInfoDTO value, ConstraintValidatorContext context) {
         int userId = value.getUserId();
-        if (id != 0) {
-            List<Integer> additionalResourcesId = userService.getUserAdditionalResourcesId(userId);
-            return additionalResourcesId.stream().anyMatch(integer -> integer == id);
-        } else {
-            return true;
-        }
+        List<UserAdditionalResourceDTO> resources = value.getAdditionalContactResources();
+        Set<Integer> editResourcesId = resources.stream().map(UserAdditionalResourceDTO::getId).filter(resourceId -> resourceId != 0).collect(Collectors.toSet());
+        Set<Integer> resourcesId = userService.getUserAdditionalResourcesId(userId);
+        return editResourcesId.isEmpty() || resourcesId.containsAll(editResourcesId);
     }
 }
