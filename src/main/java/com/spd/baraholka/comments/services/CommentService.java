@@ -1,5 +1,6 @@
 package com.spd.baraholka.comments.services;
 
+import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.repositories.CommentRepository;
 import org.slf4j.Logger;
@@ -19,9 +20,11 @@ public class CommentService {
     @Value("${commentService.topCommentsCount}")
     private int topCommentsCount;
     private final CommentRepository commentRepository;
+//    private final AdvertisementService advertisementService;
 
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, AdvertisementService advertisementService) {
         this.commentRepository = commentRepository;
+//        this.advertisementService = advertisementService;
     }
 
     public List<Comment> getAllByAdId(int adId) {
@@ -63,4 +66,7 @@ public class CommentService {
         logger.info("IN update - comment: {} by id: {} successfully updated", updatedComment, id);
         return updatedComment;
     }
+
+
+    //TODO find ad by id
 }
