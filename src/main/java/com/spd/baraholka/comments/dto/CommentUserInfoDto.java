@@ -21,7 +21,9 @@ public class CommentUserInfoDto {
     private String userImageUrl;
     @PositiveOrZero
     private int parentCommentId;
+    @PositiveOrZero
     private int likesAmount;
+    @PositiveOrZero
     private int dislikesAmount;
 
     public int getId() {
