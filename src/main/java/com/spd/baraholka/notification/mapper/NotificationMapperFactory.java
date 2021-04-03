@@ -3,6 +3,7 @@ package com.spd.baraholka.notification.mapper;
 import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
+import com.spd.baraholka.comments.dto.CommentUserInfoDto;
 import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.model.AdvertisementNotification;
 import com.spd.baraholka.notification.model.BanBlockNotification;
@@ -86,7 +87,7 @@ public class NotificationMapperFactory {
         EventType eventType = (EventType) parameters[0];
         Advertisement advertisement = (Advertisement) parameters[1];
         UserDTO userMailTo = (UserDTO) parameters[2];
-        Comment comment = parameters[3];
+        CommentUserInfoDto comment = (CommentUserInfoDto) parameters[3];
 
         switch (eventType) {
             case ACCOUNT_BAN:
@@ -111,7 +112,7 @@ public class NotificationMapperFactory {
                 CommentNotification commentNotification = new CommentNotification();
 
                 setParameters(commentNotification, advertisement, userMailTo);
-                commentNotification.setWriterName(commentDto.getFirstName() + " " + commentDto.getLastName());
+                commentNotification.setWriterName(comment.getUserName() + " " + comment.getUserLastName());
                 return commentNotification;
             default:
                 throw new IllegalStateException("Unexpected value: " + eventType);
