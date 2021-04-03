@@ -14,10 +14,7 @@ import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -84,18 +81,23 @@ public class UserService {
     @Transactional
     public int updateUserMainInfo(EditUserMainInfoDTO mainInfoDTO) {
         User user = userMapper.convertToEntity(mainInfoDTO);
-        updateResource(mainInfoDTO.getAdditionalContactResources());
+        updateResource(mainInfoDTO.getAdditionalContactResources(), user.getId());
         return persistenceUserService.updateUserMainInfo(user);
     }
 
-    private void updateResource(List<UserAdditionalResourceDTO> resourcesDTO) {
-        List<UserAdditionalResource> allResources = resourceMapper.convertToEntityList(resourcesDTO);
+    private void updateResource(List<UserAdditionalResourceDTO> resourcesDTO, int userId) {
+        List<UserAdditionalResource> allResources = resourceMapper.convertToEntityList(resourcesDTO, userId);
         Map<Boolean, List<UserAdditionalResource>> dividedResources = divideByExist(allResources);
         persistenceResourceService.updateUserAdditionalResources(dividedResources.getOrDefault(false, Collections.emptyList()));
-        persistenceResourceService.insertNewUserAdditionalResources(dividedResources.get(true));
+        persistenceResourceService.insertNewUserAdditionalResources(dividedResources.getOrDefault(true, Collections.emptyList()));
     }
 
     private Map<Boolean, List<UserAdditionalResource>> divideByExist(List<UserAdditionalResource> resources) {
         return resources.stream().collect(Collectors.groupingBy(isResourceNew::test, Collectors.toList()));
+    }
+
+    public Set<Integer> getUserAdditionalResourcesId(int userId) {
+        List<Integer> resourcesId = persistenceResourceService.selectUserAdditionalResourcesId(userId);
+        return new HashSet<>(resourcesId);
     }
 }
