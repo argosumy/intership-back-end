@@ -78,26 +78,45 @@ public class UserService {
         return exist.orElse(false);
     }
 
-    @Transactional
-    public int updateUserMainInfo(EditUserMainInfoDTO mainInfoDTO) {
-        User user = userMapper.convertToEntity(mainInfoDTO);
-        updateResource(mainInfoDTO.getAdditionalContactResources(), user.getId());
-        return persistenceUserService.updateUserMainInfo(user);
+    public Set<Integer> getUserAdditionalResourcesId(int userId) {
+        List<Integer> resourcesId = persistenceResourceService.selectUserAdditionalResourcesId(userId);
+        return new HashSet<>(resourcesId);
     }
 
-    private void updateResource(List<UserAdditionalResourceDTO> resourcesDTO, int userId) {
-        List<UserAdditionalResource> allResources = resourceMapper.convertToEntityList(resourcesDTO, userId);
+    @Transactional
+    public EditUserMainInfoDTO updateUserMainInfo(EditUserMainInfoDTO mainInfoDTO) {
+        User user = userMapper.convertToEntity(mainInfoDTO);
+        List<UserAdditionalResource> allResources = resourceMapper.convertToEntityList(mainInfoDTO.getAdditionalContactResources(), user.getId());
+
+        EditUserMainInfoDTO updatedMainInfoDTO = updateUserInfoPart(user);
+        List<UserAdditionalResourceDTO> updatedResources = updateResourceInfoPart(allResources, user.getId());
+
+        return collectUserMainInfoDTO(updatedMainInfoDTO, updatedResources);
+    }
+
+    private EditUserMainInfoDTO updateUserInfoPart(User user) {
+        User updatedUserInfo = persistenceUserService.updateUserMainInfo(user);
+        return userMapper.convertToInfoDTO(updatedUserInfo);
+    }
+
+    private List<UserAdditionalResourceDTO> updateResourceInfoPart(List<UserAdditionalResource> allResources, int userId) {
         Map<Boolean, List<UserAdditionalResource>> dividedResources = divideByExist(allResources);
         persistenceResourceService.updateUserAdditionalResources(dividedResources.getOrDefault(false, Collections.emptyList()));
         persistenceResourceService.insertNewUserAdditionalResources(dividedResources.getOrDefault(true, Collections.emptyList()));
+        return collectUserAdditionalResourcesDTO(userId);
     }
 
     private Map<Boolean, List<UserAdditionalResource>> divideByExist(List<UserAdditionalResource> resources) {
         return resources.stream().collect(Collectors.groupingBy(isResourceNew::test, Collectors.toList()));
     }
 
-    public Set<Integer> getUserAdditionalResourcesId(int userId) {
-        List<Integer> resourcesId = persistenceResourceService.selectUserAdditionalResourcesId(userId);
-        return new HashSet<>(resourcesId);
+    private List<UserAdditionalResourceDTO> collectUserAdditionalResourcesDTO(int userId) {
+        List<UserAdditionalResource> additionalResources = persistenceResourceService.selectUserAdditionalResources(userId);
+        return resourceMapper.convertToDTOList(additionalResources);
+    }
+
+    private EditUserMainInfoDTO collectUserMainInfoDTO(EditUserMainInfoDTO updatedMainInfoDTO, List<UserAdditionalResourceDTO> updatedResources) {
+        updatedMainInfoDTO.setAdditionalContactResources(updatedResources);
+        return updatedMainInfoDTO;
     }
 }
