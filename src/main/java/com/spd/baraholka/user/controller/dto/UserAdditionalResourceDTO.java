@@ -1,9 +1,13 @@
 package com.spd.baraholka.user.controller.dto;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserAdditionalResourceDTO {
+
+    @NotNull
+    private int id;
 
     @NotEmpty
     @Size(max = 50)
@@ -11,8 +15,6 @@ public class UserAdditionalResourceDTO {
 
     @NotEmpty
     private String resourceUrl;
-
-    private int id;
 
     public int getId() {
         return id;
