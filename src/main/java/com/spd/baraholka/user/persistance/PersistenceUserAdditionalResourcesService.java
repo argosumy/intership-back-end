@@ -11,4 +11,6 @@ public interface PersistenceUserAdditionalResourcesService {
     void updateUserAdditionalResources(List<UserAdditionalResource> additionalResources);
 
     void insertNewUserAdditionalResources(List<UserAdditionalResource> additionalResources);
+
+    List<Integer> selectUserAdditionalResourcesId(int userId);
 }
