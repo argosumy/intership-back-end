@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.controller.dto;
 
-import com.spd.baraholka.annotation.user.BelongToUser;
+import com.spd.baraholka.annotation.user.UserAdditionalResources;
 import com.spd.baraholka.annotation.user.UserExist;
 
 import javax.validation.constraints.NotEmpty;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-@BelongToUser
+@UserAdditionalResources
 public class EditUserMainInfoDTO {
 
     @NotNull

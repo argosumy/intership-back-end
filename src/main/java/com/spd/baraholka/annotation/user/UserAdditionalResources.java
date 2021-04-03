@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = AdditionalResourceBelongToUserValidator.class)
-public @interface BelongToUser {
+public @interface UserAdditionalResources {
 
     String message() default "Additional resource does not belong to user";
 

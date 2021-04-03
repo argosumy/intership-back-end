@@ -1,6 +1,6 @@
 package com.spd.baraholka.validation.user;
 
-import com.spd.baraholka.annotation.user.BelongToUser;
+import com.spd.baraholka.annotation.user.UserAdditionalResources;
 import com.spd.baraholka.user.controller.dto.EditUserMainInfoDTO;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.service.UserService;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class AdditionalResourceBelongToUserValidator implements ConstraintValidator<BelongToUser, EditUserMainInfoDTO> {
+public class AdditionalResourceBelongToUserValidator implements ConstraintValidator<UserAdditionalResources, EditUserMainInfoDTO> {
 
     private final UserService userService;
 
