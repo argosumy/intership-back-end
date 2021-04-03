@@ -2,7 +2,7 @@ package com.spd.baraholka.user.controller.dto;
 
 import java.util.List;
 
-public class EditMainInfoUserDTO {
+public class EditUserMainInfoDTO {
 
     private int userId;
     private String position;

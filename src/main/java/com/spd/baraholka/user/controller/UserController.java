@@ -1,7 +1,7 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
-import com.spd.baraholka.user.controller.dto.EditMainInfoUserDTO;
+import com.spd.baraholka.user.controller.dto.EditUserMainInfoDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PutMapping
-    public int updateUserMainInfo(@RequestBody @Valid EditMainInfoUserDTO mainInfoDTO) {
+    public int updateUserMainInfo(@RequestBody @Valid EditUserMainInfoDTO mainInfoDTO) {
         return userService.updateUserMainInfo(mainInfoDTO);
     }
 
