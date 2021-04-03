@@ -2,12 +2,23 @@ package com.spd.baraholka.user.controller.dto;
 
 import com.spd.baraholka.annotation.user.BelongToUser;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 @BelongToUser
 public class UserAdditionalResourceDTO {
 
-    private int id;
-    private int userId;
+    @NotEmpty
+    @Size(max = 50)
     private String resourceName;
+
+    @NotNull
+    @Positive
+    private int userId;
+
+    private int id;
     private String resourceUrl;
 
     public int getId() {
