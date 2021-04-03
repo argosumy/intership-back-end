@@ -14,6 +14,7 @@ import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -90,7 +91,7 @@ public class UserService {
     private void updateResource(List<UserAdditionalResourceDTO> resourcesDTO) {
         List<UserAdditionalResource> allResources = resourceMapper.convertToEntityList(resourcesDTO);
         Map<Boolean, List<UserAdditionalResource>> dividedResources = divideByExist(allResources);
-        persistenceResourceService.updateUserAdditionalResources(dividedResources.get(false));
+        persistenceResourceService.updateUserAdditionalResources(dividedResources.getOrDefault(false, Collections.emptyList()));
         persistenceResourceService.insertNewUserAdditionalResources(dividedResources.get(true));
     }
 
