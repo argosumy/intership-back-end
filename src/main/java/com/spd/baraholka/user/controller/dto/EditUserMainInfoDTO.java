@@ -1,13 +1,33 @@
 package com.spd.baraholka.user.controller.dto;
 
+import com.spd.baraholka.annotation.user.UserExist;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class EditUserMainInfoDTO {
 
+    @NotNull
+    @UserExist
     private int userId;
+
+    @NotEmpty
+    @Size(max = 50)
     private String position;
+
+    @NotEmpty
+    @Size(max = 20)
     private String phoneNumber;
+
+    @NotEmpty
+    @Size(max = 26)
     private String location;
+
+    @Valid
+    @NotEmpty
     private List<UserAdditionalResourceDTO> additionalContactResources;
 
     public int getUserId() {
