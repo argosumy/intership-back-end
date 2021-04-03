@@ -5,6 +5,7 @@ import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.Owner;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.mappers.OwnerRowMapper;
+import com.spd.baraholka.user.persistance.mappers.UserMainInfoRowMapper;
 import com.spd.baraholka.user.persistance.mappers.UserShortViewRowMapper;
 import com.spd.baraholka.user.persistance.mappers.UserRowMapper;
 import org.springframework.dao.DataAccessException;
@@ -24,19 +25,23 @@ import java.util.Set;
 @Repository
 public class UserRepository implements PersistenceUserService {
 
+    private static final String SELECT_USER_MAIN_INFO = "SELECT id, position, phone_number, location FROM users WHERE id=:userId";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper;
     private final UserShortViewRowMapper userShortViewRowMapper;
     private final OwnerRowMapper ownerRowMapper;
+    private final UserMainInfoRowMapper userMainInfoRowMapper;
 
     public UserRepository(NamedParameterJdbcTemplate jdbcTemplate,
                           UserRowMapper userRowMapper,
                           UserShortViewRowMapper userShortViewRowMapper,
-                          OwnerRowMapper ownerRowMapper) {
+                          OwnerRowMapper ownerRowMapper,
+                          UserMainInfoRowMapper userMainInfoRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.userRowMapper = userRowMapper;
         this.userShortViewRowMapper = userShortViewRowMapper;
         this.ownerRowMapper = ownerRowMapper;
+        this.userMainInfoRowMapper = userMainInfoRowMapper;
     }
 
     @Override
@@ -59,11 +64,16 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public int updateUserMainInfo(User user) {
+    public User updateUserMainInfo(User user) {
         String updateSQL = "UPDATE users SET position=:position, phone_number=:phoneNumber, location=:location WHERE id=:id";
         Map<String, Object> updateParameters = createUpdateUserMainInfoParameters(user);
         jdbcTemplate.update(updateSQL, updateParameters);
-        return user.getId();
+        return selectUserMainInfo(user.getId());
+    }
+
+    @Override
+    public User selectUserMainInfo(int userId) {
+        return jdbcTemplate.queryForObject(SELECT_USER_MAIN_INFO, Map.of("userId", userId), userMainInfoRowMapper);
     }
 
     private Map<String, Object> createUpdateUserMainInfoParameters(User user) {
