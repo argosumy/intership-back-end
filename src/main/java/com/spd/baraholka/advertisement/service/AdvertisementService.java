@@ -37,7 +37,8 @@ public class AdvertisementService {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
         int id = persistenceAdvertisementService.insertAdvertisement(advertisement);
         advertisement.setAdvertisementId(id);
-        sender.sendAllUsersNotification(advertisement);
+//        sender.sendAllUsersNotification(advertisement);
+        sender.sendAllUsersNotification(advertisementMapper.convertToDTO(advertisement));
         return id;
     }
 

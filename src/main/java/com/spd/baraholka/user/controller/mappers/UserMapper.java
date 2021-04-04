@@ -49,6 +49,17 @@ public class UserMapper {
         return userDTO;
     }
 
+    public UserShortViewDTO toShortViewDTO(UserDTO userDTO) {
+        UserShortViewDTO userShortViewDTO = new UserShortViewDTO();
+        userShortViewDTO.setId(userDTO.getId());
+        userShortViewDTO.setFirstName(userDTO.getFirstName());
+        userShortViewDTO.setLastName(userDTO.getLastName());
+        userShortViewDTO.setBlocked(userDTO.isBlocked());
+        userShortViewDTO.setEndDateOfBan(userDTO.getEndDateOfBan());
+        userShortViewDTO.setEmail(userDTO.getEmail());
+        return userShortViewDTO;
+    }
+
     private String collapseImageUrl(String imageUrl) {
         if (imageUrl.contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
             return imageUrl;

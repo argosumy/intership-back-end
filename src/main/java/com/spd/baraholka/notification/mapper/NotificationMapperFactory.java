@@ -1,16 +1,13 @@
 package com.spd.baraholka.notification.mapper;
 
-import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
-import com.spd.baraholka.advertisement.service.AdvertisementService;
+import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
 import com.spd.baraholka.comments.dto.CommentUserInfoDto;
-import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.model.AdvertisementNotification;
 import com.spd.baraholka.notification.model.BanBlockNotification;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.model.CommentNotification;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
-import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -26,7 +23,7 @@ public class NotificationMapperFactory {
 
     public BaseNotification getNotification(Object... parameters) {
         var eventType = (EventType) parameters[0];
-        var advertisement = (Advertisement) parameters[1];
+        var advertisement = (FullAdvertisementDTO) parameters[1];
         var userMailTo = (UserShortViewDTO) parameters[2];
         var comment = (CommentUserInfoDto) parameters[3];
         var images = (List<String>) parameters[4];
@@ -62,30 +59,40 @@ public class NotificationMapperFactory {
     }
 
     private void setParameters(EventType eventType, String endpoint, Object... parameters) {
-        BaseNotification notification = (BaseNotification) parameters[0];
-        Advertisement advertisement = (Advertisement) parameters[1];
-        UserShortViewDTO userMailTo = (UserShortViewDTO) parameters[2];
-        CommentUserInfoDto comment = (CommentUserInfoDto) parameters[3];
+        var notification = (BaseNotification) parameters[0];
+        var advertisement = (FullAdvertisementDTO) parameters[1];
+        var user = (UserShortViewDTO) parameters[2];
+        var comment = (CommentUserInfoDto) parameters[3];
 
+        notification.setObjectLink(HTTP_LOCALHOST_8080_API + endpoint);
         if (advertisement != null) {
-            notification.setObjectLink(HTTP_LOCALHOST_8080_API + endpoint);
         }
-        if (userMailTo != null) {
-            notification.setMailTo(userMailTo.getEmail());
-            notification.setUserProfileLink(HTTP_LOCALHOST_8080_API + userEndpoint(userMailTo));
+        if (user != null) {
+            notification.setMailTo(user.getEmail());
+            notification.setUserProfileLink(HTTP_LOCALHOST_8080_API + userEndpoint(user));
         }
         notification.setSubject(eventType.name());
         notification.setEventType(eventType);
         notification.setCreationDate(LocalDateTime.now());
     }
 
-    private String getEndpoint(EventType eventType, Advertisement advertisement, CommentUserInfoDto comment) {
+    private String getEndpoint(EventType eventType, FullAdvertisementDTO advertisement, CommentUserInfoDto comment) {
         return eventType == EventType.NEW_ADVERTISEMENT_COMMENT ?
                 advertisementEndpoint(advertisement) :
                 commentEndpoint(comment);
     }
 
-    private String advertisementEndpoint(Advertisement advertisement) {
+//    private String setObjectLink(EventType eventType, FullAdvertisementDTO advertisement, CommentUserInfoDto comment, BaseNotification notification) {
+//        return eventType == EventType.NEW_ADVERTISEMENT_COMMENT ?
+//               setAdvertisementLink(advertisement) :
+//               setCommentLink(comment);
+//    }
+//
+//    private String setAdvertisementLink(FullAdvertisementDTO advertisement) {
+//        return
+//    }
+
+    private String advertisementEndpoint(FullAdvertisementDTO advertisement) {
         return ADVERTISEMENT + advertisement.getAdvertisementId();
     }
 
@@ -96,12 +103,4 @@ public class NotificationMapperFactory {
     private String commentEndpoint(CommentUserInfoDto comment) {
         return COMMENT + comment.getId();
     }
-//
-//    private String getMainImage(List<ImageResource> images) {
-//        return images.stream()
-//                .filter(ImageResource::getIsPrimary)
-//                .map(ImageResource::getImageUrl)
-//                .findFirst()
-//                .orElse(null);
-//    }
 }

@@ -1,6 +1,7 @@
 package com.spd.baraholka.comments.services;
 
 import com.spd.baraholka.comments.entities.Comment;
+import com.spd.baraholka.comments.mappers.CommentUserInfoDtoMapper;
 import com.spd.baraholka.comments.repositories.CommentRepository;
 import com.spd.baraholka.notification.service.Sender;
 import org.slf4j.Logger;
@@ -21,10 +22,12 @@ public class CommentService {
     @Value("${commentService.topCommentsCount}")
     private int topCommentsCount;
     private final CommentRepository commentRepository;
+    private final CommentUserInfoDtoMapper commentUserInfoDtoMapper;
     private final Sender sender;
 
-    public CommentService(CommentRepository commentRepository, @Lazy Sender sender) {
+    public CommentService(CommentRepository commentRepository, CommentUserInfoDtoMapper commentUserInfoDtoMapper, @Lazy Sender sender) {
         this.commentRepository = commentRepository;
+        this.commentUserInfoDtoMapper = commentUserInfoDtoMapper;
         this.sender = sender;
     }
 
@@ -41,13 +44,15 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
-    public Comment saveNew(Comment comment) {
-        Comment commentToSave = commentRepository.saveNew(comment);
-        logger.info("IN save new - comment: {} successfully saved", commentToSave);
-        sender.sendAdvertisementCommentNotification(comment);
-        sender.sendCommentNotification(comment);
+    public int saveNew(Comment comment) {
+        int savedCommentId = commentRepository.saveNew(comment);
+        logger.info("IN save new - comment with id : {} successfully saved", savedCommentId);
+        sender.sendAdvertisementCommentNotification(commentUserInfoDtoMapper.getCommentUserInfoDto(comment));
+        var commentUserInfoDto = commentUserInfoDtoMapper.getCommentUserInfoDto(comment);
+        commentUserInfoDto.setId(savedCommentId);
+        sender.sendCommentNotification(commentUserInfoDto);
 
-        return commentToSave;
+        return savedCommentId;
     }
 
     public void deleteById(int id) {
@@ -70,7 +75,4 @@ public class CommentService {
         logger.info("IN update - comment: {} by id: {} successfully updated", updatedComment, id);
         return updatedComment;
     }
-
-
-    //TODO find ad by id
 }

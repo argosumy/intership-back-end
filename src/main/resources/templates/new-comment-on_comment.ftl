@@ -40,7 +40,7 @@
         <div class="container">
             <p class="description">
                 User <#if writer??>${writer}</#if>
-                post new comment <#if objectLink??> in <a href="${objectLink}">Your comment</a></#if>
+                post new comment <#if objectLink??> on <a href="${objectLink}">Your comment</a></#if>
             </p>
 
             <p class="unsubscribe">

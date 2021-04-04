@@ -37,6 +37,7 @@
             .small-image {
                 width: 90px;
                 height: 100px;
+                margin: 5px;
             }
             .btn {
                 display: inline-block;

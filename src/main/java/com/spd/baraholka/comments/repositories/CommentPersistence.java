@@ -9,7 +9,7 @@ public interface CommentPersistence {
 
     List<Comment> getAllByAdId(int adId);
 
-    Comment saveNew(Comment comment);
+    int saveNew(Comment comment);
 
     Comment update(Comment comment, int id);
 

@@ -33,8 +33,6 @@ public final class ModelFactory {
                 model.put("description", ((AdvertisementNotification) baseNotification).getDescription());
                 model.put("mailTo", baseNotification.getMailTo());
                 model.put("mainImage", ((AdvertisementNotification) baseNotification).getMainImage());
-//                ((AdvertisementNotification) baseNotification).getImages()
-//                        .forEach(image -> model.put("image", image));
                 model.put("images", ((AdvertisementNotification) baseNotification).getImages());
                 break;
             case ACCOUNT_BAN:
