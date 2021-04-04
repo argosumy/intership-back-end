@@ -46,10 +46,10 @@ public class CommentService {
 
     public int saveNew(Comment comment) {
         int savedCommentId = commentRepository.saveNew(comment);
-        logger.info("IN save new - comment with id : {} successfully saved", savedCommentId);
-        sender.sendAdvertisementCommentNotification(commentUserInfoDtoMapper.getCommentUserInfoDto(comment));
         var commentUserInfoDto = commentUserInfoDtoMapper.getCommentUserInfoDto(comment);
         commentUserInfoDto.setId(savedCommentId);
+        logger.info("IN save new - comment with id : {} successfully saved", savedCommentId);
+        sender.sendAdvertisementCommentNotification(commentUserInfoDto);
         sender.sendCommentNotification(commentUserInfoDto);
 
         return savedCommentId;

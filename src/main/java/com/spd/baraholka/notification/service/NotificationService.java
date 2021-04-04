@@ -1,6 +1,7 @@
 package com.spd.baraholka.notification.service;
 
 import com.spd.baraholka.config.exceptions.NotificationSendException;
+import com.spd.baraholka.notification.mapper.NotificationMapper;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.model.Notification;
 import com.spd.baraholka.notification.repository.NotificationRepository;

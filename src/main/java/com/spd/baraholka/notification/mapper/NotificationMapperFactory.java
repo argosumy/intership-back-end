@@ -24,7 +24,7 @@ public class NotificationMapperFactory {
     public BaseNotification getNotification(Object... parameters) {
         var eventType = (EventType) parameters[0];
         var advertisement = (FullAdvertisementDTO) parameters[1];
-        var userMailTo = (UserShortViewDTO) parameters[2];
+        var user = (UserShortViewDTO) parameters[2];
         var comment = (CommentUserInfoDto) parameters[3];
         var images = (List<String>) parameters[4];
         var mainImage = (String) parameters[5];
@@ -33,14 +33,14 @@ public class NotificationMapperFactory {
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
                 BanBlockNotification banBlockNotification = new BanBlockNotification();
-                setParameters(eventType, userEndpoint(userMailTo), banBlockNotification, advertisement, userMailTo, comment);
+                setParameters(eventType, userEndpoint(user), banBlockNotification, user);
                 banBlockNotification.setReason("SPAM DETECTED!");
-                banBlockNotification.setEndDate(userMailTo.getEndDateOfBan());
+                banBlockNotification.setEndDate(user.getEndDateOfBan());
                 return banBlockNotification;
             case NEW_ADVERTISEMENT:
             case ADVERTISEMENT_CHANGE:
                 AdvertisementNotification advertisementNotification = new AdvertisementNotification();
-                setParameters(eventType, advertisementEndpoint(advertisement), advertisementNotification, advertisement, userMailTo, comment);
+                setParameters(eventType, advertisementEndpoint(advertisement), advertisementNotification, user);
                 advertisementNotification.setTitle(advertisement.getTitle());
                 advertisementNotification.setDescription(advertisement.getDescription());
                 advertisementNotification.setImages(images);
@@ -50,7 +50,7 @@ public class NotificationMapperFactory {
             case NEW_COMMENT_ON_COMMENT:
                 CommentNotification adCommentNotification = new CommentNotification();
                 String endpoint = getEndpoint(eventType, advertisement, comment);
-                setParameters(eventType, endpoint, adCommentNotification, advertisement, userMailTo, comment);
+                setParameters(eventType, endpoint, adCommentNotification, user);
                 adCommentNotification.setWriterName(comment.getUserName() + " " + comment.getUserLastName());
                 return adCommentNotification;
             default:
@@ -58,19 +58,10 @@ public class NotificationMapperFactory {
         }
     }
 
-    private void setParameters(EventType eventType, String endpoint, Object... parameters) {
-        var notification = (BaseNotification) parameters[0];
-        var advertisement = (FullAdvertisementDTO) parameters[1];
-        var user = (UserShortViewDTO) parameters[2];
-        var comment = (CommentUserInfoDto) parameters[3];
-
+    private void setParameters(EventType eventType, String endpoint, BaseNotification notification, UserShortViewDTO user) {
         notification.setObjectLink(HTTP_LOCALHOST_8080_API + endpoint);
-        if (advertisement != null) {
-        }
-        if (user != null) {
-            notification.setMailTo(user.getEmail());
-            notification.setUserProfileLink(HTTP_LOCALHOST_8080_API + userEndpoint(user));
-        }
+        notification.setMailTo(user.getEmail());
+        notification.setUserProfileLink(HTTP_LOCALHOST_8080_API + userEndpoint(user));
         notification.setSubject(eventType.name());
         notification.setEventType(eventType);
         notification.setCreationDate(LocalDateTime.now());
@@ -81,16 +72,6 @@ public class NotificationMapperFactory {
                 advertisementEndpoint(advertisement) :
                 commentEndpoint(comment);
     }
-
-//    private String setObjectLink(EventType eventType, FullAdvertisementDTO advertisement, CommentUserInfoDto comment, BaseNotification notification) {
-//        return eventType == EventType.NEW_ADVERTISEMENT_COMMENT ?
-//               setAdvertisementLink(advertisement) :
-//               setCommentLink(comment);
-//    }
-//
-//    private String setAdvertisementLink(FullAdvertisementDTO advertisement) {
-//        return
-//    }
 
     private String advertisementEndpoint(FullAdvertisementDTO advertisement) {
         return ADVERTISEMENT + advertisement.getAdvertisementId();
