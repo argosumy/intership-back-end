@@ -53,12 +53,6 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public Optional<Boolean> existsByEmail(String email) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
-                Map.of("email", email), Boolean.class));
-    }
-
-    @Override
     public User create(User user) {
         final String sql = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, avatar) " +
                 "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :avatar) ";
