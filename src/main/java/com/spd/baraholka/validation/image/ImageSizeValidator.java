@@ -1,7 +1,7 @@
 package com.spd.baraholka.validation.image;
 
 import com.spd.baraholka.annotation.image.ImageSize;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintValidator;
@@ -12,12 +12,22 @@ public class ImageSizeValidator implements ConstraintValidator<ImageSize, Multip
 
     private static final int BYTES_IN_MB = 1024 * 1024;
 
-    @Value("${user.avatar.maxsize.mb}")
-    private int avatarMaxSizeInMB;
+    private final Environment env;
+
+    private int maxMB;
+
+    public ImageSizeValidator(Environment env) {
+        this.env = env;
+    }
+
+    @Override
+    public void initialize(ImageSize constraintAnnotation) {
+        this.maxMB = Integer.parseInt(env.resolvePlaceholders(constraintAnnotation.maxMB()));
+    }
 
     @Override
     public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
         Objects.requireNonNull(file);
-        return file.getSize() <= (long) avatarMaxSizeInMB * BYTES_IN_MB;
+        return file.getSize() <= (long) maxMB * BYTES_IN_MB;
     }
 }
