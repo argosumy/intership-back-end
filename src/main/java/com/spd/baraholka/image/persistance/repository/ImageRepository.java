@@ -1,10 +1,8 @@
 package com.spd.baraholka.image.persistance.repository;
 
-import com.spd.baraholka.image.persistance.entity.Image;
-import com.spd.baraholka.image.persistance.entity.ImageResource;
+import com.spd.baraholka.image.persistance.entity.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public interface ImageRepository {
 

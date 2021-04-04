@@ -1,10 +1,9 @@
 package com.spd.baraholka.image.controller.annotation;
 
-import com.spd.baraholka.image.controller.dto.ImageResourceDto;
+import com.spd.baraholka.image.controller.dto.*;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import java.util.List;
+import javax.validation.*;
+import java.util.*;
 
 public class HasPrimaryConstraintValidator implements ConstraintValidator<HasPrimaryImage, List<ImageResourceDto>> {
 

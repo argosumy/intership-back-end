@@ -1,28 +1,21 @@
 package com.spd.baraholka.image.controller;
 
-import com.spd.baraholka.config.exceptions.AdvertisementIdsMismatchException;
-import com.spd.baraholka.image.controller.annotation.HasPrimaryImage;
-import com.spd.baraholka.image.controller.annotation.ValidatePositions;
-import com.spd.baraholka.image.controller.annotation.ValidImageIds;
-import com.spd.baraholka.image.controller.dto.ImageDto;
-import com.spd.baraholka.image.controller.dto.ImageResourceDto;
-import com.spd.baraholka.image.persistance.entity.Image;
-import com.spd.baraholka.image.persistance.entity.ImageResource;
-import com.spd.baraholka.image.service.ImageService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
+import com.spd.baraholka.config.exceptions.*;
+import com.spd.baraholka.image.controller.annotation.*;
+import com.spd.baraholka.image.controller.dto.*;
+import com.spd.baraholka.image.persistance.entity.*;
+import com.spd.baraholka.image.service.*;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
+import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.validation.*;
+import javax.validation.constraints.*;
+import java.util.*;
+import java.util.stream.*;
 
 @RestController
 @Validated

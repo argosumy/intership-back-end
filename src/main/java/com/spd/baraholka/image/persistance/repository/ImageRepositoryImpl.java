@@ -1,17 +1,13 @@
 package com.spd.baraholka.image.persistance.repository;
 
-import com.spd.baraholka.image.persistance.entity.Image;
-import com.spd.baraholka.image.persistance.entity.ImageResource;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.stereotype.Repository;
+import com.spd.baraholka.image.persistance.entity.*;
+import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.support.*;
+import org.springframework.stereotype.*;
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.sql.*;
+import java.util.*;
 
 @Repository
 public class ImageRepositoryImpl implements ImageRepository {

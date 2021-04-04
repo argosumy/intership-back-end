@@ -1,9 +1,7 @@
 package com.spd.baraholka.image.persistance.entity;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDateTime;
-import java.util.Objects;
+import java.time.*;
+import java.util.*;
 
 public class Image {
     private Long id;

@@ -1,14 +1,13 @@
 package com.spd.baraholka.image.service;
 
-import com.spd.baraholka.image.persistance.entity.Image;
-import com.spd.baraholka.image.persistance.repository.ImageRepository;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import com.spd.baraholka.image.persistance.entity.*;
+import com.spd.baraholka.image.persistance.repository.*;
+import org.springframework.scheduling.annotation.*;
+import org.springframework.stereotype.*;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.*;
+import java.util.*;
+import java.util.stream.*;
 
 @Service
 public class ImageCleaningServiceImpl implements ImageCleaningService {

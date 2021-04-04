@@ -1,12 +1,11 @@
 package com.spd.baraholka.image.controller.annotation;
 
-import com.spd.baraholka.image.controller.dto.ImageResourceDto;
-import com.spd.baraholka.image.persistance.repository.ImageRepository;
+import com.spd.baraholka.image.controller.dto.*;
+import com.spd.baraholka.image.persistance.repository.*;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.validation.*;
+import java.util.*;
+import java.util.stream.*;
 
 public class ValidImageIdsConstrainValidator implements ConstraintValidator<ValidImageIds, List<ImageResourceDto>> {
 

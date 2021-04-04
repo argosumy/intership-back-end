@@ -1,8 +1,8 @@
 package com.spd.baraholka.image.persistance.entity;
 
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.*;
 
-import java.util.Objects;
+import java.util.*;
 
 public class ImageResource {
 

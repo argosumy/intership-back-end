@@ -1,11 +1,10 @@
 package com.spd.baraholka.image.controller.annotation;
 
-import com.spd.baraholka.image.controller.dto.ImageResourceDto;
+import com.spd.baraholka.image.controller.dto.*;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.validation.*;
+import java.util.*;
+import java.util.stream.*;
 
 public class UniquePositionsConstrainValidator implements ConstraintValidator<ValidatePositions, List<ImageResourceDto>>  {
 

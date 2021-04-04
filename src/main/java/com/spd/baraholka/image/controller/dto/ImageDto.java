@@ -1,6 +1,6 @@
 package com.spd.baraholka.image.controller.dto;
 
-import java.util.Objects;
+import java.util.*;
 
 public class ImageDto {
 
