@@ -2,7 +2,6 @@ package com.spd.baraholka.notification.mapper;
 
 import com.spd.baraholka.notification.dto.NotificationDto;
 import com.spd.baraholka.notification.enums.EventType;
-import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.model.Notification;
 import org.springframework.stereotype.Component;
 

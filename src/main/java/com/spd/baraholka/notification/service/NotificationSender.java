@@ -1,7 +1,6 @@
 package com.spd.baraholka.notification.service;
 
 import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
-import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.comments.dto.CommentUserInfoDto;
 import com.spd.baraholka.comments.services.CommentService;
