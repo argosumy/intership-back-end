@@ -1,5 +1,6 @@
 package com.spd.baraholka.user.controller;
 
+import com.spd.baraholka.annotation.image.ImageSize;
 import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.image.service.ImageService;
 import com.spd.baraholka.user.controller.dto.UserDTO;
@@ -48,7 +49,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Upload a user avatar to the server", response = String.class)
     @PostMapping(value = "/me/image", consumes = "multipart/form-data")
-    public String saveUserAvatar(@RequestPart MultipartFile image) {
+    public String saveUserAvatar(@RequestPart @ImageSize MultipartFile image) {
         User currentUser = userService.getCurrentUser();
         int userId = currentUser.getId();
         String avatarFileName = imageService.generateAvatarFileName(userId, image);
