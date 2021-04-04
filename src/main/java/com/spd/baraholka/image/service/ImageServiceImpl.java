@@ -109,9 +109,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     private String getFileExtension(String filename) {
-        String delimiter = ".";
+        String delimiter = "\\.";
         Objects.requireNonNull(filename);
         String[] fileNameParts = filename.split(delimiter);
-        return delimiter + fileNameParts[fileNameParts.length - 1];
+        if (fileNameParts.length < 2) {
+            return ".jpg";
+        }
+        return "." + fileNameParts[fileNameParts.length - 1];
     }
 }
