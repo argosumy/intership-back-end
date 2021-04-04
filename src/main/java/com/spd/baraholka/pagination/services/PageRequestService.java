@@ -19,8 +19,7 @@ public class PageRequestService {
         this.advertisementService = advertisementService;
     }
 
-    public PageRequest<Advertisement> getPageRequest(int pageSize, int pageNumber) {
-        List<Advertisement> advertisementList = advertisementService.getAllActive();
+    public PageRequest<Advertisement> getPageRequest(int pageSize, int pageNumber, List<Advertisement> advertisementList) {
         int size = advertisementList.size();
         int offset = getOffset(pageSize, pageNumber);
         int adLastIndex = checkedLastIndex(getLastIndex(pageSize, offset), size);

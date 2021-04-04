@@ -53,16 +53,19 @@ public class AdvertisementController {
     }
 
     @GetMapping("/search")
-    public List<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
-                                                        @RequestParam(value = "size", required = false) Integer size) {
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword(keyword, size);
-        return advertisementMapper.toAdvertisementDtoList(advertisementList);
+    public PageRequest<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
+                                                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                                                               @RequestParam("pageNumber") int pageNumber) {
+        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword(keyword);
+        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, advertisementList);
+        return pageRequest.map(advertisementMapper::getAdvertisementDto);
     }
 
     @GetMapping
     public PageRequest<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                   @RequestParam("pageNumber") int pageNumber) {
-        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber);
+        List<Advertisement> advertisementList = advertisementService.getAllActive();
+        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, advertisementList);
         return pageRequest.map(advertisementUserEmailMapper::getAdvertisementUserEmailDto);
     }
 

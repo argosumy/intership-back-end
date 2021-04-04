@@ -72,12 +72,11 @@ public class AdvertisementService {
         return advertisementDTO;
     }
 
-    public List<Advertisement> getFilteredAdsByKeyword(String keyword, Integer size) {
+    public List<Advertisement> getFilteredAdsByKeyword(String keyword) {
         List<Advertisement> advertisementList = getAllActive();
         return advertisementList.stream()
                 .filter(ad -> (ad.getTitle().toLowerCase().contains(keyword.toLowerCase()) ||
                         ad.getDescription().toLowerCase().contains(keyword.toLowerCase())))
-                .limit(size != null ? size : advertisementList.size())
                 .collect(Collectors.toList());
     }
 
