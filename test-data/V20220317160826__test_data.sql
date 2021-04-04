@@ -1,11 +1,11 @@
 INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
-VALUES ('Ivan', 'Ivanov', 'Smila', 'ivan@spd-ukraine.com', 'developer', '+380685489524', 'users/1/homer3.jpg');
+VALUES ('Ivan', 'Ivanov', 'Smila', 'ivan@spd-ukraine.com', 'developer', '+380685489524', 'https://s3-eu-west-1.amazonaws.com/baraholka-images-store/avatar_1.png');
 INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
-VALUES ('Petua', 'Petrov', 'Kyiv', 'petua@spd-ukraine.com', 'developer', '+380676548921', 'users/1/homer3.jpg');
+VALUES ('Petua', 'Petrov', 'Kyiv', 'petua@spd-ukraine.com', 'developer', '+380676548921', 'https://s3-eu-west-1.amazonaws.com/baraholka-images-store/avatar_2.png');
 INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
-VALUES ('Gena', 'Genov', 'Charkiv', 'gena@spd-ukraine.com', 'developer', '+380685686243', 'users/1/homer3.jpg');
+VALUES ('Gena', 'Genov', 'Charkiv', 'gena@spd-ukraine.com', 'developer', '+380685686243', 'https://s3-eu-west-1.amazonaws.com/baraholka-images-store/avatar_3.png');
 INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
-VALUES ('Vasua', 'Ivanov', 'Odessa', 'vasua@spd-ukraine.com', 'developer', '+38068658958', 'users/1/homer3.jpg');
+VALUES ('Vasua', 'Ivanov', 'Odessa', 'vasua@spd-ukraine.com', 'developer', '+38068658958', 'https://s3-eu-west-1.amazonaws.com/baraholka-images-store/avatar_4.png');
 INSERT INTO users_additional_resources (user_id, resource_name, resource_url)
 VALUES (1, 'vk', 'vk.com');
 INSERT INTO users_additional_resources (user_id, resource_name, resource_url)

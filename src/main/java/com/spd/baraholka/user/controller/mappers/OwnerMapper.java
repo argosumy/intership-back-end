@@ -15,7 +15,8 @@ public class OwnerMapper {
         OwnerDTO ownerDTO = new OwnerDTO();
         ownerDTO.setId(owner.getId());
         ownerDTO.setFullName(owner.getFullName());
-        String imageUrl = collapseImageUrl(owner.getImageUrl());
+        String imageUrl = owner.getImageUrl();
+//        String imageUrl = collapseImageUrl(owner.getImageUrl());
         ownerDTO.setImageUrl(imageUrl);
         ownerDTO.setEmail(owner.getEmail());
         return ownerDTO;
