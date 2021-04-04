@@ -8,12 +8,12 @@ import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementServi
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.config.exceptions.BadRequestException;
-import com.spd.baraholka.config.exceptions.NotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.service.OwnerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -119,5 +119,13 @@ public class AdvertisementService {
             advertisement.setPublicationDate(parsedDate);
             return persistenceAdvertisementService.updateAdvertisement(advertisement);
         }
+    }
+
+    public int cancelDelayedPublication(int id) {
+        Advertisement advertisement = findDraftAdById(id)
+                .orElseThrow(NotFoundException::new);
+
+        advertisement.setPublicationDate(LocalDateTime.now());
+        return persistenceAdvertisementService.updateAdvertisement(advertisement);
     }
 }

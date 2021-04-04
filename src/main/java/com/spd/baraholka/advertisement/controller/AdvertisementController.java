@@ -1,10 +1,6 @@
 package com.spd.baraholka.advertisement.controller;
 
-import com.spd.baraholka.advertisement.controller.dto.AdvertisementDTO;
-import com.spd.baraholka.advertisement.controller.dto.AdvertisementUserEmailDTO;
-import com.spd.baraholka.advertisement.controller.dto.EditedAdvertisementDTO;
-import com.spd.baraholka.advertisement.controller.dto.FullAdvertisementDTO;
-import com.spd.baraholka.advertisement.controller.dto.InitialAdvertisementDTO;
+import com.spd.baraholka.advertisement.controller.dto.*;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
@@ -19,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Validated
@@ -79,8 +74,7 @@ public class AdvertisementController {
 
     @PutMapping("/{id}/cancel-delayed")
     public int cancelDelayedPublicationOfExistsAd(@PathVariable("id") int id) {
-        String presentDate = String.valueOf(LocalDateTime.now());
-        return advertisementService.editPublicationDate(id, presentDate);
+        return advertisementService.cancelDelayedPublication(id);
     }
 
     @GetMapping("/{id}")
