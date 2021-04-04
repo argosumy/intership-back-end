@@ -1,16 +1,9 @@
 package com.spd.baraholka.notification.service;
 
-import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
-import com.spd.baraholka.advertisement.service.AdvertisementService;
-import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.comments.services.CommentService;
 import com.spd.baraholka.config.exceptions.NotificationSendException;
-import com.spd.baraholka.notification.enums.EventType;
-import com.spd.baraholka.notification.mapper.NotificationMapperFactory;
 import com.spd.baraholka.notification.model.BaseNotification;
 import com.spd.baraholka.notification.model.Notification;
 import com.spd.baraholka.notification.repository.NotificationRepository;
-import com.spd.baraholka.user.service.UserService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -39,16 +32,10 @@ public class NotificationService {
 
     public NotificationService(JavaMailSender emailSender,
                                @Qualifier("freeMarker") Configuration emailConfig,
-                               NotificationRepository notificationRepository,
-                               UserService userService, NotificationMapperFactory notificationMapperFactory,
-                               AdvertisementService advertisementService, CommentService commentService) {
+                               NotificationRepository notificationRepository) {
         this.emailSender = emailSender;
         this.emailConfig = emailConfig;
         this.notificationRepository = notificationRepository;
-//        this.userService = userService;
-//        this.notificationMapperFactory = notificationMapperFactory;
-//        this.advertisementService = advertisementService;
-//        this.commentService = commentService;
     }
 
     public void sendMessage(BaseNotification baseNotification) {

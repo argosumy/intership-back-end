@@ -3,6 +3,7 @@ package com.spd.baraholka.notification.mapper;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.comments.dto.CommentUserInfoDto;
+import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.notification.enums.EventType;
 import com.spd.baraholka.notification.model.AdvertisementNotification;
 import com.spd.baraholka.notification.model.BanBlockNotification;
@@ -13,6 +14,7 @@ import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class NotificationMapperFactory {
@@ -21,81 +23,19 @@ public class NotificationMapperFactory {
     public static final String ADVERTISEMENT = "advertisement/";
     public static final String COMMENT = "comment/";
     public static final String USERS = "users/";
-    private final UserService userService;
-    private final AdvertisementService advertisementService;
-
-    public NotificationMapperFactory(UserService userService, AdvertisementService advertisementService) {
-        this.userService = userService;
-        this.advertisementService = advertisementService;
-    }
-
-//    public BaseNotification getNotification(NotificationDto notificationDto) {
-//        UserDTO userById;
-//        FullAdvertisementDTO advertisementById;
-//        UserDTO userMailTo = getUserById(notificationDto.getUserMailToId());
-//        EventType eventType = notificationDto.getEventType();
-//
-//        switch (eventType) {
-//            case ACCOUNT_BAN:
-//            case ADVERTISEMENT_BLOCK:
-//                BanBlockNotification banBlockNotification = new BanBlockNotification();
-//                setParameters(banBlockNotification, notificationDto, userMailTo);
-//                banBlockNotification.setReason(notificationDto.getReason());
-//                banBlockNotification.setEndDate(notificationDto.getBlockEndDate());
-//                return banBlockNotification;
-//            case NEW_ADVERTISEMENT:
-//            case ADVERTISEMENT_CHANGE:
-//                AdvertisementNotification advertisementNotification = new AdvertisementNotification();
-//                advertisementById = getAdvertisementById(notificationDto.getAdvertisementId());
-//                setParameters(advertisementNotification, notificationDto, userMailTo);
-//                advertisementNotification.setTitle(advertisementById.getTitle());
-//                advertisementNotification.setDescription(advertisementById.getDescription());
-//                return advertisementNotification;
-//            case NEW_ADVERTISEMENT_COMMENT:
-//            case NEW_COMMENT_ON_COMMENT:
-//                CommentNotification commentNotification = new CommentNotification();
-//                userById = getUserById(notificationDto.getUserId());
-//                setParameters(commentNotification, notificationDto, userMailTo);
-//                commentNotification.setWriterName(userById.getFirstName() + " " + userById.getLastName());
-//                return commentNotification;
-//            default:
-//                throw new IllegalStateException("Unexpected value: " + eventType);
-//        }
-//    }
-//
-//    private void setParameters(BaseNotification notification, NotificationDto notificationDto, UserDTO userMailTo) {
-//        notification.setSubject(notificationDto.getEventType().name());
-//        notification.setMailTo(userMailTo.getEmail());
-//        notification.setObjectLink(notificationDto.getObjectLink());
-//        notification.setUserProfileLink(notificationDto.getUserProfileLink());
-//        notification.setEventType(notificationDto.getEventType());
-//        notification.setCreationDate(LocalDateTime.now());
-//    }
-//
-//    private UserDTO getUserById(int userId) {
-//        return userService.getUserById(userId);
-//    }
-//
-//    private FullAdvertisementDTO getAdvertisementById(int advertisementId) {
-//        return advertisementService.getAdvertisementById(advertisementId);
-//    }
-//}
 
     public BaseNotification getNotification(Object... parameters) {
-//        UserDTO userById;
-//        FullAdvertisementDTO advertisementById;
-//        UserDTO userMailTo;
-
-        EventType eventType = (EventType) parameters[0];
-        Advertisement advertisement = (Advertisement) parameters[1];
-        UserShortViewDTO userMailTo = (UserShortViewDTO) parameters[2];
-        CommentUserInfoDto comment = (CommentUserInfoDto) parameters[3];
+        var eventType = (EventType) parameters[0];
+        var advertisement = (Advertisement) parameters[1];
+        var userMailTo = (UserShortViewDTO) parameters[2];
+        var comment = (CommentUserInfoDto) parameters[3];
+        var images = (List<ImageResource>) parameters[4];
+        var mainImage = (String) parameters[5];
 
         switch (eventType) {
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
                 BanBlockNotification banBlockNotification = new BanBlockNotification();
-
                 setParameters(eventType, userEndpoint(userMailTo), banBlockNotification, advertisement, userMailTo, comment);
                 banBlockNotification.setReason("SPAM DETECTED!");
                 banBlockNotification.setEndDate(userMailTo.getEndDateOfBan());
@@ -106,6 +46,8 @@ public class NotificationMapperFactory {
                 setParameters(eventType, advertisementEndpoint(advertisement), advertisementNotification, advertisement, userMailTo, comment);
                 advertisementNotification.setTitle(advertisement.getTitle());
                 advertisementNotification.setDescription(advertisement.getDescription());
+//                advertisementNotification.setMainImage(getMainImage(images));
+                advertisementNotification.setMainImage(mainImage);
                 return advertisementNotification;
             case NEW_ADVERTISEMENT_COMMENT:
             case NEW_COMMENT_ON_COMMENT:
@@ -154,4 +96,12 @@ public class NotificationMapperFactory {
     private String commentEndpoint(CommentUserInfoDto comment) {
         return COMMENT + comment.getId();
     }
+//
+//    private String getMainImage(List<ImageResource> images) {
+//        return images.stream()
+//                .filter(ImageResource::getIsPrimary)
+//                .map(ImageResource::getImageUrl)
+//                .findFirst()
+//                .orElse(null);
+//    }
 }
