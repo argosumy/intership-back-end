@@ -37,7 +37,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -76,7 +75,6 @@ class AdvertisementControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-//        AdvertisementMapper advertisementMapper = new AdvertisementMapper();
         advertisementDraft = createAdvertisement(1, LocalDateTime.of(2022, 1, 1, 10, 40, 1),
                 AdvertisementStatus.DRAFT);
         advertisementActive = createAdvertisement(2, LocalDateTime.of(2019, 2, 2, 2, 10, 2),
@@ -111,19 +109,6 @@ class AdvertisementControllerTest {
         pageRequest.setTotalPages(1);
         pageRequest.setContent(List.of(advertisementActive, advertisementDraftToBeShown));
         return pageRequest;
-    }
-
-    @Test
-    @DisplayName("Expect list of advertisements filtered by keyword")
-    void getFilteredAdsByKeyword() throws Exception {
-        when(advertisementService.getFilteredAdsByKeyword("title", null)).thenReturn(
-                List.of(advertisementActive, advertisementDraftToBeShown)
-        );
-
-        mockMvc.perform(get("/advertisements/search?keyword=title&size=")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(getResponseJson(List.of(advertisementActive, advertisementDraftToBeShown))))
-                .andExpect(status().isOk());
     }
 
     @Test
