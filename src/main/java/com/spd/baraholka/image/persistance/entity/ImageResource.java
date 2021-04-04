@@ -2,6 +2,8 @@ package com.spd.baraholka.image.persistance.entity;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
+
 public class ImageResource {
 
     private long id;
@@ -56,5 +58,30 @@ public class ImageResource {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ImageResource that = (ImageResource) o;
+        return id == that.id && adId == that.adId && isPrimary == that.isPrimary && position == that.position && Objects.equals(image, that.image) && imageUrl.equals(that.imageUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, adId, isPrimary, position, image, imageUrl);
+    }
+
+    @Override
+    public String toString() {
+        return "ImageResource{" +
+                "id=" + id +
+                ", adId=" + adId +
+                ", isPrimary=" + isPrimary +
+                ", position=" + position +
+                ", image=" + image +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }

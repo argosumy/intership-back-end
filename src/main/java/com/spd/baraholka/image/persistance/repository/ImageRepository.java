@@ -1,12 +1,14 @@
 package com.spd.baraholka.image.persistance.repository;
 
+import com.spd.baraholka.image.persistance.entity.Image;
 import com.spd.baraholka.image.persistance.entity.ImageResource;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ImageRepository {
-    long saveImageUrl(String imageUrl);
+
+    Image saveImage(Image image);
 
     void save(ImageResource imageResource);
 
@@ -17,4 +19,16 @@ public interface ImageRepository {
     Optional<ImageResource> getImageById(long imageId);
 
     void deleteImage(long imageId);
+
+    void updateImageResource(ImageResource imageResource);
+
+    void setAttached(long imageId);
+
+    List<Image> getUnattachedImages();
+
+    Image getImage(long imageId);
+
+    void deleteImageResourcesByAdId(long adId);
+
+    boolean existImages(List<Long> imageIds);
 }
