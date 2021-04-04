@@ -48,7 +48,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Upload a user avatar to the server", response = String.class)
-    @PostMapping(value = "/me/image", consumes = "multipart/form-data")
+    @PostMapping(value = "/me/avatar", consumes = "multipart/form-data")
     public String saveUserAvatar(@RequestPart @ImageSize MultipartFile image) {
         User currentUser = userService.getCurrentUser();
         int userId = currentUser.getId();
