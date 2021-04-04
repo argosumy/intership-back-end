@@ -14,15 +14,19 @@ public class ImageSizeValidator implements ConstraintValidator<ImageSize, Multip
 
     private final Environment env;
 
-    private int maxMB;
+    private static int maxMB;
 
     public ImageSizeValidator(Environment env) {
         this.env = env;
     }
 
+    public static int getMaxMB() {
+        return maxMB;
+    }
+
     @Override
     public void initialize(ImageSize constraintAnnotation) {
-        this.maxMB = Integer.parseInt(env.resolvePlaceholders(constraintAnnotation.maxMB()));
+        maxMB = Integer.parseInt(env.resolvePlaceholders(constraintAnnotation.maxMB()));
     }
 
     @Override
