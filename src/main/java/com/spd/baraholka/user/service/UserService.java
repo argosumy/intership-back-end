@@ -138,4 +138,8 @@ public class UserService implements UserDetailsService {
         User user = findByEmail(userPrincipal.getUsername());
         return collectUserDTO(user);
     }
+
+    public int updateAvatar(int userId, String imageUrl) {
+        return persistenceUserService.updateAvatar(userId, imageUrl);
+    }
 }

@@ -20,16 +20,21 @@ public class AWS3ServiceImpl implements AWS3Service {
 
     private final AmazonS3 amazonS3Client;
 
+    private final String amazonDomain;
+
     private final String bucketName;
 
     @Autowired
-    public AWS3ServiceImpl(@Value("${amazonProperties.bucketName}") String bucketName, AmazonS3 amazonS3Client) {
+    public AWS3ServiceImpl(@Value("${amazon.domain}") String amazonDomain,
+                           @Value("${amazonProperties.bucketName}") String bucketName,
+                           AmazonS3 amazonS3Client) {
+        this.amazonDomain = amazonDomain;
         this.bucketName = bucketName;
         this.amazonS3Client = amazonS3Client;
     }
 
     @Override
-    public void uploadImage(String fileName, MultipartFile image) {
+    public String uploadImage(String fileName, MultipartFile image) {
         File file = convertMultiPartFileToFile(image);
         try {
             amazonS3Client.putObject(
@@ -38,6 +43,7 @@ public class AWS3ServiceImpl implements AWS3Service {
         } finally {
             file.delete();
         }
+        return amazonDomain + bucketName + "/" + fileName;
     }
 
     @Override

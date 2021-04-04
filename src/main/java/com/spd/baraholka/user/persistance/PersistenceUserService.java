@@ -27,4 +27,6 @@ public interface PersistenceUserService {
     Optional<User> findByEmail(String email);
 
     Set<Role> findRolesByUserId(int id);
+
+    int updateAvatar(int userId, String imageUrl);
 }
