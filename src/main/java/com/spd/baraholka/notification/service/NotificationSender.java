@@ -12,9 +12,7 @@ import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class NotificationSender implements Sender {

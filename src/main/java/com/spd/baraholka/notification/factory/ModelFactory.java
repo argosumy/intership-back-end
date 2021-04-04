@@ -17,8 +17,8 @@ public final class ModelFactory {
     private ModelFactory() {
     }
 
-    public static Map<String, String> getModel(BaseNotification baseNotification) {
-        Map<String, String> model = new HashMap<>();
+    public static Map<String, Object> getModel(BaseNotification baseNotification) {
+        Map<String, Object> model = new HashMap<>();
         EventType eventType = baseNotification.getEventType();
         setLinks(baseNotification, model);
 
@@ -35,7 +35,7 @@ public final class ModelFactory {
                 model.put("mainImage", ((AdvertisementNotification) baseNotification).getMainImage());
 //                ((AdvertisementNotification) baseNotification).getImages()
 //                        .forEach(image -> model.put("image", image));
-//                model.put("image", ((AdvertisementNotification) baseNotification).getImages());
+                model.put("images", ((AdvertisementNotification) baseNotification).getImages());
                 break;
             case ACCOUNT_BAN:
             case ADVERTISEMENT_BLOCK:
@@ -48,7 +48,7 @@ public final class ModelFactory {
         return model;
     }
 
-    private static void setLinks(BaseNotification baseNotification, Map<String, String> model) {
+    private static void setLinks(BaseNotification baseNotification, Map<String, Object> model) {
         model.put(OBJECT_LINK, baseNotification.getObjectLink());
         model.put(PROFILE_LINK, baseNotification.getUserProfileLink());
     }

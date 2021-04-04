@@ -40,7 +40,7 @@ public class NotificationService {
 
     public void sendMessage(BaseNotification baseNotification) {
         try {
-            Map<String, String> model = getModel(baseNotification);
+            Map<String, Object> model = getModel(baseNotification);
             var templateLabel = baseNotification.getEventType().getTemplateLabel();
             Template template = emailConfig.getTemplate(templateLabel);
             String html = getHtml(model, template);
@@ -63,7 +63,7 @@ public class NotificationService {
         return message;
     }
 
-    private String getHtml(Map<String, String> model, Template template) throws IOException, TemplateException {
+    private String getHtml(Map<String, Object> model, Template template) throws IOException, TemplateException {
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
     }
 

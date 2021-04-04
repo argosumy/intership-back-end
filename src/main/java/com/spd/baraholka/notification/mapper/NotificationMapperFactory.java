@@ -29,7 +29,7 @@ public class NotificationMapperFactory {
         var advertisement = (Advertisement) parameters[1];
         var userMailTo = (UserShortViewDTO) parameters[2];
         var comment = (CommentUserInfoDto) parameters[3];
-        var images = (List<ImageResource>) parameters[4];
+        var images = (List<String>) parameters[4];
         var mainImage = (String) parameters[5];
 
         switch (eventType) {
@@ -46,7 +46,7 @@ public class NotificationMapperFactory {
                 setParameters(eventType, advertisementEndpoint(advertisement), advertisementNotification, advertisement, userMailTo, comment);
                 advertisementNotification.setTitle(advertisement.getTitle());
                 advertisementNotification.setDescription(advertisement.getDescription());
-//                advertisementNotification.setMainImage(getMainImage(images));
+                advertisementNotification.setImages(images);
                 advertisementNotification.setMainImage(mainImage);
                 return advertisementNotification;
             case NEW_ADVERTISEMENT_COMMENT:

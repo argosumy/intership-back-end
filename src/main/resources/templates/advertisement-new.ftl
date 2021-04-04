@@ -36,6 +36,7 @@
             }
             .small-image {
                 width: 90px;
+                height: 100px;
             }
             .btn {
                 display: inline-block;
