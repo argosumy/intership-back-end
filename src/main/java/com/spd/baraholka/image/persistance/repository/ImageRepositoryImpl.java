@@ -85,24 +85,6 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public Optional<ImageResource> getImageById(long imageId) {
-        String sql = "SELECT images.id as id, ad_id, is_primary, position, url FROM advertisements_images " +
-                     "LEFT JOIN images ON advertisements_images.image_id = images.id " +
-                     "WHERE image_id = :imageId";
-
-        MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("imageId", imageId);
-
-        ImageResource imageResource = jdbcTemplate.queryForObject(sql, parameters, imageResourceMapper);
-
-        if (Objects.isNull(imageResource)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(imageResource);
-    }
-
-    @Override
     public void deleteImage(long imageId) {
         String sql = "DELETE FROM images WHERE id = :imageId";
 
@@ -112,18 +94,6 @@ public class ImageRepositoryImpl implements ImageRepository {
         if (jdbcTemplate.update(sql, parameters) != 1) {
             throw new IllegalStateException("Failed to delete the image with id = " + imageId);
         }
-    }
-
-    @Override
-    public void updateImageResource(ImageResource imageResource) {
-        String sql = "UPDATE advertisements_images SET is_primary = :isPrimary, position = :position WHERE id = :id";
-
-        MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("id", imageResource.getId());
-        parameters.addValue("isPrimary", imageResource.getIsPrimary());
-        parameters.addValue("position", imageResource.getPosition());
-
-        jdbcTemplate.update(sql, parameters);
     }
 
     @Override

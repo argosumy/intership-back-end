@@ -62,10 +62,15 @@ public class ImageResource {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ImageResource that = (ImageResource) o;
-        return id == that.id && adId == that.adId && isPrimary == that.isPrimary && position == that.position && Objects.equals(image, that.image) && imageUrl.equals(that.imageUrl);
+        return id == that.id && adId == that.adId && isPrimary == that.isPrimary && position == that.position &&
+                Objects.equals(image, that.image) && imageUrl.equals(that.imageUrl);
     }
 
     @Override

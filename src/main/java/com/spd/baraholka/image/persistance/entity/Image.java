@@ -43,10 +43,15 @@ public class Image {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Image image = (Image) o;
-        return isAttached == image.isAttached && Objects.equals(id, image.id) && Objects.equals(url, image.url) && Objects.equals(uploadedAt, image.uploadedAt);
+        return isAttached == image.isAttached && Objects.equals(id, image.id) && Objects.equals(url, image.url)
+                && Objects.equals(uploadedAt, image.uploadedAt);
     }
 
     @Override

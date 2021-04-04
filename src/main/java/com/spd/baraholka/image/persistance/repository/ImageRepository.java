@@ -14,11 +14,7 @@ public interface ImageRepository {
 
     List<ImageResource> getAllByAdId(long adId);
 
-    Optional<ImageResource> getImageById(long imageId);
-
     void deleteImage(long imageId);
-
-    void updateImageResource(ImageResource imageResource);
 
     void setAttached(long imageId);
 
