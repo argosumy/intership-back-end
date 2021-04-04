@@ -1,7 +1,7 @@
 package com.spd.baraholka.advertisement.service;
 
 import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
-import com.spd.baraholka.advertisement.persistance.*;
+import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
@@ -9,14 +9,12 @@ import com.spd.baraholka.advertisement.persistance.repositories.AdvertisementRep
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.user.service.OwnerService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

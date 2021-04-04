@@ -1,12 +1,12 @@
 package com.spd.baraholka.pagination.services;
 
+import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
+import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
+import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
-import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
-import com.spd.baraholka.advertisement.controller.mappers.AdvertisementUserEmailMapper;
-import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.user.service.OwnerService;
@@ -82,8 +82,8 @@ class PageRequestServiceTest {
         List<Advertisement> advertisementList = advertisementService.getAllActive();
         PageRequest<Advertisement> pageRequest = PageRequest.of(
                 1, 2, 3, advertisementList);
-
-        assertThat(advertisementList).isEqualTo(pageRequestService.getPageRequest(2, 1).getContent());
+        var allActive = advertisementService.getAllActive();
+        assertThat(advertisementList).isEqualTo(pageRequestService.getPageRequest(2, 1, allActive).getContent());
     }
 
     @Test
@@ -95,7 +95,7 @@ class PageRequestServiceTest {
                 4, 2, 3, advertisementList);
 
         assertThrows(NotFoundException.class,
-                () -> pageRequestService.getPageRequest(2, 4),
+                () -> pageRequestService.getPageRequest(2, 4, advertisementList),
                 "Not found!"
         );
     }
@@ -109,7 +109,7 @@ class PageRequestServiceTest {
                 0, 2, 3, advertisementList);
 
         assertThrows(NotFoundException.class,
-                () -> pageRequestService.getPageRequest(2, 0),
+                () -> pageRequestService.getPageRequest(2, 0, advertisementList),
                 "Not found!"
         );
     }
