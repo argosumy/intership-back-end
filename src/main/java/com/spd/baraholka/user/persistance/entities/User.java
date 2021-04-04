@@ -3,7 +3,11 @@ package com.spd.baraholka.user.persistance.entities;
 import com.spd.baraholka.role.Role;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.spd.baraholka.role.Role.USER;
 
 public class User {
 
@@ -21,7 +25,7 @@ public class User {
 
     public User() {
         this.roles = new HashSet<>();
-        roles.add(Role.USER);
+        roles.add(USER);
     }
 
     public int getId() {
@@ -102,6 +106,14 @@ public class User {
 
     public boolean grantRole(Role role) {
         return roles.add(role);
+    }
+
+    public boolean revokeRole(Role role) {
+        boolean isRevoked = false;
+        if (!USER.equals(role)) {
+            isRevoked = roles.remove(role);
+        }
+        return isRevoked;
     }
 
     public LocalDateTime getEndDateOfBan() {

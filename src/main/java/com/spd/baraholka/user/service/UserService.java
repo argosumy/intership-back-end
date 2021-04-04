@@ -1,6 +1,7 @@
 package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
+import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
@@ -10,9 +11,11 @@ import com.spd.baraholka.user.persistance.PersistenceUserAdditionalResourcesServ
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -72,5 +75,25 @@ public class UserService {
     public boolean isUserExist(int id) {
         Optional<Boolean> exist = persistenceUserService.isExist(id);
         return exist.orElse(false);
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public void grantRole(User user, Role role) {
+        Objects.requireNonNull(user);
+        Objects.requireNonNull(role);
+        boolean isRoleGranted = user.grantRole(role);
+        if (isRoleGranted) {
+            persistenceUserService.saveRole(user.getId(), role.name());
+        }
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public void revokeRole(User user, Role role) {
+        Objects.requireNonNull(user);
+        Objects.requireNonNull(role);
+        boolean isRoleRevoked = user.revokeRole(role);
+        if (isRoleRevoked) {
+            persistenceUserService.deleteRole(user.getId(), role.name());
+        }
     }
 }

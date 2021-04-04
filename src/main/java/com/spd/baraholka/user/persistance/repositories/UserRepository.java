@@ -106,13 +106,27 @@ public class UserRepository implements PersistenceUserService {
     private void saveUserRoles(User user) {
         Set<Role> roles = Objects.requireNonNull(user.getRoles());
         int userId = user.getId();
-        final String sql = "INSERT INTO users_roles (user_id, role) values (:user_id, :role)";
         for (Role role : roles) {
-            SqlParameterSource parameters = new MapSqlParameterSource()
-                    .addValue("user_id", userId)
-                    .addValue("role", role.name());
-            jdbcTemplate.update(sql, parameters);
+            saveRole(userId, role.name());
         }
+    }
+
+    public void saveRole(int userId, String role) {
+        Objects.requireNonNull(role);
+        final String sql = "INSERT INTO users_roles (user_id, role) values (:user_id, :role)";
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("user_id", userId)
+                .addValue("role", role);
+        jdbcTemplate.update(sql, parameters);
+    }
+
+    public void deleteRole(int userId, String role) {
+        Objects.requireNonNull(role);
+        final String sql = "DELETE FROM users_roles WHERE (user_id = :user_id) and (role = :role)";
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("user_id", userId)
+                .addValue("role", role);
+        jdbcTemplate.update(sql, parameters);
     }
 }
 

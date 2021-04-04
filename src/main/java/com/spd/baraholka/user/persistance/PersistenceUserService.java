@@ -1,5 +1,6 @@
 package com.spd.baraholka.user.persistance;
 
+import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.persistance.entities.Owner;
 import com.spd.baraholka.user.persistance.entities.User;
 
@@ -21,4 +22,8 @@ public interface PersistenceUserService {
     Optional<Boolean> isExist(int value);
 
     Optional<Owner> selectOwner(int id);
+
+    void saveRole(int userId, String role);
+
+    void deleteRole(int userId, String role);
 }

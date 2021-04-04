@@ -1,9 +1,11 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
+import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,8 @@ import com.spd.baraholka.user.service.UserSettingsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Validated
 @RequestMapping("/users")
@@ -40,5 +44,10 @@ public class UserController {
     @GetMapping
     public List<UserShortViewDTO> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @PostMapping(path = "/{id}/roles", consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> grantRole(@PathVariable("id") @UserExist int id, @RequestBody Role role) {
+        UserDTO user = getUserById(id);
     }
 }
