@@ -73,4 +73,8 @@ public class UserService {
         Optional<Boolean> exist = persistenceUserService.isExist(id);
         return exist.orElse(false);
     }
+
+    public int updateAvatar(int userId, String imageUrl) {
+        return persistenceUserService.updateAvatar(userId, imageUrl);
+    }
 }

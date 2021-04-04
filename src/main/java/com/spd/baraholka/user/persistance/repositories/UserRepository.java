@@ -114,5 +114,14 @@ public class UserRepository implements PersistenceUserService {
             jdbcTemplate.update(sql, parameters);
         }
     }
+
+    @Override
+    public int updateAvatar(int userId, String imageUrl) {
+        final String sql = "UPDATE users SET avatar = :avatar WHERE id = :user_id";
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("user_id", userId)
+                .addValue("avatar", imageUrl);
+        return jdbcTemplate.update(sql, parameters);
+    }
 }
 

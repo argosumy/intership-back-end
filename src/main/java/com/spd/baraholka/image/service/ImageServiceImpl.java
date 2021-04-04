@@ -2,7 +2,6 @@ package com.spd.baraholka.image.service;
 
 import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.image.persistance.repository.ImageRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,32 +10,24 @@ import java.util.*;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private final String amazonDomain;
+    private static final String AVATAR_PREFIX = "avatar_";
 
     private final ImageRepository repository;
 
     private final AWS3Service aws3Service;
 
-    private final String bucketName;
-
     private static final Comparator<ImageResource> COMPARATOR = Comparator.comparing(ImageResource::getPosition);
 
-    public ImageServiceImpl(ImageRepository repository,
-                            AWS3ServiceImpl aws3Service,
-                            @Value("${amazon.domain}") String amazonDomain,
-                            @Value("${amazonProperties.bucketName}") String bucketName) {
+    public ImageServiceImpl(ImageRepository repository, AWS3ServiceImpl aws3Service) {
         this.repository = repository;
         this.aws3Service = aws3Service;
-        this.amazonDomain = amazonDomain;
-        this.bucketName = bucketName;
     }
 
     @Override
     public ImageResource save(ImageResource imageResource) {
         String imageName = generateFileName(imageResource);
-        String imageUrl = amazonDomain + bucketName + "/" + imageName;
 
-        aws3Service.uploadImage(imageName, imageResource.getImage());
+        String imageUrl = uploadImage(imageName, imageResource.getImage());
 
         long imageId = repository.saveImageUrl(imageUrl);
 
@@ -46,6 +37,11 @@ public class ImageServiceImpl implements ImageService {
         repository.save(imageResource);
 
         return imageResource;
+    }
+
+    @Override
+    public String uploadImage(String imageName, MultipartFile image) {
+        return aws3Service.uploadImage(imageName, image);
     }
 
     @Override
@@ -96,8 +92,26 @@ public class ImageServiceImpl implements ImageService {
     private String generateFileName(ImageResource imageResource) {
         long adId = imageResource.getAdId();
         MultipartFile multiPart = imageResource.getImage();
-        String originalFileName = Objects.requireNonNull(multiPart.getOriginalFilename()).replace(" ", "_");
+        String originalFileName = generateFileName(multiPart);
 
         return String.format("ads/%s/%s-%s", adId, new Date().getTime(), originalFileName);
+    }
+
+    private String generateFileName(MultipartFile file) {
+        return Objects.requireNonNull(file.getOriginalFilename()).replace(" ", "_");
+    }
+
+    @Override
+    public String generateAvatarFileName(int userId, MultipartFile file) {
+        Objects.requireNonNull(file);
+        String fileExtension = getFileExtension(file.getOriginalFilename());
+        return AVATAR_PREFIX + userId + fileExtension;
+    }
+
+    private String getFileExtension(String filename) {
+        String delimiter = ".";
+        Objects.requireNonNull(filename);
+        String[] fileNameParts = filename.split(delimiter);
+        return delimiter + fileNameParts[fileNameParts.length - 1];
     }
 }

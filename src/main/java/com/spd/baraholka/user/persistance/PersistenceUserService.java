@@ -21,4 +21,6 @@ public interface PersistenceUserService {
     Optional<Boolean> isExist(int value);
 
     Optional<Owner> selectOwner(int id);
+
+    int updateAvatar(int userId, String imageUrl);
 }
