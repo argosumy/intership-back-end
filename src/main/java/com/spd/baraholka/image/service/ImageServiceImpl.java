@@ -10,7 +10,7 @@ import java.util.*;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private static final String AVATAR_PREFIX = "avatars/avatar_";
+    private static final String AVATAR_PREFIX = "users/avatar_";
 
     private final ImageRepository repository;
 
