@@ -1,5 +1,6 @@
 package com.spd.baraholka.image.controller;
 
+import com.spd.baraholka.annotation.image.ImageContent;
 import com.spd.baraholka.image.controller.dto.ImageResourceDto;
 import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.image.service.ImageService;
@@ -40,7 +41,7 @@ public class ImageController {
     @PostMapping(value = "ads/{adId}/images", consumes = "multipart/form-data")
     public void saveImages(@PathVariable long adId,
                            @Size(min = 1, max = 10, message = "Can't process the request. Images number min = 1, max = 10")
-                           @RequestPart(value = "images") List<MultipartFile> images) {
+                           @RequestPart(value = "images") @ImageContent List<MultipartFile> images) {
         List<ImageResource> imageResources = toDomain(adId, images);
 
         imageService.saveAll(imageResources);
@@ -53,7 +54,7 @@ public class ImageController {
                                       @Min(1) @Max(10)
                                       @RequestParam(name = "position")
                                       int position,
-                                      @RequestPart MultipartFile image) {
+                                      @RequestPart @ImageContent MultipartFile image) {
         ImageResource imageResource = imageService.save(
                 new ImageResource(adId, isPrimary, position, image)
         );

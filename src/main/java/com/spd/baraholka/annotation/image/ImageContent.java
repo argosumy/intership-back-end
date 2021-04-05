@@ -14,10 +14,16 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = ImageContentValidator.class)
 public @interface ImageContent {
 
-    String message() default "Provided file is not an image.";
+    String message() default "Provided file is not an image or file extension does not correspond to an image.";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
+    @Target({ElementType.PARAMETER})
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface List {
+        ImageContent[] value();
+    }
 }
 

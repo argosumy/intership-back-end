@@ -114,7 +114,7 @@ public class ImageServiceImpl implements ImageService {
         Objects.requireNonNull(filename);
         String[] fileNameParts = filename.split(delimiter);
         if (fileNameParts.length < 2) {
-            return ".jpg";
+            return "";
         }
         return "." + fileNameParts[fileNameParts.length - 1];
     }
