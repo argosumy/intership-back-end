@@ -16,4 +16,6 @@ public interface PersistenceAdvertisementService {
     int updateAdvertisementStatus(int id, AdvertisementStatus status);
 
     Optional<Boolean> isExist(int intValue);
+
+    Optional<Advertisement> selectAdvertisementById(int id);
 }
