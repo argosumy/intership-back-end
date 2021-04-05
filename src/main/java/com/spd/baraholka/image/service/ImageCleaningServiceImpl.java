@@ -15,8 +15,8 @@ public class ImageCleaningServiceImpl implements ImageCleaningService {
     // Unattached to an ad images keep time (in minutes)
     public static final int KEEP_TIME = 60;
     // millisecond * seconds * minutes
-    public static final int INITIAL_DELAY = 1000 * 60 * 2;
-    public static final int EXECUTION_PERIOD = 1000 * 60 * 2;
+    public static final int INITIAL_DELAY = 1000 * 60 * 60 * 2;
+    public static final int EXECUTION_PERIOD = 1000 * 60 * 60 * 2;
 
     private final ImageRepository repository;
 
