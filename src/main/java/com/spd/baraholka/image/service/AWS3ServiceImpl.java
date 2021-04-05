@@ -18,6 +18,8 @@ import java.util.Objects;
 @Service
 public class AWS3ServiceImpl implements AWS3Service {
 
+    private static final String ILLEGAL_FILE_URL = "Illegal file URL. Provided file URL does not belong to SPD-Baraholka S3 bucket.";
+
     private final AmazonS3 amazonS3Client;
 
     private final String amazonDomain;
@@ -48,7 +50,7 @@ public class AWS3ServiceImpl implements AWS3Service {
 
     @Override
     public boolean deleteImageFromS3Bucket(String fileUrl) {
-        String objectName = fileUrl.substring(fileUrl.lastIndexOf("ads/"));
+        String objectName = getObjectNameFromUrl(fileUrl);
 
         if (amazonS3Client.doesObjectExist(bucketName, objectName)) {
             amazonS3Client.deleteObject(new DeleteObjectRequest(bucketName, objectName));
@@ -57,6 +59,16 @@ public class AWS3ServiceImpl implements AWS3Service {
         }
 
         return false;
+    }
+
+    private String getObjectNameFromUrl(String fileUrl) {
+        Objects.requireNonNull(fileUrl);
+        String bucketUrl = amazonDomain + bucketName + "/";
+        String[] fileUrlParts = fileUrl.split(bucketUrl);
+        if (fileUrlParts.length < 2) {
+            throw new IllegalArgumentException(ILLEGAL_FILE_URL);
+        }
+        return fileUrlParts[fileUrlParts.length - 1];
     }
 
     private File convertMultiPartFileToFile(MultipartFile multipartFile) {

@@ -20,12 +20,4 @@ public class OwnerMapper {
         ownerDTO.setEmail(owner.getEmail());
         return ownerDTO;
     }
-
-    private String collapseImageUrl(String imageUrl) {
-        if (imageUrl.contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
-            return imageUrl;
-        } else {
-            return awsImageUrl.concat(imageUrl);
-        }
-    }
 }

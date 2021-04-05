@@ -25,7 +25,7 @@ public class UserMapper {
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setBlocked(user.isBlocked());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
+        String imageUrl = user.getImageUrl();
         userDTO.setImageUrl(imageUrl);
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setLocation(user.getLocation());
@@ -47,14 +47,6 @@ public class UserMapper {
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setEmail(user.getEmail());
         return userDTO;
-    }
-
-    private String collapseImageUrl(String imageUrl) {
-        if (imageUrl.contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
-            return imageUrl;
-        } else {
-            return awsImageUrl.concat(imageUrl);
-        }
     }
 
     public User convertFromOAuth(OAuth2UserDTO oAuth2UserDto) {
