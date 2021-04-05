@@ -1,6 +1,6 @@
 package com.spd.baraholka.annotation.image;
 
-import com.spd.baraholka.validation.image.ImageContentValidator;
+import com.spd.baraholka.validation.image.ImageContentListValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ImageContentValidator.class)
-public @interface ImageContent {
+@Constraint(validatedBy = ImageContentListValidator.class)
+public @interface ImagesContent {
 
-    String message() default "Provided file is not an image or file extension does not correspond to an image.";
+    String message() default "Some of provided files are not images or file extensions are not valid.";
 
     Class<?>[] groups() default {};
 

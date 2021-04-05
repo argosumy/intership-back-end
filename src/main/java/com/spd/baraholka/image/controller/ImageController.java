@@ -1,6 +1,7 @@
 package com.spd.baraholka.image.controller;
 
 import com.spd.baraholka.annotation.image.ImageContent;
+import com.spd.baraholka.annotation.image.ImagesContent;
 import com.spd.baraholka.image.controller.dto.ImageResourceDto;
 import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.image.service.ImageService;
@@ -35,19 +36,25 @@ public class ImageController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Images are successfully uploaded"),
             @ApiResponse(code = 400, message = "Can't process the request. Images number min = 1, max = 10"),
+            @ApiResponse(code = 400, message = "Some of provided files are not images or file extensions are not valid."),
             @ApiResponse(code = 400, message = "Maximum upload size exceeded; The image exceeds its maximum permitted size of 5 Megabytes.")
     })
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "ads/{adId}/images", consumes = "multipart/form-data")
     public void saveImages(@PathVariable long adId,
                            @Size(min = 1, max = 10, message = "Can't process the request. Images number min = 1, max = 10")
-                           @RequestPart(value = "images") @ImageContent List<MultipartFile> images) {
+                           @RequestPart(value = "images") @ImagesContent List<MultipartFile> images) {
         List<ImageResource> imageResources = toDomain(adId, images);
 
         imageService.saveAll(imageResources);
     }
 
     @ApiOperation(value = "Upload single advertisement image to the server", response = ImageResourceDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Image is successfully uploaded"),
+            @ApiResponse(code = 400, message = "Provided file is not an image or file extension does not correspond to an image."),
+            @ApiResponse(code = 400, message = "Maximum upload size exceeded; The image exceeds its maximum permitted size of 5 Megabytes.")
+    })
     @PostMapping(value = "ads/{adId}/image", consumes = "multipart/form-data")
     public ImageResourceDto saveImage(@PathVariable long adId,
                                       @RequestParam(name = "isPrimary") boolean isPrimary,

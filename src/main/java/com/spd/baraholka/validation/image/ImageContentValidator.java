@@ -2,6 +2,7 @@ package com.spd.baraholka.validation.image;
 
 import com.spd.baraholka.annotation.image.ImageContent;
 import com.spd.baraholka.image.service.ImageService;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintValidator;
@@ -9,6 +10,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Objects;
 import java.util.Set;
 
+@Component
 public class ImageContentValidator implements ConstraintValidator<ImageContent, MultipartFile> {
 
     private static final String IMAGE_MIME_PREFIX = "image/";
