@@ -58,7 +58,7 @@ You can use Tools -> Query Tool for executing SQL queries in pgAdmin.
 
 
 10. _(Optional)_ If needed, you can add your SQL requests to populate a database:
-    - by editing a file **V20220317160826__test_data.sql** in a folder **test-data**
+    - by editing a file **test_data.sql** in a folder **test-data**
     - by adding one or several new SQL files in a folder **test-data**
 
 _**Note:**_ Please make sure to empty database by running `docker-compose down` before `docker-compose up --build`
