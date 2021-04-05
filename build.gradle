@@ -1,6 +1,18 @@
+import groovy.sql.Sql
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.postgresql:postgresql:42.2.18'
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.4.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.flywaydb.flyway' version '7.7.2'
     id 'java'
     id 'jacoco'
     id 'checkstyle'
@@ -12,6 +24,10 @@ sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
+}
+
+configurations {
+    driver
 }
 
 dependencies {
@@ -34,6 +50,8 @@ dependencies {
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.assertj:assertj-core'
     testImplementation 'com.github.database-rider:rider-junit5:1.23.0'
+
+    driver 'org.postgresql:postgresql'
 }
 
 test {
@@ -47,4 +65,46 @@ jacocoTestReport {
         xml.enabled(true)
         html.enabled(true)
     }
+}
+
+flyway {
+    loadProperties()
+    url = project.ext.dbUrl
+    user = project.ext.dbUser
+    password = project.ext.dbPassword
+    locations = ['classpath:db/migration']
+    outOfOrder = true
+    ignoreFutureMigrations = true
+    baselineOnMigrate = true
+}
+
+task populateDatabase {
+    dependsOn flywayMigrate
+    doLast {
+        configureJdbcDriver()
+        Sql sql = Sql.newInstance(project.ext.dbUrl, project.ext.dbUser, project.ext.dbPassword, project.ext.driverName)
+        String sqlString = project.file('test-data/test-data.sql').getText()
+        sql.execute(sqlString)
+        sql.close()
+    }
+}
+
+def loadProperties() {
+    Properties properties = new Properties()
+    File propertiesFile = project.file('src/main/resources/application.properties')
+    propertiesFile.withInputStream {
+        properties.load(it)
+    }
+    project.ext.dbUrl = System.getenv('SPRING_DATASOURCE_URL') ?: properties.'spring.datasource.url'
+    project.ext.dbUser = System.getenv('SPRING_DATASOURCE_USERNAME') ?: properties.'spring.datasource.username'
+    project.ext.dbPassword = System.getenv('SPRING_DATASOURCE_PASSWORD') ?: properties.'spring.datasource.password'
+}
+
+def configureJdbcDriver() {
+    URLClassLoader loader = GroovyObject.class.classLoader
+    configurations.driver.each {
+        File file -> loader.addURL(file.toURL())
+    }
+    project.ext.driverName = 'org.postgresql.Driver'
+    Class.forName(project.ext.driverName)
 }
