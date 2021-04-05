@@ -63,4 +63,8 @@ public class AdvertisementService {
         advertisementDTO.setAdvertisementOwner(owner);
         return advertisementDTO;
     }
+
+    public void promotionAd(int advertisementId) {
+        persistenceAdvertisementService.updatePromotionDate(advertisementId);
+    }
 }
