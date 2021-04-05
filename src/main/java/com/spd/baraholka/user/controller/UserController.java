@@ -4,14 +4,11 @@ import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
+import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.spd.baraholka.user.service.UserSettingsService;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,8 +43,17 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "/{id}/roles", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> grantRole(@PathVariable("id") @UserExist int id, @RequestBody Role role) {
-        UserDTO user = getUserById(id);
+    public void grantRole(@PathVariable("id") @UserExist int id, @RequestBody Role role) {
+        User user = userService.getUserEntityById(id);
+        userService.grantRole(user, role);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(path = "/{id}/roles", consumes = APPLICATION_JSON_VALUE)
+    public void revokeRole(@PathVariable("id") @UserExist int id, @RequestBody Role role) {
+        User user = userService.getUserEntityById(id);
+        userService.revokeRole(user, role);
     }
 }

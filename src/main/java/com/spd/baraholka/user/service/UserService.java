@@ -41,6 +41,10 @@ public class UserService {
         return collectUserDTO(user);
     }
 
+    public User getUserEntityById(int id) {
+        return persistenceUserService.selectUserById(id);
+    }
+
     private UserDTO collectUserDTO(User user) {
         List<UserAdditionalResource> additionalResources = persistenceResourceService.selectUserAdditionalResources(user.getId());
         UserDTO userDTO = userMapper.convertToDTO(user);
