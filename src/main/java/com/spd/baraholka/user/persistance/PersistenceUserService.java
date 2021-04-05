@@ -22,9 +22,13 @@ public interface PersistenceUserService {
 
     Optional<Boolean> isExist(int value);
 
+    User updateUserMainInfo(User user);
+
     Optional<Owner> selectOwner(int id);
 
     Optional<User> findByEmail(String email);
 
     Set<Role> findRolesByUserId(int id);
+
+    User selectUserMainInfo(int userId);
 }

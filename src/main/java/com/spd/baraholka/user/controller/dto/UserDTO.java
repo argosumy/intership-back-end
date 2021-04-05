@@ -2,6 +2,7 @@ package com.spd.baraholka.user.controller.dto;
 
 import com.spd.baraholka.role.Role;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,6 +33,7 @@ public class UserDTO {
     @Size(max = 20)
     private String phoneNumber;
 
+    @Valid
     @NotEmpty
     private List<UserAdditionalResourceDTO> additionalContactResources;
 
