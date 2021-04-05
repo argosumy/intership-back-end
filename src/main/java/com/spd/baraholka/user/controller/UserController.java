@@ -1,22 +1,20 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
+import com.spd.baraholka.user.controller.dto.EditUserMainInfoDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.spd.baraholka.user.service.UserSettingsService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Validated
-@RequestMapping("/users")
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -30,6 +28,11 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable("id") @UserExist int id) {
         return userService.getUserById(id);
+    }
+
+    @PutMapping
+    public EditUserMainInfoDTO updateUserMainInfo(@RequestBody @Valid EditUserMainInfoDTO mainInfoDTO) {
+        return userService.updateUserMainInfo(mainInfoDTO);
     }
 
     @PutMapping("/{id}/general")
