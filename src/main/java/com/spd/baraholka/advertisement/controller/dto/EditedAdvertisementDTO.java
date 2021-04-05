@@ -40,6 +40,8 @@ public class EditedAdvertisementDTO {
     @PresentOrFutureDate
     private LocalDateTime publicationDate;
 
+    private List<CharacteristicDTO> characteristics;
+
     public int getAdvertisementId() {
         return advertisementId;
     }
@@ -74,6 +76,10 @@ public class EditedAdvertisementDTO {
 
     public LocalDateTime getPublicationDate() {
         return publicationDate;
+    }
+
+    public List<CharacteristicDTO> getCharacteristics() {
+        return characteristics;
     }
 
     public void setAdvertisementId(int advertisementId) {
