@@ -4,6 +4,7 @@ import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,5 +41,11 @@ public class UserController {
     @GetMapping
     public List<UserShortViewDTO> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> showMe() {
+        UserDTO userDTO = userService.getCurrentUserDTO();
+        return ResponseEntity.ok().body(userDTO);
     }
 }
