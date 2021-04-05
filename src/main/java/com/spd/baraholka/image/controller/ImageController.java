@@ -36,7 +36,8 @@ public class ImageController {
     })
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "ads/{adId}/images", consumes = "multipart/form-data")
-    public void saveImages(@PathVariable long adId,
+    public void saveImages(@IsAdExisting
+                           @PathVariable long adId,
                            @Size(min = 1, max = 10, message = "Can't process the request. Images number min = 1, max = 10")
                            @RequestPart(value = "images") List<MultipartFile> images) {
         List<ImageResource> imageResources = toDomain(adId, images);
@@ -67,6 +68,7 @@ public class ImageController {
     }
 
     @PostMapping(value = "ads/{adId}/images/image", consumes = "multipart/form-data")
+    @ApiOperation(value = "Upload a single image to S3")
     @ResponseStatus(HttpStatus.OK)
     public ImageDto uploadImage(@PathVariable long adId,
                                 @RequestPart MultipartFile image) {
@@ -75,14 +77,15 @@ public class ImageController {
         return new ImageDto(imageData.getId(), imageData.getUrl());
     }
 
-    @ApiOperation(value = "Upload image resources. ", consumes = "application/json")
+    @ApiOperation(value = "Upload image resources.", consumes = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Image resources are successfully uploaded."),
             @ApiResponse(code = 400, message = "Can't process the request. Invalid json data."),
     })
     @PostMapping(value = "ads/{adId}/imageResources", consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public void saveImageResources(@PathVariable long adId,
+    public void saveImageResources(@IsAdExisting
+                                   @PathVariable long adId,
                                    @RequestBody
                                    @HasPrimaryImage
                                    @ValidatePositions
