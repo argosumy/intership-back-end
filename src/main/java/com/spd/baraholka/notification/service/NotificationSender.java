@@ -84,10 +84,12 @@ public class NotificationSender implements Sender {
 
     @Override
     public void sendWishListChangeNotification(FullAdvertisementDTO advertisement) {
+        //TODO, blocked by other task
     }
 
     @Override
     public void sendUserBanNotification(UserShortViewDTO user) {
+        //TODO, blocked by other task
         notificationService.sendMessage(notificationMapperFactory.getNotification(eventType, NULL, user, NULL, NULL, NULL));
     }
 }
