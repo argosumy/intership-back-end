@@ -3,6 +3,8 @@ package com.spd.baraholka.advertisement.persistance.repositories;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.advertisement.persistance.mappers.AdvertisementRowMapper;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -19,9 +21,11 @@ import java.util.Optional;
 public class AdvertisementRepository implements PersistenceAdvertisementService {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final AdvertisementRowMapper advertisementMapper;
 
-    public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+    public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate, AdvertisementRowMapper advertisementRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.advertisementMapper = advertisementRowMapper;
     }
 
     @Override
@@ -55,6 +59,16 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         return Optional.ofNullable(jdbcTemplate.queryForObject(isExistQuery, Map.of("id", id), Boolean.class));
     }
 
+    @Override
+    public Optional<Advertisement> selectAdvertisementById(int id) {
+        String selectSQL = createSelectSQL();
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, Map.of("id", id), advertisementMapper));
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("ownerId", advertisement.getOwnerId());
@@ -85,6 +99,11 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 "advertisementId", advertisement.getAdvertisementId());
     }
 
+    private String createSelectSQL() {
+        return "SELECT id, title, description, price, category, currency, discount_availability, city, status, publication_date, user_id"
+                + " FROM advertisements WHERE id=:id";
+    }
+
     private String createUpdateSQL() {
         return "UPDATE advertisements SET title=:title, "
                 + "status=:status, "
@@ -105,8 +124,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     private String createUpdateStatusSQL() {
-        return "UPDATE  advertisements " +
-                "SET status=:status, status_change_date=:statusChangeDate WHERE id=:advertisementId";
+        return "UPDATE  advertisements SET status=:status, status_change_date=:statusChangeDate WHERE id=:advertisementId";
     }
 
     private String createInsertSQL() {
