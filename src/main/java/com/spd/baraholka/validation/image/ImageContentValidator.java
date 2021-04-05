@@ -15,7 +15,7 @@ public class ImageContentValidator implements ConstraintValidator<ImageContent, 
 
     private final ImageService imageService;
 
-    private static final Set<String> IMAGE_FILE_EXTENSIONS = Set.of("jpg", "jpeg", "png", "gif", "tif", "bmp", "svg");
+    private static final Set<String> IMAGE_FILE_EXTENSIONS = Set.of(".jpg", ".jpeg", ".png", ".gif", ".tif", ".bmp", ".svg");
 
     public ImageContentValidator(ImageService imageService) {
         this.imageService = imageService;

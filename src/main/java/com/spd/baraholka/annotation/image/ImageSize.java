@@ -16,7 +16,7 @@ public @interface ImageSize {
 
     String maxMB();
 
-    String message() default "Avatar image is too large and exceeds its maximum permitted size of {maxMB}.";
+    String message() default "Provided image is too large and exceeds maximum permitted size of 2 MB."; // size of {maxMB}
 
     Class<?>[] groups() default {};
 
