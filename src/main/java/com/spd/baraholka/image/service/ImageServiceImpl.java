@@ -10,7 +10,7 @@ import java.util.*;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private static final String AVATAR_PREFIX = "avatar_";
+    private static final String AVATAR_PREFIX = "avatars/avatar_";
 
     private final ImageRepository repository;
 
@@ -108,7 +108,8 @@ public class ImageServiceImpl implements ImageService {
         return AVATAR_PREFIX + userId + fileExtension;
     }
 
-    private String getFileExtension(String filename) {
+    @Override
+    public String getFileExtension(String filename) {
         String delimiter = "\\.";
         Objects.requireNonNull(filename);
         String[] fileNameParts = filename.split(delimiter);
