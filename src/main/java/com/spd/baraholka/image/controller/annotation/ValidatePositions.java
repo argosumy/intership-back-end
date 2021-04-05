@@ -3,7 +3,7 @@ package com.spd.baraholka.image.controller.annotation;
 import javax.validation.*;
 import java.lang.annotation.*;
 
-@Constraint(validatedBy = UniquePositionsConstrainValidator.class)
+@Constraint(validatedBy = PositionsConstrainValidator.class)
 @Target({ ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidatePositions {

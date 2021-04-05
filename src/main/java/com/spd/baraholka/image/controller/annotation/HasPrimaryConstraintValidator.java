@@ -1,10 +1,12 @@
 package com.spd.baraholka.image.controller.annotation;
 
 import com.spd.baraholka.image.controller.dto.*;
+import org.springframework.stereotype.*;
 
 import javax.validation.*;
 import java.util.*;
 
+@Component
 public class HasPrimaryConstraintValidator implements ConstraintValidator<HasPrimaryImage, List<ImageResourceDto>> {
 
     @Override

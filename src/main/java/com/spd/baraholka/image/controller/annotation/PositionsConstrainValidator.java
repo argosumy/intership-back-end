@@ -1,12 +1,14 @@
 package com.spd.baraholka.image.controller.annotation;
 
 import com.spd.baraholka.image.controller.dto.*;
+import org.springframework.stereotype.*;
 
 import javax.validation.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class UniquePositionsConstrainValidator implements ConstraintValidator<ValidatePositions, List<ImageResourceDto>>  {
+@Component
+public class PositionsConstrainValidator implements ConstraintValidator<ValidatePositions, List<ImageResourceDto>>  {
 
     @Override
     public boolean isValid(List<ImageResourceDto> resources, ConstraintValidatorContext context) {
@@ -37,19 +39,17 @@ public class UniquePositionsConstrainValidator implements ConstraintValidator<Va
         }
 
         private boolean determine() {
-            for (int i = 0; i < listSize; i++) {
-                if (!isLast(i)) {
-                    if (nums.get(i + 1) - nums.get(i) != 1) {
-                        return false;
-                    }
+            if (listSize == 1) {
+                return true;
+            }
+
+            for (int i = 0; i < (listSize - 1); i++) {
+                if ((nums.get(i + 1) - nums.get(i)) != 1) {
+                    return false;
                 }
             }
 
             return true;
-        }
-
-        private boolean isLast(int i) {
-            return i == (listSize - 1);
         }
     }
 }
