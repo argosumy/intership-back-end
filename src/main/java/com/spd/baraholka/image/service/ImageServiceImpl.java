@@ -89,6 +89,11 @@ public class ImageServiceImpl implements ImageService {
         repository.deleteImage(imageResource.getId());
     }
 
+    @Override
+    public void deleteImage(String imageUrl) {
+        aws3Service.deleteImageFromS3Bucket(imageUrl);
+    }
+
     private String generateFileName(ImageResource imageResource) {
         long adId = imageResource.getAdId();
         MultipartFile multiPart = imageResource.getImage();

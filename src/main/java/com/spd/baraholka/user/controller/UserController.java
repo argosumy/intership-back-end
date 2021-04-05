@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 
 @Validated
 @RequestMapping("/users")
@@ -64,8 +65,10 @@ public class UserController {
         User currentUser = userService.getCurrentUser();
         int userId = currentUser.getId();
         String avatarFileName = imageService.generateAvatarFileName(image);
-        String avatarUrl = imageService.uploadImage(avatarFileName, image);
-        userService.updateAvatar(userId, avatarUrl);
-        return avatarUrl;
+        String newAvatarUrl = imageService.uploadImage(avatarFileName, image);
+        String oldAvatarUrl = Objects.requireNonNull(userService.getUserById(userId)).getImageUrl();
+        userService.updateAvatar(userId, newAvatarUrl);
+        imageService.deleteImage(oldAvatarUrl);
+        return newAvatarUrl;
     }
 }
