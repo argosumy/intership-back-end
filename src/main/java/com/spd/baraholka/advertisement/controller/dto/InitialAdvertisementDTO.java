@@ -83,3 +83,4 @@ public class InitialAdvertisementDTO {
         return characteristics;
     }
 }
+

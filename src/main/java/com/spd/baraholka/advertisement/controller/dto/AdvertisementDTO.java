@@ -2,73 +2,61 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
-import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
-import com.spd.baraholka.annotation.advertisement.EditedStatus;
-import com.spd.baraholka.annotation.advertisement.PresentOrFutureDate;
-import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.List;
 
-public class EditedAdvertisementDTO {
+public class AdvertisementDTO {
 
-    @NotNull
-    @Min(1)
-    @AdvertisementExist
     private int advertisementId;
-
+    private int ownerId;
     @Size(max = 200)
     private String title;
-
-    @EditedStatus
+    @NotNull
     private AdvertisementStatus status;
-
     @Positive
     private double price;
-
-    @Size(max = 25)
+    @PastOrPresent
+    private LocalDateTime creationDate;
+    @PastOrPresent
+    private LocalDateTime statusChangeDate;
+    @Size(max = 20)
     private String city;
-
-    @Size(max = 2000)
+    @NotNull
     private String description;
-
+    @NotNull
+    private String category;
     @NotNull
     private CurrencyType currency;
-
-    @NotNull
     private boolean discountAvailability;
-
-    @PresentOrFutureDate
+    @NotNull
     private LocalDateTime publicationDate;
-
-    private List<CharacteristicDTO> characteristics;
 
     public int getAdvertisementId() {
         return advertisementId;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public AdvertisementStatus getStatus() {
-        return status;
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public double getPrice() {
         return price;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public CurrencyType getCurrency() {
@@ -79,28 +67,52 @@ public class EditedAdvertisementDTO {
         return discountAvailability;
     }
 
-    public LocalDateTime getPublicationDate() {
-        return publicationDate;
+    public String getCity() {
+        return city;
     }
 
-    public List<CharacteristicDTO> getCharacteristics() {
-        return characteristics;
-    }
-
-    public void setAdvertisementId(int advertisementId) {
-        this.advertisementId = advertisementId;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public AdvertisementStatus getStatus() {
+        return status;
     }
 
     public void setStatus(AdvertisementStatus status) {
         this.status = status;
     }
 
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public LocalDateTime getPublicationDate() {
+        return publicationDate;
+    }
+
+    public LocalDateTime getStatusChangeDate() {
+        return statusChangeDate;
+    }
+
+    public void setAdvertisementId(int advertisementId) {
+        this.advertisementId = advertisementId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setStatusChangeDate(LocalDateTime statusChangeDate) {
+        this.statusChangeDate = statusChangeDate;
     }
 
     public void setCity(String city) {
@@ -109,6 +121,10 @@ public class EditedAdvertisementDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public void setCurrency(CurrencyType currency) {
