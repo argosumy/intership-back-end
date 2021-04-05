@@ -44,15 +44,15 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(path = "/{id}/roles", consumes = APPLICATION_JSON_VALUE)
-    public void grantRole(@PathVariable("id") @UserExist int id, @RequestBody Role role) {
+    @PostMapping(path = "/{id}/roles")
+    public void grantRole(@PathVariable("id") @UserExist int id, @RequestParam Role role) {
         User user = userService.getUserEntityById(id);
         userService.grantRole(user, role);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping(path = "/{id}/roles", consumes = APPLICATION_JSON_VALUE)
-    public void revokeRole(@PathVariable("id") @UserExist int id, @RequestBody Role role) {
+    @DeleteMapping(path = "/{id}/roles")
+    public void revokeRole(@PathVariable("id") @UserExist int id, @RequestParam Role role) {
         User user = userService.getUserEntityById(id);
         userService.revokeRole(user, role);
     }
