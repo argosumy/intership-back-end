@@ -20,7 +20,7 @@ public interface ImageService {
 
     void deleteImage(long imageId);
 
-    String generateAvatarFileName(int userId, MultipartFile file);
+    String generateAvatarFileName(MultipartFile file);
 
     String getFileExtension(String filename);
 }

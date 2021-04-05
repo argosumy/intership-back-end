@@ -63,7 +63,7 @@ public class UserController {
                                  @ImageContent MultipartFile image) {
         User currentUser = userService.getCurrentUser();
         int userId = currentUser.getId();
-        String avatarFileName = imageService.generateAvatarFileName(userId, image);
+        String avatarFileName = imageService.generateAvatarFileName(image);
         String avatarUrl = imageService.uploadImage(avatarFileName, image);
         userService.updateAvatar(userId, avatarUrl);
         return avatarUrl;

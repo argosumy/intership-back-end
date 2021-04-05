@@ -102,10 +102,10 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public String generateAvatarFileName(int userId, MultipartFile file) {
+    public String generateAvatarFileName(MultipartFile file) {
         Objects.requireNonNull(file);
         String fileExtension = getFileExtension(file.getOriginalFilename());
-        return AVATAR_PREFIX + userId + fileExtension;
+        return AVATAR_PREFIX + UUID.randomUUID().toString() + fileExtension;
     }
 
     @Override

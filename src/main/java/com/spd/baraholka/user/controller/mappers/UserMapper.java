@@ -40,7 +40,6 @@ public class UserMapper {
         UserShortViewDTO userDTO = new UserShortViewDTO();
         userDTO.setId(user.getId());
         String imageUrl = user.getImageUrl();
-//        String imageUrl = collapseImageUrl(user.getImageUrl());
         userDTO.setImageUrl(imageUrl);
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
