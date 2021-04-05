@@ -7,7 +7,7 @@ public class CommentDto {
 
     private int id;
     @NotBlank(message = "body shouldn't be empty!")
-    @Size(min = 2, max = 400, message = "length must be between 2 and 255 characters!")
+    @Size(min = 2, max = 255, message = "length must be between 2 and 255 characters!")
     private final String body;
     @NotNull
     private final LocalDate createdDate;

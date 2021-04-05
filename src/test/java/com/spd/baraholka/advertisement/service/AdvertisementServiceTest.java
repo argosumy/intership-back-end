@@ -6,6 +6,7 @@ import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.advertisement.persistance.repositories.AdvertisementRepository;
+import com.spd.baraholka.characteristic.service.CharacteristicServiceImpl;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.user.service.OwnerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,8 @@ class AdvertisementServiceTest {
     private PersistenceAdvertisementService persistenceAdvertisementService;
     @Mock
     private OwnerService ownerService;
+    @Mock
+    private CharacteristicServiceImpl characteristicService;
     private AdvertisementService advertisementService;
     private Advertisement advertisementActive;
     private Advertisement advertisementDraft;
@@ -39,7 +42,7 @@ class AdvertisementServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         AdvertisementMapper advertisementMapper = new AdvertisementMapper();
-        advertisementService = new AdvertisementService(persistenceAdvertisementService, advertisementMapper, ownerService);
+        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService, advertisementMapper, ownerService);
         advertisementDraft = createAdvertisement(1, LocalDateTime.of(2022, 1, 1, 10, 40, 1),
                 AdvertisementStatus.DRAFT);
         advertisementActive = createAdvertisement(2, LocalDateTime.of(2019, 2, 2, 2, 10, 2),

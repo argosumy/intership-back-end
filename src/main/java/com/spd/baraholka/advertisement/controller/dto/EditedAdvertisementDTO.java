@@ -2,12 +2,17 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
-import com.spd.baraholka.annotation.advertisement.EditedStatus;
 import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
+import com.spd.baraholka.annotation.advertisement.EditedStatus;
 import com.spd.baraholka.annotation.advertisement.PresentOrFutureDate;
+import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EditedAdvertisementDTO {
 
