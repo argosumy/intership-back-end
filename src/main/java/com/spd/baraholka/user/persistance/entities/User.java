@@ -6,7 +6,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.spd.baraholka.role.Role.USER;
 
 import static com.spd.baraholka.role.Role.USER;
 
@@ -27,6 +31,7 @@ public class User implements UserDetails {
     public User() {
         this.roles = new HashSet<>();
         this.roles.add(USER);
+        roles.add(USER);
     }
 
     public int getId() {
@@ -111,6 +116,14 @@ public class User implements UserDetails {
 
     public boolean grantRole(Role role) {
         return roles.add(role);
+    }
+
+    public boolean revokeRole(Role role) {
+        boolean isRevoked = false;
+        if (!USER.equals(role)) {
+            isRevoked = roles.remove(role);
+        }
+        return isRevoked;
     }
 
     public LocalDateTime getEndDateOfBan() {

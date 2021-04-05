@@ -18,9 +18,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -54,6 +56,10 @@ public class UserService implements UserDetailsService {
         } else {
             return collectUserDTO(user.get());
         }
+    }
+
+    public User getUserEntityById(int id) {
+        return persistenceUserService.selectUserById(id);
     }
 
     private UserDTO collectUserDTO(User user) {
@@ -137,5 +143,25 @@ public class UserService implements UserDetailsService {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = findByEmail(userPrincipal.getUsername());
         return collectUserDTO(user);
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public void grantRole(User user, Role role) {
+        Objects.requireNonNull(user);
+        Objects.requireNonNull(role);
+        boolean isRoleGranted = user.grantRole(role);
+        if (isRoleGranted) {
+            persistenceUserService.saveRole(user.getId(), role.name());
+        }
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public void revokeRole(User user, Role role) {
+        Objects.requireNonNull(user);
+        Objects.requireNonNull(role);
+        boolean isRoleRevoked = user.revokeRole(role);
+        if (isRoleRevoked) {
+            persistenceUserService.deleteRole(user.getId(), role.name());
+        }
     }
 }

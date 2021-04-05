@@ -27,4 +27,8 @@ public interface PersistenceUserService {
     Optional<User> findByEmail(String email);
 
     Set<Role> findRolesByUserId(int id);
+
+    void saveRole(int userId, String role);
+
+    void deleteRole(int userId, String role);
 }
