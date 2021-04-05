@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/statistic/categories/param")
+@RequestMapping(value = "/statistic/categories")
 public class StatisticController {
     private final FactoryDTO factoryDTO;
 
