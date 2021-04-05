@@ -59,7 +59,12 @@ public class UserService implements UserDetailsService {
     }
 
     public User getUserEntityById(int id) {
-        return persistenceUserService.selectUserById(id);
+        Optional<User> user = persistenceUserService.selectUserById(id);
+        if (user.isEmpty()) {
+            throw new NotFoundByIdException(id);
+        } else {
+            return collectUser(user.get());
+        }
     }
 
     private UserDTO collectUserDTO(User user) {

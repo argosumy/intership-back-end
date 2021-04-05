@@ -6,11 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import static com.spd.baraholka.role.Role.USER;
 
 import static com.spd.baraholka.role.Role.USER;
 
