@@ -20,14 +20,20 @@ public class NotificationMapperFactory {
     public static final String ADVERTISEMENT = "advertisement/";
     public static final String COMMENT = "comment/";
     public static final String USERS = "users/";
+    public static final int ZERO = 0;
+    public static final int TWO = 2;
+    public static final int ONE = 1;
+    public static final int THREE = 3;
+    public static final int FOUR = 4;
+    public static final int FIVE = 5;
 
     public BaseNotification getNotification(Object... parameters) {
-        var eventType = (EventType) parameters[0];
-        var advertisement = (FullAdvertisementDTO) parameters[1];
-        var user = (UserShortViewDTO) parameters[2];
-        var comment = (CommentUserInfoDto) parameters[3];
-        var images = (List<String>) parameters[4];
-        var mainImage = (String) parameters[5];
+        var eventType = (EventType) parameters[ZERO];
+        var advertisement = (FullAdvertisementDTO) parameters[ONE];
+        var user = (UserShortViewDTO) parameters[TWO];
+        var comment = (CommentUserInfoDto) parameters[THREE];
+        var images = (List<String>) parameters[FOUR];
+        var mainImage = (String) parameters[FIVE];
 
         switch (eventType) {
             case ACCOUNT_BAN:

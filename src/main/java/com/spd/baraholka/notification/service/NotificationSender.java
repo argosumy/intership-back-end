@@ -31,6 +31,7 @@ public class NotificationSender implements Sender {
     private final NotificationMapper notificationMapper;
     private EventType eventType;
 
+    @SuppressWarnings("checkstyle:ParameterNumber")
     public NotificationSender(NotificationMapperFactory notificationMapperFactory, UserService userService,
                               AdvertisementService advertisementService, CommentService commentService,
                               NotificationService notificationService, ImageServiceImpl imageService, UserMapper userMapper,

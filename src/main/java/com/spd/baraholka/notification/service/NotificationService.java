@@ -29,7 +29,6 @@ public class NotificationService {
     private final Configuration emailConfig;
     private final NotificationRepository notificationRepository;
 
-
     public NotificationService(JavaMailSender emailSender,
                                @Qualifier("freeMarker") Configuration emailConfig,
                                NotificationRepository notificationRepository) {
