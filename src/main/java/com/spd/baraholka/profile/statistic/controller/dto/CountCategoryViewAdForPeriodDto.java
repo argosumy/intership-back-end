@@ -6,20 +6,20 @@ import com.spd.baraholka.profile.statistic.service.StatisticService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FullStatisticByCategoryDto implements StatisticDTO {
+public class CountCategoryViewAdForPeriodDto implements StatisticDTO {
     private final StatisticService statisticService;
 
-    public FullStatisticByCategoryDto(StatisticService statisticService) {
+    public CountCategoryViewAdForPeriodDto(StatisticService statisticService) {
         this.statisticService = statisticService;
-            }
+    }
 
     @Override
     public Object getStatistic() {
-        return statisticService.getCountCategoryByGroupFull(SQLQueries.GET_COUNT_CATEGORY_VIEW_FULL);
+        return statisticService.getCountCategoryByGroupForPeriod(SQLQueries.GET_COUNT_CATEGORY_VIEW_FOR_PERIOD);
     }
 
     @Override
     public String getTypeDTO() {
-        return TypeStatistic.FULL.name();
+        return TypeStatistic.VIEW.name();
     }
 }
