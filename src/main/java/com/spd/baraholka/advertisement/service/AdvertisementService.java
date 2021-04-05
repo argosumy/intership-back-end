@@ -10,6 +10,7 @@ import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.service.OwnerService;
+import com.spd.baraholka.characteristic.persistance.CharacteristicService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,22 +21,30 @@ public class AdvertisementService {
     private final PersistenceAdvertisementService persistenceAdvertisementService;
     private final AdvertisementMapper advertisementMapper;
     private final OwnerService ownerService;
+    private final CharacteristicService characteristicService;
 
     public AdvertisementService(PersistenceAdvertisementService persistenceAdvertisementService,
+                                CharacteristicService characteristicService,
                                 AdvertisementMapper advertisementMapper,
                                 OwnerService ownerService) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
         this.advertisementMapper = advertisementMapper;
         this.ownerService = ownerService;
+        this.characteristicService = characteristicService;
     }
 
     public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
-        return persistenceAdvertisementService.insertAdvertisement(advertisement);
+        int adId = persistenceAdvertisementService.insertAdvertisement(advertisement);
+        advertisementDTO.getCharacteristics().forEach(characteristicDTO -> characteristicService.save(adId, characteristicDTO));
+
+        return adId;
     }
 
     public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
+        characteristicService.update(advertisementDTO.getAdvertisementId(), advertisementDTO.getCharacteristics());
+
         return persistenceAdvertisementService.updateAdvertisement(advertisement);
     }
 
