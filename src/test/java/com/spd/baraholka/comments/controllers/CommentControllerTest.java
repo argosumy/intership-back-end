@@ -8,14 +8,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
+import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;
+import com.spd.baraholka.comments.mappers.CommentUserInfoDtoMapper;
 import com.spd.baraholka.comments.services.CommentService;
 import com.spd.baraholka.config.SecurityConfig;
-import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,9 @@ class CommentControllerTest {
     @Autowired
     @MockBean
     private CommentDtoMapper commentDtoMapper;
+    @Autowired
+    @MockBean
+    private CommentUserInfoDtoMapper commentUserInfoDtoMapper;
     @Autowired
     private ObjectMapper mapper;
     private CommentDto commentDto;
@@ -139,6 +142,9 @@ class CommentControllerTest {
     @Test
     @DisplayName("Comment was deleted")
     void deleteComment() throws Exception {
+        when(commentService.findById(1))
+                .thenReturn(Optional.ofNullable(comment));
+
         mockMvc.perform(delete("/comment/1"))
                 .andExpect(status().isOk());
 
@@ -168,11 +174,10 @@ class CommentControllerTest {
     }
 
     @Test
-    @Disabled
     @DisplayName("Comment not found by id")
     void commentNotFoundById() throws Exception {
         when(commentService.findById(2))
-                .thenThrow(new NotFoundException());
+                .thenThrow(new CommentNotFoundException(100));
 
         mockMvc.perform(get("/comment/100"))
                 .andExpect(status().isNotFound());

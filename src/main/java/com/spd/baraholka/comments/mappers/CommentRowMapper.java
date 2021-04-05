@@ -39,12 +39,6 @@ public class CommentRowMapper implements RowMapper<Comment> {
     private User getMappedUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("user_id"));
-        user.setFirstName(rs.getString("first_name"));
-        user.setLastName(rs.getString("last_name"));
-        user.setEmail(rs.getString("e_mail"));
-        user.setPosition(rs.getString("position"));
-        user.setPhoneNumber(rs.getString("phone_number"));
-        user.setBlocked(rs.getBoolean("is_blocked"));
         return user;
     }
 }

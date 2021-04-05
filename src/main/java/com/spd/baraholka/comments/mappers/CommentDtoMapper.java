@@ -2,21 +2,15 @@ package com.spd.baraholka.comments.mappers;
 
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
+import com.spd.baraholka.comments.dto.UpdatedCommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 @Component
 public class CommentDtoMapper {
-
-    public List<CommentDto> toCommentDtoList(List<Comment> commentList) {
-        return commentList.stream()
-                .map(this::getCommentDto)
-                .collect(Collectors.toList());
-    }
 
     public CommentDto getCommentDto(Comment comment) {
         return new CommentDto(
@@ -33,7 +27,7 @@ public class CommentDtoMapper {
         return new Comment(
                 commentDto.getId(),
                 commentDto.getBody(),
-                commentDto.getCreatedDate(),
+                LocalDate.now(),
                 getAdvertisement(commentDto),
                 getUser(commentDto),
                 getParentComment(commentDto)
@@ -58,13 +52,9 @@ public class CommentDtoMapper {
         return advertisement;
     }
 
-    public Comment updateExistsComment(Comment comment, CommentDto commentDto) {
-        comment.setId(commentDto.getId());
-        comment.setBody(commentDto.getBody());
-        comment.setCreatedDate(commentDto.getCreatedDate());
-        comment.setAdvertisement(getAdvertisement(commentDto));
-        comment.setUser(getUser(commentDto));
-        comment.setParent(getParentComment(commentDto));
+    public Comment updateExistsComment(Comment comment, UpdatedCommentDto updatedCommentDto) {
+        comment.setBody(updatedCommentDto.getBody());
+        comment.setCreatedDate(LocalDate.now());
         return comment;
     }
 }
