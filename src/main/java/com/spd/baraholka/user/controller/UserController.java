@@ -6,20 +6,13 @@ import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.spd.baraholka.user.service.UserSettingsService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Validated
 @RequestMapping("/users")
