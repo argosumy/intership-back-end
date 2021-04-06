@@ -96,3 +96,10 @@ INSERT INTO wish_list(user_id, advertisement_id)
 VALUES (1, 2);
 INSERT INTO wish_list(user_id, advertisement_id)
 VALUES (1, 3);
+
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 2);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 1);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 3);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (2, 2);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (2, 3);
+INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 3);

@@ -7,6 +7,7 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.views.service.ViewService;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import com.spd.baraholka.config.exceptions.BadRequestException;
@@ -33,15 +34,18 @@ public class AdvertisementService {
     private static final Logger logger = LoggerFactory.getLogger(AdvertisementService.class);
     private final OwnerService ownerService;
     private final CharacteristicService characteristicService;
+    private final ViewService viewService;
 
     public AdvertisementService(PersistenceAdvertisementService persistenceAdvertisementService,
                                 CharacteristicService characteristicService,
                                 AdvertisementMapper advertisementMapper,
-                                OwnerService ownerService) {
+                                OwnerService ownerService,
+                                ViewService viewService) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
         this.advertisementMapper = advertisementMapper;
         this.ownerService = ownerService;
         this.characteristicService = characteristicService;
+        this.viewService = viewService;
     }
 
     public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
@@ -87,6 +91,8 @@ public class AdvertisementService {
         OwnerDTO owner = ownerService.getOwner(advertisement.getOwnerId());
         advertisementDTO.setAdvertisementOwner(owner);
         advertisementDTO.setCharacteristics(characteristicService.readForAdId(advertisementDTO.getAdvertisementId()));
+        viewService.save(advertisementDTO.getAdvertisementId());
+
         return advertisementDTO;
     }
 
