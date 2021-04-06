@@ -24,6 +24,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -58,6 +59,7 @@ class CommentControllerTest {
     private CommentDto commentDto;
     private Comment comment;
     private Advertisement advertisement;
+    @MockBean
     private User user;
     @Autowired
     private SecurityConfig securityConfig;
@@ -142,6 +144,7 @@ class CommentControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "MODERATOR")
     @DisplayName("Comment was deleted")
     void deleteComment() throws Exception {
         when(commentService.findById(1))
@@ -154,6 +157,7 @@ class CommentControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "MODERATOR")
     @DisplayName("Comment was updated")
     void updateComment() throws Exception {
         when(commentService.findById(1))
