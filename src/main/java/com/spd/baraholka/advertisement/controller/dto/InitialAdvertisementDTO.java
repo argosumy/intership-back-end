@@ -4,9 +4,13 @@ import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.annotation.advertisement.InitialStatus;
 import com.spd.baraholka.annotation.advertisement.PresentOrFutureDate;
+import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class InitialAdvertisementDTO {
 
@@ -38,6 +42,8 @@ public class InitialAdvertisementDTO {
 
     @PresentOrFutureDate
     private LocalDateTime publicationDate;
+
+    private List<CharacteristicDTO> characteristics;
 
     public String getCategory() {
         return category;
@@ -73,6 +79,14 @@ public class InitialAdvertisementDTO {
 
     public LocalDateTime getPublicationDate() {
         return publicationDate;
+    }
+
+    public List<CharacteristicDTO> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(List<CharacteristicDTO> characteristics) {
+        this.characteristics = characteristics;
     }
 
     public int getAdvertisementId() {

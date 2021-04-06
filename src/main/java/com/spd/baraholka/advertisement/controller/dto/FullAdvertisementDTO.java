@@ -2,9 +2,11 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
+import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class FullAdvertisementDTO {
 
@@ -19,6 +21,7 @@ public class FullAdvertisementDTO {
     private AdvertisementStatus status;
     private LocalDateTime publicationDate;
     private OwnerDTO advertisementOwner;
+    private List<CharacteristicDTO> characteristics;
 
     public int getAdvertisementId() {
         return advertisementId;
@@ -34,6 +37,14 @@ public class FullAdvertisementDTO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<CharacteristicDTO> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(List<CharacteristicDTO> characteristics) {
+        this.characteristics = characteristics;
     }
 
     public String getDescription() {
@@ -108,3 +119,4 @@ public class FullAdvertisementDTO {
         this.advertisementOwner = advertisementOwner;
     }
 }
+

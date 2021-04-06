@@ -1,11 +1,18 @@
 package com.spd.baraholka.image.service;
 
-import com.spd.baraholka.image.persistance.entity.ImageResource;
+import com.spd.baraholka.image.persistance.entity.*;
+import org.springframework.web.multipart.*;
 
-import java.util.List;
+import java.util.*;
 
 public interface ImageService {
     ImageResource save(ImageResource imageResource);
+
+    void saveImageResources(long adId, List<ImageResource> imageResources);
+
+    Image uploadImage(long adId, MultipartFile image);
+
+    List<Image> getAllUnattached();
 
     void saveAll(List<ImageResource> imageResources);
 
