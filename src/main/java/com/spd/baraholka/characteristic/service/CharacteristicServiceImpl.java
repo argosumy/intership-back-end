@@ -50,7 +50,8 @@ public class CharacteristicServiceImpl implements CharacteristicService {
     public List<CharacteristicDTO> readForAdId(int adId) {
         List<CharacteristicDTO> list = new ArrayList<>();
         for (Characteristic characteristic: characteristicRepository.readForAdId(adId)) {
-            list.add(new CharacteristicDTO(characteristic.getCharacteristicName(),
+            list.add(new CharacteristicDTO(
+                    characteristic.getCharacteristicName(),
                     characteristic.getCharacteristicValue(),
                     characteristic.isApproved(),
                     characteristic.getCategory())
