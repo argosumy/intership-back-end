@@ -46,13 +46,13 @@ public class CommentController {
         return commentService.saveNew(comment);
     }
 
-    @PreAuthorize("hasAnyAuthority('MODERATOR')")
     @DeleteMapping("/comment/{id}")
     public void deleteComment(@PathVariable("id") int id) {
         commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
         commentService.deleteById(id);
     }
 
+    @PreAuthorize("hasAnyAuthority('MODERATOR')")
     @PutMapping("/comment/{id}")
     public CommentDto updateComment(@RequestBody @Valid UpdatedCommentDto updatedCommentDto, @PathVariable("id") int id) {
         Comment comment = commentService.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
