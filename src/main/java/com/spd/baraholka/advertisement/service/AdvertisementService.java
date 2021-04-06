@@ -90,6 +90,10 @@ public class AdvertisementService {
         return advertisementDTO;
     }
 
+    public void promotionAd(int advertisementId) {
+        persistenceAdvertisementService.updatePromotionDate(advertisementId);
+    }
+
     public List<Advertisement> getFilteredAdsByKeyword(String keyword) {
         List<Advertisement> advertisementList = getAllActive();
         return advertisementList.stream()
