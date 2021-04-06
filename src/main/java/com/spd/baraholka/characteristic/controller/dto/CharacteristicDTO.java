@@ -39,6 +39,22 @@ public class CharacteristicDTO {
         return category;
     }
 
+    public void setCharacteristicName(String characteristicName) {
+        this.characteristicName = characteristicName;
+    }
+
+    public void setCharacteristicValue(String characteristicValue) {
+        this.characteristicValue = characteristicValue;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
