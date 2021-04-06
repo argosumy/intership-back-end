@@ -110,6 +110,31 @@ public class UserRepository implements PersistenceUserService {
         }
     }
 
+    @Override
+    public Optional<User> findByEmail(String email) {
+        try {
+            return Optional.ofNullable(jdbcTemplate
+                    .queryForObject("SELECT * FROM users WHERE LOWER(e_mail) = LOWER(:email)",
+                            Map.of("email", email),
+                            userRowMapper)
+            );
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Set<Role> findRolesByUserId(int id) {
+        Set<Role> roles = new HashSet<>();
+        List<String> roleNames = jdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
+                Map.of("user_id", id),
+                String.class);
+        for (String role : roleNames) {
+            roles.add(Role.valueOf(role));
+        }
+        return roles;
+    }
+
     private MapSqlParameterSource createUpdateUserMainInfoParameters(User user) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("position", user.getPosition());
@@ -140,35 +165,5 @@ public class UserRepository implements PersistenceUserService {
                     .addValue("role", role.name());
             jdbcTemplate.update(SAVE_USER_ROLE_SQL, parameters);
         }
-    }
-
-    @Override
-    public Optional<Boolean> existsByEmail(String email) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER(e_mail) = LOWER(:email)",
-                Map.of("email", email), Boolean.class));
-    }
-
-    public Optional<User> findByEmail(String email) {
-        try {
-            return Optional.ofNullable(jdbcTemplate
-                    .queryForObject("SELECT * FROM users WHERE LOWER(e_mail) = LOWER(:email)",
-                    Map.of("email", email),
-                    userRowMapper)
-            );
-        } catch (DataAccessException e) {
-            return Optional.empty();
-        }
-    }
-
-    @Override
-    public Set<Role> findRolesByUserId(int id) {
-        Set<Role> roles = new HashSet<>();
-        List<String> roleNames = jdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
-                Map.of("user_id", id),
-                String.class);
-        for (String role : roleNames) {
-            roles.add(Role.valueOf(role));
-        }
-        return roles;
     }
 }

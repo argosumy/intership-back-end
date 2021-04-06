@@ -91,4 +91,8 @@ public class UserProfileService {
         updatedMainInfoDTO.setAdditionalContactResources(updatedResources);
         return updatedMainInfoDTO;
     }
+
+    public UserDTO getCurrentUserDTO() {
+        return null; //TODO implement method
+    }
 }

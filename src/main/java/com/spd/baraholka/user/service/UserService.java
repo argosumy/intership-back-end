@@ -1,20 +1,14 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.EditUserMainInfoDTO;
-import com.spd.baraholka.user.controller.dto.UserAdditionalResourceDTO;
-import com.spd.baraholka.user.controller.dto.UserDTO;
-import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
-import com.spd.baraholka.user.controller.mappers.UserAdditionalResourceMapper;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
-import com.spd.baraholka.user.persistance.entities.UserAdditionalResource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,11 +21,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.spd.baraholka.role.Role.MODERATOR;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Qualifier("UserService")
@@ -84,7 +73,6 @@ public class UserService implements UserDetailsService {
         return exist.orElse(false);
     }
 
-    public EditUserMainInfoDTO updateUserInfoPart(EditUserMainInfoDTO mainInfoDTO) {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByEmail(username);
@@ -97,7 +85,7 @@ public class UserService implements UserDetailsService {
 
     public User findByEmail(String email) {
         Optional<User> optionalUser = persistenceUserService.findByEmail(email);
-        User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
+        User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return collectUser(user);
     }
 
@@ -113,19 +101,22 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    //TODO implement method
     public User getCurrentUser() {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return findByEmail(userPrincipal.getUsername());
     }
 
-    public UserDTO getCurrentUserDTO() {
-        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = findByEmail(userPrincipal.getUsername());
-        return collectUserDTO(user);
-    }
+    //TODO implement method
+//    public UserDTO getCurrentUserDTO() {
+//        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = findByEmail(userPrincipal.getUsername());
+//        return collectUserDTO(user);
+//    }
 
-    public Set<Integer> getUserAdditionalResourcesId(int userId) {
-        List<Integer> resourcesId = persistenceResourceService.selectUserAdditionalResourcesId(userId);
-        return new HashSet<>(resourcesId);
+    public EditUserMainInfoDTO updateUserInfoPart(EditUserMainInfoDTO mainInfoDTO) {
+        User user = userMapper.convertToEntity(mainInfoDTO);
+        User updatedUserInfo = persistenceUserService.updateUserMainInfo(user);
+        return userMapper.convertToInfoDTO(updatedUserInfo);
     }
 }

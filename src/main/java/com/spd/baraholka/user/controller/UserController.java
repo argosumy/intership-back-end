@@ -3,6 +3,7 @@ package com.spd.baraholka.user.controller;
 import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.user.controller.dto.*;
 import com.spd.baraholka.user.service.UserProfileService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
