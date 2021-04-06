@@ -59,7 +59,8 @@ VALUES (2, 'false', 'false', 'false', 'false', 'false', 'false') ON CONFLICT DO 
 INSERT INTO users_settings (user_id, new_ads_notification, new_comments_to_my_ad_notification,
                             replies_to_my_comments_notification, mentions_in_thread_notification,
                             wishlist_update_notification, open_ads_in_new_tab)
-VALUES (3, ''true'', ''false'', ''true'', ''false'', ''true'', ''false'') ON CONFLICT DO NOTHING;
+VALUES (3, 'true', 'false', 'true', 'false', 'true', 'false') ON CONFLICT DO NOTHING;
+
 INSERT INTO comments (id, body, created_at, advertisement_id, user_id, parent_id)
 VALUES (0, ' ', '2000-01-01 00:00:00.000000', 1, 1, NULL);
 INSERT INTO comments (body, created_at, advertisement_id, user_id, parent_id)
