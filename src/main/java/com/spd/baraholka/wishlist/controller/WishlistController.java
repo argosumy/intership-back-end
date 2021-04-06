@@ -16,17 +16,17 @@ public class WishlistController {
         this.wishlistService = wishlistService;
     }
 
-    @PostMapping("/{userId}/{advertisementsId}")
+    @PostMapping("/{advertisementsId}")
     public void saveWishlist(@PathVariable int userId, @PathVariable int advertisementsId) {
         wishlistService.save(userId, advertisementsId);
     }
 
-    @DeleteMapping("/{userId}/{advertisementsId}")
+    @DeleteMapping("/{advertisementsId}")
     public void deleteWishlist(@PathVariable int userId, @PathVariable int advertisementsId) {
         wishlistService.delete(userId, advertisementsId);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping
     public List<Integer> getWishlist(@PathVariable int userId) {
         return wishlistService.read(userId);
     }
