@@ -91,3 +91,8 @@ INSERT INTO characteristics (advertisement_id, category_name, characteristics_na
 VALUES (2, 'ANIMALS', 'weight', '15', TRUE);
 INSERT INTO characteristics (advertisement_id, category_name, characteristics_name, characteristics_value, is_approved)
 VALUES (2, 'ANIMALS', 'color', 'white', FALSE);
+
+INSERT INTO wish_list(user_id, advertisement_id)
+VALUES (1, 2);
+INSERT INTO wish_list(user_id, advertisement_id)
+VALUES (1, 3);
