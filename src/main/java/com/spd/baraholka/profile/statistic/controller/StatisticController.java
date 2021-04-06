@@ -17,7 +17,7 @@ public class StatisticController {
     }
 
     @GetMapping
-    public StatisticDTO getStatistic(@RequestParam(value = "type") String type) {
+    public StatisticDTO getStatistic(@RequestParam String type) {
         return factoryDTO.getDTO(type);
     }
 }
