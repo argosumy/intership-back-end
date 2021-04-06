@@ -20,5 +20,9 @@ public interface PersistenceUserService {
 
     Optional<Boolean> isExist(int value);
 
+    User updateUserMainInfo(User user);
+
     Optional<Owner> selectOwner(int id);
+
+    User selectUserMainInfo(int userId);
 }
