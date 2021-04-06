@@ -10,8 +10,21 @@ import java.util.stream.Collectors;
 @Component
 public class UserAdditionalResourceMapper {
 
+    public List<UserAdditionalResource> convertToEntityList(List<UserAdditionalResourceDTO> additionalResourceDTOS, int userId) {
+        return additionalResourceDTOS.stream().map(resource -> convertToEntity(resource, userId)).collect(Collectors.toList());
+    }
+
     public List<UserAdditionalResourceDTO> convertToDTOList(List<UserAdditionalResource> additionalResources) {
         return additionalResources.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    private UserAdditionalResource convertToEntity(UserAdditionalResourceDTO additionalResourceDTO, int userId) {
+        UserAdditionalResource userAdditionalResource = new UserAdditionalResource();
+        userAdditionalResource.setId(additionalResourceDTO.getId());
+        userAdditionalResource.setUserId(userId);
+        userAdditionalResource.setResourceName(additionalResourceDTO.getResourceName());
+        userAdditionalResource.setResourceUrl(additionalResourceDTO.getResourceUrl());
+        return userAdditionalResource;
     }
 
     private UserAdditionalResourceDTO convertToDTO(UserAdditionalResource additionalResource) {
