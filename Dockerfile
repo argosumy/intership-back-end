@@ -2,6 +2,8 @@ FROM openjdk:11
 
 ENV APP_NAME="spd-baraholka"
 ENV APP_VERSION="0.0.1-SNAPSHOT"
+ENV PROTOCOL=http
+ENV HOST=localhost:8080
 
 EXPOSE 8080
 
@@ -17,6 +19,6 @@ RUN addgroup spring && adduser spring --quiet --disabled-password --gecos "" --i
 
 RUN ./gradlew bootJar
 
-USER spring:spring
+#USER spring:spring
 
-CMD java -jar ./build/libs/${APP_NAME}-${APP_VERSION}.jar
+CMD ./gradlew populateDatabase && java -jar ./build/libs/${APP_NAME}-${APP_VERSION}.jar

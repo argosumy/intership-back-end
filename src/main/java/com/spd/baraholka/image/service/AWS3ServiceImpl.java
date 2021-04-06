@@ -1,19 +1,14 @@
 package com.spd.baraholka.image.service;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.spd.baraholka.config.exceptions.MultipartFileConversionFailureException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+import com.spd.baraholka.config.exceptions.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.multipart.*;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Objects;
+import java.io.*;
+import java.util.*;
 
 @Service
 public class AWS3ServiceImpl implements AWS3Service {
