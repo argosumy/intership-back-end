@@ -14,6 +14,8 @@ public interface ImageService {
 
     List<Image> getAllUnattached();
 
+    String uploadImage(String imageName, MultipartFile image);
+
     void saveAll(List<ImageResource> imageResources);
 
     List<ImageResource> getPrimary(List<Long> adIds);
@@ -23,4 +25,10 @@ public interface ImageService {
     void deleteAllByAdId(long adId);
 
     void deleteImage(long imageId);
+
+    void deleteImage(String imageUrl);
+
+    String generateAvatarFileName(MultipartFile file);
+
+    String getFileExtension(String filename);
 }

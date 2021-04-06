@@ -1,5 +1,7 @@
 package com.spd.baraholka.image.controller;
 
+import com.spd.baraholka.annotation.image.ImageContent;
+import com.spd.baraholka.annotation.image.ImagesContent;
 import com.spd.baraholka.config.exceptions.*;
 import com.spd.baraholka.image.controller.annotation.*;
 import com.spd.baraholka.image.controller.dto.*;
@@ -32,6 +34,7 @@ public class ImageController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Images are successfully uploaded"),
             @ApiResponse(code = 400, message = "Can't process the request. Images number min = 1, max = 10"),
+            @ApiResponse(code = 400, message = "Some of provided files are not images or file extensions are not valid."),
             @ApiResponse(code = 400, message = "Maximum upload size exceeded; The image exceeds its maximum permitted size of 5 Megabytes.")
     })
     @ResponseStatus(HttpStatus.OK)
@@ -39,7 +42,7 @@ public class ImageController {
     public void saveImages(@IsAdExisting
                            @PathVariable long adId,
                            @Size(min = 1, max = 10, message = "Can't process the request. Images number min = 1, max = 10")
-                           @RequestPart(value = "images") List<MultipartFile> images) {
+                           @RequestPart(value = "images") @ImagesContent List<MultipartFile> images) {
         List<ImageResource> imageResources = toDomain(adId, images);
 
         imageService.saveAll(imageResources);
@@ -69,9 +72,14 @@ public class ImageController {
 
     @PostMapping(value = "ads/{adId}/images/image", consumes = "multipart/form-data")
     @ApiOperation(value = "Upload a single image to S3")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Image is successfully uploaded"),
+            @ApiResponse(code = 400, message = "Provided file is not an image or file extension does not correspond to an image."),
+            @ApiResponse(code = 400, message = "Maximum upload size exceeded; The image exceeds its maximum permitted size of 5 Megabytes.")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ImageDto uploadImage(@PathVariable long adId,
-                                @RequestPart MultipartFile image) {
+                                @RequestPart @ImageContent MultipartFile image) {
         Image imageData = imageService.uploadImage(adId, image);
 
         return new ImageDto(imageData.getId(), imageData.getUrl());

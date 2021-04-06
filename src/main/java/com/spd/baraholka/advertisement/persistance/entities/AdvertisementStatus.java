@@ -7,5 +7,5 @@ public enum AdvertisementStatus {
     ON_HOLD,
     ARCHIVED,
     DELETED,
-    DELAYED_PUBLICATION
+    DELAYED_PUBLICATION,
 }

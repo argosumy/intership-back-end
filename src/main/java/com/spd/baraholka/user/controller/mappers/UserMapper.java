@@ -38,8 +38,7 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
-        userDTO.setBlocked(user.isBlocked());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
+        String imageUrl = user.getImageUrl();
         userDTO.setImageUrl(imageUrl);
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setLocation(user.getLocation());
@@ -84,7 +83,7 @@ public class UserMapper {
     private UserShortViewDTO convertToShortViewDTO(User user) {
         UserShortViewDTO userDTO = new UserShortViewDTO();
         userDTO.setId(user.getId());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
+        String imageUrl = user.getImageUrl();
         userDTO.setImageUrl(imageUrl);
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
