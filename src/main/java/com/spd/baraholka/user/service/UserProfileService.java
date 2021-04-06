@@ -1,9 +1,8 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.login.UserPrincipal;
+import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.*;
 import com.spd.baraholka.user.persistance.entities.User;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +33,13 @@ public class UserProfileService {
         UserDTO user = userService.getUserById(id);
         List<UserAdditionalResourceDTO> additionalResources = userAdditionalResourceService.getUserAdditionalResources(user.getId());
         ShortViewBlockDetailDTO blockDetail = userBlockService.getShortViewUserBlockDetail(user.getId());
-        return collectUserDTO(user, additionalResources, blockDetail);
+        Set<Role> roles = userService.getRolesByUserId(id);
+        return collectUserDTO(user, roles, additionalResources, blockDetail);
+    }
+
+    public UserDTO getCurrentUser() {
+        User user = userService.getCurrentUser();
+        return getUserById(user.getId());
     }
 
     public int updateUserGeneralSettings(int id, boolean openAdsInNewTab) {
@@ -67,12 +72,6 @@ public class UserProfileService {
         return userAdditionalResourceService.getUserAdditionalResourcesId(userId);
     }
 
-    public UserDTO getCurrentUserDTO() {
-        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findByEmail(userPrincipal.getUsername());
-        return collectUserDTO(user);
-    }
-
     private List<UserShortViewDTO> collectShortViewUserDTO(List<UserShortViewDTO> users, List<ShortViewBlockDetailDTO> blockDetails) {
         return users.stream().map(userShortViewDTO -> matchUserWithBlockDetails(userShortViewDTO, blockDetails)).collect(Collectors.toList());
     }
@@ -89,7 +88,8 @@ public class UserProfileService {
         shortViewDTO.setEndDateOfBan(blockDetail.getBlockedUntil());
     }
 
-    private UserDTO collectUserDTO(UserDTO user, List<UserAdditionalResourceDTO> additionalResources, ShortViewBlockDetailDTO blockDetail) {
+    private UserDTO collectUserDTO(UserDTO user, Set<Role> roles, List<UserAdditionalResourceDTO> additionalResources, ShortViewBlockDetailDTO blockDetail) {
+        user.setRoles(roles);
         user.setAdditionalContactResources(additionalResources);
         user.setBlocked(blockDetail.isBlocked());
         user.setEndDateOfBan(blockDetail.getBlockedUntil());
@@ -101,7 +101,7 @@ public class UserProfileService {
         return updatedMainInfoDTO;
     }
 
-    private UserDTO collectUserDTO(User user) {
-        return null; // TODO implement method
+    public int updateAvatar(int userId, String imageUrl) {
+        return userService.updateAvatar(userId, imageUrl);
     }
 }

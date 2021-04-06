@@ -26,9 +26,11 @@ public interface PersistenceUserService {
 
     Optional<Owner> selectOwner(int id);
 
+    int updateAvatar(int userId, String imageUrl);
+
     Optional<User> findByEmail(String email);
 
-    Set<Role> findRolesByUserId(int id);
+    Set<Role> getRolesByUserId(int id);
 
     User selectUserMainInfo(int userId);
 }

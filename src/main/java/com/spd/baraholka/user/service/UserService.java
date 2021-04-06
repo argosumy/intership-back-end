@@ -73,8 +73,8 @@ public class UserService implements UserDetailsService {
         return exist.orElse(false);
     }
 
-    public Set<Role> findRolesByUserId(int id) {
-        return persistenceUserService.findRolesByUserId(id);
+    public Set<Role> getRolesByUserId(int id) {
+        return persistenceUserService.getRolesByUserId(id);
     }
 
     public User findByEmail(String email) {
@@ -107,8 +107,12 @@ public class UserService implements UserDetailsService {
     }
 
     private User collectUser(User user) {
-        Set<Role> roles = findRolesByUserId(user.getId());
+        Set<Role> roles = getRolesByUserId(user.getId());
         user.setRoles(roles);
         return user;
+    }
+
+    public int updateAvatar(int userId, String imageUrl) {
+        return persistenceUserService.updateAvatar(userId, imageUrl);
     }
 }

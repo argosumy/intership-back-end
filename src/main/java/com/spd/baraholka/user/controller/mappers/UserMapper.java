@@ -38,7 +38,7 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
+        String imageUrl = user.getImageUrl();
         userDTO.setImageUrl(imageUrl);
         userDTO.setLocation(user.getLocation());
         userDTO.setRoles(user.getRoles());
@@ -82,19 +82,11 @@ public class UserMapper {
     private UserShortViewDTO convertToShortViewDTO(User user) {
         UserShortViewDTO userDTO = new UserShortViewDTO();
         userDTO.setId(user.getId());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
+        String imageUrl = user.getImageUrl();
         userDTO.setImageUrl(imageUrl);
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());
         return userDTO;
-    }
-
-    private String collapseImageUrl(String imageUrl) {
-        if (imageUrl.contains("googleusercontent")) { //TODO Delete mock, replace when image saving will be alloy
-            return imageUrl;
-        } else {
-            return awsImageUrl.concat(imageUrl);
-        }
     }
 }

@@ -1,11 +1,11 @@
 INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
-VALUES ('Ivan', 'Ivanov', 'Smila', 'ivan@spd-ukraine.com', 'developer', '+380685489524', 'users/1/homer3.jpg') ON CONFLICT DO NOTHING;
+VALUES ('Ivan', 'Ivanov', 'Smila', 'ivan@spd-ukraine.com', 'developer', '+380685489524', 'https://s3-eu-west-1.amazonaws.com/baraholka-images-store/avatar_1.png') ON CONFLICT DO NOTHING;
 INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
-VALUES ('Petua', 'Petrov', 'Kyiv', 'petua@spd-ukraine.com', 'developer', '+380676548921', 'users/1/homer3.jpg') ON CONFLICT DO NOTHING;
+VALUES ('Petua', 'Petrov', 'Kyiv', 'petua@spd-ukraine.com', 'developer', '+380676548921', 'https://s3-eu-west-1.amazonaws.com/baraholka-images-store/avatar_2.png') ON CONFLICT DO NOTHING;
 INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
-VALUES ('Gena', 'Genov', 'Charkiv', 'gena@spd-ukraine.com', 'developer', '+380685686243', 'users/1/homer3.jpg') ON CONFLICT DO NOTHING;
+VALUES ('Gena', 'Genov', 'Charkiv', 'gena@spd-ukraine.com', 'developer', '+380685686243', 'https://s3-eu-west-1.amazonaws.com/baraholka-images-store/avatar_3.png') ON CONFLICT DO NOTHING;
 INSERT INTO users (first_name, last_name, location, e_mail, position, phone_number, avatar)
-VALUES ('Vasua', 'Ivanov', 'Odessa', 'vasua@spd-ukraine.com', 'developer', '+38068658958', 'users/1/homer3.jpg') ON CONFLICT DO NOTHING;
+VALUES ('Vasua', 'Ivanov', 'Odessa', 'vasua@spd-ukraine.com', 'developer', '+38068658958', 'https://s3-eu-west-1.amazonaws.com/baraholka-images-store/avatar_4.png') ON CONFLICT DO NOTHING;
 INSERT INTO users_additional_resources (user_id, resource_name, resource_url)
 VALUES (1, 'vk', 'vk.com') ON CONFLICT DO NOTHING;
 INSERT INTO users_additional_resources (user_id, resource_name, resource_url)
@@ -60,7 +60,6 @@ INSERT INTO users_settings (user_id, new_ads_notification, new_comments_to_my_ad
                             replies_to_my_comments_notification, mentions_in_thread_notification,
                             wishlist_update_notification, open_ads_in_new_tab)
 VALUES (3, 'true', 'false', 'true', 'false', 'true', 'false') ON CONFLICT DO NOTHING;
-
 INSERT INTO comments (id, body, created_at, advertisement_id, user_id, parent_id)
 VALUES (0, ' ', '2000-01-01 00:00:00.000000', 1, 1, NULL);
 INSERT INTO comments (body, created_at, advertisement_id, user_id, parent_id)
@@ -91,15 +90,3 @@ INSERT INTO characteristics (advertisement_id, category_name, characteristics_na
 VALUES (2, 'ANIMALS', 'weight', '15', TRUE);
 INSERT INTO characteristics (advertisement_id, category_name, characteristics_name, characteristics_value, is_approved)
 VALUES (2, 'ANIMALS', 'color', 'white', FALSE);
-
-INSERT INTO wish_list(user_id, advertisement_id)
-VALUES (1, 2);
-INSERT INTO wish_list(user_id, advertisement_id)
-VALUES (1, 3);
-
-INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 2);
-INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 1);
-INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 3);
-INSERT INTO history_of_views(user_id, advertisements_id) VALUES (2, 2);
-INSERT INTO history_of_views(user_id, advertisements_id) VALUES (2, 3);
-INSERT INTO history_of_views(user_id, advertisements_id) VALUES (1, 3);
