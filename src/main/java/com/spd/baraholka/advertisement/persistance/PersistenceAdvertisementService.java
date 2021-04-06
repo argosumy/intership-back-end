@@ -12,8 +12,6 @@ public interface PersistenceAdvertisementService {
 
     void updatePromotionDate(int idAdvertisement);
 
-    int insertAdvertisement(Advertisement advertisement);
-
     int updateAdvertisement(Advertisement advertisement);
 
     int updateAdvertisementStatus(int id, AdvertisementStatus status);
