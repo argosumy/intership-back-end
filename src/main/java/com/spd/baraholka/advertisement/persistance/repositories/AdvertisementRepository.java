@@ -7,6 +7,7 @@ import com.spd.baraholka.advertisement.persistance.mappers.AdvertisementRowMappe
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,15 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate, AdvertisementRowMapper advertisementRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.advertisementMapper = advertisementRowMapper;
+    }
+
+    @Override
+    public void updatePromotionDate(int idAdvertisement) {
+        LocalDateTime realDate = LocalDateTime.now();
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
+                .addValue("date", realDate)
+                .addValue("id", idAdvertisement);
+        jdbcTemplate.update("UPDATE advertisements SET promoted_at = :date WHERE id = :id", sqlParameterSource);
     }
 
     @Override

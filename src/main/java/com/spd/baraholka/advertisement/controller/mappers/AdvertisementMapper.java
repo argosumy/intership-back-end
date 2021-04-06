@@ -67,7 +67,6 @@ public class AdvertisementMapper {
         advertisementDTO.setStatus(advertisement.getStatus());
         advertisementDTO.setCreationDate(advertisement.getCreationDate());
         advertisementDTO.setPublicationDate(advertisement.getPublicationDate());
-        advertisementDTO.setStatusChangeDate(advertisement.getStatusChangeDate());
         return advertisementDTO;
     }
 

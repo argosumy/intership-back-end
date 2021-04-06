@@ -84,4 +84,9 @@ public class AdvertisementController {
     public FullAdvertisementDTO getAdvertisement(@PathVariable("id") @AdvertisementExist int id) {
         return advertisementService.getAdvertisementById(id);
     }
+
+    @PutMapping("/{id}/promotion")
+    public void promotionAd(@PathVariable(value = "id") int adId) {
+        advertisementService.promotionAd(adId);
+    }
 }
