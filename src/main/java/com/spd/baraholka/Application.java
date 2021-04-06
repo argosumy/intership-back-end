@@ -2,8 +2,10 @@ package com.spd.baraholka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.*;
 
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
+@EnableScheduling
 @SpringBootApplication
 public class Application {
 

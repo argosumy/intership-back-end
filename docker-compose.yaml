@@ -3,10 +3,6 @@ version: '3'
 services:
   database:
     image: 'postgres:alpine'
-    build:
-      context: .
-      dockerfile: Dockerfile.postgres
-    container_name: postgres
     restart: on-failure
     ports:
       - "5432:5432"
@@ -14,7 +10,8 @@ services:
       - POSTGRES_DB=baraholka
       - POSTGRES_USER=baraholka
       - POSTGRES_PASSWORD=baraholka
-#    volumes:
+    volumes:
+      - ./.gradle-cache:/home/spring/spd-baraholka/.gradle
 #      - ./db-data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "baraholka", "-U", "baraholka" ]
@@ -44,10 +41,11 @@ services:
       - "5050:5050"
     environment:
       - PGADMIN_LISTEN_PORT=5050
-      - PGADMIN_DEFAULT_EMAIL=admin
+      - PGADMIN_DEFAULT_EMAIL=admin@mail.com
       - PGADMIN_DEFAULT_PASSWORD=12345
     depends_on:
       - database
 
-#volumes:
+volumes:
+  .gradle-cache:
 #  db-data:

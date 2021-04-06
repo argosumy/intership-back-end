@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS advertisements ADD COLUMN IF NOT EXISTS promoted_at TIMESTAMP;
