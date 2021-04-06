@@ -17,7 +17,6 @@ import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -25,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,9 +40,10 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
+//@Disabled
 @AutoConfigureMockMvc(addFilters = false)
-@WebMvcTest(AdvertisementController.class)
+//@WebMvcTest(AdvertisementController.class)
+@SpringBootTest
 class AdvertisementControllerTest {
 
     @Autowired
