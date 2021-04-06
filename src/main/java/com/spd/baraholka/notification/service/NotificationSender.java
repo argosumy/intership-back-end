@@ -50,12 +50,14 @@ public class NotificationSender implements Sender {
     public void sendAllUsersNotification(FullAdvertisementDTO advertisement) {
         var imageResources = imageService.getAllByAdId(advertisement.getAdvertisementId());
         var imageUrlsList = imageResources.stream().map(ImageResource::getImageUrl).collect(Collectors.toList());
-        var mainImage = imageService.getPrimary(Collections.singletonList((long) advertisement.getAdvertisementId())).get(0).getImageUrl();
+        var mainImageList = imageService.getPrimary(Collections.singletonList((long) advertisement.getAdvertisementId()));
+        var mainImage = !mainImageList.isEmpty() ? mainImageList.get(0).getImageUrl() : "";
+        eventType = EventType.NEW_ADVERTISEMENT;
 
         userService.getAllUsers()
                 .forEach(userMailTo -> {
                     notificationService.sendMessage(notificationMapperFactory.getNotification(
-                            EventType.NEW_ADVERTISEMENT, advertisement, userMailTo, NULL, imageUrlsList, mainImage));
+                            eventType, advertisement, userMailTo, NULL, imageUrlsList, mainImage));
                     notificationService.saveNotification(notificationMapper.of(userMailTo.getId(), advertisement.getAdvertisementId(), eventType));
                 });
     }

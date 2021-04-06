@@ -11,9 +11,9 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -201,31 +201,5 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + " :publicationDate,"
                 + " :statusChangeDate)"
                 + " RETURNING id";
-    }
-
-    public List<Advertisement> getAllActive() {
-        return jdbcTemplate.query(
-                "SELECT * FROM advertisements a WHERE a.status=:active OR " +
-                        "(a.status=:draft AND a.publication_date<=:publicationDate)",
-                Map.of("active", "ACTIVE",
-                        "draft", "DRAFT",
-                        PUBLICATION_DATE, LocalDateTime.now()
-                ),
-                advertisementRowMapper
-        );
-    }
-
-    public Optional<Advertisement> findDraftAdById(int id) {
-        try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(
-                    "SELECT * FROM advertisements WHERE id=:id AND status=:status",
-                    Map.of("id", id,
-                            STATUS, "DRAFT"
-                    ),
-                    advertisementRowMapper
-            ));
-        } catch (DataAccessException e) {
-            return Optional.empty();
-        }
     }
 }

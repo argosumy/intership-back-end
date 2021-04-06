@@ -40,7 +40,7 @@ public class NotificationMapperFactory {
             case ADVERTISEMENT_BLOCK:
                 BanBlockNotification banBlockNotification = new BanBlockNotification();
                 setParameters(eventType, userEndpoint(user), banBlockNotification, user);
-                banBlockNotification.setReason("SPAM DETECTED!");
+                banBlockNotification.setReason("SPAM DETECTED!"); //Mock
                 banBlockNotification.setEndDate(user.getEndDateOfBan());
                 return banBlockNotification;
             case NEW_ADVERTISEMENT:
