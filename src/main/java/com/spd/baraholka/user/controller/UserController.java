@@ -49,4 +49,10 @@ public class UserController {
     public ShortViewBlockDetailDTO unBlockUser(@PathVariable("id") @UserExist int userId, @RequestParam("isNotify") boolean isNotify) {
         return userService.unBlockUser(userId, isNotify);
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> showMe() {
+        UserDTO userDTO = userService.getCurrentUserDTO();
+        return ResponseEntity.ok().body(userDTO);
+    }
 }

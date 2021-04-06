@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,6 +26,9 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
             "SELECT id, title, description, price, category, currency, discount_availability, city, status, publication_date, user_id FROM advertisements WHERE id=:id";
     private static final String EXIST_BY_ID_SQL = "SELECT count(*) <> 0 FROM advertisements WHERE id=:id";
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    public static final String STATUS_PARAMETER = "status";
+    public static final String STATUS_CHANGE_DATE_PARAMETER = "statusChangeDate";
+    public static final String PUBLICATION_DATE_PARAMETER = "publicationDate";
     private final AdvertisementRowMapper advertisementMapper;
 
     public AdvertisementRepository(NamedParameterJdbcTemplate jdbcTemplate, AdvertisementRowMapper advertisementRowMapper) {
@@ -68,6 +72,19 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
         } catch (DataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public void changeStatusArchivedOnDeleted() {
+        String sql = "UPDATE advertisements SET status = :del, status_change_date = now() " +
+                "WHERE status = :arch " +
+                "AND (now() - status_change_date) < INTERVAL '60 DAY'";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("del", "DELETED");
+        params.addValue("arch", "ARCHIVED");
+
+        jdbcTemplate.update(sql, params);
     }
 
     private MapSqlParameterSource createInsertParameters(Advertisement advertisement) {
@@ -148,5 +165,31 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 + " :publicationDate,"
                 + " :statusChangeDate)"
                 + " RETURNING id";
+    }
+
+    public List<Advertisement> getAllActive() {
+        return jdbcTemplate.query(
+                "SELECT * FROM advertisements a WHERE a.status=:active OR " +
+                        "(a.status=:draft AND a.publication_date<=:publicationDate)",
+                Map.of("active", "ACTIVE",
+                        "draft", "DRAFT",
+                        PUBLICATION_DATE_PARAMETER, LocalDateTime.now()
+                ),
+                advertisementMapper
+        );
+    }
+
+    public Optional<Advertisement> findDraftAdById(int id) {
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(
+                    "SELECT * FROM advertisements WHERE id=:id AND status=:status",
+                    Map.of("id", id,
+                            STATUS_PARAMETER, "DRAFT"
+                    ),
+                    advertisementMapper
+            ));
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
     }
 }

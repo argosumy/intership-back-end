@@ -41,6 +41,7 @@ public class UserMapper {
         String imageUrl = collapseImageUrl(user.getImageUrl());
         userDTO.setImageUrl(imageUrl);
         userDTO.setLocation(user.getLocation());
+        userDTO.setRoles(user.getRoles());
         return userDTO;
     }
 
