@@ -69,9 +69,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image uploadImage(long adId, MultipartFile file) {
         String imageName = generateFileName(adId, file);
-        String imageUrl = amazonDomain + bucketName + "/" + imageName;
-
-        aws3Service.uploadImage(imageName, file);
+        String imageUrl = aws3Service.uploadImage(imageName, file);
 
         Image image = new Image();
         image.setUrl(imageUrl);
