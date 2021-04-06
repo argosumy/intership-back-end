@@ -1,11 +1,8 @@
 package com.spd.baraholka.user.controller;
 
 import com.spd.baraholka.annotation.user.UserExist;
-import com.spd.baraholka.user.controller.dto.EditUserMainInfoDTO;
-import com.spd.baraholka.user.controller.dto.UserDTO;
-import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
-import com.spd.baraholka.user.service.UserService;
-import com.spd.baraholka.user.service.UserSettingsService;
+import com.spd.baraholka.user.controller.dto.*;
+import com.spd.baraholka.user.service.UserProfileService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +16,7 @@ public class UserController {
 
     private final UserProfileService userService;
 
-    public UserController(UserService userService, UserSettingsService userSettingsService) {
+    public UserController(UserProfileService userService) {
         this.userService = userService;
     }
 
@@ -29,6 +26,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}/settings/general")
+    public int updateUserGeneralSettings(@PathVariable("id") @UserExist int id, @RequestParam("openAdsInNewTab") boolean openAdsInNewTab) {
+        return userService.updateUserGeneralSettings(id, openAdsInNewTab);
+    }
+
     @PutMapping
     public EditUserMainInfoDTO updateUserMainInfo(@RequestBody @Valid EditUserMainInfoDTO mainInfoDTO) {
         return userService.updateUserMainInfo(mainInfoDTO);

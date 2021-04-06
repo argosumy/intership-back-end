@@ -2,9 +2,11 @@ package com.spd.baraholka.user.service;
 
 import com.spd.baraholka.user.controller.dto.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,11 +52,16 @@ public class UserProfileService {
         return userBlockService.unBlockUser(userId, isNotify);
     }
 
-    private UserDTO collectUserDTO(UserDTO user, List<UserAdditionalResourceDTO> additionalResources, ShortViewBlockDetailDTO blockDetail) {
-        user.setAdditionalContactResources(additionalResources);
-        user.setBlocked(blockDetail.isBlocked());
-        user.setEndDateOfBan(blockDetail.getBlockedUntil());
-        return user;
+    @Transactional
+    public EditUserMainInfoDTO updateUserMainInfo(EditUserMainInfoDTO mainInfoDTO) {
+        EditUserMainInfoDTO updatedMainInfoDTO = userService.updateUserInfoPart(mainInfoDTO);
+        List<UserAdditionalResourceDTO> updatedResources =
+                userAdditionalResourceService.updateResourceInfoPart(mainInfoDTO.getAdditionalContactResources(), mainInfoDTO.getUserId());
+        return collectUserMainInfoDTO(updatedMainInfoDTO, updatedResources);
+    }
+
+    public Set<Integer> getUserAdditionalResourcesId(int userId) {
+        return userAdditionalResourceService.getUserAdditionalResourcesId(userId);
     }
 
     private List<UserShortViewDTO> collectShortViewUserDTO(List<UserShortViewDTO> users, List<ShortViewBlockDetailDTO> blockDetails) {
@@ -71,5 +78,17 @@ public class UserProfileService {
     private void setUserBlockDetail(UserShortViewDTO shortViewDTO, ShortViewBlockDetailDTO blockDetail) {
         shortViewDTO.setBlocked(blockDetail.isBlocked());
         shortViewDTO.setEndDateOfBan(blockDetail.getBlockedUntil());
+    }
+
+    private UserDTO collectUserDTO(UserDTO user, List<UserAdditionalResourceDTO> additionalResources, ShortViewBlockDetailDTO blockDetail) {
+        user.setAdditionalContactResources(additionalResources);
+        user.setBlocked(blockDetail.isBlocked());
+        user.setEndDateOfBan(blockDetail.getBlockedUntil());
+        return user;
+    }
+
+    private EditUserMainInfoDTO collectUserMainInfoDTO(EditUserMainInfoDTO updatedMainInfoDTO, List<UserAdditionalResourceDTO> updatedResources) {
+        updatedMainInfoDTO.setAdditionalContactResources(updatedResources);
+        return updatedMainInfoDTO;
     }
 }

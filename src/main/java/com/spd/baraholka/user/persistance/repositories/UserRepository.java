@@ -35,6 +35,7 @@ public class UserRepository implements PersistenceUserService {
     private static final String INSERT_USER_SQL = "INSERT INTO users (first_name, last_name, e_mail, location, phone_number, position, avatar) " +
             "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :avatar) ";
     private static final String SELECT_USER_MAIN_INFO = "SELECT id, position, phone_number, location FROM users WHERE id=:userId";
+    private static final String UPDATE_USER_MAIN_INFO_SQL = "UPDATE users SET position=:position, phone_number=:phoneNumber, location=:location WHERE id=:id";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper;
     private final UserShortViewRowMapper userShortViewRowMapper;
@@ -70,19 +71,14 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public User updateUserMainInfo(User user) {
-        String updateSQL = "UPDATE users SET position=:position, phone_number=:phoneNumber, location=:location WHERE id=:id";
-        Map<String, Object> updateParameters = createUpdateUserMainInfoParameters(user);
-        jdbcTemplate.update(updateSQL, updateParameters);
+        MapSqlParameterSource updateParameters = createUpdateUserMainInfoParameters(user);
+        jdbcTemplate.update(UPDATE_USER_MAIN_INFO_SQL, updateParameters);
         return selectUserMainInfo(user.getId());
     }
 
     @Override
     public User selectUserMainInfo(int userId) {
         return jdbcTemplate.queryForObject(SELECT_USER_MAIN_INFO, Map.of("userId", userId), userMainInfoRowMapper);
-    }
-
-    private Map<String, Object> createUpdateUserMainInfoParameters(User user) {
-        return Map.of("position", user.getPosition(), "phoneNumber", user.getPhoneNumber(), "location", user.getLocation(), "id", user.getId());
     }
 
     @Override
@@ -118,6 +114,15 @@ public class UserRepository implements PersistenceUserService {
         }
     }
 
+    private MapSqlParameterSource createUpdateUserMainInfoParameters(User user) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("position", user.getPosition());
+        namedParameters.addValue("phoneNumber", user.getPhoneNumber());
+        namedParameters.addValue("location", user.getLocation());
+        namedParameters.addValue("id", user.getId());
+        return namedParameters;
+    }
+
     private MapSqlParameterSource createInsertUserParameters(User user) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("first_name", user.getFirstName());
@@ -141,4 +146,3 @@ public class UserRepository implements PersistenceUserService {
         }
     }
 }
-
