@@ -1,5 +1,10 @@
 package com.spd.baraholka.views;
 
+import com.spd.baraholka.user.service.UserService;
+import com.spd.baraholka.views.persistance.entities.View;
+import com.spd.baraholka.views.persistance.repository.ViewRepository;
+import com.spd.baraholka.views.service.ViewService;
+import com.spd.baraholka.views.service.ViewServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,11 +23,12 @@ class ViewServiceImplTest {
     private static final LocalDateTime DATE_TIME = LocalDateTime.of(2021,  1, 1, 18, 10, 15);
     private ViewService viewService;
     private ViewRepository viewRepository;
+    private UserService userService;
 
     @BeforeEach
     void initializing() {
         viewRepository = Mockito.mock(ViewRepository.class);
-        viewService = new ViewServiceImpl(viewRepository);
+        viewService = new ViewServiceImpl(viewRepository, userService);
     }
 
     @Test
@@ -33,13 +39,6 @@ class ViewServiceImplTest {
         list.add(view);
 
         Mockito.when(viewRepository.read(USER_ID)).thenReturn(list);
-        assertAll(() -> assertEquals(list, viewService.read(USER_ID)));
-    }
-
-    @Test
-    @DisplayName("test saving view advertisement (advertisementsId) for user (userId)")
-    void testSave() {
-        Mockito.when(viewRepository.save(USER_ID, ADVERTISEMENT_ID)).thenReturn(USER_ID);
-        assertAll(() -> assertEquals(USER_ID, viewService.save(USER_ID, ADVERTISEMENT_ID)));
+        assertAll(() -> assertEquals(list, viewService.read()));
     }
 }

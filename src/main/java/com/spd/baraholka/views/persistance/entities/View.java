@@ -1,4 +1,4 @@
-package com.spd.baraholka.views;
+package com.spd.baraholka.views.persistance.entities;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

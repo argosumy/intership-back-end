@@ -1,5 +1,6 @@
-package com.spd.baraholka.views;
+package com.spd.baraholka.views.persistance.repository;
 
+import com.spd.baraholka.views.persistance.entities.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -37,14 +38,14 @@ public class ViewRepositoryImpl implements ViewRepository {
     }
 
     @Override
-    public int save(int userId, int advertisementsId) {
+    public void save(int userId, int advertisementsId) {
         final String sql = "INSERT INTO history_of_views(user_id, advertisements_id) " +
-                "VALUES (:user_id, :advertisements_id) RETURNING id";
+                "VALUES (:user_id, :advertisements_id) ";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("user_id", userId)
                 .addValue("advertisements_id", advertisementsId);
 
-        return jdbcTemplate.update(sql, parameters);
+        jdbcTemplate.update(sql, parameters);
     }
 }
