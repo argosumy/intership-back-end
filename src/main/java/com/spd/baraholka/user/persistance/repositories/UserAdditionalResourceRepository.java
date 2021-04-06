@@ -14,36 +14,35 @@ import java.util.Map;
 @Repository
 public class UserAdditionalResourceRepository implements PersistenceUserAdditionalResourcesService {
 
-    private static final String INSERT_USER_ADDITIONAL_RESOURCE_SQL =
+    private static final String INSERT_USER_ADDITIONAL_RESOURCES_SQL =
             "INSERT INTO users_additional_resources (user_id, resource_name, resource_url) VALUES (:userId, :resourceName, :resourceUrl)";
     private static final String SELECT_USER_ADDITIONAL_RESOURCES_ID = "SELECT id FROM users_additional_resources WHERE user_id=:userId";
+    private static final String SELECT_USER_ADDITIONAL_RESOURCES_SQL = "SELECT * FROM users_additional_resources WHERE user_id=:id";
+    private static final String UPDATE_USER_ADDITIONAL_RESOURCES_SQL =
+            "UPDATE users_additional_resources SET resource_name=:resourceName, resource_url=:resourceUrl WHERE id=:id";
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserAdditionalResourceRowMapper resourceRowMapper;
 
-    public UserAdditionalResourceRepository(NamedParameterJdbcTemplate jdbcTemplate,
-                                            UserAdditionalResourceRowMapper resourceRowMapper) {
+    public UserAdditionalResourceRepository(NamedParameterJdbcTemplate jdbcTemplate, UserAdditionalResourceRowMapper resourceRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.resourceRowMapper = resourceRowMapper;
     }
 
     @Override
     public List<UserAdditionalResource> selectUserAdditionalResources(int id) {
-        String selectSQL = "SELECT * FROM users_additional_resources WHERE user_id=:id";
-        Map<String, Integer> selectParameters = Map.of("id", id);
-        return jdbcTemplate.query(selectSQL, selectParameters, resourceRowMapper);
+        return jdbcTemplate.query(SELECT_USER_ADDITIONAL_RESOURCES_SQL, Map.of("id", id), resourceRowMapper);
     }
 
     @Override
     public void updateUserAdditionalResources(List<UserAdditionalResource> additionalResources) {
-        String updateSQL = "UPDATE users_additional_resources SET resource_name=:resourceName, resource_url=:resourceUrl WHERE id=:id";
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(additionalResources.toArray());
-        jdbcTemplate.batchUpdate(updateSQL, batch);
+        jdbcTemplate.batchUpdate(UPDATE_USER_ADDITIONAL_RESOURCES_SQL, batch);
     }
 
     @Override
     public void insertNewUserAdditionalResources(List<UserAdditionalResource> additionalResources) {
         SqlParameterSource[] batchParameters = SqlParameterSourceUtils.createBatch(additionalResources.toArray());
-        jdbcTemplate.batchUpdate(INSERT_USER_ADDITIONAL_RESOURCE_SQL, batchParameters);
+        jdbcTemplate.batchUpdate(INSERT_USER_ADDITIONAL_RESOURCES_SQL, batchParameters);
     }
 
     @Override
