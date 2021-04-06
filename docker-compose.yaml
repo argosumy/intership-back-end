@@ -10,7 +10,8 @@ services:
       - POSTGRES_DB=baraholka
       - POSTGRES_USER=baraholka
       - POSTGRES_PASSWORD=baraholka
-#    volumes:
+    volumes:
+      - ./.gradle-cache:/home/spring/spd-baraholka/.gradle
 #      - ./db-data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "baraholka", "-U", "baraholka" ]
@@ -45,5 +46,6 @@ services:
     depends_on:
       - database
 
-#volumes:
+volumes:
+  .gradle-cache:
 #  db-data:

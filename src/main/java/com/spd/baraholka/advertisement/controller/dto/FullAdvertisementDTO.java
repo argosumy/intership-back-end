@@ -108,3 +108,4 @@ public class FullAdvertisementDTO {
         this.advertisementOwner = advertisementOwner;
     }
 }
+
