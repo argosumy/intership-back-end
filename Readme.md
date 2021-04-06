@@ -26,7 +26,7 @@ Additionally, for Windows 10 Home _(Note: WSL2 is included in Windows 10 Pro by 
 `docker-compose up --build`
 
 5. Log in to pgAdmin page at [http://localhost:5050](http://localhost:5050) using credentials:
-- **Username:** admin@mail.com
+- **Username:** admin
 - **Password:** 12345
    
 _**Note:**_ Please feel free to try [pgAdmin interactive online tutorial](https://www.pgadmin.org/try/).
@@ -58,7 +58,7 @@ You can use Tools -> Query Tool for executing SQL queries in pgAdmin.
 
 
 10. _(Optional)_ If needed, you can add your SQL requests to populate a database:
-    - by editing a file **test-data.sql** in a folder **test-data**
+    - by editing a file **R__test_data.sql** in a folder **test-data**
     - by adding one or several new SQL files in a folder **test-data**
 
 _**Note:**_ Please make sure to empty database by running `docker-compose down` before `docker-compose up --build`

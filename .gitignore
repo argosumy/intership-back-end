@@ -7,7 +7,6 @@ out/
 
 # Gradle
 .gradle
-.gradle-cache/
 build/
 
 .DS_Store

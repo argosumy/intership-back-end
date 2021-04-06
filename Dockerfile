@@ -19,6 +19,6 @@ RUN addgroup spring && adduser spring --quiet --disabled-password --gecos "" --i
 
 RUN ./gradlew bootJar
 
-#USER spring:spring
+USER spring:spring
 
-CMD ./gradlew populateDatabase && java -jar ./build/libs/${APP_NAME}-${APP_VERSION}.jar
+CMD java -jar ./build/libs/${APP_NAME}-${APP_VERSION}.jar
