@@ -4,12 +4,15 @@ import com.spd.baraholka.annotation.image.ImageContent;
 import com.spd.baraholka.annotation.image.ImageSize;
 import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.image.service.ImageService;
+import com.spd.baraholka.role.Role;
 import com.spd.baraholka.user.controller.dto.*;
+import com.spd.baraholka.user.persistance.entities.User;
 import com.spd.baraholka.user.service.UserProfileService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -89,6 +92,7 @@ public class UserController {
         return newAvatarUrl;
     }
 
+    @PreAuthorize("hasAuthority('MODERATOR')")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "/{id}/roles")
     public void grantRole(@PathVariable("id") @UserExist int id, @RequestParam Role role) {
@@ -96,6 +100,7 @@ public class UserController {
         userService.grantRole(user, role);
     }
 
+    @PreAuthorize("hasAuthority('MODERATOR')")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(path = "/{id}/roles")
     public void revokeRole(@PathVariable("id") @UserExist int id, @RequestParam Role role) {

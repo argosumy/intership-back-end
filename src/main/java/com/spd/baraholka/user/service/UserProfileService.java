@@ -104,4 +104,16 @@ public class UserProfileService {
     public int updateAvatar(int userId, String imageUrl) {
         return userService.updateAvatar(userId, imageUrl);
     }
+
+    public User getUserEntityById(int id) {
+        return userService.getUserEntityById(id);
+    }
+
+    public void grantRole(User user, Role role) {
+        userService.grantRole(user, role);
+    }
+
+    public void revokeRole(User user, Role role) {
+        userService.revokeRole(user, role);
+    }
 }

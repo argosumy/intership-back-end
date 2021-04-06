@@ -10,11 +10,11 @@ import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,6 +45,13 @@ public class UserService implements UserDetailsService {
     public UserDTO getUserById(int id) {
         User user = persistenceUserService.selectUserById(id);
         return userMapper.convertToDTO(user);
+    }
+
+    public User getUserEntityById(int id) {
+        User user = persistenceUserService.selectUserById(id);
+        Set<Role> roles = persistenceUserService.getRolesByUserId(id);
+        user.setRoles(roles);
+        return user;
     }
 
     public List<UserShortViewDTO> getAllUsers() {
