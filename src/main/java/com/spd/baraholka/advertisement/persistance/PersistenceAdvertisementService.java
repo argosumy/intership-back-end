@@ -22,5 +22,7 @@ public interface PersistenceAdvertisementService {
 
     Optional<Boolean> isExist(int intValue);
 
+    void changeStatusArchivedOnDeleted();
+
     Optional<Advertisement> selectAdvertisementById(int id);
 }

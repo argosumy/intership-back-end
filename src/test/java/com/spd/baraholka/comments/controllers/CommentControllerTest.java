@@ -37,8 +37,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 class CommentControllerTest {
 

@@ -1,13 +1,15 @@
 package com.spd.baraholka.login;
 
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
-import com.spd.baraholka.login.service.OAuth2UserService;
-import org.junit.jupiter.api.*;
+import com.spd.baraholka.login.service.GoogleOAuth2UserService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,8 +35,7 @@ class GoogleOAuth2UserServiceTest {
     private OAuth2User oAuth2UserMock;
 
     @Autowired
-    @Qualifier("Google OAuth2")
-    private OAuth2UserService serviceUnderTest;
+    private GoogleOAuth2UserService serviceUnderTest;
 
     private final String dummyEmail = "mock@email.com";
     private final String dummyGivenName = "Mock Given Name";
@@ -60,7 +61,7 @@ class GoogleOAuth2UserServiceTest {
     @DisplayName("'Should return user's email from Principal")
     void shouldReturnUserEmailFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
+        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getOAuth2UserDTO();
         assertEquals(oAuth2UserDto.getEmail(), dummyEmail);
     }
 
@@ -68,7 +69,7 @@ class GoogleOAuth2UserServiceTest {
     @DisplayName("'Should return user's first name from Principal")
     void shouldReturnUserFirstNameFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
+        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getOAuth2UserDTO();
         assertEquals(oAuth2UserDto.getFirstName(), dummyGivenName);
     }
 
@@ -76,7 +77,7 @@ class GoogleOAuth2UserServiceTest {
     @DisplayName("'Should return user's last name from Principal")
     void shouldReturnUserLastNameFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
+        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getOAuth2UserDTO();
         assertEquals(oAuth2UserDto.getLastName(), dummyFamilyName);
     }
 
@@ -84,7 +85,7 @@ class GoogleOAuth2UserServiceTest {
     @DisplayName("'Should return user's avatar from Principal")
     void shouldReturnUserAvatarFromPrincipal() {
         when(oAuth2UserMock.getAttributes()).thenReturn(initDummyAttributes());
-        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getUserInfoFromOAuth2();
+        OAuth2UserDTO oAuth2UserDto = serviceUnderTest.getOAuth2UserDTO();
         assertEquals(oAuth2UserDto.getImageUrl(), dummyPicture);
     }
 

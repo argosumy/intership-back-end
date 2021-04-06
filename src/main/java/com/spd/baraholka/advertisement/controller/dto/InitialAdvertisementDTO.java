@@ -82,5 +82,9 @@ public class InitialAdvertisementDTO {
     public List<CharacteristicDTO> getCharacteristics() {
         return characteristics;
     }
+
+    public void setCharacteristics(List<CharacteristicDTO> characteristics) {
+        this.characteristics = characteristics;
+    }
 }
 

@@ -17,7 +17,7 @@ public interface CharacteristicService {
 
     List<CategoryModel> readAllCategoryWithCharacteristics();
 
-    List<Characteristic> readForAdId(int adId);
+    List<CharacteristicDTO> readForAdId(int adId);
 
     List<Characteristic> readNotApproved();
 }

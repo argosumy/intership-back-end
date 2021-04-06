@@ -38,11 +38,10 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
-        userDTO.setBlocked(user.isBlocked());
         String imageUrl = collapseImageUrl(user.getImageUrl());
         userDTO.setImageUrl(imageUrl);
-        userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setLocation(user.getLocation());
+        userDTO.setRoles(user.getRoles());
         return userDTO;
     }
 
@@ -87,8 +86,6 @@ public class UserMapper {
         userDTO.setImageUrl(imageUrl);
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
-        userDTO.setBlocked(user.isBlocked());
-        userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setEmail(user.getEmail());
         return userDTO;
     }
