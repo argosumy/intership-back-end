@@ -1,6 +1,6 @@
 package com.spd.baraholka.annotation.user;
 
-import com.spd.baraholka.validation.user.UserIdValidator;
+import com.spd.baraholka.validation.user.AdditionalResourceBelongToUserValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,12 +9,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.PARAMETER, ElementType.FIELD})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UserIdValidator.class)
-public @interface UserExist {
+@Constraint(validatedBy = AdditionalResourceBelongToUserValidator.class)
+public @interface UserAdditionalResources {
 
-    String message() default "User not exist in system";
+    String message() default "Additional resource does not belong to user";
 
     Class<?>[] groups() default {};
 
