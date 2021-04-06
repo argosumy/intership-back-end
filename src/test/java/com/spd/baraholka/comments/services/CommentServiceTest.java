@@ -1,7 +1,6 @@
 package com.spd.baraholka.comments.services;
 
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
-import com.spd.baraholka.comments.dto.CommentUserInfoDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.mappers.CommentUserInfoDtoMapper;
 import com.spd.baraholka.comments.repositories.CommentRepository;
