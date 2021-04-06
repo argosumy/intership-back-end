@@ -67,6 +67,12 @@ public class UserProfileService {
         return userAdditionalResourceService.getUserAdditionalResourcesId(userId);
     }
 
+    public UserDTO getCurrentUserDTO() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findByEmail(userPrincipal.getUsername());
+        return collectUserDTO(user);
+    }
+
     private List<UserShortViewDTO> collectShortViewUserDTO(List<UserShortViewDTO> users, List<ShortViewBlockDetailDTO> blockDetails) {
         return users.stream().map(userShortViewDTO -> matchUserWithBlockDetails(userShortViewDTO, blockDetails)).collect(Collectors.toList());
     }
@@ -93,12 +99,6 @@ public class UserProfileService {
     private EditUserMainInfoDTO collectUserMainInfoDTO(EditUserMainInfoDTO updatedMainInfoDTO, List<UserAdditionalResourceDTO> updatedResources) {
         updatedMainInfoDTO.setAdditionalContactResources(updatedResources);
         return updatedMainInfoDTO;
-    }
-
-    public UserDTO getCurrentUserDTO() {
-        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findByEmail(userPrincipal.getUsername());
-        return collectUserDTO(user);
     }
 
     private UserDTO collectUserDTO(User user) {

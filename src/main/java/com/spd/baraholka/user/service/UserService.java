@@ -34,15 +34,15 @@ public class UserService implements UserDetailsService {
         this.userMapper = userMapper;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = findByEmail(username);
+        return collectUser(user);
+    }
+
     public UserDTO getUserById(int id) {
         User user = persistenceUserService.selectUserById(id);
         return userMapper.convertToDTO(user);
-    }
-
-    private User collectUser(User user) {
-        Set<Role> roles = findRolesByUserId(user.getId());
-        user.setRoles(roles);
-        return user;
     }
 
     public List<UserShortViewDTO> getAllUsers() {
@@ -71,12 +71,6 @@ public class UserService implements UserDetailsService {
     public boolean isUserExist(int id) {
         Optional<Boolean> exist = persistenceUserService.isExist(id);
         return exist.orElse(false);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByEmail(username);
-        return collectUser(user);
     }
 
     public Set<Role> findRolesByUserId(int id) {
@@ -110,5 +104,11 @@ public class UserService implements UserDetailsService {
         User user = userMapper.convertToEntity(mainInfoDTO);
         User updatedUserInfo = persistenceUserService.updateUserMainInfo(user);
         return userMapper.convertToInfoDTO(updatedUserInfo);
+    }
+
+    private User collectUser(User user) {
+        Set<Role> roles = findRolesByUserId(user.getId());
+        user.setRoles(roles);
+        return user;
     }
 }
