@@ -101,18 +101,10 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    //TODO implement method
     public User getCurrentUser() {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return findByEmail(userPrincipal.getUsername());
     }
-
-    //TODO implement method
-//    public UserDTO getCurrentUserDTO() {
-//        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User user = findByEmail(userPrincipal.getUsername());
-//        return collectUserDTO(user);
-//    }
 
     public EditUserMainInfoDTO updateUserInfoPart(EditUserMainInfoDTO mainInfoDTO) {
         User user = userMapper.convertToEntity(mainInfoDTO);

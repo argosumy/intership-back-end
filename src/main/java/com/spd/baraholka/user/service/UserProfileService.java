@@ -1,6 +1,9 @@
 package com.spd.baraholka.user.service;
 
+import com.spd.baraholka.login.UserPrincipal;
 import com.spd.baraholka.user.controller.dto.*;
+import com.spd.baraholka.user.persistance.entities.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,6 +96,12 @@ public class UserProfileService {
     }
 
     public UserDTO getCurrentUserDTO() {
-        return null; //TODO implement method
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findByEmail(userPrincipal.getUsername());
+        return collectUserDTO(user);
+    }
+
+    private UserDTO collectUserDTO(User user) {
+        return null; // TODO implement method
     }
 }
