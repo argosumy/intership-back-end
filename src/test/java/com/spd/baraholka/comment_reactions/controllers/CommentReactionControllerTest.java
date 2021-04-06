@@ -10,15 +10,22 @@ import com.spd.baraholka.comment_reactions.enums.CommentReactionType;
 import com.spd.baraholka.comment_reactions.mappers.CommentReactionDtoMapper;
 import com.spd.baraholka.comment_reactions.services.CommentReactionService;
 import com.spd.baraholka.comments.entities.Comment;
-import com.spd.baraholka.users.entities.User;
+import com.spd.baraholka.comments.services.CommentService;
+import com.spd.baraholka.config.SecurityConfig;
+import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 import static com.spd.baraholka.comment_reactions.enums.CommentReactionType.DISLIKE;
 import static com.spd.baraholka.comment_reactions.enums.CommentReactionType.LIKE;
@@ -27,12 +34,17 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CommentReactionController.class)
+@ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
+@SpringBootTest
 class CommentReactionControllerTest {
 
     @Autowired
     @MockBean
     private CommentReactionService commentReactionService;
+    @Autowired
+    @MockBean
+    private CommentService commentService;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -41,7 +53,14 @@ class CommentReactionControllerTest {
     @Autowired
     private ObjectMapper mapper;
     private CommentReactionDto commentReactionDto;
-
+    @MockBean
+    private Comment comment;
+    @Autowired
+    private SecurityConfig securityConfig;
+    @Autowired
+    @MockBean
+    @Qualifier("OAuth2SuccessHandler")
+    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @BeforeEach
     void setUp() {
@@ -51,18 +70,6 @@ class CommentReactionControllerTest {
 
     private CommentReactionDto createCommentReactionDto() {
         return new CommentReactionDto(1, DISLIKE, 1, 1);
-    }
-
-    private Comment createComment() {
-        Comment comment = new Comment();
-        comment.setId(1);
-        return comment;
-    }
-
-    private User createUser() {
-        User user = new User();
-        user.setId(1);
-        return user;
     }
 
     @Test
@@ -84,6 +91,9 @@ class CommentReactionControllerTest {
 
     @Test
     void deleteCommentReaction() throws Exception {
+        when(commentService.findById(1))
+                .thenReturn(Optional.ofNullable(comment));
+
         mockMvc.perform(delete("/comment-reaction/1/LIKE"))
                 .andExpect(status().isOk());
 

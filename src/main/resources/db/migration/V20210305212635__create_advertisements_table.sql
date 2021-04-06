@@ -1,4 +1,4 @@
-CREATE TABLE "advertisements"
+CREATE TABLE advertisements
 (
     id                    SERIAL PRIMARY KEY NOT NULL,
     user_id               int                NOT NULL,

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 @Component
 public class UserShortViewRowMapper implements RowMapper<User> {
@@ -18,16 +17,7 @@ public class UserShortViewRowMapper implements RowMapper<User> {
         user.setImageUrl(rs.getString("avatar"));
         user.setFirstName(rs.getString("first_name"));
         user.setLastName(rs.getString("last_name"));
-        user.setBlocked(rs.getBoolean("is_blocked"));
-        setUserEndDateOfBan(user, rs);
         user.setEmail(rs.getString("e_mail"));
         return user;
-    }
-
-    private void setUserEndDateOfBan(User user, ResultSet resultSet) throws SQLException {
-        Timestamp endDateOfBan = resultSet.getTimestamp("end_date_of_ban");
-        if (endDateOfBan != null) {
-            user.setEndDateOfBan(endDateOfBan.toLocalDateTime());
-        }
     }
 }

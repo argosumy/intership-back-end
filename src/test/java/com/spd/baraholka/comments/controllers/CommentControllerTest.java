@@ -5,20 +5,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.spd.baraholka.advertisements.persistance.Advertisement;
+import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.comments.dto.CommentDto;
 import com.spd.baraholka.comments.entities.Comment;
 import com.spd.baraholka.comments.exceptions.CommentNotFoundException;
 import com.spd.baraholka.comments.mappers.CommentDtoMapper;
+import com.spd.baraholka.comments.mappers.CommentUserInfoDtoMapper;
 import com.spd.baraholka.comments.services.CommentService;
-import com.spd.baraholka.users.entities.User;
+import com.spd.baraholka.config.SecurityConfig;
+import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
+import com.spd.baraholka.user.persistance.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -31,7 +37,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CommentController.class)
+@ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
+@SpringBootTest
 class CommentControllerTest {
 
     @Autowired
@@ -43,11 +51,20 @@ class CommentControllerTest {
     @MockBean
     private CommentDtoMapper commentDtoMapper;
     @Autowired
+    @MockBean
+    private CommentUserInfoDtoMapper commentUserInfoDtoMapper;
+    @Autowired
     private ObjectMapper mapper;
     private CommentDto commentDto;
     private Comment comment;
     private Advertisement advertisement;
     private User user;
+    @Autowired
+    private SecurityConfig securityConfig;
+    @Autowired
+    @MockBean
+    @Qualifier("OAuth2SuccessHandler")
+    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @BeforeEach
     void setUp() {
@@ -127,6 +144,9 @@ class CommentControllerTest {
     @Test
     @DisplayName("Comment was deleted")
     void deleteComment() throws Exception {
+        when(commentService.findById(1))
+                .thenReturn(Optional.ofNullable(comment));
+
         mockMvc.perform(delete("/comment/1"))
                 .andExpect(status().isOk());
 
