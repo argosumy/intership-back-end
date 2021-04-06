@@ -31,6 +31,16 @@ public class AWS3ServiceImpl implements AWS3Service {
     }
 
     @Override
+    public String getAmazonDomain() {
+        return amazonDomain;
+    }
+
+    @Override
+    public String getBucketName() {
+        return bucketName;
+    }
+
+    @Override
     public String uploadImage(String fileName, MultipartFile image) {
         File file = convertMultiPartFileToFile(image);
         try {

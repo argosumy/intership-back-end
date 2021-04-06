@@ -139,7 +139,11 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void deleteImage(String imageUrl) {
-        aws3Service.deleteImageFromS3Bucket(imageUrl);
+        Objects.requireNonNull(imageUrl);
+        String bucketUrl = aws3Service.getAmazonDomain() + aws3Service.getBucketName();
+        if (imageUrl.contains(bucketUrl)) {
+            aws3Service.deleteImageFromS3Bucket(imageUrl);
+        }
     }
 
     private String generateFileName(ImageResource imageResource) {
