@@ -5,6 +5,11 @@ import com.spd.baraholka.user.controller.dto.EditUserMainInfoDTO;
 import com.spd.baraholka.user.controller.dto.UserDTO;
 import com.spd.baraholka.user.controller.dto.UserShortViewDTO;
 import com.spd.baraholka.user.service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.spd.baraholka.user.service.UserSettingsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +48,11 @@ public class UserController {
     @GetMapping
     public List<UserShortViewDTO> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> showMe() {
+        UserDTO userDTO = userService.getCurrentUserDTO();
+        return ResponseEntity.ok().body(userDTO);
     }
 }

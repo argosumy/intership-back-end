@@ -7,6 +7,8 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import com.spd.baraholka.config.exceptions.BadRequestException;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.config.exceptions.NotFoundException;
@@ -23,6 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@EnableScheduling
 public class AdvertisementService {
 
     private final PersistenceAdvertisementService persistenceAdvertisementService;
@@ -65,6 +68,11 @@ public class AdvertisementService {
         return exist.orElse(false);
     }
 
+    @Scheduled(cron = "${baraholka.scheduled.delete-old-archive-task}")
+    public void deleteOldArchiveAdvertisements() {
+        persistenceAdvertisementService.changeStatusArchivedOnDeleted();
+    }
+
     public FullAdvertisementDTO getAdvertisementById(int id) {
         Optional<Advertisement> advertisement = persistenceAdvertisementService.selectAdvertisementById(id);
         if (advertisement.isPresent()) {
@@ -78,6 +86,7 @@ public class AdvertisementService {
         FullAdvertisementDTO advertisementDTO = advertisementMapper.convertToDTO(advertisement);
         OwnerDTO owner = ownerService.getOwner(advertisement.getOwnerId());
         advertisementDTO.setAdvertisementOwner(owner);
+        advertisementDTO.setCharacteristics(characteristicService.readForAdId(advertisementDTO.getAdvertisementId()));
         return advertisementDTO;
     }
 
