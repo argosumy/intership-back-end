@@ -41,7 +41,7 @@ public class CharacteristicRepositoryImpl implements CharacteristicRepository {
                 .addValue("category_name", characteristic.getCategory().toString())
                 .addValue("characteristics_name", characteristic.getCharacteristicName())
                 .addValue("characteristics_value", characteristic.getCharacteristicValue())
-                .addValue("is_approved", characteristic.isApproved());
+                .addValue("is_approved", characteristic.getIsApproved());
 
         jdbcTemplate.update(sql, parameters);
     }
@@ -72,7 +72,7 @@ public class CharacteristicRepositoryImpl implements CharacteristicRepository {
     @Override
     public List<Characteristic> readForAdId(int adId) {
         String sql = "SELECT * FROM characteristics " +
-                "WHERE is_deleted = FALSE AND is_approved = TRUE AND id = :id";
+                "WHERE is_deleted = FALSE AND id = :id";
 
         return jdbcTemplate.query(sql, new MapSqlParameterSource("id", adId), characteristicMapper);
     }

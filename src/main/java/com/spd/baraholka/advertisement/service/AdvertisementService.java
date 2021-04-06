@@ -86,6 +86,7 @@ public class AdvertisementService {
         FullAdvertisementDTO advertisementDTO = advertisementMapper.convertToDTO(advertisement);
         OwnerDTO owner = ownerService.getOwner(advertisement.getOwnerId());
         advertisementDTO.setAdvertisementOwner(owner);
+        advertisementDTO.setCharacteristics(characteristicService.readForAdId(advertisementDTO.getAdvertisementId()));
         return advertisementDTO;
     }
 

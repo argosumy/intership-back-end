@@ -8,6 +8,7 @@ import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,8 +47,16 @@ public class CharacteristicServiceImpl implements CharacteristicService {
     }
 
     @Override
-    public List<Characteristic> readForAdId(int adId) {
-        return characteristicRepository.readForAdId(adId);
+    public List<CharacteristicDTO> readForAdId(int adId) {
+        List<CharacteristicDTO> list = new ArrayList<>();
+        for (Characteristic characteristic: characteristicRepository.readForAdId(adId)) {
+            list.add(new CharacteristicDTO(characteristic.getCharacteristicName(),
+                    characteristic.getCharacteristicValue(),
+                    characteristic.isApproved(),
+                    characteristic.getCategory())
+            );
+        }
+        return list;
     }
 
     @Override

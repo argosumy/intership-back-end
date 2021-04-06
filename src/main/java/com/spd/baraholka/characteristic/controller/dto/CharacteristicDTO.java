@@ -27,28 +27,28 @@ public class CharacteristicDTO {
         return characteristicName;
     }
 
-    public String getCharacteristicValue() {
-        return characteristicValue;
-    }
-
-    public boolean isApproved() {
-        return isApproved;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
     public void setCharacteristicName(String characteristicName) {
         this.characteristicName = characteristicName;
+    }
+
+    public String getCharacteristicValue() {
+        return characteristicValue;
     }
 
     public void setCharacteristicValue(String characteristicValue) {
         this.characteristicValue = characteristicValue;
     }
 
-    public void setApproved(boolean approved) {
+    public boolean getIsApproved() {
+        return isApproved;
+    }
+
+    public void setIsApproved(boolean approved) {
         isApproved = approved;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public void setCategory(Category category) {
