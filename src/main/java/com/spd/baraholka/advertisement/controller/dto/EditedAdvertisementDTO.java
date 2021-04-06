@@ -122,4 +122,8 @@ public class EditedAdvertisementDTO {
     public void setPublicationDate(LocalDateTime publicationDate) {
         this.publicationDate = publicationDate;
     }
+
+    public void setCharacteristics(List<CharacteristicDTO> characteristics) {
+        this.characteristics = characteristics;
+    }
 }

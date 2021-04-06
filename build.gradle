@@ -44,6 +44,7 @@ dependencies {
     implementation "io.springfox:springfox-boot-starter:3.0.0"
     implementation 'com.amazonaws:aws-java-sdk:1.11.969'
     implementation 'org.freemarker:freemarker'
+    implementation 'org.awaitility:awaitility:3.1.6'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
