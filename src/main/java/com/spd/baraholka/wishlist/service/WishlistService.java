@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface WishlistService {
 
-    void save(int userId, int advertisementsId);
+    void save(int advertisementsId);
 
-    List<Integer> read(int userId);
+    List<Integer> read();
 
-    void delete(int userId, int advertisementsId);
+    void delete(int advertisementsId);
 }
