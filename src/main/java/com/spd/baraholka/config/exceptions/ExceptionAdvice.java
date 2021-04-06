@@ -82,4 +82,17 @@ public class ExceptionAdvice {
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(AdvertisementIdsMismatchException.class)
+    public ResponseEntity<ErrorDto> handleAdvertisementIdsMismatchException(AdvertisementIdsMismatchException aime,
+                                                                            HttpServletRequest request) {
+        ErrorDto error = new ErrorDto(
+                HttpStatus.BAD_REQUEST.value(),
+                aime.getMessage(),
+                LocalDateTime.now(),
+                request.getServletPath()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }
