@@ -16,11 +16,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class UserRepository implements PersistenceUserService {
@@ -45,22 +41,20 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public User selectUserById(int id) {
+    public Optional<User> selectUserById(int id) {
         String selectSQL = "SELECT * FROM users WHERE id=:id";
         Map<String, Integer> selectParameters = Map.of("id", id);
-        return jdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper);
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(selectSQL, selectParameters, userRowMapper));
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public List<User> selectAllUsers() {
         String selectSQL = "SELECT id, first_name, last_name, avatar, e_mail, is_blocked, end_date_of_ban FROM users";
         return jdbcTemplate.query(selectSQL, userShortViewRowMapper);
-    }
-
-    @Override
-    public Optional<Boolean> existsByEmail(String email) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER (e_mail) = LOWER (:email)",
-                Map.of("email", email), Boolean.class));
     }
 
     @Override
@@ -135,6 +129,36 @@ public class UserRepository implements PersistenceUserService {
                     .addValue("role", role.name());
             jdbcTemplate.update(sql, parameters);
         }
+    }
+
+    @Override
+    public Optional<Boolean> existsByEmail(String email) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT count(*) <> 0 FROM users WHERE LOWER(e_mail) = LOWER(:email)",
+                Map.of("email", email), Boolean.class));
+    }
+
+    public Optional<User> findByEmail(String email) {
+        try {
+            return Optional.ofNullable(jdbcTemplate
+                    .queryForObject("SELECT * FROM users WHERE LOWER(e_mail) = LOWER(:email)",
+                    Map.of("email", email),
+                    userRowMapper)
+            );
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Set<Role> findRolesByUserId(int id) {
+        Set<Role> roles = new HashSet<>();
+        List<String> roleNames = jdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
+                Map.of("user_id", id),
+                String.class);
+        for (String role : roleNames) {
+            roles.add(Role.valueOf(role));
+        }
+        return roles;
     }
 }
 

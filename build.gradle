@@ -96,9 +96,9 @@ def loadProperties() {
     propertiesFile.withInputStream {
         properties.load(it)
     }
-    project.ext.dbUrl = System.getenv('SPRING_DATASOURCE_URL') ?: properties.'spring.datasource.url'
-    project.ext.dbUser = System.getenv('SPRING_DATASOURCE_USERNAME') ?: properties.'spring.datasource.username'
-    project.ext.dbPassword = System.getenv('SPRING_DATASOURCE_PASSWORD') ?: properties.'spring.datasource.password'
+    project.ext.dbUrl = System.getenv('DB_URL') ?: System.getenv('SPRING_DATASOURCE_URL') ?: properties.'spring.datasource.url'
+    project.ext.dbUser = System.getenv('DB_USERNAME') ?: System.getenv('SPRING_DATASOURCE_USERNAME') ?: properties.'spring.datasource.username'
+    project.ext.dbPassword = System.getenv('DB_PASSWORD') ?: System.getenv('SPRING_DATASOURCE_PASSWORD') ?: properties.'spring.datasource.password'
 }
 
 def configureJdbcDriver() {

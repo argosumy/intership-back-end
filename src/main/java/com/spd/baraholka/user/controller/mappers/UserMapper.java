@@ -43,6 +43,7 @@ public class UserMapper {
         userDTO.setImageUrl(imageUrl);
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setLocation(user.getLocation());
+        userDTO.setRoles(user.getRoles());
         return userDTO;
     }
 
