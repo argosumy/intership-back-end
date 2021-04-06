@@ -6,7 +6,6 @@ import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.image.service.ImageService;
 import com.spd.baraholka.user.controller.dto.*;
 import com.spd.baraholka.user.service.UserProfileService;
-import org.springframework.http.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -62,10 +61,10 @@ public class UserController {
         return userService.unBlockUser(userId, isNotify);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/me")
-    public ResponseEntity<UserDTO> showMe() {
-        UserDTO userDTO = userService.getCurrentUserDTO();
-        return ResponseEntity.ok().body(userDTO);
+    public UserDTO showMe() {
+        return userService.getCurrentUser();
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -80,8 +79,8 @@ public class UserController {
     public String saveUserAvatar(@RequestPart
                                  @ImageSize(maxMB = "${user.avatar.maxsize.mb}")
                                  @ImageContent MultipartFile image) {
-        User currentUser = userService.getCurrentUser();
-        int userId = currentUser.getId();
+        UserDTO loggedInUser = userService.getCurrentUser();
+        int userId = loggedInUser.getId();
         String avatarFileName = imageService.generateAvatarFileName(image);
         String newAvatarUrl = imageService.uploadImage(avatarFileName, image);
         String oldAvatarUrl = Objects.requireNonNull(userService.getUserById(userId)).getImageUrl();

@@ -30,7 +30,7 @@ public interface PersistenceUserService {
 
     Optional<User> findByEmail(String email);
 
-    Set<Role> findRolesByUserId(int id);
+    Set<Role> getRolesByUserId(int id);
 
     User selectUserMainInfo(int userId);
 }

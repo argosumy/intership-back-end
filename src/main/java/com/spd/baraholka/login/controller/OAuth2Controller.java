@@ -19,7 +19,7 @@ public class OAuth2Controller {
 
     @GetMapping(ENDPOINT_ME)
     public ResponseEntity<UserDTO> showMe() {
-        UserDTO userDTO = userService.getCurrentUserDTO();
+        UserDTO userDTO = userService.getCurrentUser();
         return ResponseEntity.ok().body(userDTO);
     }
 }

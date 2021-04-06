@@ -32,6 +32,10 @@ public class UserRepository implements PersistenceUserService {
             "VALUES (:first_name, :last_name, :email, :location, :phone_number, :position, :avatar) ";
     private static final String SELECT_USER_MAIN_INFO = "SELECT id, position, phone_number, location FROM users WHERE id=:userId";
     private static final String UPDATE_USER_MAIN_INFO_SQL = "UPDATE users SET position=:position, phone_number=:phoneNumber, location=:location WHERE id=:id";
+    private static final String SELECT_USER_BY_EMAIL_SQL = "SELECT * FROM users WHERE LOWER(e_mail) = LOWER(:email)";
+    private static final String SELECT_ROLES_BY_USER_SQL = "SELECT role FROM users_roles WHERE user_id = :user_id";
+    private static final String UPDATE_USER_AVATAR_SQL = "UPDATE users SET avatar = :avatar WHERE id = :user_id";
+
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper;
     private final UserShortViewRowMapper userShortViewRowMapper;
@@ -114,7 +118,7 @@ public class UserRepository implements PersistenceUserService {
     public Optional<User> findByEmail(String email) {
         try {
             return Optional.ofNullable(jdbcTemplate
-                    .queryForObject("SELECT * FROM users WHERE LOWER(e_mail) = LOWER(:email)",
+                    .queryForObject(SELECT_USER_BY_EMAIL_SQL,
                             Map.of("email", email),
                             userRowMapper)
             );
@@ -124,9 +128,9 @@ public class UserRepository implements PersistenceUserService {
     }
 
     @Override
-    public Set<Role> findRolesByUserId(int id) {
+    public Set<Role> getRolesByUserId(int id) {
         Set<Role> roles = new HashSet<>();
-        List<String> roleNames = jdbcTemplate.queryForList("SELECT role FROM users_roles WHERE user_id = :user_id",
+        List<String> roleNames = jdbcTemplate.queryForList(SELECT_ROLES_BY_USER_SQL,
                 Map.of("user_id", id),
                 String.class);
         for (String role : roleNames) {
@@ -158,13 +162,11 @@ public class UserRepository implements PersistenceUserService {
 
     @Override
     public int updateAvatar(int userId, String imageUrl) {
-        final String sql = "UPDATE users SET avatar = :avatar WHERE id = :user_id";
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("user_id", userId)
                 .addValue("avatar", imageUrl);
-        return jdbcTemplate.update(sql, parameters);
+        return jdbcTemplate.update(UPDATE_USER_AVATAR_SQL, parameters);
     }
-}
 
     private void saveUserRoles(User user) {
         Set<Role> roles = Objects.requireNonNull(user.getRoles());
