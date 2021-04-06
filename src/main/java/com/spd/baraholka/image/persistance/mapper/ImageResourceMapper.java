@@ -1,11 +1,10 @@
 package com.spd.baraholka.image.persistance.mapper;
 
-import com.spd.baraholka.image.persistance.entity.ImageResource;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
+import com.spd.baraholka.image.persistance.entity.*;
+import org.springframework.jdbc.core.*;
+import org.springframework.stereotype.*;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 @Component
 public class ImageResourceMapper implements RowMapper<ImageResource> {

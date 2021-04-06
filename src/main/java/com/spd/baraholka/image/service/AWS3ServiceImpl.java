@@ -1,35 +1,47 @@
 package com.spd.baraholka.image.service;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.spd.baraholka.config.exceptions.MultipartFileConversionFailureException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+import com.spd.baraholka.config.exceptions.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.multipart.*;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Objects;
+import java.io.*;
+import java.util.*;
 
 @Service
 public class AWS3ServiceImpl implements AWS3Service {
 
+    private static final String ILLEGAL_FILE_URL = "Illegal file URL. Provided file URL does not belong to SPD-Baraholka S3 bucket.";
+
     private final AmazonS3 amazonS3Client;
+
+    private final String amazonDomain;
 
     private final String bucketName;
 
     @Autowired
-    public AWS3ServiceImpl(@Value("${amazonProperties.bucketName}") String bucketName, AmazonS3 amazonS3Client) {
+    public AWS3ServiceImpl(@Value("${amazon.domain}") String amazonDomain,
+                           @Value("${amazonProperties.bucketName}") String bucketName,
+                           AmazonS3 amazonS3Client) {
+        this.amazonDomain = amazonDomain;
         this.bucketName = bucketName;
         this.amazonS3Client = amazonS3Client;
     }
 
     @Override
-    public void uploadImage(String fileName, MultipartFile image) {
+    public String getAmazonDomain() {
+        return amazonDomain;
+    }
+
+    @Override
+    public String getBucketName() {
+        return bucketName;
+    }
+
+    @Override
+    public String uploadImage(String fileName, MultipartFile image) {
         File file = convertMultiPartFileToFile(image);
         try {
             amazonS3Client.putObject(
@@ -38,11 +50,12 @@ public class AWS3ServiceImpl implements AWS3Service {
         } finally {
             file.delete();
         }
+        return amazonDomain + bucketName + "/" + fileName;
     }
 
     @Override
     public boolean deleteImageFromS3Bucket(String fileUrl) {
-        String objectName = fileUrl.substring(fileUrl.lastIndexOf("ads/"));
+        String objectName = getObjectNameFromUrl(fileUrl);
 
         if (amazonS3Client.doesObjectExist(bucketName, objectName)) {
             amazonS3Client.deleteObject(new DeleteObjectRequest(bucketName, objectName));
@@ -51,6 +64,16 @@ public class AWS3ServiceImpl implements AWS3Service {
         }
 
         return false;
+    }
+
+    private String getObjectNameFromUrl(String fileUrl) {
+        Objects.requireNonNull(fileUrl);
+        String bucketUrl = amazonDomain + bucketName + "/";
+        String[] fileUrlParts = fileUrl.split(bucketUrl);
+        if (fileUrlParts.length < 2) {
+            throw new IllegalArgumentException(ILLEGAL_FILE_URL);
+        }
+        return fileUrlParts[fileUrlParts.length - 1];
     }
 
     private File convertMultiPartFileToFile(MultipartFile multipartFile) {

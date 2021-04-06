@@ -12,7 +12,7 @@ public interface PersistenceUserService {
 
     User create(User user);
 
-    Optional<User> selectUserById(int id);
+    User selectUserById(int id);
 
     Optional<Boolean> existsByEmail(String email);
 
@@ -22,10 +22,17 @@ public interface PersistenceUserService {
 
     Optional<Boolean> isExist(int value);
 
+    User updateUserMainInfo(User user);
+
     Optional<Owner> selectOwner(int id);
+
+    int updateAvatar(int userId, String imageUrl);
 
     Optional<User> findByEmail(String email);
 
+    Set<Role> getRolesByUserId(int id);
+
+    User selectUserMainInfo(int userId);
     Set<Role> findRolesByUserId(int id);
 
     void saveRole(int userId, String role);

@@ -9,6 +9,7 @@ import com.spd.baraholka.advertisement.persistance.repositories.AdvertisementRep
 import com.spd.baraholka.characteristic.service.CharacteristicServiceImpl;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.user.service.OwnerService;
+import com.spd.baraholka.views.service.ViewService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,12 +38,13 @@ class AdvertisementServiceTest {
     private Advertisement advertisementActive;
     private Advertisement advertisementDraft;
     private Advertisement advertisementDraftToBeShown;
+    private ViewService viewService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         AdvertisementMapper advertisementMapper = new AdvertisementMapper();
-        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService, advertisementMapper, ownerService);
+        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService, advertisementMapper, ownerService, viewService);
         advertisementDraft = createAdvertisement(1, LocalDateTime.of(2022, 1, 1, 10, 40, 1),
                 AdvertisementStatus.DRAFT);
         advertisementActive = createAdvertisement(2, LocalDateTime.of(2019, 2, 2, 2, 10, 2),

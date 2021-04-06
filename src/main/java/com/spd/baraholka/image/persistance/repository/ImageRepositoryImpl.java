@@ -1,39 +1,46 @@
 package com.spd.baraholka.image.persistance.repository;
 
-import com.spd.baraholka.image.persistance.entity.ImageResource;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.stereotype.Repository;
+import com.spd.baraholka.image.persistance.entity.*;
+import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.support.*;
+import org.springframework.stereotype.*;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.sql.*;
+import java.util.*;
 
 @Repository
 public class ImageRepositoryImpl implements ImageRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final RowMapper<ImageResource> rowMapper;
+    private final RowMapper<ImageResource> imageResourceMapper;
+    private final RowMapper<Image> imageMapper;
 
-    public ImageRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate, RowMapper<ImageResource> rowMapper) {
+    public ImageRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate, RowMapper<ImageResource> imageResourceMapper, RowMapper<Image> imageMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.rowMapper = rowMapper;
+        this.imageResourceMapper = imageResourceMapper;
+        this.imageMapper = imageMapper;
     }
 
     @Override
-    public long saveImageUrl(String imageUrl) {
-        String sql = "INSERT INTO images(url) VALUES (:imageUrl) RETURNING id";
+    public Image saveImage(Image image) {
+        String sql = "INSERT INTO images(url, is_attached, uploaded_at) " +
+                     "VALUES (:imageUrl, :isAttached, :uploadedAt) RETURNING id";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("imageUrl", imageUrl);
+        parameters.addValue("imageUrl", image.getUrl());
+        parameters.addValue("isAttached", image.isAttached());
+        parameters.addValue("uploadedAt", Timestamp.valueOf(image.getUploadedAt()));
 
         jdbcTemplate.update(sql, parameters, keyHolder);
 
-        return Objects.requireNonNull(keyHolder.getKey()).longValue();
+        long id = Objects.requireNonNull(keyHolder.getKey()).longValue();
+
+        image.setId(id);
+
+        return image;
     }
 
     @Override
@@ -61,7 +68,7 @@ public class ImageRepositoryImpl implements ImageRepository {
         parameters.addValue("adIds", adIds);
         parameters.addValue("isPrimary", true);
 
-        return jdbcTemplate.query(sql, parameters, rowMapper);
+        return jdbcTemplate.query(sql, parameters, imageResourceMapper);
     }
 
     @Override
@@ -74,25 +81,7 @@ public class ImageRepositoryImpl implements ImageRepository {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("adId", adId);
 
-        return jdbcTemplate.query(sql, parameters, rowMapper);
-    }
-
-    @Override
-    public Optional<ImageResource> getImageById(long imageId) {
-        String sql = "SELECT images.id as id, ad_id, is_primary, position, url FROM advertisements_images " +
-                     "LEFT JOIN images ON advertisements_images.image_id = images.id " +
-                     "WHERE image_id = :imageId";
-
-        MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("imageId", imageId);
-
-        ImageResource imageResource = jdbcTemplate.queryForObject(sql, parameters, rowMapper);
-
-        if (Objects.isNull(imageResource)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(imageResource);
+        return jdbcTemplate.query(sql, parameters, imageResourceMapper);
     }
 
     @Override
@@ -105,5 +94,55 @@ public class ImageRepositoryImpl implements ImageRepository {
         if (jdbcTemplate.update(sql, parameters) != 1) {
             throw new IllegalStateException("Failed to delete the image with id = " + imageId);
         }
+    }
+
+    @Override
+    public void setAttached(long imageId) {
+        String sql = "UPDATE images SET is_attached = :isAttached WHERE id = :imageId";
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("imageId", imageId);
+        parameters.addValue("isAttached", true);
+
+        jdbcTemplate.update(sql, parameters);
+    }
+
+    @Override
+    public List<Image> getUnattachedImages() {
+        String sql = "SELECT * FROM images WHERE is_attached = false";
+
+        return jdbcTemplate.query(sql, imageMapper);
+    }
+
+    @Override
+    public Image getImage(long imageId) {
+        String sql = "SELECT * FROM images WHERE id = :imageId";
+
+        MapSqlParameterSource parameter = new MapSqlParameterSource();
+        parameter.addValue("imageId", imageId);
+
+        return jdbcTemplate.queryForObject(sql, parameter, imageMapper);
+    }
+
+    @Override
+    public void deleteImageResourcesByAdId(long adId) {
+        String sql = "DELETE FROM advertisements_images WHERE ad_id = :adId";
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("adId", adId);
+
+        jdbcTemplate.update(sql, parameters);
+    }
+
+    @Override
+    public boolean existImages(List<Long> imageIds) {
+        String sql = "SELECT * FROM images WHERE id IN (:imageIds)";
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("imageIds", imageIds);
+
+        List<Image> images = jdbcTemplate.query(sql, parameters, imageMapper);
+
+        return images.size() == imageIds.size();
     }
 }

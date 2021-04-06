@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface PersistenceAdvertisementService {
 
+    void updatePromotionDate(int idAdvertisement);
+
     int updateAdvertisement(Advertisement advertisement);
 
     int updateAdvertisementStatus(int id, AdvertisementStatus status);
@@ -21,6 +23,8 @@ public interface PersistenceAdvertisementService {
     int insertAdvertisement(Advertisement advertisement);
 
     Optional<Boolean> isExist(int intValue);
+
+    void changeStatusArchivedOnDeleted();
 
     Optional<Advertisement> selectAdvertisementById(int id);
 }
