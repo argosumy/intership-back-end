@@ -1,7 +1,6 @@
 package com.spd.baraholka.image.controller;
 
-import com.spd.baraholka.annotation.image.ImageContent;
-import com.spd.baraholka.annotation.image.ImagesContent;
+import com.spd.baraholka.annotation.image.*;
 import com.spd.baraholka.config.exceptions.*;
 import com.spd.baraholka.image.controller.annotation.*;
 import com.spd.baraholka.image.controller.dto.*;
@@ -68,6 +67,14 @@ public class ImageController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteImage(@PathVariable long imageId) {
         imageService.deleteImage(imageId);
+    }
+
+    @ApiOperation(value = "Returns list of primary images to the specified ads")
+    @PostMapping("images/primary")
+    public List<ImageResourceDto> getPrimary(@RequestBody List<Long> adIds) {
+        List<ImageResource> primaryImages = imageService.getPrimary(adIds);
+
+        return toDto(primaryImages);
     }
 
     @PostMapping(value = "ads/{adId}/images/image", consumes = "multipart/form-data")
@@ -140,6 +147,16 @@ public class ImageController {
         }
 
         return imageResources;
+    }
+
+    private List<ImageResourceDto> toDto(List<ImageResource> imageResources) {
+        return imageResources.stream().map(imgResource -> {
+            return new ImageResourceDto(imgResource.getId(),
+                    imgResource.getAdId(),
+                    imgResource.getIsPrimary(),
+                    imgResource.getPosition(),
+                    imgResource.getImageUrl());
+        }).collect(Collectors.toList());
     }
 
     private void validateIds(long adId, List<ImageResourceDto> imageResources) {
