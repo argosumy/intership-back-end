@@ -21,8 +21,12 @@ public class AdditionalResourceBelongToUserValidator implements ConstraintValida
 
     @Override
     public boolean isValid(EditUserMainInfoDTO value, ConstraintValidatorContext context) {
-        int userId = value.getUserId();
         List<UserAdditionalResourceDTO> resources = value.getAdditionalContactResources();
+        return resources != null && iBelongToUser(value, resources);
+    }
+
+    private boolean iBelongToUser(EditUserMainInfoDTO value, List<UserAdditionalResourceDTO> resources) {
+        int userId = value.getUserId();
         Set<Integer> editResourcesId = resources.stream().map(UserAdditionalResourceDTO::getId).filter(resourceId -> resourceId != 0).collect(Collectors.toSet());
         Set<Integer> resourcesId = userService.getUserAdditionalResourcesId(userId);
         return editResourcesId.isEmpty() || resourcesId.containsAll(editResourcesId);

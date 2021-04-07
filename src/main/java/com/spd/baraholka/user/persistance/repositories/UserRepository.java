@@ -114,6 +114,31 @@ public class UserRepository implements PersistenceUserService {
         }
     }
 
+    private void saveUserRoles(User user) {
+        Set<Role> roles = Objects.requireNonNull(user.getRoles());
+        int userId = user.getId();
+        for (Role role : roles) {
+            saveRole(userId, role.name());
+        }
+    }
+
+    public void saveRole(int userId, String role) {
+        Objects.requireNonNull(role);
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("user_id", userId)
+                .addValue("role", role);
+        jdbcTemplate.update(SAVE_USER_ROLE_SQL, parameters);
+    }
+
+    public void deleteRole(int userId, String role) {
+        Objects.requireNonNull(role);
+        final String sql = "DELETE FROM users_roles WHERE (user_id = :user_id) and (role = :role)";
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("user_id", userId)
+                .addValue("role", role);
+        jdbcTemplate.update(sql, parameters);
+    }
+
     @Override
     public Optional<User> findByEmail(String email) {
         try {
@@ -166,16 +191,5 @@ public class UserRepository implements PersistenceUserService {
                 .addValue("user_id", userId)
                 .addValue("avatar", imageUrl);
         return jdbcTemplate.update(UPDATE_USER_AVATAR_SQL, parameters);
-    }
-
-    private void saveUserRoles(User user) {
-        Set<Role> roles = Objects.requireNonNull(user.getRoles());
-        int userId = user.getId();
-        for (Role role : roles) {
-            SqlParameterSource parameters = new MapSqlParameterSource()
-                    .addValue("user_id", userId)
-                    .addValue("role", role.name());
-            jdbcTemplate.update(SAVE_USER_ROLE_SQL, parameters);
-        }
     }
 }

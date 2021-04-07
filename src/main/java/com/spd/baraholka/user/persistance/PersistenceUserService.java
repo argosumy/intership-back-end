@@ -33,4 +33,8 @@ public interface PersistenceUserService {
     Set<Role> getRolesByUserId(int id);
 
     User selectUserMainInfo(int userId);
+
+    void saveRole(int userId, String role);
+
+    void deleteRole(int userId, String role);
 }

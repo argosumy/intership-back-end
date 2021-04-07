@@ -2,38 +2,48 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
+import com.spd.baraholka.annotation.advertisement.PositivePrice;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class AdvertisementDTO {
 
-    private int advertisementId;
-    private int ownerId;
     @Size(max = 200)
     private String title;
+
     @NotNull
     private AdvertisementStatus status;
-    @Positive
+
+    @PositivePrice
     private double price;
+
     @PastOrPresent
     private LocalDateTime creationDate;
+
     @PastOrPresent
     private LocalDateTime statusChangeDate;
+
     @Size(max = 20)
     private String city;
+
     @NotNull
     private String description;
+
     @NotNull
     private String category;
+
     @NotNull
     private CurrencyType currency;
-    private boolean discountAvailability;
+
     @NotNull
     private LocalDateTime publicationDate;
+
+    private boolean discountAvailability;
+    private int ownerId;
+    private int advertisementId;
 
     public int getAdvertisementId() {
         return advertisementId;
