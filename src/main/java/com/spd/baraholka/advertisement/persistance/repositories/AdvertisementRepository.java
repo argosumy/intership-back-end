@@ -20,11 +20,15 @@ import java.util.*;
 @Repository
 public class AdvertisementRepository implements PersistenceAdvertisementService {
 
-    private static final String CATEGORY_CONDITION = " AND a.category = :category";
+//    private static final String CATEGORY_CONDITION = " AND a.category = :category";
+//    private static final String CATEGORY_CONDITION = " AND a.category = ANY(ARRAY:category)";
+    private static final String CATEGORY_CONDITION = " AND a.category IN (:category)";
     private static final String PRICE_RANGE_CONDITION = " AND a.price BETWEEN :min AND :max";
     private static final String MAX_PRICE_CONDITION = " AND a.price <= :max";
     private static final String MIN_PRICE_CONDITION = " AND a.price >= :min";
-    private static final String CITY_CONDITION = " AND a.city = :city";
+//    private static final String CITY_CONDITION = " AND a.city = :city";
+//    private static final String CITY_CONDITION = " AND a.city = ANY(ARRAY:city)";
+    private static final String CITY_CONDITION = " AND a.city IN (:city)";
     private static final String STATUS_CONDITION = " AND a.status = :status";
     private static final String CHARACTERISTICS_CONDITION = " (c.characteristics_name = :characteristics_name AND c.characteristics_value = :characteristics_value " +
             "AND c.is_approved = TRUE AND c.is_deleted = FALSE)";
@@ -153,13 +157,13 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 counter++;
             }
         }
-        if (filterDTO.getCategory() != null) {
+        if (filterDTO.getCategories() != null) {
             sql.append(CATEGORY_CONDITION);
-            parameters.put("category", filterDTO.getCategory().name());
+            parameters.put("category", filterDTO.getCategories().toString().replace("[", "").replace("]",""));
         }
-        if (filterDTO.getCity() != null) {
+        if (filterDTO.getCities() != null) {
             sql.append(CITY_CONDITION);
-            parameters.put("city", filterDTO.getCity());
+            parameters.put("city", filterDTO.getCities().toString().replace("[", "").replace("]",""));
         }
         if (filterDTO.getMaxPrice() != null) {
             parameters.put("max", filterDTO.getMaxPrice());

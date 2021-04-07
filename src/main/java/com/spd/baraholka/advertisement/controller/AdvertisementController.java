@@ -79,7 +79,7 @@ public class AdvertisementController {
     }
 
     @SuppressWarnings("checkstyle:parameternumber")
-    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(path="/filter", consumes = APPLICATION_JSON_VALUE)
     public PageRequest<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
                                                                   @RequestBody FilterDTO filterDTO,
 //                                                                  @RequestParam(value = "category", required = false) Category category,
@@ -98,7 +98,7 @@ public class AdvertisementController {
         return pageRequest.map(advertisementUserEmailMapper::getAdvertisementUserEmailDto);
     }
 
-    @PostMapping(path = "/profile", consumes = APPLICATION_JSON_VALUE)
+    @GetMapping("/profile")
     public PageRequest<AdvertisementUserEmailDTO> getAllAdsByType(@RequestParam(value = "type", required = true, defaultValue = "my") String type,
                                                                   @RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
                                                                   @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
@@ -130,12 +130,12 @@ public class AdvertisementController {
         advertisementService.promotionAd(adId);
     }
 
-    private FilterDTO initFilterDTO(Category[] category, String[] city, Double minPrice, Double maxPrice, Map<String, String> characteristics) {
+    private FilterDTO initFilterDTO(List<Category> categories, List<String> cities, Double minPrice, Double maxPrice, Map<String, String> characteristics) {
         FilterDTO filterDTO = new FilterDTO();
-        if (category != null) {
-            filterDTO.setCategory(category);
+        if (categories != null) {
+            filterDTO.setCategories(categories);
         }
-        filterDTO.setCity(city);
+        filterDTO.setCities(cities);
         filterDTO.setMinPrice(minPrice);
         filterDTO.setMaxPrice(maxPrice);
         filterDTO.setCharacteristics(characteristics);

@@ -2,22 +2,23 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.characteristic.persistance.entities.Category;
 
+import java.util.List;
 import java.util.Map;
 
 public class FilterDTO {
 
-    private Category[] category;
+    private List<Category> categories;
     private Double minPrice;
     private Double maxPrice;
-    private String[] city;
+    private List<String> cities;
     private Map<String, String> characteristics;
 
-    public Category[] getCategory() {
-        return category;
+    public List<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category[] category) {
-        this.category = category;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public Double getMinPrice() {
@@ -36,12 +37,12 @@ public class FilterDTO {
         this.maxPrice = maxPrice;
     }
 
-    public String[] getCity() {
-        return city;
+    public List<String> getCities() {
+        return cities;
     }
 
-    public void setCity(String[] city) {
-        this.city = city;
+    public void setCities(List<String> city) {
+        this.cities = city;
     }
 
     public Map<String, String> getCharacteristics() {
