@@ -1,7 +1,7 @@
 package com.spd.baraholka.login.controller;
 
-import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
-import com.spd.baraholka.login.service.OAuth2UserService;
+import com.spd.baraholka.user.controller.dto.UserDTO;
+import com.spd.baraholka.user.service.UserProfileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OAuth2Controller {
 
-    private final OAuth2UserService oAuth2UserService;
+    private final UserProfileService userService;
 
-    public static final String ENDPOINT_ME_OAUTH = "/me/oauth2";
+    public static final String ENDPOINT_ME = "/me";
 
-    public OAuth2Controller(OAuth2UserService oAuth2UserService) {
-        this.oAuth2UserService = oAuth2UserService;
+    public OAuth2Controller(UserProfileService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping(ENDPOINT_ME_OAUTH)
-    public ResponseEntity<OAuth2UserDTO> showOAuth2User() {
-        OAuth2UserDTO oAuth2UserDto = oAuth2UserService.getUserInfoFromOAuth2();
-        return ResponseEntity.ok().body(oAuth2UserDto);
+    @GetMapping(ENDPOINT_ME)
+    public ResponseEntity<UserDTO> showMe() {
+        UserDTO userDTO = userService.getCurrentUser();
+        return ResponseEntity.ok().body(userDTO);
     }
 }

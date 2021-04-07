@@ -38,11 +38,11 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setPosition(user.getPosition());
         userDTO.setPhoneNumber(user.getPhoneNumber());
-        userDTO.setBlocked(user.isBlocked());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
+        String imageUrl = user.getImageUrl();
         userDTO.setImageUrl(imageUrl);
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setLocation(user.getLocation());
+        userDTO.setRoles(user.getRoles());
         return userDTO;
     }
 
@@ -83,7 +83,7 @@ public class UserMapper {
     private UserShortViewDTO convertToShortViewDTO(User user) {
         UserShortViewDTO userDTO = new UserShortViewDTO();
         userDTO.setId(user.getId());
-        String imageUrl = collapseImageUrl(user.getImageUrl());
+        String imageUrl = user.getImageUrl();
         userDTO.setImageUrl(imageUrl);
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
@@ -91,6 +91,17 @@ public class UserMapper {
         userDTO.setEndDateOfBan(user.getEndDateOfBan());
         userDTO.setEmail(user.getEmail());
         return userDTO;
+    }
+
+    public UserShortViewDTO toShortViewDTO(UserDTO userDTO) {
+        UserShortViewDTO userShortViewDTO = new UserShortViewDTO();
+        userShortViewDTO.setId(userDTO.getId());
+        userShortViewDTO.setFirstName(userDTO.getFirstName());
+        userShortViewDTO.setLastName(userDTO.getLastName());
+        userShortViewDTO.setBlocked(userDTO.isBlocked());
+        userShortViewDTO.setEndDateOfBan(userDTO.getEndDateOfBan());
+        userShortViewDTO.setEmail(userDTO.getEmail());
+        return userShortViewDTO;
     }
 
     private String collapseImageUrl(String imageUrl) {

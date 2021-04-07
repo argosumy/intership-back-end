@@ -1,51 +1,87 @@
 package com.spd.baraholka.image.service;
 
-import com.spd.baraholka.image.persistance.entity.ImageResource;
-import com.spd.baraholka.image.persistance.repository.ImageRepository;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import com.spd.baraholka.image.persistance.entity.*;
+import com.spd.baraholka.image.persistance.repository.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.multipart.*;
 
+import java.time.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private final String amazonDomain;
+    private static final String AVATAR_PREFIX = "users/avatar_";
 
     private final ImageRepository repository;
 
     private final AWS3Service aws3Service;
 
-    private final String bucketName;
-
     private static final Comparator<ImageResource> COMPARATOR = Comparator.comparing(ImageResource::getPosition);
 
-    public ImageServiceImpl(ImageRepository repository,
-                            AWS3ServiceImpl aws3Service,
-                            @Value("${amazon.domain}") String amazonDomain,
-                            @Value("${amazonProperties.bucketName}") String bucketName) {
+    public ImageServiceImpl(ImageRepository repository, AWS3ServiceImpl aws3Service) {
         this.repository = repository;
         this.aws3Service = aws3Service;
-        this.amazonDomain = amazonDomain;
-        this.bucketName = bucketName;
     }
 
     @Override
     public ImageResource save(ImageResource imageResource) {
         String imageName = generateFileName(imageResource);
-        String imageUrl = amazonDomain + bucketName + "/" + imageName;
 
-        aws3Service.uploadImage(imageName, imageResource.getImage());
+        String imageUrl = uploadImage(imageName, imageResource.getImage());
 
-        long imageId = repository.saveImageUrl(imageUrl);
+        Image image = new Image();
+        image.setUrl(imageUrl);
+        image.setAttached(true);
+        image.setUploadedAt(LocalDateTime.now());
 
-        imageResource.setId(imageId);
-        imageResource.setImageUrl(imageUrl);
+        repository.saveImage(image);
+
+        imageResource.setId(image.getId());
+        imageResource.setImageUrl(image.getUrl());
 
         repository.save(imageResource);
 
         return imageResource;
+    }
+
+    @Override
+    public String uploadImage(String imageName, MultipartFile image) {
+        return aws3Service.uploadImage(imageName, image);
+    }
+
+    @Override
+    public void saveImageResources(long adId, List<ImageResource> imageResources) {
+        List<ImageResource> attachedImages = repository.getAllByAdId(adId);
+        if (!attachedImages.isEmpty()) {
+            repository.deleteImageResourcesByAdId(adId);
+            deleteImagesDifferenceFromS3(imageResources, attachedImages);
+        }
+
+        imageResources.forEach(imageResource -> {
+            repository.setAttached(imageResource.getId());
+            repository.save(imageResource);
+        });
+    }
+
+    @Override
+    public Image uploadImage(long adId, MultipartFile file) {
+        String imageName = generateFileName(adId, file);
+        String imageUrl = aws3Service.uploadImage(imageName, file);
+
+        Image image = new Image();
+        image.setUrl(imageUrl);
+        image.setAttached(false);
+        image.setUploadedAt(LocalDateTime.now());
+
+        return repository.saveImage(image);
+    }
+
+    @Override
+    public List<Image> getAllUnattached() {
+        return repository.getUnattachedImages();
     }
 
     @Override
@@ -80,17 +116,34 @@ public class ImageServiceImpl implements ImageService {
         });
     }
 
-    @Override
     public void deleteImage(long imageId) {
-        Optional<ImageResource> imageResourceContainer = repository.getImageById(imageId);
+        Image image = repository.getImage(imageId);
+        aws3Service.deleteImageFromS3Bucket(image.getUrl());
+        repository.deleteImage(imageId);
+    }
 
-        if (imageResourceContainer.isEmpty()) {
-            throw new NoSuchElementException("Images with id " + imageId + " wasn't found.");
+    private void deleteImagesDifferenceFromS3(List<ImageResource> imageResources, List<ImageResource> attachedImages) {
+        Set<Long> attachedImagesIds = attachedImages.stream().map(ImageResource::getId).collect(Collectors.toSet());
+        Set<Long> toBeSavedImagesIds = imageResources.stream().map(ImageResource::getId).collect(Collectors.toSet());
+        List<Long> difference = attachedImagesIds
+                .stream()
+                .filter(imageResource -> !toBeSavedImagesIds.contains(imageResource))
+                .collect(Collectors.toList());
+
+        difference.forEach(imageId -> {
+            Image image = repository.getImage(imageId);
+            aws3Service.deleteImageFromS3Bucket(image.getUrl());
+            repository.deleteImage(imageId);
+        });
+    }
+
+    @Override
+    public void deleteImage(String imageUrl) {
+        Objects.requireNonNull(imageUrl);
+        String bucketUrl = aws3Service.getAmazonDomain() + aws3Service.getBucketName();
+        if (imageUrl.contains(bucketUrl)) {
+            aws3Service.deleteImageFromS3Bucket(imageUrl);
         }
-
-        ImageResource imageResource = imageResourceContainer.get();
-        aws3Service.deleteImageFromS3Bucket(imageResource.getImageUrl());
-        repository.deleteImage(imageResource.getId());
     }
 
     private String generateFileName(ImageResource imageResource) {
@@ -99,5 +152,29 @@ public class ImageServiceImpl implements ImageService {
         String originalFileName = Objects.requireNonNull(multiPart.getOriginalFilename()).replace(" ", "_");
 
         return String.format("ads/%s/%s-%s", adId, new Date().getTime(), originalFileName);
+    }
+
+    private String generateFileName(long adId, MultipartFile multiPart) {
+        String originalFileName = Objects.requireNonNull(multiPart.getOriginalFilename()).replace(" ", "_");
+
+        return String.format("ads/%s/%s-%s", adId, new Date().getTime(), originalFileName);
+    }
+
+    @Override
+    public String generateAvatarFileName(MultipartFile file) {
+        Objects.requireNonNull(file);
+        String fileExtension = getFileExtension(file.getOriginalFilename());
+        return AVATAR_PREFIX + UUID.randomUUID().toString() + fileExtension;
+    }
+
+    @Override
+    public String getFileExtension(String filename) {
+        String delimiter = "\\.";
+        Objects.requireNonNull(filename);
+        String[] fileNameParts = filename.split(delimiter);
+        if (fileNameParts.length < 2) {
+            return "";
+        }
+        return "." + fileNameParts[fileNameParts.length - 1];
     }
 }

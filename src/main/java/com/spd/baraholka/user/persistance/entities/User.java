@@ -1,11 +1,19 @@
 package com.spd.baraholka.user.persistance.entities;
 
 import com.spd.baraholka.role.Role;
+import com.spd.baraholka.role.UserAuthority;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
-public class User {
+import static com.spd.baraholka.role.Role.USER;
+
+public class User implements UserDetails {
 
     private int id;
     private String imageUrl;
@@ -17,11 +25,12 @@ public class User {
     private String phoneNumber;
     private boolean isBlocked;
     private LocalDateTime endDateOfBan;
-    private final Set<Role> roles;
+    private Set<Role> roles;
 
     public User() {
         this.roles = new HashSet<>();
-        roles.add(Role.USER);
+        this.roles.add(USER);
+        roles.add(USER);
     }
 
     public int getId() {
@@ -100,15 +109,66 @@ public class User {
         return Collections.unmodifiableSet(roles);
     }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public boolean grantRole(Role role) {
         return roles.add(role);
+    }
+
+    public boolean revokeRole(Role role) {
+        boolean isRevoked = false;
+        if (!USER.equals(role)) {
+            isRevoked = roles.remove(role);
+        }
+        return isRevoked;
     }
 
     public LocalDateTime getEndDateOfBan() {
         return endDateOfBan;
     }
 
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        for (Role role : this.roles) {
+            authorities.add(new UserAuthority(role));
+        }
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return "N/A";
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !isBlocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
     public void setEndDateOfBan(LocalDateTime endDateOfBan) {
         this.endDateOfBan = endDateOfBan;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

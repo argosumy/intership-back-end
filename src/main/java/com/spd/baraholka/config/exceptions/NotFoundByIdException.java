@@ -6,3 +6,4 @@ public class NotFoundByIdException extends RuntimeException {
         super("Could not find by id: " + id);
     }
 }
+
