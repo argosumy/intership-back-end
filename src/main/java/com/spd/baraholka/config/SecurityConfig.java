@@ -55,9 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint()
-                    .userService(oAuth2UserService)
+                .userService(oAuth2UserService)
                 .and()
                 .successHandler(oauth2SuccessHandler)
+                .and()
+                .logout().permitAll()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
     }
