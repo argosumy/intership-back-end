@@ -10,6 +10,7 @@ import com.spd.baraholka.user.controller.mappers.UserMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserService;
 import com.spd.baraholka.user.persistance.entities.User;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -43,6 +45,13 @@ public class UserService implements UserDetailsService {
     public UserDTO getUserById(int id) {
         User user = persistenceUserService.selectUserById(id);
         return userMapper.convertToDTO(user);
+    }
+
+    public User getUserEntityById(int id) {
+        User user = persistenceUserService.selectUserById(id);
+        Set<Role> roles = persistenceUserService.getRolesByUserId(id);
+        user.setRoles(roles);
+        return user;
     }
 
     public List<UserShortViewDTO> getAllUsers() {
@@ -114,5 +123,25 @@ public class UserService implements UserDetailsService {
 
     public int updateAvatar(int userId, String imageUrl) {
         return persistenceUserService.updateAvatar(userId, imageUrl);
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public void grantRole(User user, Role role) {
+        Objects.requireNonNull(user);
+        Objects.requireNonNull(role);
+        boolean isRoleGranted = user.grantRole(role);
+        if (isRoleGranted) {
+            persistenceUserService.saveRole(user.getId(), role.name());
+        }
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public void revokeRole(User user, Role role) {
+        Objects.requireNonNull(user);
+        Objects.requireNonNull(role);
+        boolean isRoleRevoked = user.revokeRole(role);
+        if (isRoleRevoked) {
+            persistenceUserService.deleteRole(user.getId(), role.name());
+        }
     }
 }
