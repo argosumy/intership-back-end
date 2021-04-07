@@ -6,17 +6,17 @@ import java.util.Map;
 
 public class FilterDTO {
 
-    private Category category;
+    private Category[] category;
     private Double minPrice;
     private Double maxPrice;
-    private String city;
+    private String[] city;
     private Map<String, String> characteristics;
 
-    public Category getCategory() {
+    public Category[] getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Category[] category) {
         this.category = category;
     }
 
@@ -36,11 +36,11 @@ public class FilterDTO {
         this.maxPrice = maxPrice;
     }
 
-    public String getCity() {
+    public String[] getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(String[] city) {
         this.city = city;
     }
 

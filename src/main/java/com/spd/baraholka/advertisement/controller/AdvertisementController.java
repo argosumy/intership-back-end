@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+
 @Validated
 @RestController
 @RequestMapping("/advertisement")
@@ -60,14 +62,15 @@ public class AdvertisementController {
     @GetMapping("/search")
     public PageRequest<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
                                                                @RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
-                                                               @RequestParam(value = "category", required = false) Category category,
-                                                               @RequestParam(value = "city", required = false) String city,
-                                                               @RequestParam(value = "min_price", required = false) Double minPrice,
-                                                               @RequestParam(value = "max_price", required = false) Double maxPrice,
-                                                               @RequestParam(value = "characteristics", required = false) Map<String, String> characteristics,
+                                                               @RequestBody FilterDTO filterDTO,
+//                                                               @RequestParam(value = "category", required = false) Category category,
+//                                                               @RequestParam(value = "city", required = false) String city,
+//                                                               @RequestParam(value = "min_price", required = false) Double minPrice,
+//                                                               @RequestParam(value = "max_price", required = false) Double maxPrice,
+//                                                               @RequestParam(value = "characteristics", required = false) Map<String, String> characteristics,
                                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                @RequestParam("pageNumber") int pageNumber) {
-        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
+//        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
         List<Advertisement> filteredAdvertisements = advertisementService.getPublishedFilteredAds(filterDTO);
         List<Advertisement> advertisementsFoundByKeyword = advertisementService.getFilteredAdsByKeyword(filteredAdvertisements, keyword);
         List<Advertisement> sortedAdvertisements = advertisementService.sort(advertisementsFoundByKeyword, sortOrder);
@@ -76,25 +79,26 @@ public class AdvertisementController {
     }
 
     @SuppressWarnings("checkstyle:parameternumber")
-    @GetMapping
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public PageRequest<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
-                                                                  @RequestParam(value = "category", required = false) Category category,
-                                                                  @RequestParam(value = "city", required = false) String city,
-                                                                  @RequestParam(value = "min_price", required = false) Double minPrice,
-                                                                  @RequestParam(value = "max_price", required = false) Double maxPrice,
-                                                                  @RequestParam(value = "characteristic_names", required = false) String[] characteristicNames,
-                                                                  @RequestParam(value = "characteristic_values", required = false) String[] characteristicValues,
+                                                                  @RequestBody FilterDTO filterDTO,
+//                                                                  @RequestParam(value = "category", required = false) Category category,
+//                                                                  @RequestParam(value = "city", required = false) String city,
+//                                                                  @RequestParam(value = "min_price", required = false) Double minPrice,
+//                                                                  @RequestParam(value = "max_price", required = false) Double maxPrice,
+//                                                                  @RequestParam(value = "characteristic_names", required = false) String[] characteristicNames,
+//                                                                  @RequestParam(value = "characteristic_values", required = false) String[] characteristicValues,
                                                                   @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                   @RequestParam("pageNumber") int pageNumber) {
-        Map<String, String> characteristics = initCharacteristics(characteristicNames, characteristicValues);
-        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
+//        Map<String, String> characteristics = initCharacteristics(characteristicNames, characteristicValues);
+//        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
         List<Advertisement> filteredAdvertisements = advertisementService.getPublishedFilteredAds(filterDTO);
         List<Advertisement> sortedAdvertisementList = advertisementService.sort(filteredAdvertisements, sortOrder);
         PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, sortedAdvertisementList);
         return pageRequest.map(advertisementUserEmailMapper::getAdvertisementUserEmailDto);
     }
 
-    @GetMapping("/profile")
+    @PostMapping(path = "/profile", consumes = APPLICATION_JSON_VALUE)
     public PageRequest<AdvertisementUserEmailDTO> getAllAdsByType(@RequestParam(value = "type", required = true, defaultValue = "my") String type,
                                                                   @RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
                                                                   @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
@@ -126,7 +130,7 @@ public class AdvertisementController {
         advertisementService.promotionAd(adId);
     }
 
-    private FilterDTO initFilterDTO(Category category, String city, Double minPrice, Double maxPrice, Map<String, String> characteristics) {
+    private FilterDTO initFilterDTO(Category[] category, String[] city, Double minPrice, Double maxPrice, Map<String, String> characteristics) {
         FilterDTO filterDTO = new FilterDTO();
         if (category != null) {
             filterDTO.setCategory(category);
