@@ -72,9 +72,9 @@ public class CharacteristicRepositoryImpl implements CharacteristicRepository {
     @Override
     public List<Characteristic> readForAdId(int adId) {
         String sql = "SELECT * FROM characteristics " +
-                "WHERE is_deleted = FALSE AND id = :id";
+                "WHERE is_deleted = FALSE AND advertisement_id = :advertisement_id";
 
-        return jdbcTemplate.query(sql, new MapSqlParameterSource("id", adId), characteristicMapper);
+        return jdbcTemplate.query(sql, new MapSqlParameterSource("advertisement_id", adId), characteristicMapper);
     }
 
     @Override
