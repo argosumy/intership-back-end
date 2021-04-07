@@ -27,7 +27,6 @@ public class EditUserMainInfoDTO {
     @Size(max = 26)
     private String location;
 
-    @NotEmpty
     @Size(max = 10)
     private List<UserAdditionalResourceDTO> additionalContactResources;
 
