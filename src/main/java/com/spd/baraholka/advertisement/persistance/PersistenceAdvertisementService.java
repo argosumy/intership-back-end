@@ -1,7 +1,9 @@
 package com.spd.baraholka.advertisement.persistance;
 
+import com.spd.baraholka.advertisement.controller.dto.FilterDTO;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
+import com.spd.baraholka.characteristic.persistance.entities.Category;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,6 +19,16 @@ public interface PersistenceAdvertisementService {
     int updateAdvertisementStatus(int id, AdvertisementStatus status);
 
     List<Advertisement> getAllActive();
+
+    List<Advertisement> getPublishedFilteredAds(FilterDTO filterDTO);
+
+    List<Advertisement> getAllPublishedByCategory(Category category);
+
+    List<Advertisement> getAllPublishedByPrice(double min, double max);
+
+    List<Advertisement> getAllPublishedByCategoryAndPrice(Category category, double min, double max);
+
+    List<Advertisement> getAllAdsWithStatusByUser(int userId, AdvertisementStatus status);
 
     Optional<Advertisement> findDraftAdById(int id);
 

@@ -28,6 +28,7 @@ public class AdvertisementRowMapper implements RowMapper<Advertisement> {
         advertisement.setCity(rs.getString("city"));
         setStatus(rs, advertisement);
         setPublicationDate(rs, advertisement);
+        setCreationDate(rs, advertisement);
         return advertisement;
     }
 
@@ -47,5 +48,11 @@ public class AdvertisementRowMapper implements RowMapper<Advertisement> {
         Timestamp publicationTimeStamp = resultSet.getTimestamp("publication_date");
         LocalDateTime publicationDate = publicationTimeStamp.toLocalDateTime();
         advertisement.setPublicationDate(publicationDate);
+    }
+
+    private void setCreationDate(ResultSet resultSet, Advertisement advertisement) throws SQLException {
+        Timestamp creationTimeStamp = resultSet.getTimestamp("creation_date");
+        LocalDateTime creationDate = creationTimeStamp.toLocalDateTime();
+        advertisement.setCreationDate(creationDate);
     }
 }
