@@ -1,7 +1,7 @@
 package com.spd.baraholka.login;
 
 import com.github.database.rider.junit5.DBUnitExtension;
-import com.spd.baraholka.config.exceptions.OAuth2ProcessingException;
+import com.spd.baraholka.exceptions.OAuth2ProcessingException;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import com.spd.baraholka.login.controller.dto.OAuth2UserDTO;
 import com.spd.baraholka.login.service.GoogleOAuth2UserService;

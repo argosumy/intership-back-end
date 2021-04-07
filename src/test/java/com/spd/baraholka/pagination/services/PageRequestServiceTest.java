@@ -8,7 +8,7 @@ import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.characteristic.persistance.CharacteristicService;
-import com.spd.baraholka.config.exceptions.NotFoundException;
+import com.spd.baraholka.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.user.service.OwnerService;
 import com.spd.baraholka.views.service.ViewService;

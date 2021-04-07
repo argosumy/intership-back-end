@@ -7,7 +7,7 @@ import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.advertisement.persistance.repositories.AdvertisementRepository;
 import com.spd.baraholka.characteristic.service.CharacteristicServiceImpl;
-import com.spd.baraholka.config.exceptions.NotFoundException;
+import com.spd.baraholka.exceptions.NotFoundException;
 import com.spd.baraholka.user.service.OwnerService;
 import com.spd.baraholka.views.service.ViewService;
 import org.junit.jupiter.api.BeforeEach;

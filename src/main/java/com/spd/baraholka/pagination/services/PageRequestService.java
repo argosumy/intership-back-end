@@ -2,7 +2,7 @@ package com.spd.baraholka.pagination.services;
 
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
-import com.spd.baraholka.config.exceptions.NotFoundException;
+import com.spd.baraholka.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import org.springframework.stereotype.Service;
 

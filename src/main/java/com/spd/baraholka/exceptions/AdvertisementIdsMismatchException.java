@@ -1,4 +1,4 @@
-package com.spd.baraholka.config.exceptions;
+package com.spd.baraholka.exceptions;
 
 public class AdvertisementIdsMismatchException extends RuntimeException {
 

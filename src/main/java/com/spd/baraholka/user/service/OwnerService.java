@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.exceptions.NotFoundByIdException;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.controller.mappers.OwnerMapper;
 import com.spd.baraholka.user.persistance.PersistenceUserService;

@@ -2,7 +2,7 @@ package com.spd.baraholka.image.service;
 
 import com.amazonaws.services.s3.*;
 import com.amazonaws.services.s3.model.*;
-import com.spd.baraholka.config.exceptions.*;
+import com.spd.baraholka.exceptions.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;

@@ -1,6 +1,6 @@
 package com.spd.baraholka.user.service;
 
-import com.spd.baraholka.config.exceptions.NotFoundByIdException;
+import com.spd.baraholka.exceptions.NotFoundByIdException;
 import com.spd.baraholka.user.persistance.PersistenceUserNotificationSettingsService;
 import com.spd.baraholka.user.persistance.entities.UserNotificationSettings;
 import org.springframework.stereotype.Service;

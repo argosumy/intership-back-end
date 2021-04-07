@@ -1,4 +1,4 @@
-package com.spd.baraholka.config.exceptions;
+package com.spd.baraholka.exceptions;
 
 import com.spd.baraholka.common.dto.ErrorDto;
 import org.springframework.dao.EmptyResultDataAccessException;

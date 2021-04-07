@@ -12,7 +12,7 @@ import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.config.SecurityConfig;
-import com.spd.baraholka.config.exceptions.NotFoundException;
+import com.spd.baraholka.exceptions.NotFoundException;
 import com.spd.baraholka.login.controller.OAuth2AuthenticationSuccessHandler;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;

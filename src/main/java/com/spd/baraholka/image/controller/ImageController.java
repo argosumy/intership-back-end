@@ -2,7 +2,7 @@ package com.spd.baraholka.image.controller;
 
 import com.spd.baraholka.annotation.image.ImageContent;
 import com.spd.baraholka.annotation.image.ImagesContent;
-import com.spd.baraholka.config.exceptions.*;
+import com.spd.baraholka.exceptions.*;
 import com.spd.baraholka.image.controller.annotation.*;
 import com.spd.baraholka.image.controller.dto.*;
 import com.spd.baraholka.image.persistance.entity.*;

@@ -1,4 +1,4 @@
-package com.spd.baraholka.config.exceptions;
+package com.spd.baraholka.exceptions;
 
 import org.springframework.security.core.AuthenticationException;
 
