@@ -12,12 +12,16 @@ import com.spd.baraholka.characteristic.persistance.CharacteristicService;
 import com.spd.baraholka.config.exceptions.BadRequestException;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.config.exceptions.NotFoundException;
+import com.spd.baraholka.notification.service.Sender;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.service.OwnerService;
 import com.spd.baraholka.user.service.UserService;
 import com.spd.baraholka.views.service.ViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -37,6 +41,7 @@ public class AdvertisementService {
     private final AdvertisementMapper advertisementMapper;
     private static final Logger logger = LoggerFactory.getLogger(AdvertisementService.class);
     private final OwnerService ownerService;
+    private final Sender sender;
     private final CharacteristicService characteristicService;
     private final ViewService viewService;
     private final UserService userService;
@@ -44,12 +49,13 @@ public class AdvertisementService {
     public AdvertisementService(PersistenceAdvertisementService persistenceAdvertisementService,
                                 CharacteristicService characteristicService,
                                 AdvertisementMapper advertisementMapper,
-                                OwnerService ownerService,
-                                ViewService viewService,
+                                OwnerService ownerService, @Lazy Sender sender,
+                                ViewService viewService) {
                                 UserService userService) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
         this.advertisementMapper = advertisementMapper;
         this.ownerService = ownerService;
+        this.sender = sender;
         this.characteristicService = characteristicService;
         this.viewService = viewService;
         this.userService = userService;
@@ -57,10 +63,12 @@ public class AdvertisementService {
 
     public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
-        int adId = persistenceAdvertisementService.insertAdvertisement(advertisement);
-        advertisementDTO.getCharacteristics().forEach(characteristicDTO -> characteristicService.save(adId, characteristicDTO));
+        int id = persistenceAdvertisementService.insertAdvertisement(advertisement);
+        advertisement.setAdvertisementId(id);
+        sender.sendAllUsersNotification(advertisementMapper.convertToDTO(advertisement));
+        advertisementDTO.getCharacteristics().forEach(characteristicDTO -> characteristicService.save(id, characteristicDTO));
 
-        return adId;
+        return id;
     }
 
     public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
@@ -147,7 +155,7 @@ public class AdvertisementService {
     }
 
     public List<Advertisement> getAllActive() {
-        List<Advertisement> active = persistenceAdvertisementService.getAllPublished();
+        List<Advertisement> active = persistenceAdvertisementService.getAllActive();
         logger.info("IN getAllActive - advertisements found: {}", active.size());
 
         setActiveStatus(active);
@@ -156,7 +164,7 @@ public class AdvertisementService {
 
     private void setActiveStatus(List<Advertisement> active) {
         active.forEach(ad -> {
-            if (ad.getStatus() == (DRAFT)) {
+            if (ad.getStatus() == (AdvertisementStatus.DRAFT)) {
                 ad.setStatus(AdvertisementStatus.ACTIVE);
                 updateAdvertisement(advertisementMapper.convertToEditedAdvertisementDTO(ad));
             }

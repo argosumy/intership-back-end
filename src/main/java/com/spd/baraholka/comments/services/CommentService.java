@@ -1,10 +1,13 @@
 package com.spd.baraholka.comments.services;
 
 import com.spd.baraholka.comments.entities.Comment;
+import com.spd.baraholka.comments.mappers.CommentUserInfoDtoMapper;
 import com.spd.baraholka.comments.repositories.CommentRepository;
+import com.spd.baraholka.notification.service.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -19,9 +22,13 @@ public class CommentService {
     @Value("${commentService.topCommentsCount}")
     private int topCommentsCount;
     private final CommentRepository commentRepository;
+    private final CommentUserInfoDtoMapper commentUserInfoDtoMapper;
+    private final Sender sender;
 
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, CommentUserInfoDtoMapper commentUserInfoDtoMapper, @Lazy Sender sender) {
         this.commentRepository = commentRepository;
+        this.commentUserInfoDtoMapper = commentUserInfoDtoMapper;
+        this.sender = sender;
     }
 
     public List<Comment> getAllByAdId(int adId) {
@@ -37,10 +44,15 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
-    public Comment saveNew(Comment comment) {
-        Comment commentToSave = commentRepository.saveNew(comment);
-        logger.info("IN save new - comment: {} successfully saved", commentToSave);
-        return commentToSave;
+    public int saveNew(Comment comment) {
+        int savedCommentId = commentRepository.saveNew(comment);
+        var commentUserInfoDto = commentUserInfoDtoMapper.getCommentUserInfoDto(comment);
+        commentUserInfoDto.setId(savedCommentId);
+        logger.info("IN save new - comment with id : {} successfully saved", savedCommentId);
+        sender.sendAdvertisementCommentNotification(commentUserInfoDto);
+        sender.sendCommentNotification(commentUserInfoDto);
+
+        return savedCommentId;
     }
 
     public void deleteById(int id) {

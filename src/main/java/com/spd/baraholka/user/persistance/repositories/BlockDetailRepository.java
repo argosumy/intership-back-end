@@ -18,7 +18,7 @@ import java.util.Optional;
 public class BlockDetailRepository implements PersistenceUserBlockService {
 
     private static final String INSERT_SQL =
-            "INSERT INTO users_block_details (user_id, blocked_until, reason, is_notify) VALUES (:userId, :blockedUntil, :reason, :isNotify) RETURNING id";
+            "INSERT INTO users_block_details (user_id, blocked_until, reason, is_notify, is_blocked) VALUES (:userId, :blockedUntil, :reason, :isNotify, :isBlocked)";
     private static final String IS_EXIST_SQL = "SELECT count(*) <> 0 FROM users_block_details WHERE user_id=:id";
     private static final String UPDATE_SQL =
             "UPDATE users_block_details SET blocked_until=:blockedUntil, reason=:reason, is_notify=:isNotify, is_blocked=:isBlocked WHERE user_id=:userId";
@@ -91,6 +91,7 @@ public class BlockDetailRepository implements PersistenceUserBlockService {
         namedParameters.addValue("blockedUntil", Timestamp.valueOf(blockDetailDTO.getBlockedUntil()));
         namedParameters.addValue("reason", blockDetailDTO.getReason());
         namedParameters.addValue("isNotify", blockDetailDTO.isNotify());
+        namedParameters.addValue("isBlocked", blockDetailDTO.isBlocked());
         return namedParameters;
     }
 }
