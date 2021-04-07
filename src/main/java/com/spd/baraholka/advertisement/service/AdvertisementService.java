@@ -7,17 +7,19 @@ import com.spd.baraholka.advertisement.controller.mappers.AdvertisementMapper;
 import com.spd.baraholka.advertisement.persistance.PersistenceAdvertisementService;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
-import com.spd.baraholka.views.service.ViewService;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
+import com.spd.baraholka.characteristic.persistance.CharacteristicService;
 import com.spd.baraholka.config.exceptions.BadRequestException;
 import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.config.exceptions.NotFoundException;
+import com.spd.baraholka.notification.service.Sender;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.service.OwnerService;
+import com.spd.baraholka.views.service.ViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.spd.baraholka.characteristic.persistance.CharacteristicService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,27 +35,31 @@ public class AdvertisementService {
     private final AdvertisementMapper advertisementMapper;
     private static final Logger logger = LoggerFactory.getLogger(AdvertisementService.class);
     private final OwnerService ownerService;
+    private final Sender sender;
     private final CharacteristicService characteristicService;
     private final ViewService viewService;
 
     public AdvertisementService(PersistenceAdvertisementService persistenceAdvertisementService,
                                 CharacteristicService characteristicService,
                                 AdvertisementMapper advertisementMapper,
-                                OwnerService ownerService,
+                                OwnerService ownerService, @Lazy Sender sender,
                                 ViewService viewService) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
         this.advertisementMapper = advertisementMapper;
         this.ownerService = ownerService;
+        this.sender = sender;
         this.characteristicService = characteristicService;
         this.viewService = viewService;
     }
 
     public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
-        int adId = persistenceAdvertisementService.insertAdvertisement(advertisement);
-        advertisementDTO.getCharacteristics().forEach(characteristicDTO -> characteristicService.save(adId, characteristicDTO));
+        int id = persistenceAdvertisementService.insertAdvertisement(advertisement);
+        advertisement.setAdvertisementId(id);
+        sender.sendAllUsersNotification(advertisementMapper.convertToDTO(advertisement));
+        advertisementDTO.getCharacteristics().forEach(characteristicDTO -> characteristicService.save(id, characteristicDTO));
 
-        return adId;
+        return id;
     }
 
     public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {

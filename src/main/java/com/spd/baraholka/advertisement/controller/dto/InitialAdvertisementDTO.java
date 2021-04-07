@@ -14,6 +14,8 @@ import java.util.List;
 
 public class InitialAdvertisementDTO {
 
+    private int advertisementId;
+
     @NotNull
     private String category;
 
@@ -86,5 +88,12 @@ public class InitialAdvertisementDTO {
     public void setCharacteristics(List<CharacteristicDTO> characteristics) {
         this.characteristics = characteristics;
     }
-}
 
+    public int getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(int advertisementId) {
+        this.advertisementId = advertisementId;
+    }
+}

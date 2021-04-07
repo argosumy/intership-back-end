@@ -9,6 +9,7 @@ import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.characteristic.persistance.CharacteristicService;
 import com.spd.baraholka.config.exceptions.NotFoundException;
+import com.spd.baraholka.notification.service.Sender;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.user.service.OwnerService;
 import com.spd.baraholka.views.service.ViewService;
@@ -39,6 +40,8 @@ class PageRequestServiceTest {
     private OwnerService ownerService;
     @Mock
     private CharacteristicService characteristicService;
+    @Mock
+    private Sender sender;
     private PageRequest<Advertisement> pageRequest;
     private Advertisement advertisement;
     private ViewService viewService;
@@ -46,7 +49,7 @@ class PageRequestServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService, advertisementMapper, ownerService, viewService);
+        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService, advertisementMapper, ownerService, sender, viewService);
         pageRequestService = new PageRequestService(advertisementService);
         MockitoAnnotations.openMocks(this);
         advertisement = createAdvertisement();

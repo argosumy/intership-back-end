@@ -41,7 +41,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
-    public Comment saveComment(@RequestBody @Valid CommentDto commentDto) {
+    public int saveComment(@RequestBody @Valid CommentDto commentDto) {
         Comment comment = commentDtoMapper.toComment(commentDto);
         return commentService.saveNew(comment);
     }
