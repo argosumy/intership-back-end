@@ -26,8 +26,8 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     private static final String MIN_PRICE_CONDITION = " AND a.price >= :min";
     private static final String CITY_CONDITION = " AND a.city = :city";
     private static final String STATUS_CONDITION = " AND a.status = :status";
-    private static final String CHARACTERISTICS_CONDITION = " AND c.characteristics_name = :characteristics_name AND c.characteristics_value = :characteristics_value " +
-            "AND is_approved = TRUE AND is_deleted = FALSE";
+    private static final String CHARACTERISTICS_CONDITION = " (c.characteristics_name = :characteristics_name AND c.characteristics_value = :characteristics_value " +
+            "AND c.is_approved = TRUE AND c.is_deleted = FALSE)";
 
     private static final String UPDATE_ADVERTISEMENTS_STATUS_SQL =
             "UPDATE  advertisements SET status=:status, status_change_date=:statusChangeDate WHERE id=:advertisementId";
@@ -43,7 +43,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     private static final String SELECT_WISHLIST_ADS_BY_USER_SQL = "SELECT * FROM advertisements a INNER JOIN wishlist w ON a.id = w.ad_id WHERE w.user_id = :user_id";
     private static final String SELECT_PUBLISHED_ADS_BY_CATEGORY_SQL = SELECT_PUBLISHED_ADS_SQL + CATEGORY_CONDITION;
     private static final String SELECT_PUBLISHED_ADS_BY_CHARACTERISTICS_JOIN_SQL =
-            "SELECT * FROM advertisements a INNER JOIN characteristics c ON a.id = c.advertisement_id";
+            "SELECT * FROM advertisements a INNER JOIN characteristics c ON a.id = c.advertisement_id WHERE";
     private static final String SELECT_PUBLISHED_ADS_BY_CHARACTERISTICS_SQL = SELECT_PUBLISHED_ADS_BY_CHARACTERISTICS_JOIN_SQL + CHARACTERISTICS_CONDITION;
     private static final String SELECT_PUBLISHED_ADS_BY_PRICE_SQL = SELECT_PUBLISHED_ADS_SQL + PRICE_RANGE_CONDITION;
     private static final String SELECT_PUBLISHED_ADS_BY_CATEGORY_AND_PRICE_SQL = SELECT_PUBLISHED_ADS_SQL + CATEGORY_CONDITION + PRICE_RANGE_CONDITION;
@@ -118,8 +118,6 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     public List<Advertisement> getAllActive() { // TODO: rename to getAllPublished()
         return jdbcTemplate.query(SELECT_PUBLISHED_ADS_SQL,
                 Map.of(
-//                        "active", AdvertisementStatus.ACTIVE.name(),
-//                        "delayed", AdvertisementStatus.DELAYED_PUBLICATION.name(),
                         PUBLICATION_DATE_PARAMETER, LocalDateTime.now()
                 ),
                 advertisementMapper
@@ -128,49 +126,60 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
 
     @Override
     public List<Advertisement> getPublishedFilteredAds(FilterDTO filterDTO) {
-        String sql = SELECT_PUBLISHED_ADS_SQL;
+        StringBuilder sql = new StringBuilder();
+        sql.append(SELECT_PUBLISHED_ADS_SQL);
         Map<String, Object> parameters = new HashMap<>();
         parameters.put(PUBLICATION_DATE_PARAMETER, LocalDateTime.now().toString());
         Objects.requireNonNull(filterDTO);
-        if ((filterDTO.getCharacteristics() != null) && !filterDTO.getCharacteristics().isEmpty()) {
-            sql = SELECT_PUBLISHED_ADS_BY_CHARACTERISTICS_SQL;
-            filterDTO.getCharacteristics().forEach((k, v) -> {
-                // TODO
-                parameters.put("characteristics_name", k);
-                parameters.put("characteristics_value", v);
-            });
+        Map<String, String> characteristics = filterDTO.getCharacteristics();
+        if ((characteristics != null) && !characteristics.isEmpty()) {
+            int counter = 0;
+            for (Map.Entry<String, String> entry : characteristics.entrySet()) {
+                if (counter == 0) {
+                    sql = new StringBuilder();
+                    sql.append(SELECT_PUBLISHED_ADS_BY_CHARACTERISTICS_SQL);
+                    parameters.put("characteristics_name", entry.getKey());
+                    parameters.put("characteristics_value", entry.getValue());
+                }
+                sql.append(" OR ");
+                sql.append(CHARACTERISTICS_CONDITION
+                        .replace(":characteristics_name", ":characteristics_name" + counter)
+                        .replace(":characteristics_value", ":characteristics_value" + counter)
+                );
+                parameters.put("characteristics_name" + counter, entry.getKey());
+                parameters.put("characteristics_value" + counter, entry.getValue());
+                counter++;
+            }
         }
         if (filterDTO.getCategory() != null) {
-            sql += CATEGORY_CONDITION;
+            sql.append(CATEGORY_CONDITION);
             parameters.put("category", filterDTO.getCategory().name());
         }
         if (filterDTO.getCity() != null) {
-            sql += CITY_CONDITION;
+            sql.append(CITY_CONDITION);
             parameters.put("city", filterDTO.getCity());
         }
         if (filterDTO.getMaxPrice() != null) {
             parameters.put("max", filterDTO.getMaxPrice());
             if (filterDTO.getMinPrice() != null) {
-                sql += PRICE_RANGE_CONDITION;
+                sql.append(PRICE_RANGE_CONDITION);
                 parameters.put("min", filterDTO.getMinPrice());
             } else {
-                sql += MAX_PRICE_CONDITION;
+                sql.append(MAX_PRICE_CONDITION);
             }
         } else {
             if (filterDTO.getMinPrice() != null) {
-                sql += MIN_PRICE_CONDITION;
+                sql.append(MIN_PRICE_CONDITION);
                 parameters.put("min", filterDTO.getMinPrice());
             }
         }
-        return jdbcTemplate.query(sql, parameters, advertisementMapper);
+        return jdbcTemplate.query(sql.toString(), parameters, advertisementMapper);
     }
 
     @Override
     public List<Advertisement> getAllPublishedByCategory(Category category) {
         return jdbcTemplate.query(SELECT_PUBLISHED_ADS_BY_CATEGORY_SQL,
                 Map.of(
-//                        "active", AdvertisementStatus.ACTIVE.name(),
-//                        "delayed", AdvertisementStatus.DELAYED_PUBLICATION.name(),
                         "category", category.name(),
                         PUBLICATION_DATE_PARAMETER, LocalDateTime.now()
                 ),
@@ -182,8 +191,6 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     public List<Advertisement> getAllPublishedByPrice(double min, double max) {
         return jdbcTemplate.query(SELECT_PUBLISHED_ADS_BY_CATEGORY_SQL,
                 Map.of(
-//                        "active", AdvertisementStatus.ACTIVE.name(),
-//                        "delayed", AdvertisementStatus.DELAYED_PUBLICATION.name(),
                         "min", min,
                         "max", max,
                         PUBLICATION_DATE_PARAMETER, LocalDateTime.now()
@@ -196,8 +203,6 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     public List<Advertisement> getAllPublishedByCategoryAndPrice(Category category, double min, double max) {
         return jdbcTemplate.query(SELECT_PUBLISHED_ADS_BY_CATEGORY_SQL,
                 Map.of(
-//                        "active", AdvertisementStatus.ACTIVE.name(),
-//                        "delayed", AdvertisementStatus.DELAYED_PUBLICATION.name(),
                         "category", category.name(),
                         "min", min,
                         "max", max,

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,11 +65,9 @@ public class AdvertisementController {
                                                                @RequestParam(value = "city", required = false) String city,
                                                                @RequestParam(value = "min_price", required = false) Double minPrice,
                                                                @RequestParam(value = "max_price", required = false) Double maxPrice,
-                                                               @RequestParam(value = "characteristic_key", required = false) String characteristicKey,
-                                                               @RequestParam(value = "characteristic_value", required = false) String characteristicValue,
+                                                               @RequestParam(value = "characteristics", required = false) Map<String, String> characteristics,
                                                                @RequestParam("pageNumber") int pageNumber) {
-        Map<String, String> characteristic = initCharacteristics(characteristicKey, characteristicValue);
-        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristic);
+        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
         List<Advertisement> filteredAdvertisements = advertisementService.getPublishedFilteredAds(filterDTO);
         List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword(filteredAdvertisements, keyword);
         List<Advertisement> sortedAdvertisementList = advertisementService.sort(advertisementList, sortOrder);
@@ -84,11 +83,11 @@ public class AdvertisementController {
                                                                   @RequestParam(value = "city", required = false) String city,
                                                                   @RequestParam(value = "min_price", required = false) Double minPrice,
                                                                   @RequestParam(value = "max_price", required = false) Double maxPrice,
-                                                                  @RequestParam(value = "characteristic_key", required = false) String characteristicKey,
-                                                                  @RequestParam(value = "characteristic_value", required = false) String characteristicValue,
+                                                                  @RequestParam(value = "characteristic_names", required = false) String[] characteristicNames,
+                                                                  @RequestParam(value = "characteristic_values", required = false) String[] characteristicValues,
                                                                   @RequestParam("pageNumber") int pageNumber) {
-        Map<String, String> characteristic = initCharacteristics(characteristicKey, characteristicValue);
-        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristic);
+        Map<String, String> characteristics = initCharacteristics(characteristicNames, characteristicValues);
+        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
         List<Advertisement> advertisementList = advertisementService.getPublishedFilteredAds(filterDTO);
         List<Advertisement> sortedAdvertisementList = advertisementService.sort(advertisementList, sortOrder);
         PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, sortedAdvertisementList);
@@ -128,13 +127,15 @@ public class AdvertisementController {
         return filterDTO;
     }
 
-    private Map<String, String> initCharacteristics(String characteristicKey, String characteristicValue) {
-        Map<String, String> characteristic;
-        if ((characteristicKey != null) && (characteristicValue != null)) {
-            characteristic = Map.of(characteristicKey, characteristicValue);
+    private Map<String, String> initCharacteristics(String[] characteristicNames, String[] characteristicValues) {
+        Map<String, String> characteristics = new HashMap<>();
+        if ((characteristicNames != null) && (characteristicValues != null)) {
+            for (int i = 0; i < characteristicNames.length; i++) {
+                characteristics.put(characteristicNames[i], characteristicValues[i]);
+            }
         } else {
-            characteristic = Collections.emptyMap();
+            characteristics = Collections.emptyMap();
         }
-        return characteristic;
+        return characteristics;
     }
 }
