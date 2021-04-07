@@ -22,8 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -50,7 +48,7 @@ public class AdvertisementService {
                                 CharacteristicService characteristicService,
                                 AdvertisementMapper advertisementMapper,
                                 OwnerService ownerService, @Lazy Sender sender,
-                                ViewService viewService) {
+                                ViewService viewService,
                                 UserService userService) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
         this.advertisementMapper = advertisementMapper;

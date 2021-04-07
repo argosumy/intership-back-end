@@ -49,7 +49,8 @@ class AdvertisementServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         AdvertisementMapper advertisementMapper = new AdvertisementMapper();
-        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService, advertisementMapper, ownerService, sender, viewService, userService);
+        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService,
+                advertisementMapper, ownerService, sender, viewService, userService);
         advertisementDraft = createAdvertisement(1, LocalDateTime.of(2022, 1, 1, 10, 40, 1),
                 AdvertisementStatus.DRAFT);
         advertisementActive = createAdvertisement(2, LocalDateTime.of(2019, 2, 2, 2, 10, 2),

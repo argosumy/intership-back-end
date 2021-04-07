@@ -18,7 +18,7 @@ public interface PersistenceAdvertisementService {
 
     int updateAdvertisementStatus(int id, AdvertisementStatus status);
 
-    List<Advertisement> getAllPublished();
+    List<Advertisement> getAllActive();
 
     List<Advertisement> getPublishedFilteredAds(FilterDTO filterDTO);
 

@@ -117,7 +117,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     @Override
-    public List<Advertisement> getAllPublished() {
+    public List<Advertisement> getAllActive() {
         return jdbcTemplate.query(SELECT_PUBLISHED_ADS_SQL,
                 Map.of(
                         PUBLICATION_DATE_PARAMETER, LocalDateTime.now()

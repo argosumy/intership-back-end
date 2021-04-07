@@ -51,7 +51,8 @@ class PageRequestServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService, advertisementMapper, ownerService, sender, viewService, userService);
+        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService,
+                advertisementMapper, ownerService, sender, viewService, userService);
         pageRequestService = new PageRequestService(advertisementService);
         MockitoAnnotations.openMocks(this);
         advertisement = createAdvertisement();
