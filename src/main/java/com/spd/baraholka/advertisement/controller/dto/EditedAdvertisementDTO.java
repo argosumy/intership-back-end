@@ -5,7 +5,6 @@ import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
 import com.spd.baraholka.annotation.advertisement.EditedStatus;
 import com.spd.baraholka.annotation.advertisement.PositivePrice;
-import com.spd.baraholka.annotation.advertisement.PresentOrFutureDate;
 import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 
 import javax.validation.constraints.Min;
@@ -42,9 +41,7 @@ public class EditedAdvertisementDTO {
     @NotNull
     private boolean discountAvailability;
 
-    @PresentOrFutureDate
     private LocalDateTime publicationDate;
-
     private List<CharacteristicDTO> characteristics;
 
     public int getAdvertisementId() {
