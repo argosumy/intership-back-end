@@ -14,6 +14,7 @@ import com.spd.baraholka.config.exceptions.NotFoundByIdException;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.user.controller.dto.OwnerDTO;
 import com.spd.baraholka.user.service.OwnerService;
+import com.spd.baraholka.user.service.UserService;
 import com.spd.baraholka.views.service.ViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus.DELAYED_PUBLICATION;
+import static com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus.DRAFT;
+
 @Service
 @EnableScheduling
 public class AdvertisementService {
@@ -35,17 +39,20 @@ public class AdvertisementService {
     private final OwnerService ownerService;
     private final CharacteristicService characteristicService;
     private final ViewService viewService;
+    private final UserService userService;
 
     public AdvertisementService(PersistenceAdvertisementService persistenceAdvertisementService,
                                 CharacteristicService characteristicService,
                                 AdvertisementMapper advertisementMapper,
                                 OwnerService ownerService,
-                                ViewService viewService) {
+                                ViewService viewService,
+                                UserService userService) {
         this.persistenceAdvertisementService = persistenceAdvertisementService;
         this.advertisementMapper = advertisementMapper;
         this.ownerService = ownerService;
         this.characteristicService = characteristicService;
         this.viewService = viewService;
+        this.userService = userService;
     }
 
     public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
@@ -123,8 +130,24 @@ public class AdvertisementService {
         return persistenceAdvertisementService.getPublishedFilteredAds(filterDTO);
     }
 
+    public List<Advertisement> getAdvertisementsByType(String type) {
+        Objects.requireNonNull(type);
+        int userId = userService.getCurrentUser().getId();
+        switch (type) {
+            case "draft":
+                return persistenceAdvertisementService.getAllAdsWithStatusByUser(userId, DRAFT);
+            case "wishlist":
+                return persistenceAdvertisementService.getWishListByUser(userId);
+            case "delayed":
+                return persistenceAdvertisementService.getAllAdsWithStatusByUser(userId, DELAYED_PUBLICATION);
+            case "my":
+            default:
+                return persistenceAdvertisementService.getAllAdsByUser(userId);
+        }
+    }
+
     public List<Advertisement> getAllActive() {
-        List<Advertisement> active = persistenceAdvertisementService.getAllActive();
+        List<Advertisement> active = persistenceAdvertisementService.getAllPublished();
         logger.info("IN getAllActive - advertisements found: {}", active.size());
 
         setActiveStatus(active);
@@ -133,7 +156,7 @@ public class AdvertisementService {
 
     private void setActiveStatus(List<Advertisement> active) {
         active.forEach(ad -> {
-            if (ad.getStatus() == (AdvertisementStatus.DRAFT)) {
+            if (ad.getStatus() == (DRAFT)) {
                 ad.setStatus(AdvertisementStatus.ACTIVE);
                 updateAdvertisement(advertisementMapper.convertToEditedAdvertisementDTO(ad));
             }

@@ -37,10 +37,12 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     private static final String ADVERTISEMENT_SOFT_DELETE_SQL = "UPDATE advertisements SET status = :del, status_change_date = now() " +
             "WHERE status = :arch " +
             "AND (now() - status_change_date) < INTERVAL '60 DAY'";
-    private static final String SELECT_ADS_BY_USER_AND_STATUS_SQL = "SELECT * FROM advertisements a WHERE a.status = :status AND a.user_id = :user_id";
-    private static final String SELECT_PUBLISHED_ADS_SQL = "SELECT * FROM advertisements a " +
+    private static final String SELECT_ADS_BY_USER_AND_STATUS_SQL = "SELECT DISTINCT * FROM advertisements a WHERE a.status = :status AND a.user_id = :user_id";
+    private static final String SELECT_ADS_BY_USER_SQL = "SELECT DISTINCT * FROM advertisements a WHERE a.user_id = :user_id";
+    private static final String SELECT_PUBLISHED_ADS_SQL = "SELECT DISTINCT * FROM advertisements a " +
             "WHERE (a.status = 'ACTIVE' OR (a.status = 'DELAYED_PUBLICATION' AND a.publication_date::text <= :publicationDate))";
-    private static final String SELECT_WISHLIST_ADS_BY_USER_SQL = "SELECT * FROM advertisements a INNER JOIN wishlist w ON a.id = w.ad_id WHERE w.user_id = :user_id";
+    private static final String SELECT_WISHLIST_ADS_BY_USER_SQL = "SELECT DISTINCT * FROM advertisements a " +
+            "INNER JOIN wish_list w ON a.id = w.advertisements_id WHERE w.user_id = :user_id";
     private static final String SELECT_PUBLISHED_ADS_BY_CATEGORY_SQL = SELECT_PUBLISHED_ADS_SQL + CATEGORY_CONDITION;
     private static final String SELECT_PUBLISHED_ADS_BY_CHARACTERISTICS_JOIN_SQL =
             "SELECT * FROM advertisements a INNER JOIN characteristics c ON a.id = c.advertisement_id WHERE";
@@ -115,7 +117,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     }
 
     @Override
-    public List<Advertisement> getAllActive() { // TODO: rename to getAllPublished()
+    public List<Advertisement> getAllPublished() {
         return jdbcTemplate.query(SELECT_PUBLISHED_ADS_SQL,
                 Map.of(
                         PUBLICATION_DATE_PARAMETER, LocalDateTime.now()
@@ -218,6 +220,22 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
                 Map.of(STATUS_PARAMETER, status.name(),
                         "user_id", userId
                 ),
+                advertisementMapper
+        );
+    }
+
+    @Override
+    public List<Advertisement> getWishListByUser(int userId) {
+        return jdbcTemplate.query(SELECT_WISHLIST_ADS_BY_USER_SQL,
+                Map.of("user_id", userId),
+                advertisementMapper
+        );
+    }
+
+    @Override
+    public List<Advertisement> getAllAdsByUser(int userId) {
+        return jdbcTemplate.query(SELECT_ADS_BY_USER_SQL,
+                Map.of("user_id", userId),
                 advertisementMapper
         );
     }

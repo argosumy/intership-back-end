@@ -11,6 +11,7 @@ import com.spd.baraholka.characteristic.persistance.CharacteristicService;
 import com.spd.baraholka.config.exceptions.NotFoundException;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.user.service.OwnerService;
+import com.spd.baraholka.user.service.UserService;
 import com.spd.baraholka.views.service.ViewService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,11 +43,13 @@ class PageRequestServiceTest {
     private PageRequest<Advertisement> pageRequest;
     private Advertisement advertisement;
     private ViewService viewService;
+    private UserService userService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService, advertisementMapper, ownerService, viewService);
+        advertisementService = new AdvertisementService(persistenceAdvertisementService, characteristicService,
+                advertisementMapper, ownerService, viewService, userService);
         pageRequestService = new PageRequestService(advertisementService);
         MockitoAnnotations.openMocks(this);
         advertisement = createAdvertisement();

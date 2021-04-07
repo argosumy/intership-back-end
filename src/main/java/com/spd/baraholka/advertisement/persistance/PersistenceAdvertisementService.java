@@ -18,7 +18,7 @@ public interface PersistenceAdvertisementService {
 
     int updateAdvertisementStatus(int id, AdvertisementStatus status);
 
-    List<Advertisement> getAllActive();
+    List<Advertisement> getAllPublished();
 
     List<Advertisement> getPublishedFilteredAds(FilterDTO filterDTO);
 
@@ -28,7 +28,11 @@ public interface PersistenceAdvertisementService {
 
     List<Advertisement> getAllPublishedByCategoryAndPrice(Category category, double min, double max);
 
+    List<Advertisement> getWishListByUser(int userId);
+
     List<Advertisement> getAllAdsWithStatusByUser(int userId, AdvertisementStatus status);
+
+    List<Advertisement> getAllAdsByUser(int userId);
 
     Optional<Advertisement> findDraftAdById(int id);
 

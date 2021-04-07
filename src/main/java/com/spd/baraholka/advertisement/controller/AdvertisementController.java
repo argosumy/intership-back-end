@@ -59,37 +59,48 @@ public class AdvertisementController {
     @SuppressWarnings("checkstyle:parameternumber")
     @GetMapping("/search")
     public PageRequest<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
-                                                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                @RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
                                                                @RequestParam(value = "category", required = false) Category category,
                                                                @RequestParam(value = "city", required = false) String city,
                                                                @RequestParam(value = "min_price", required = false) Double minPrice,
                                                                @RequestParam(value = "max_price", required = false) Double maxPrice,
                                                                @RequestParam(value = "characteristics", required = false) Map<String, String> characteristics,
+                                                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                @RequestParam("pageNumber") int pageNumber) {
         FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
         List<Advertisement> filteredAdvertisements = advertisementService.getPublishedFilteredAds(filterDTO);
-        List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword(filteredAdvertisements, keyword);
-        List<Advertisement> sortedAdvertisementList = advertisementService.sort(advertisementList, sortOrder);
-        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, sortedAdvertisementList);
+        List<Advertisement> advertisementsFoundByKeyword = advertisementService.getFilteredAdsByKeyword(filteredAdvertisements, keyword);
+        List<Advertisement> sortedAdvertisements = advertisementService.sort(advertisementsFoundByKeyword, sortOrder);
+        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, sortedAdvertisements);
         return pageRequest.map(advertisementMapper::getAdvertisementDto);
     }
 
     @SuppressWarnings("checkstyle:parameternumber")
     @GetMapping
-    public PageRequest<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
-                                                                  @RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
+    public PageRequest<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
                                                                   @RequestParam(value = "category", required = false) Category category,
                                                                   @RequestParam(value = "city", required = false) String city,
                                                                   @RequestParam(value = "min_price", required = false) Double minPrice,
                                                                   @RequestParam(value = "max_price", required = false) Double maxPrice,
                                                                   @RequestParam(value = "characteristic_names", required = false) String[] characteristicNames,
                                                                   @RequestParam(value = "characteristic_values", required = false) String[] characteristicValues,
+                                                                  @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                   @RequestParam("pageNumber") int pageNumber) {
         Map<String, String> characteristics = initCharacteristics(characteristicNames, characteristicValues);
         FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
-        List<Advertisement> advertisementList = advertisementService.getPublishedFilteredAds(filterDTO);
-        List<Advertisement> sortedAdvertisementList = advertisementService.sort(advertisementList, sortOrder);
+        List<Advertisement> filteredAdvertisements = advertisementService.getPublishedFilteredAds(filterDTO);
+        List<Advertisement> sortedAdvertisementList = advertisementService.sort(filteredAdvertisements, sortOrder);
+        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, sortedAdvertisementList);
+        return pageRequest.map(advertisementUserEmailMapper::getAdvertisementUserEmailDto);
+    }
+
+    @GetMapping("/profile")
+    public PageRequest<AdvertisementUserEmailDTO> getAllAdsByType(@RequestParam(value = "type", required = true, defaultValue = "my") String type,
+                                                                  @RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
+                                                                  @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                                                                  @RequestParam("pageNumber") int pageNumber) {
+        List<Advertisement> filteredAdvertisements = advertisementService.getAdvertisementsByType(type);
+        List<Advertisement> sortedAdvertisementList = advertisementService.sort(filteredAdvertisements, sortOrder);
         PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, sortedAdvertisementList);
         return pageRequest.map(advertisementUserEmailMapper::getAdvertisementUserEmailDto);
     }
