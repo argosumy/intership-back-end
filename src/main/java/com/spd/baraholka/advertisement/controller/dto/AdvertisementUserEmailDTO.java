@@ -2,6 +2,7 @@ package com.spd.baraholka.advertisement.controller.dto;
 
 import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
+import com.spd.baraholka.annotation.advertisement.PositivePrice;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class AdvertisementUserEmailDTO {
     private String title;
     @NotNull
     private AdvertisementStatus status;
-    @Positive
+    @PositivePrice
     private double price;
     @PastOrPresent
     private LocalDateTime creationDate;
