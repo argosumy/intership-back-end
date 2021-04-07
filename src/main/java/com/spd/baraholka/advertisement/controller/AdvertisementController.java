@@ -8,7 +8,6 @@ import com.spd.baraholka.advertisement.persistance.entities.AdvertisementStatus;
 import com.spd.baraholka.advertisement.service.AdvertisementService;
 import com.spd.baraholka.annotation.advertisement.AdvertisementExist;
 import com.spd.baraholka.annotation.advertisement.ChangedStatus;
-import com.spd.baraholka.characteristic.persistance.entities.Category;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,12 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Validated
 @RestController
@@ -58,19 +52,12 @@ public class AdvertisementController {
         return advertisementService.updateAdvertisementStatus(id, status);
     }
 
-    @SuppressWarnings("checkstyle:parameternumber")
     @GetMapping("/search")
     public PageRequest<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
                                                                @RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
                                                                @RequestBody FilterDTO filterDTO,
-//                                                               @RequestParam(value = "category", required = false) Category category,
-//                                                               @RequestParam(value = "city", required = false) String city,
-//                                                               @RequestParam(value = "min_price", required = false) Double minPrice,
-//                                                               @RequestParam(value = "max_price", required = false) Double maxPrice,
-//                                                               @RequestParam(value = "characteristics", required = false) Map<String, String> characteristics,
                                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                @RequestParam("pageNumber") int pageNumber) {
-//        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
         List<Advertisement> filteredAdvertisements = advertisementService.getPublishedFilteredAds(filterDTO);
         List<Advertisement> advertisementsFoundByKeyword = advertisementService.getFilteredAdsByKeyword(filteredAdvertisements, keyword);
         List<Advertisement> sortedAdvertisements = advertisementService.sort(advertisementsFoundByKeyword, sortOrder);
@@ -78,20 +65,11 @@ public class AdvertisementController {
         return pageRequest.map(advertisementMapper::getAdvertisementDto);
     }
 
-    @SuppressWarnings("checkstyle:parameternumber")
-    @PostMapping(path="/filter", consumes = APPLICATION_JSON_VALUE)
+    @GetMapping
     public PageRequest<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "sort", required = false, defaultValue = "recent") String sortOrder,
                                                                   @RequestBody FilterDTO filterDTO,
-//                                                                  @RequestParam(value = "category", required = false) Category category,
-//                                                                  @RequestParam(value = "city", required = false) String city,
-//                                                                  @RequestParam(value = "min_price", required = false) Double minPrice,
-//                                                                  @RequestParam(value = "max_price", required = false) Double maxPrice,
-//                                                                  @RequestParam(value = "characteristic_names", required = false) String[] characteristicNames,
-//                                                                  @RequestParam(value = "characteristic_values", required = false) String[] characteristicValues,
                                                                   @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                   @RequestParam("pageNumber") int pageNumber) {
-//        Map<String, String> characteristics = initCharacteristics(characteristicNames, characteristicValues);
-//        FilterDTO filterDTO = initFilterDTO(category, city, minPrice, maxPrice, characteristics);
         List<Advertisement> filteredAdvertisements = advertisementService.getPublishedFilteredAds(filterDTO);
         List<Advertisement> sortedAdvertisementList = advertisementService.sort(filteredAdvertisements, sortOrder);
         PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, sortedAdvertisementList);
@@ -128,29 +106,5 @@ public class AdvertisementController {
     @PutMapping("/{id}/promotion")
     public void promotionAd(@PathVariable(value = "id") int adId) {
         advertisementService.promotionAd(adId);
-    }
-
-    private FilterDTO initFilterDTO(List<Category> categories, List<String> cities, Double minPrice, Double maxPrice, Map<String, String> characteristics) {
-        FilterDTO filterDTO = new FilterDTO();
-        if (categories != null) {
-            filterDTO.setCategories(categories);
-        }
-        filterDTO.setCities(cities);
-        filterDTO.setMinPrice(minPrice);
-        filterDTO.setMaxPrice(maxPrice);
-        filterDTO.setCharacteristics(characteristics);
-        return filterDTO;
-    }
-
-    private Map<String, String> initCharacteristics(String[] characteristicNames, String[] characteristicValues) {
-        Map<String, String> characteristics = new HashMap<>();
-        if ((characteristicNames != null) && (characteristicValues != null)) {
-            for (int i = 0; i < characteristicNames.length; i++) {
-                characteristics.put(characteristicNames[i], characteristicValues[i]);
-            }
-        } else {
-            characteristics = Collections.emptyMap();
-        }
-        return characteristics;
     }
 }
