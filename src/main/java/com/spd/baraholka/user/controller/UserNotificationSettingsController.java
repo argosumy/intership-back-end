@@ -4,12 +4,10 @@ import com.spd.baraholka.user.controller.dto.UserNotificationSettingsDTO;
 import com.spd.baraholka.user.controller.mappers.UserNotificationSettingsMapper;
 import com.spd.baraholka.user.persistance.entities.UserNotificationSettings;
 import com.spd.baraholka.user.service.UserNotificationSettingsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/notification-settings")
+@RestController
+@RequestMapping("/users/settings/notification")
 public class UserNotificationSettingsController {
 
     private final UserNotificationSettingsService userNotificationSettingsService;
