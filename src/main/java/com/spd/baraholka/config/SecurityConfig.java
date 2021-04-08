@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .successHandler(oauth2SuccessHandler)
                 .and()
-                .logout().permitAll()
+                .logout().logoutSuccessUrl("/").permitAll()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
     }
