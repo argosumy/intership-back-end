@@ -49,6 +49,7 @@ public class UserController {
         return userService.updateUserMainInfo(mainInfoDTO);
     }
 
+    @PreAuthorize("hasAuthority('MODERATOR')")
     @GetMapping
     public List<UserShortViewDTO> getAllUsers() {
         return userService.getAllUsers();
