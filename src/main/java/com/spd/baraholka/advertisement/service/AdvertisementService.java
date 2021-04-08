@@ -56,7 +56,7 @@ public class AdvertisementService {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
         int id = persistenceAdvertisementService.insertAdvertisement(advertisement);
         advertisement.setAdvertisementId(id);
-        sender.sendAllUsersNotification(advertisementMapper.convertToDTO(advertisement));
+//        sender.sendAllUsersNotification(advertisementMapper.convertToDTO(advertisement));    //TODO fix secure access
         advertisementDTO.getCharacteristics().forEach(characteristicDTO -> characteristicService.save(id, characteristicDTO));
 
         return id;
