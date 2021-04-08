@@ -32,8 +32,9 @@ public class AdvertisementUserEmailMapper {
         advertisementUserEmailDTO.setPublicationDate(advertisement.getPublicationDate());
         advertisementUserEmailDTO.setStatusChangeDate(advertisement.getStatusChangeDate());
         advertisementUserEmailDTO.setUserEmail(getUserEmail(advertisement));
-        if (imageResource != null) advertisementUserEmailDTO.setImagePath(imageResource.getImageUrl());
-
+        if (imageResource != null) {
+            advertisementUserEmailDTO.setImagePath(imageResource.getImageUrl());
+        }
         return advertisementUserEmailDTO;
     }
 

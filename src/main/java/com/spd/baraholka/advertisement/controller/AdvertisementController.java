@@ -62,8 +62,8 @@ public class AdvertisementController {
 
     @GetMapping("/search")
     public PageRequest<AdvertisementUserEmailDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
-                                                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
-                                                               @RequestParam("pageNumber") int pageNumber) {
+                                                                        @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                                                                        @RequestParam("pageNumber") int pageNumber) {
         List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword(keyword);
         return getAdvertisementDTOPageRequest(pageSize, pageNumber, advertisementList);
     }
@@ -96,7 +96,9 @@ public class AdvertisementController {
         advertisementService.promotionAd(adId);
     }
 
-    private PageRequest<AdvertisementUserEmailDTO> getAdvertisementDTOPageRequest(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, @RequestParam("pageNumber") int pageNumber, List<Advertisement> advertisementList) {
+    private PageRequest<AdvertisementUserEmailDTO> getAdvertisementDTOPageRequest(
+            @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, @RequestParam("pageNumber") int pageNumber,
+            List<Advertisement> advertisementList) {
         PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, advertisementList);
 
         List<Integer> adIds = pageRequest.getContent().stream()
