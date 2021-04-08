@@ -12,7 +12,7 @@ public class ImageMapper implements RowMapper<Image> {
 
     @Override
     public Image mapRow(ResultSet rs, int rowNum) throws SQLException {
-        long imageId = rs.getInt("id");
+        int imageId = rs.getInt("id");
         String imageUrl = rs.getString("url");
         boolean isAttached = rs.getBoolean("is_attached");
         LocalDateTime uploadedAt = rs.getTimestamp("uploaded_at").toLocalDateTime();

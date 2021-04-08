@@ -34,6 +34,7 @@ public class AdvertisementUserEmailDTO {
     private LocalDateTime publicationDate;
     @Email
     private String userEmail;
+    private String imagePath;
 
     public String getUserEmail() {
         return userEmail;
@@ -145,5 +146,13 @@ public class AdvertisementUserEmailDTO {
 
     public void setPublicationDate(LocalDateTime publicationDate) {
         this.publicationDate = publicationDate;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 }

@@ -6,21 +6,21 @@ import java.util.*;
 
 public class ImageResource {
 
-    private long id;
-    private final long adId;
+    private int id;
+    private final int adId;
     private final boolean isPrimary;
     private final int position;
     private MultipartFile image;
     private String imageUrl;
 
-    public ImageResource(long adId, boolean isPrimary, int position, MultipartFile image) {
+    public ImageResource(int adId, boolean isPrimary, int position, MultipartFile image) {
         this.adId = adId;
         this.isPrimary = isPrimary;
         this.position = position;
         this.image = image;
     }
 
-    public ImageResource(long id, long adId, boolean isPrimary, int position, String imageUrl) {
+    public ImageResource(int id, int adId, boolean isPrimary, int position, String imageUrl) {
         this.id = id;
         this.adId = adId;
         this.isPrimary = isPrimary;
@@ -28,15 +28,15 @@ public class ImageResource {
         this.imageUrl = imageUrl;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public long getAdId() {
+    public int getAdId() {
         return adId;
     }
 

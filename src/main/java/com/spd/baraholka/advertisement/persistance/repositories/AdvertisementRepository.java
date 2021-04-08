@@ -24,7 +24,7 @@ public class AdvertisementRepository implements PersistenceAdvertisementService 
     private static final String UPDATE_ADVERTISEMENTS_STATUS_SQL =
             "UPDATE  advertisements SET status=:status, status_change_date=:statusChangeDate WHERE id=:advertisementId";
     private static final String SELECT_ADVERTISEMENT_BY_ID_SQL =
-            "SELECT id, title, description, price, category, currency, discount_availability, city, status, publication_date, user_id FROM advertisements WHERE id=:id";
+            "SELECT * FROM advertisements WHERE id=:id";
     private static final String EXIST_BY_ID_SQL = "SELECT count(*) <> 0 FROM advertisements WHERE id=:id";
     private static final String ADVERTISEMENT_SOFT_DELETE_SQL = "UPDATE advertisements SET status = :del, status_change_date = now() " +
             "WHERE status = :arch " +

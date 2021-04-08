@@ -49,8 +49,8 @@ public class CommentService {
         var commentUserInfoDto = commentUserInfoDtoMapper.getCommentUserInfoDto(comment);
         commentUserInfoDto.setId(savedCommentId);
         logger.info("IN save new - comment with id : {} successfully saved", savedCommentId);
-        sender.sendAdvertisementCommentNotification(commentUserInfoDto);
-        sender.sendCommentNotification(commentUserInfoDto);
+//        sender.sendAdvertisementCommentNotification(commentUserInfoDto); //TODO fix secure access
+//        sender.sendCommentNotification(commentUserInfoDto);              //TODO fix secure access
 
         return savedCommentId;
     }

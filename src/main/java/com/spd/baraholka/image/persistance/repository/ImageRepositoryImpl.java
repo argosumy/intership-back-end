@@ -36,7 +36,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 
         jdbcTemplate.update(sql, parameters, keyHolder);
 
-        long id = Objects.requireNonNull(keyHolder.getKey()).longValue();
+        int id = Objects.requireNonNull(keyHolder.getKey()).intValue();
 
         image.setId(id);
 
@@ -58,7 +58,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public List<ImageResource> getPrimary(List<Long> adIds) {
+    public List<ImageResource> getPrimary(List<Integer> adIds) {
         String sql = "SELECT image_id as id, ad_id, is_primary, position, url " +
                      "FROM advertisements_images " +
                      "LEFT JOIN images ON advertisements_images.image_id = images.id " +
@@ -72,7 +72,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public List<ImageResource> getAllByAdId(long adId) {
+    public List<ImageResource> getAllByAdId(int adId) {
         String sql = "SELECT images.id as id, ad_id, is_primary, position, url " +
                      "FROM advertisements_images " +
                      "LEFT JOIN images ON advertisements_images.image_id = images.id " +
@@ -85,7 +85,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public void deleteImage(long imageId) {
+    public void deleteImage(int imageId) {
         String sql = "DELETE FROM images WHERE id = :imageId";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -97,7 +97,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public void setAttached(long imageId) {
+    public void setAttached(int imageId) {
         String sql = "UPDATE images SET is_attached = :isAttached WHERE id = :imageId";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -115,7 +115,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public Image getImage(long imageId) {
+    public Image getImage(int imageId) {
         String sql = "SELECT * FROM images WHERE id = :imageId";
 
         MapSqlParameterSource parameter = new MapSqlParameterSource();
@@ -125,7 +125,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public void deleteImageResourcesByAdId(long adId) {
+    public void deleteImageResourcesByAdId(int adId) {
         String sql = "DELETE FROM advertisements_images WHERE ad_id = :adId";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -135,7 +135,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public boolean existImages(List<Long> imageIds) {
+    public boolean existImages(List<Integer> imageIds) {
         String sql = "SELECT * FROM images WHERE id IN (:imageIds)";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();

@@ -2,6 +2,8 @@ package com.spd.baraholka.advertisement.controller.mappers;
 
 import com.spd.baraholka.advertisement.controller.dto.AdvertisementUserEmailDTO;
 import com.spd.baraholka.advertisement.persistance.entities.Advertisement;
+import com.spd.baraholka.image.controller.dto.ImageResourceDto;
+import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.user.service.UserService;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,7 @@ public class AdvertisementUserEmailMapper {
         this.userService = userService;
     }
 
-    public AdvertisementUserEmailDTO getAdvertisementUserEmailDto(Advertisement advertisement) {
+    public AdvertisementUserEmailDTO getAdvertisementUserEmailDto(Advertisement advertisement, ImageResource imageResource) {
         AdvertisementUserEmailDTO advertisementUserEmailDTO = new AdvertisementUserEmailDTO();
         advertisementUserEmailDTO.setAdvertisementId(advertisement.getAdvertisementId());
         advertisementUserEmailDTO.setOwnerId(advertisement.getOwnerId());
@@ -30,10 +32,21 @@ public class AdvertisementUserEmailMapper {
         advertisementUserEmailDTO.setPublicationDate(advertisement.getPublicationDate());
         advertisementUserEmailDTO.setStatusChangeDate(advertisement.getStatusChangeDate());
         advertisementUserEmailDTO.setUserEmail(getUserEmail(advertisement));
+        if (imageResource != null) {
+            advertisementUserEmailDTO.setImagePath(imageResource.getImageUrl());
+        }
         return advertisementUserEmailDTO;
     }
 
     private String getUserEmail(Advertisement advertisement) {
         return userService.getUserById(advertisement.getOwnerId()).getEmail();
+    }
+
+    private ImageResourceDto getImageResourceDto(ImageResource imageResource) {
+        return new ImageResourceDto(imageResource.getId(),
+                imageResource.getAdId(),
+                imageResource.getIsPrimary(),
+                imageResource.getPosition(),
+                imageResource.getImageUrl());
     }
 }

@@ -19,7 +19,7 @@ public class ValidImageIdsConstrainValidator implements ConstraintValidator<Vali
 
     @Override
     public boolean isValid(List<ImageResourceDto> value, ConstraintValidatorContext context) {
-        List<Long> imageIds = value.stream().map(ImageResourceDto::getId).collect(Collectors.toList());
+        List<Integer> imageIds = value.stream().map(ImageResourceDto::getId).collect(Collectors.toList());
 
         return imageRepository.existImages(imageIds);
     }

@@ -4,15 +4,15 @@ import java.util.*;
 
 public class ImageDto {
 
-    private final long id;
+    private final int id;
     private final String url;
 
-    public ImageDto(long id, String url) {
+    public ImageDto(int id, String url) {
         this.id = id;
         this.url = url;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

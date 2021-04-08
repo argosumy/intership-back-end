@@ -40,7 +40,7 @@ public class ImageController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "ads/{adId}/images", consumes = "multipart/form-data")
     public void saveImages(@IsAdExisting
-                           @PathVariable long adId,
+                           @PathVariable int adId,
                            @Size(min = 1, max = 10, message = "Can't process the request. Images number min = 1, max = 10")
                            @RequestPart(value = "images") @ImagesContent List<MultipartFile> images) {
         List<ImageResource> imageResources = toDomain(adId, images);
@@ -50,7 +50,7 @@ public class ImageController {
 
     @ApiOperation(value = "Fetch all images of an advertisement", response = ImageResourceDto.class, responseContainer = "List")
     @GetMapping("ads/{adId}/images")
-    public List<ImageResourceDto> getAllByAdId(@PathVariable long adId) {
+    public List<ImageResourceDto> getAllByAdId(@PathVariable int adId) {
         List<ImageResource> imageResources = imageService.getAllByAdId(adId);
 
         return imageResources
@@ -66,7 +66,7 @@ public class ImageController {
     @ApiOperation(value = "Delete a single image")
     @DeleteMapping(value = "images/{imageId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteImage(@PathVariable long imageId) {
+    public void deleteImage(@PathVariable int imageId) {
         imageService.deleteImage(imageId);
     }
 
@@ -78,7 +78,7 @@ public class ImageController {
             @ApiResponse(code = 400, message = "Maximum upload size exceeded; The image exceeds its maximum permitted size of 5 Megabytes.")
     })
     @ResponseStatus(HttpStatus.OK)
-    public ImageDto uploadImage(@PathVariable long adId,
+    public ImageDto uploadImage(@PathVariable int adId,
                                 @RequestPart @ImageContent MultipartFile image) {
         Image imageData = imageService.uploadImage(adId, image);
 
@@ -93,7 +93,7 @@ public class ImageController {
     @PostMapping(value = "ads/{adId}/imageResources", consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public void saveImageResources(@IsAdExisting
-                                   @PathVariable long adId,
+                                   @PathVariable int adId,
                                    @RequestBody
                                    @HasPrimaryImage
                                    @ValidatePositions
@@ -123,11 +123,11 @@ public class ImageController {
     @ApiOperation(value = "Delete all images of an advertisement")
     @DeleteMapping("ads/{adId}/images")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllImagesByAdId(@PathVariable long adId) {
+    public void deleteAllImagesByAdId(@PathVariable int adId) {
         imageService.deleteAllByAdId(adId);
     }
 
-    private List<ImageResource> toDomain(long adId, List<MultipartFile> images) {
+    private List<ImageResource> toDomain(int adId, List<MultipartFile> images) {
         List<ImageResource> imageResources = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
             MultipartFile image = images.get(i);
@@ -142,7 +142,7 @@ public class ImageController {
         return imageResources;
     }
 
-    private void validateIds(long adId, List<ImageResourceDto> imageResources) {
+    private void validateIds(int adId, List<ImageResourceDto> imageResources) {
         if (!imageResources.stream().allMatch(resource -> resource.getAdId() == adId)) {
             throw new AdvertisementIdsMismatchException("Advertisement id values are different");
         }

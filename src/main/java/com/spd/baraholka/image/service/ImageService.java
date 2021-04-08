@@ -8,9 +8,9 @@ import java.util.*;
 public interface ImageService {
     ImageResource save(ImageResource imageResource);
 
-    void saveImageResources(long adId, List<ImageResource> imageResources);
+    void saveImageResources(int adId, List<ImageResource> imageResources);
 
-    Image uploadImage(long adId, MultipartFile image);
+    Image uploadImage(int adId, MultipartFile image);
 
     List<Image> getAllUnattached();
 
@@ -18,13 +18,13 @@ public interface ImageService {
 
     void saveAll(List<ImageResource> imageResources);
 
-    List<ImageResource> getPrimary(List<Long> adIds);
+    List<ImageResource> getPrimary(List<Integer> adIds);
 
-    List<ImageResource> getAllByAdId(long adId);
+    List<ImageResource> getAllByAdId(int adId);
 
-    void deleteAllByAdId(long adId);
+    void deleteAllByAdId(int adId);
 
-    void deleteImage(long imageId);
+    void deleteImage(int imageId);
 
     void deleteImage(String imageUrl);
 

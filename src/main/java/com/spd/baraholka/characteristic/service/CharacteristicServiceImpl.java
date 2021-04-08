@@ -27,8 +27,10 @@ public class CharacteristicServiceImpl implements CharacteristicService {
 
     @Override
     public void update(int id, List<CharacteristicDTO> characteristics) {
-        characteristicRepository.delete(id);
-        characteristics.forEach(characteristicDTO -> characteristicRepository.save(id, characteristicDTO));
+        if (characteristics != null) {
+            characteristicRepository.delete(id);
+            characteristics.forEach(characteristicDTO -> characteristicRepository.save(id, characteristicDTO));
+        }
     }
 
     @Override
@@ -49,7 +51,7 @@ public class CharacteristicServiceImpl implements CharacteristicService {
     @Override
     public List<CharacteristicDTO> readForAdId(int adId) {
         List<CharacteristicDTO> list = new ArrayList<>();
-        for (Characteristic characteristic: characteristicRepository.readForAdId(adId)) {
+        for (Characteristic characteristic : characteristicRepository.readForAdId(adId)) {
             list.add(new CharacteristicDTO(
                     characteristic.getCharacteristicName(),
                     characteristic.getCharacteristicValue(),

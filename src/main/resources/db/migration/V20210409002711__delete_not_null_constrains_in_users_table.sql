@@ -1,0 +1,6 @@
+ALTER TABLE users
+    ALTER COLUMN position DROP NOT NULL;
+ALTER TABLE users
+    ALTER COLUMN phone_number DROP NOT NULL;
+ALTER TABLE users
+    ALTER COLUMN location DROP NOT NULL;

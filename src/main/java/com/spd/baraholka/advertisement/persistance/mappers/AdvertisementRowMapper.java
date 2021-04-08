@@ -33,19 +33,25 @@ public class AdvertisementRowMapper implements RowMapper<Advertisement> {
 
     private void setCurrency(ResultSet resultSet, Advertisement advertisement) throws SQLException {
         String currency = resultSet.getString("currency");
-        CurrencyType currencyType = CurrencyType.valueOf(currency);
-        advertisement.setCurrency(currencyType);
+        if (currency != null) {
+            CurrencyType currencyType = CurrencyType.valueOf(currency);
+            advertisement.setCurrency(currencyType);
+        }
     }
 
     private void setStatus(ResultSet resultSet, Advertisement advertisement) throws SQLException {
         String status = resultSet.getString("status");
-        AdvertisementStatus advertisementStatus = AdvertisementStatus.valueOf(status);
-        advertisement.setStatus(advertisementStatus);
+        if (status != null) {
+            AdvertisementStatus advertisementStatus = AdvertisementStatus.valueOf(status);
+            advertisement.setStatus(advertisementStatus);
+        }
     }
 
     private void setPublicationDate(ResultSet resultSet, Advertisement advertisement) throws SQLException {
         Timestamp publicationTimeStamp = resultSet.getTimestamp("publication_date");
-        LocalDateTime publicationDate = publicationTimeStamp.toLocalDateTime();
-        advertisement.setPublicationDate(publicationDate);
+        if (publicationTimeStamp != null) {
+            LocalDateTime publicationDate = publicationTimeStamp.toLocalDateTime();
+            advertisement.setPublicationDate(publicationDate);
+        }
     }
 }

@@ -10,19 +10,19 @@ public interface ImageRepository {
 
     void save(ImageResource imageResource);
 
-    List<ImageResource> getPrimary(List<Long> adIds);
+    List<ImageResource> getPrimary(List<Integer> adIds);
 
-    List<ImageResource> getAllByAdId(long adId);
+    List<ImageResource> getAllByAdId(int adId);
 
-    void deleteImage(long imageId);
+    void deleteImage(int imageId);
 
-    void setAttached(long imageId);
+    void setAttached(int imageId);
 
     List<Image> getUnattachedImages();
 
-    Image getImage(long imageId);
+    Image getImage(int imageId);
 
-    void deleteImageResourcesByAdId(long adId);
+    void deleteImageResourcesByAdId(int adId);
 
-    boolean existImages(List<Long> imageIds);
+    boolean existImages(List<Integer> imageIds);
 }

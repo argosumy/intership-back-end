@@ -12,8 +12,8 @@ public class ImageResourceMapper implements RowMapper<ImageResource> {
     @Override
     public ImageResource mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        long id = rs.getLong("id");
-        long adId = rs.getLong("ad_id");
+        int id = rs.getInt("id");
+        int adId = rs.getInt("ad_id");
         boolean isPrimary = rs.getBoolean("is_primary");
         int positionOrder = rs.getInt("position");
         String imageUrl = rs.getString("url");
