@@ -16,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Configuration
@@ -59,8 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .successHandler(oauth2SuccessHandler)
                 .and()
-                .logout().logoutSuccessUrl("/").permitAll()
-                .and()
+                .logout(logout -> logout
+                        .permitAll()
+                        .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK)))
                 .exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
     }
 
