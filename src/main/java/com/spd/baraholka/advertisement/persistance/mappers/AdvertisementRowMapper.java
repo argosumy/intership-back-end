@@ -28,7 +28,6 @@ public class AdvertisementRowMapper implements RowMapper<Advertisement> {
         advertisement.setCity(rs.getString("city"));
         setStatus(rs, advertisement);
         setPublicationDate(rs, advertisement);
-        setStatusChangeDate(rs, advertisement);
         return advertisement;
     }
 
