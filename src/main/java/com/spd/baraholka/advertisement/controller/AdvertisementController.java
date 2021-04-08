@@ -79,7 +79,7 @@ public class AdvertisementController {
                 .map(Advertisement::getAdvertisementId)
                 .collect(Collectors.toList());
 
-        Map<Long, ImageResource> adsImages = imageService.getPrimary(adIds).stream()
+        Map<Integer, ImageResource> adsImages = imageService.getPrimary(adIds).stream()
                 .collect(Collectors.toMap(ImageResource::getAdId, Function.identity()));
 
         return pageRequest.map(advertisement -> advertisementUserEmailMapper

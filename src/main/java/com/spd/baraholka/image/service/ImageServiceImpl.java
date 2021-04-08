@@ -53,7 +53,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void saveImageResources(long adId, List<ImageResource> imageResources) {
+    public void saveImageResources(int adId, List<ImageResource> imageResources) {
         List<ImageResource> attachedImages = repository.getAllByAdId(adId);
         if (!attachedImages.isEmpty()) {
             repository.deleteImageResourcesByAdId(adId);
@@ -67,7 +67,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image uploadImage(long adId, MultipartFile file) {
+    public Image uploadImage(int adId, MultipartFile file) {
         String imageName = generateFileName(adId, file);
         String imageUrl = aws3Service.uploadImage(imageName, file);
 
@@ -95,7 +95,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<ImageResource> getAllByAdId(long adId) {
+    public List<ImageResource> getAllByAdId(int adId) {
         List<ImageResource> imageResources = repository.getAllByAdId(adId);
 
         if (imageResources.isEmpty()) {
@@ -108,7 +108,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void deleteAllByAdId(long adId) {
+    public void deleteAllByAdId(int adId) {
         List<ImageResource> imageResources = repository.getAllByAdId(adId);
         imageResources.forEach(imageResource -> {
             aws3Service.deleteImageFromS3Bucket(imageResource.getImageUrl());
@@ -116,16 +116,16 @@ public class ImageServiceImpl implements ImageService {
         });
     }
 
-    public void deleteImage(long imageId) {
+    public void deleteImage(int imageId) {
         Image image = repository.getImage(imageId);
         aws3Service.deleteImageFromS3Bucket(image.getUrl());
         repository.deleteImage(imageId);
     }
 
     private void deleteImagesDifferenceFromS3(List<ImageResource> imageResources, List<ImageResource> attachedImages) {
-        Set<Long> attachedImagesIds = attachedImages.stream().map(ImageResource::getId).collect(Collectors.toSet());
-        Set<Long> toBeSavedImagesIds = imageResources.stream().map(ImageResource::getId).collect(Collectors.toSet());
-        List<Long> difference = attachedImagesIds
+        Set<Integer> attachedImagesIds = attachedImages.stream().map(ImageResource::getId).collect(Collectors.toSet());
+        Set<Integer> toBeSavedImagesIds = imageResources.stream().map(ImageResource::getId).collect(Collectors.toSet());
+        List<Integer> difference = attachedImagesIds
                 .stream()
                 .filter(imageResource -> !toBeSavedImagesIds.contains(imageResource))
                 .collect(Collectors.toList());
@@ -147,14 +147,14 @@ public class ImageServiceImpl implements ImageService {
     }
 
     private String generateFileName(ImageResource imageResource) {
-        long adId = imageResource.getAdId();
+        int adId = imageResource.getAdId();
         MultipartFile multiPart = imageResource.getImage();
         String originalFileName = Objects.requireNonNull(multiPart.getOriginalFilename()).replace(" ", "_");
 
         return String.format("ads/%s/%s-%s", adId, new Date().getTime(), originalFileName);
     }
 
-    private String generateFileName(long adId, MultipartFile multiPart) {
+    private String generateFileName(int adId, MultipartFile multiPart) {
         String originalFileName = Objects.requireNonNull(multiPart.getOriginalFilename()).replace(" ", "_");
 
         return String.format("ads/%s/%s-%s", adId, new Date().getTime(), originalFileName);

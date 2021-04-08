@@ -5,16 +5,16 @@ import javax.validation.constraints.*;
 public final class ImageResourceDto {
 
     @Positive
-    private final long id;
+    private final int id;
     @Positive
-    private final long adId;
+    private final int adId;
     private final boolean primary;
     @Min(1) @Max(10)
     private final int position;
     @NotBlank
     private final String url;
 
-    public ImageResourceDto(long id, long adId, boolean primary, int position, String url) {
+    public ImageResourceDto(int id, int adId, boolean primary, int position, String url) {
         this.id = id;
         this.adId = adId;
         this.primary = primary;
@@ -22,11 +22,11 @@ public final class ImageResourceDto {
         this.url = url;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public long getAdId() {
+    public int getAdId() {
         return adId;
     }
 
