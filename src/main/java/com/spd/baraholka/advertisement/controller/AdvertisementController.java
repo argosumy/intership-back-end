@@ -61,29 +61,18 @@ public class AdvertisementController {
     }
 
     @GetMapping("/search")
-    public PageRequest<AdvertisementDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
+    public PageRequest<AdvertisementUserEmailDTO> getFilteredAdsByTitle(@RequestParam("keyword") String keyword,
                                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                @RequestParam("pageNumber") int pageNumber) {
         List<Advertisement> advertisementList = advertisementService.getFilteredAdsByKeyword(keyword);
-        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, advertisementList);
-        return pageRequest.map(advertisementMapper::getAdvertisementDto);
+        return getAdvertisementDTOPageRequest(pageSize, pageNumber, advertisementList);
     }
 
     @GetMapping
     public PageRequest<AdvertisementUserEmailDTO> getAllActiveAds(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
                                                                   @RequestParam("pageNumber") int pageNumber) {
         List<Advertisement> advertisementList = advertisementService.getAllActive();
-        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, advertisementList);
-
-        List<Integer> adIds = pageRequest.getContent().stream()
-                .map(Advertisement::getAdvertisementId)
-                .collect(Collectors.toList());
-
-        Map<Integer, ImageResource> adsImages = imageService.getPrimary(adIds).stream()
-                .collect(Collectors.toMap(ImageResource::getAdId, Function.identity()));
-
-        return pageRequest.map(advertisement -> advertisementUserEmailMapper
-                .getAdvertisementUserEmailDto(advertisement, adsImages.get(advertisement.getAdvertisementId())));
+        return getAdvertisementDTOPageRequest(pageSize, pageNumber, advertisementList);
     }
 
     @PutMapping("/{id}/publish-delayed")
@@ -105,5 +94,19 @@ public class AdvertisementController {
     @PutMapping("/{id}/promotion")
     public void promotionAd(@PathVariable(value = "id") int adId) {
         advertisementService.promotionAd(adId);
+    }
+
+    private PageRequest<AdvertisementUserEmailDTO> getAdvertisementDTOPageRequest(@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, @RequestParam("pageNumber") int pageNumber, List<Advertisement> advertisementList) {
+        PageRequest<Advertisement> pageRequest = pageRequestService.getPageRequest(pageSize, pageNumber, advertisementList);
+
+        List<Integer> adIds = pageRequest.getContent().stream()
+                .map(Advertisement::getAdvertisementId)
+                .collect(Collectors.toList());
+
+        Map<Integer, ImageResource> adsImages = imageService.getPrimary(adIds).stream()
+                .collect(Collectors.toMap(ImageResource::getAdId, Function.identity()));
+
+        return pageRequest.map(advertisement -> advertisementUserEmailMapper
+                .getAdvertisementUserEmailDto(advertisement, adsImages.get(advertisement.getAdvertisementId())));
     }
 }
