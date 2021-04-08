@@ -10,7 +10,7 @@ public interface ImageRepository {
 
     void save(ImageResource imageResource);
 
-    List<ImageResource> getPrimary(List<Long> adIds);
+    List<ImageResource> getPrimary(List<Integer> adIds);
 
     List<ImageResource> getAllByAdId(long adId);
 

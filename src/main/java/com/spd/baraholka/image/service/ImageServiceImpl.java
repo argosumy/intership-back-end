@@ -90,7 +90,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<ImageResource> getPrimary(List<Long> adIds) {
+    public List<ImageResource> getPrimary(List<Integer> adIds) {
         return repository.getPrimary(adIds);
     }
 

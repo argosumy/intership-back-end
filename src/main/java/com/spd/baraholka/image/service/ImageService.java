@@ -18,7 +18,7 @@ public interface ImageService {
 
     void saveAll(List<ImageResource> imageResources);
 
-    List<ImageResource> getPrimary(List<Long> adIds);
+    List<ImageResource> getPrimary(List<Integer> adIds);
 
     List<ImageResource> getAllByAdId(long adId);
 

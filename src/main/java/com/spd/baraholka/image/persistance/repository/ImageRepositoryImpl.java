@@ -58,7 +58,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public List<ImageResource> getPrimary(List<Long> adIds) {
+    public List<ImageResource> getPrimary(List<Integer> adIds) {
         String sql = "SELECT image_id as id, ad_id, is_primary, position, url " +
                      "FROM advertisements_images " +
                      "LEFT JOIN images ON advertisements_images.image_id = images.id " +
