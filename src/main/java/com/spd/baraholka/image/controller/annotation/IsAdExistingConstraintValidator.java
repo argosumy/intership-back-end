@@ -7,7 +7,7 @@ import org.springframework.stereotype.*;
 import javax.validation.*;
 
 @Component
-public class IsAdExistingConstraintValidator implements ConstraintValidator<IsAdExisting, Long> {
+public class IsAdExistingConstraintValidator implements ConstraintValidator<IsAdExisting, Integer> {
     private final AdvertisementService adService;
 
     @Autowired
@@ -16,8 +16,8 @@ public class IsAdExistingConstraintValidator implements ConstraintValidator<IsAd
     }
 
     @Override
-    public boolean isValid(Long id, ConstraintValidatorContext context) {
+    public boolean isValid(Integer id, ConstraintValidatorContext context) {
         // Must be fixed. Long type value is down casted here to int.
-        return adService.isAdvertisementExist(id.intValue());
+        return adService.isAdvertisementExist(id);
     }
 }

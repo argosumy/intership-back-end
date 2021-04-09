@@ -22,6 +22,7 @@ public class FullAdvertisementDTO {
     private LocalDateTime publicationDate;
     private OwnerDTO advertisementOwner;
     private List<CharacteristicDTO> characteristics;
+    private int views;
 
     public int getAdvertisementId() {
         return advertisementId;
@@ -117,6 +118,14 @@ public class FullAdvertisementDTO {
 
     public void setAdvertisementOwner(OwnerDTO advertisementOwner) {
         this.advertisementOwner = advertisementOwner;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public int getViews() {
+        return views;
     }
 }
 

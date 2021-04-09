@@ -5,7 +5,6 @@ import com.spd.baraholka.advertisement.persistance.entities.CurrencyType;
 import com.spd.baraholka.annotation.advertisement.InitialStatus;
 import com.spd.baraholka.annotation.advertisement.PositivePrice;
 import com.spd.baraholka.annotation.advertisement.PresentOrFutureDate;
-import com.spd.baraholka.annotation.user.UserExist;
 import com.spd.baraholka.characteristic.controller.dto.CharacteristicDTO;
 
 import javax.validation.constraints.NotNull;
@@ -42,7 +41,6 @@ public class InitialAdvertisementDTO {
     @PresentOrFutureDate
     private LocalDateTime publicationDate;
 
-    @UserExist
     private int ownerId;
 
     private List<CharacteristicDTO> characteristics;

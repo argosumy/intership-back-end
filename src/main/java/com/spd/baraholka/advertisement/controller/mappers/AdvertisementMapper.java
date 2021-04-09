@@ -16,7 +16,6 @@ public class AdvertisementMapper {
 
     public Advertisement convertToEntity(InitialAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = new Advertisement();
-        advertisement.setOwnerId(advertisementDTO.getOwnerId()); //TODO must be replace by user id from cookies session
         advertisement.setCategory(advertisementDTO.getCategory());
         advertisement.setTitle(advertisementDTO.getTitle());
         advertisement.setDescription(advertisementDTO.getDescription());

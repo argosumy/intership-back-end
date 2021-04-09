@@ -52,8 +52,9 @@ public class AdvertisementService {
         this.viewService = viewService;
     }
 
-    public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
+    public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO, int userId) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
+        advertisement.setOwnerId(userId);
         int id = persistenceAdvertisementService.insertAdvertisement(advertisement);
         advertisement.setAdvertisementId(id);
 //        sender.sendAllUsersNotification(advertisementMapper.convertToDTO(advertisement));    //TODO fix secure access
@@ -62,8 +63,16 @@ public class AdvertisementService {
         return id;
     }
 
-    public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
+    private int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
+        characteristicService.update(advertisementDTO.getAdvertisementId(), advertisementDTO.getCharacteristics());
+
+        return persistenceAdvertisementService.updateAdvertisement(advertisement);
+    }
+
+    public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO, int userId) {
+        Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
+        advertisement.setOwnerId(userId);
         characteristicService.update(advertisementDTO.getAdvertisementId(), advertisementDTO.getCharacteristics());
 
         return persistenceAdvertisementService.updateAdvertisement(advertisement);
@@ -94,12 +103,25 @@ public class AdvertisementService {
 
     private FullAdvertisementDTO collectFullAdvertisementDTO(Advertisement advertisement) {
         FullAdvertisementDTO advertisementDTO = advertisementMapper.convertToDTO(advertisement);
-        OwnerDTO owner = ownerService.getOwner(advertisement.getOwnerId());
-        advertisementDTO.setAdvertisementOwner(owner);
+        addOwnerToAdvertisementDTO(advertisementDTO, advertisement.getOwnerId());
+        addCharacteristicsToAdvertisementDTO(advertisementDTO);
+        addViewsToAdvertisementDTO(advertisement, advertisementDTO);
+        return advertisementDTO;
+    }
+
+    private void addViewsToAdvertisementDTO(Advertisement advertisement, FullAdvertisementDTO advertisementDTO) {
+        int countOfViews = viewService.getCountOfViewsForAdvertisement(advertisement.getAdvertisementId());
+        advertisementDTO.setViews(countOfViews);
+    }
+
+    private void addCharacteristicsToAdvertisementDTO(FullAdvertisementDTO advertisementDTO) {
         advertisementDTO.setCharacteristics(characteristicService.readForAdId(advertisementDTO.getAdvertisementId()));
         viewService.save(advertisementDTO.getAdvertisementId());
+    }
 
-        return advertisementDTO;
+    private void addOwnerToAdvertisementDTO(FullAdvertisementDTO advertisementDTO, int ownerId) {
+        OwnerDTO owner = ownerService.getOwner(ownerId);
+        advertisementDTO.setAdvertisementOwner(owner);
     }
 
     public void promotionAd(int advertisementId) {
@@ -119,7 +141,16 @@ public class AdvertisementService {
         logger.info("IN getAllActive - advertisements found: {}", active.size());
 
         setActiveStatus(active);
+        addCountOfViews(active);
         return active;
+    }
+
+    private void addCountOfViews(List<Advertisement> advertisements) {
+        advertisements.forEach(advertisement -> {
+            int advertisementId = advertisement.getAdvertisementId();
+            int countOfViews = viewService.getCountOfViewsForAdvertisement(advertisementId);
+            advertisement.setViews(countOfViews);
+        });
     }
 
     private void setActiveStatus(List<Advertisement> active) {
