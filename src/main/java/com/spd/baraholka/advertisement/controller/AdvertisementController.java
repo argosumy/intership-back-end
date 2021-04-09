@@ -12,6 +12,8 @@ import com.spd.baraholka.image.persistance.entity.ImageResource;
 import com.spd.baraholka.image.service.ImageService;
 import com.spd.baraholka.pagination.entities.PageRequest;
 import com.spd.baraholka.pagination.services.PageRequestService;
+import com.spd.baraholka.user.persistance.entities.User;
+import com.spd.baraholka.user.service.UserService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,27 +34,32 @@ public class AdvertisementController {
     private final AdvertisementUserEmailMapper advertisementUserEmailMapper;
     private final PageRequestService pageRequestService;
     private final ImageService imageService;
+    private final UserService userService;
 
     public AdvertisementController(AdvertisementService advertisementService,
                                    AdvertisementMapper advertisementMapper,
                                    AdvertisementUserEmailMapper advertisementUserEmailMapper,
                                    PageRequestService pageRequestService,
-                                   ImageService imageService) {
+                                   ImageService imageService,
+                                   UserService userService) {
         this.advertisementService = advertisementService;
         this.advertisementMapper = advertisementMapper;
         this.advertisementUserEmailMapper = advertisementUserEmailMapper;
         this.pageRequestService = pageRequestService;
         this.imageService = imageService;
+        this.userService = userService;
     }
 
     @PostMapping
     public int saveAdvertisement(@RequestBody @Valid InitialAdvertisementDTO advertisementDTO) {
-        return advertisementService.saveAdvertisement(advertisementDTO);
+        User currentUser = userService.getCurrentUser();
+        return advertisementService.saveAdvertisement(advertisementDTO, currentUser.getId());
     }
 
     @PutMapping
     public int updateAdvertisement(@RequestBody @Valid EditedAdvertisementDTO advertisementDTO) {
-        return advertisementService.updateAdvertisement(advertisementDTO);
+        User currentUser = userService.getCurrentUser();
+        return advertisementService.updateAdvertisement(advertisementDTO, currentUser.getId());
     }
 
     @PutMapping("/{id}")

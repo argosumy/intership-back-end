@@ -42,7 +42,6 @@ public class EditedAdvertisementDTO {
     @NotNull
     private boolean discountAvailability;
 
-    @UserExist
     private int ownerId;
 
     private LocalDateTime publicationDate;

@@ -42,7 +42,6 @@ public class InitialAdvertisementDTO {
     @PresentOrFutureDate
     private LocalDateTime publicationDate;
 
-    @UserExist
     private int ownerId;
 
     private List<CharacteristicDTO> characteristics;

@@ -52,8 +52,9 @@ public class AdvertisementService {
         this.viewService = viewService;
     }
 
-    public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO) {
+    public int saveAdvertisement(InitialAdvertisementDTO advertisementDTO, int userId) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
+        advertisement.setOwnerId(userId);
         int id = persistenceAdvertisementService.insertAdvertisement(advertisement);
         advertisement.setAdvertisementId(id);
 //        sender.sendAllUsersNotification(advertisementMapper.convertToDTO(advertisement));    //TODO fix secure access
@@ -62,8 +63,16 @@ public class AdvertisementService {
         return id;
     }
 
-    public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
+    private int updateAdvertisement(EditedAdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
+        characteristicService.update(advertisementDTO.getAdvertisementId(), advertisementDTO.getCharacteristics());
+
+        return persistenceAdvertisementService.updateAdvertisement(advertisement);
+    }
+
+    public int updateAdvertisement(EditedAdvertisementDTO advertisementDTO, int userId) {
+        Advertisement advertisement = advertisementMapper.convertToEntity(advertisementDTO);
+        advertisement.setOwnerId(userId);
         characteristicService.update(advertisementDTO.getAdvertisementId(), advertisementDTO.getCharacteristics());
 
         return persistenceAdvertisementService.updateAdvertisement(advertisement);
