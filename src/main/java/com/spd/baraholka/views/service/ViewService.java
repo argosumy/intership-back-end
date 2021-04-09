@@ -9,4 +9,6 @@ public interface ViewService {
     List<View> read();
 
     void save(int advertisementsId);
+
+    int getCountOfViewsForAdvertisement(int advertisementId);
 }

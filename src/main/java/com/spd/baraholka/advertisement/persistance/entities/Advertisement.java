@@ -17,6 +17,7 @@ public class Advertisement {
     private LocalDateTime creationDate;
     private LocalDateTime publicationDate;
     private LocalDateTime statusChangeDate;
+    private int views;
 
     public int getAdvertisementId() {
         return advertisementId;
@@ -120,5 +121,13 @@ public class Advertisement {
 
     public void setStatusChangeDate(LocalDateTime statusChangeDate) {
         this.statusChangeDate = statusChangeDate;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public int getViews() {
+        return views;
     }
 }

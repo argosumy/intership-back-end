@@ -35,6 +35,7 @@ public class AdvertisementUserEmailMapper {
         if (imageResource != null) {
             advertisementUserEmailDTO.setImagePath(imageResource.getImageUrl());
         }
+        advertisementUserEmailDTO.setViews(advertisement.getViews());
         return advertisementUserEmailDTO;
     }
 

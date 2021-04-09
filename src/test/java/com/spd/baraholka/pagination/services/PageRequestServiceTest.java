@@ -42,9 +42,10 @@ class PageRequestServiceTest {
     private CharacteristicService characteristicService;
     @Mock
     private Sender sender;
+    @Mock
+    private ViewService viewService;
     private PageRequest<Advertisement> pageRequest;
     private Advertisement advertisement;
-    private ViewService viewService;
 
     @BeforeEach
     void setUp() {

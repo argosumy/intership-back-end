@@ -103,12 +103,25 @@ public class AdvertisementService {
 
     private FullAdvertisementDTO collectFullAdvertisementDTO(Advertisement advertisement) {
         FullAdvertisementDTO advertisementDTO = advertisementMapper.convertToDTO(advertisement);
-        OwnerDTO owner = ownerService.getOwner(advertisement.getOwnerId());
-        advertisementDTO.setAdvertisementOwner(owner);
+        addOwnerToAdvertisementDTO(advertisementDTO, advertisement.getOwnerId());
+        addCharacteristicsToAdvertisementDTO(advertisementDTO);
+        addViewsToAdvertisementDTO(advertisement, advertisementDTO);
+        return advertisementDTO;
+    }
+
+    private void addViewsToAdvertisementDTO(Advertisement advertisement, FullAdvertisementDTO advertisementDTO) {
+        int countOfViews = viewService.getCountOfViewsForAdvertisement(advertisement.getAdvertisementId());
+        advertisementDTO.setViews(countOfViews);
+    }
+
+    private void addCharacteristicsToAdvertisementDTO(FullAdvertisementDTO advertisementDTO) {
         advertisementDTO.setCharacteristics(characteristicService.readForAdId(advertisementDTO.getAdvertisementId()));
         viewService.save(advertisementDTO.getAdvertisementId());
+    }
 
-        return advertisementDTO;
+    private void addOwnerToAdvertisementDTO(FullAdvertisementDTO advertisementDTO, int ownerId) {
+        OwnerDTO owner = ownerService.getOwner(ownerId);
+        advertisementDTO.setAdvertisementOwner(owner);
     }
 
     public void promotionAd(int advertisementId) {
@@ -128,7 +141,16 @@ public class AdvertisementService {
         logger.info("IN getAllActive - advertisements found: {}", active.size());
 
         setActiveStatus(active);
+        addCountOfViews(active);
         return active;
+    }
+
+    private void addCountOfViews(List<Advertisement> advertisements) {
+        advertisements.forEach(advertisement -> {
+            int advertisementId = advertisement.getAdvertisementId();
+            int countOfViews = viewService.getCountOfViewsForAdvertisement(advertisementId);
+            advertisement.setViews(countOfViews);
+        });
     }
 
     private void setActiveStatus(List<Advertisement> active) {
