@@ -46,7 +46,7 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public int saveAdvertisement(@RequestBody InitialAdvertisementDTO advertisementDTO) {
+    public int saveAdvertisement(@RequestBody @Valid InitialAdvertisementDTO advertisementDTO) {
         return advertisementService.saveAdvertisement(advertisementDTO);
     }
 
