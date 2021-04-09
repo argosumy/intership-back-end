@@ -35,6 +35,7 @@ public class AdvertisementUserEmailDTO {
     @Email
     private String userEmail;
     private String imagePath;
+    private int views;
 
     public String getUserEmail() {
         return userEmail;
@@ -154,5 +155,13 @@ public class AdvertisementUserEmailDTO {
 
     public String getImagePath() {
         return imagePath;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public int getViews() {
+        return views;
     }
 }

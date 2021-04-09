@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ViewRepositoryImpl implements ViewRepository {
+
+    private static final String SELECT_COUNT_OF_VIEWS_SQL = "SELECT count(DISTINCT user_id) FROM history_of_views WHERE advertisements_id =:advertisementId";
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -47,5 +50,10 @@ public class ViewRepositoryImpl implements ViewRepository {
                 .addValue("advertisements_id", advertisementsId);
 
         jdbcTemplate.update(sql, parameters);
+    }
+
+    @Override
+    public Integer getCountOfViews(int advertisementId) {
+        return jdbcTemplate.queryForObject(SELECT_COUNT_OF_VIEWS_SQL, Map.of("advertisementId", advertisementId), Integer.class);
     }
 }

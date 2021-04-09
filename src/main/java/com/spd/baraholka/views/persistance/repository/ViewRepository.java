@@ -9,4 +9,6 @@ public interface ViewRepository {
     List<View> read(int userId);
 
     void save(int userId, int advertisementsId);
+
+    Integer getCountOfViews(int advertisementId);
 }
