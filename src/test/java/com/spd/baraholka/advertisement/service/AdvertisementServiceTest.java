@@ -37,11 +37,12 @@ class AdvertisementServiceTest {
     private CharacteristicServiceImpl characteristicService;
     @Mock
     private Sender sender;
+    @Mock
+    private ViewService viewService;
     private AdvertisementService advertisementService;
     private Advertisement advertisementActive;
     private Advertisement advertisementDraft;
     private Advertisement advertisementDraftToBeShown;
-    private ViewService viewService;
 
     @BeforeEach
     void setUp() {
