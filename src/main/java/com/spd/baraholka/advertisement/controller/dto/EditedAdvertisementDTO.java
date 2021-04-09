@@ -41,6 +41,8 @@ public class EditedAdvertisementDTO {
     @NotNull
     private boolean discountAvailability;
 
+    private int ownerId;
+
     private LocalDateTime publicationDate;
     private List<CharacteristicDTO> characteristics;
 
@@ -122,5 +124,13 @@ public class EditedAdvertisementDTO {
 
     public void setCharacteristics(List<CharacteristicDTO> characteristics) {
         this.characteristics = characteristics;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 }
